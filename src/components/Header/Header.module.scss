@@ -1,0 +1,124 @@
+.header {
+  position: fixed;
+  height: 46px;
+  width: 100%;
+  background-color: #333;
+  z-index: 10;
+}
+.header-container {
+  width: 1240px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+}
+.logo {
+  fill: var(--white);
+  width: 69px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.header-items {
+  text-decoration: none;
+  display: block;
+  padding: 12px 0;
+  height: 46px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 104px;
+  border-right: 1px solid #111;
+  color: var(--text-primary);
+  font-size: 14px;
+  &:hover {
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.active {
+  background-color: #111;
+  color: var(--white);
+}
+.search-container {
+  padding: 9px 10px 8px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  input {
+    width: 100%;
+    color: #666;
+    outline: 0;
+    border: 0;
+    padding: 5px 7px;
+    background: #e5e5e5;
+    height: 28px;
+    border-radius: 4px;
+  }
+}
+
+.search-btn {
+  position: absolute;
+  right: 16px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.search-icon {
+  width: 15;
+  height: 15;
+}
+.avatar-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 64px;
+  padding: 10px 0px 10px 10px;
+  cursor: pointer;
+  &:hover {
+    .dropdown-icon {
+      color: var(--white);
+    }
+  }
+}
+.avatar-img {
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+}
+.dropdown-icon {
+  color: var(--text-primary);
+  position: absolute;
+  top: 21px;
+  right: 10px;
+  height: 5px;
+  width: 8px;
+  height: 8px;
+}
+.dropdown-menu {
+  width: 133px;
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.more-btn {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  &:hover {
+    color: var(--white);
+  }
+}
+.more-menu {
+  width: 168px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}

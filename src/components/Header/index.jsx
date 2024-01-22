@@ -89,16 +89,25 @@ const Header = () => {
   return (
     <div className={cx("header")}>
       <div className={cx("header-container")}>
-        <NavLink className={(nav) => cx("logo", { active: nav.isActive })}>
+        <NavLink
+          to="/"
+          className={(nav) => cx("logo", { active: nav.isActive })}
+        >
           <Logo />
         </NavLink>
 
         <NavLink
+          to="/"
           className={(nav) => cx("header-items", { active: nav.isActive })}
         >
           Home
         </NavLink>
-        <div className={cx("header-items")}>Stream</div>
+        <NavLink
+          to={"/feed"}
+          className={(nav) => cx("header-items", { active: nav.isActive })}
+        >
+          Feed
+        </NavLink>
         <div className={cx("header-items")}>Library</div>
 
         <div className={cx("search-container")}>
@@ -118,7 +127,12 @@ const Header = () => {
 
         <div className={cx("header-items")}>For Artists</div>
 
-        <div className={cx("header-items")}>Upload</div>
+        <NavLink
+          to={"/upload"}
+          className={(nav) => cx("header-items", { active: nav.isActive })}
+        >
+          Upload
+        </NavLink>
 
         <HeadlessTippy
           interactive
@@ -153,7 +167,7 @@ const Header = () => {
 
         <HeadlessTippy
           interactive
-          offset={[0, 0]}
+          offset={[-60, 0]}
           render={(atr) => {
             return (
               <Wrapper className={cx("more-menu")}>

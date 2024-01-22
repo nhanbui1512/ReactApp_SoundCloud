@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+    Route,
+    createBrowserRouter,
+    createRoutesFromElements,
+    RouterProvider,
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//import components
+import Layout from "components/Layout/Layout";
+import Home from "components/Home/Home";
+import Stream from "components/Stream/Stream";
+import Library from "components/Library/Library";
+import Upload from "components/Upload/Upload";
+
+const App = () => {
+    const router = createBrowserRouter(
+        createRoutesFromElements(
+            <>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home/>}></Route>
+                    <Route path="/Stream" element={<Stream />}></Route>
+                    <Route path="/Library" element={<Library/>}></Route>
+                    <Route path="/Upload" element={<Upload/>}></Route>
+                </Route>
+            </>
+        )
+    )
+    return (
+        <>
+            <RouterProvider router={router} />
+            {/* <ToastContainer /> */}
+        </>
+    )
 }
-
 export default App;

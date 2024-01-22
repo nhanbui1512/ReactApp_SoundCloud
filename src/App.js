@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 //import components
-import Layout from "components/Layout/Layout";
+import Layout from "Layout/Layout";
 import Home from "components/Home/Home";
 import Stream from "components/Stream/Stream";
 import Library from "components/Library/Library";

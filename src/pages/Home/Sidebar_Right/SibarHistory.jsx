@@ -1,43 +1,49 @@
-import "./Sidebar.module.scss";
+import React from "react";
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import artirstFollow from "./data";
-import { IoIosPeople } from "react-icons/io";
-import { FaRegChartBar } from "react-icons/fa";
-import { SlUserFollow } from "react-icons/sl";
+import { FaPlay } from "react-icons/fa";
+import { IoHeart } from "react-icons/io5";
+import { RiRepeatLine } from "react-icons/ri";
+import { FaHistory } from "react-icons/fa";
 
-import React from "react";
-import SidebarHeart from "./SidebarHeart";
-import SidebarHistory from "./SibarHistory";
 
 const cx = classNames.bind(styles);
-const Sidebar = () => {
-  
+const SidebarHistory = () => {
   return (
     <>
       <div className={cx("sidebar__modul")}>
         <div className={cx("sidebar__modul-refresh")}>
           <span>
-            <IoIosPeople />
+            <FaHistory />
           </span>
-          <span>Artists you should follow</span>
+          <span>View All</span>
         </div>
         <div className={cx("sidebar__modul-container")}>
           <ul className={cx("sidebar__modul-list")}>
             {artirstFollow.map((art, index) => {
               return (
                 <li className={cx("sidebar__modul-list-item")}>
-                  <img src={art.image} alt="" className={cx("sidebar__modul-image")} />
+                  <img
+                    src={art.image1}
+                    alt=""
+                    className={cx("sidebar__modul-image-song")}
+                  />
                   <div className={cx("sidebar__modul-item-info")}>
                     <div className={cx("sidebar__modul-item-head")}>
                       <div className={cx("sidebar__modul-item-name")}>
                         {art.name}
                       </div>
-                      <div className={cx("sidebar__modul-item-wrap")}>
-                        <span className={cx("sidebar__modul-item-know")}>
-                          {art.follower} K
-                        </span>
-                      </div>
+                      {/* <div className={cx("sidebar__modul-item-wrap")}>
+                                                        <span className={cx("sidebar__modul-item-know")}>
+                                                            {art.follower} K
+                                                        </span>
+                                                    </div> */}
+                      
+                    
+                    </div>
+                    <div className={cx("sidebar__modul-item-body")}>
+                      {art.songName}
                     </div>
                     <div className={cx("sidebar__modul-item-bottom")}>
                       <div className="sidebar__modul-item-bottom-left">
@@ -46,22 +52,20 @@ const Sidebar = () => {
                             "sidebar__modul-item-quantity-follower"
                           )}
                         >
-                          <IoIosPeople />
-													{art.follower} M
+                          <FaPlay />
+                          {art.follower} M
                         </span>
                         <span
                           className={cx("sidebar__modul-item-quantity-song")}
                         >
-													<FaRegChartBar />
+                          <IoHeart />
                           {art.song}
                         </span>
-                      </div>
-                      <button className={cx("sidebar__modul-item-follower")}>
-                        <SlUserFollow />
-                        <span className="sidebar__modul-item-following">
-                          following
+                        <span className={cx("sidebar__modul-item-repeat")}>
+                          <RiRepeatLine />
+                          {art.repeat}
                         </span>
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -70,11 +74,7 @@ const Sidebar = () => {
           </ul>
         </div>
       </div>
-      <div className={cx("sticky-topbar")}>
-        <SidebarHeart/>
-				<SidebarHistory/>
-      </div>
     </>
   );
 };
-export default Sidebar;
+export default SidebarHistory;

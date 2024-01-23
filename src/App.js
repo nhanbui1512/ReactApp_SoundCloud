@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 //import components
-import Layout from "Layout/Layout";
-import Home from "pages/Home/Home";
-import Stream from "pages/Stream/Stream";
-import Library from "pages/Library/Library";
-import Upload from "pages/Upload/Upload";
-import Feed from "pages/Feed";
+import Layout from 'Layouts/DefaultLayout/Layout';
+import Home from 'pages/Home/Home';
+import Stream from 'pages/Stream/Stream';
+import Library from 'pages/Library/Library';
+import Upload from 'pages/Upload/Upload';
+import Feed from 'pages/Feed';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -25,8 +25,8 @@ const App = () => {
           <Route path="/Upload" element={<Upload />}></Route>
           <Route path="/feed" element={<Feed />}></Route>
         </Route>
-      </>
-    )
+      </>,
+    ),
   );
   return (
     <>

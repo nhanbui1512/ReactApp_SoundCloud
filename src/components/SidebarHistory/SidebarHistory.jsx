@@ -1,17 +1,15 @@
-import React from "react";
-import classNames from "classnames/bind";
-import styles from "../Sidebar_Right/Sidebar.module.scss";
-import artirstFollow from "../Sidebar_Right/data";
-import { FaPlay } from "react-icons/fa";
-import { IoHeart } from "react-icons/io5";
-import { RiRepeatLine } from "react-icons/ri";
-import { FaHistory } from "react-icons/fa";
+import React from 'react';
+import classNames from 'classnames/bind';
+import styles from '../Sidebar_Right/Sidebar.module.scss';
+import { FaPlay } from 'react-icons/fa';
+import { IoHeart } from 'react-icons/io5';
+import { RiRepeatLine } from 'react-icons/ri';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faHeart,
-  faListOl,
+  // faListOl,
   faListUl,
   faPause,
   faPlay,
@@ -24,10 +22,8 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
 
-
-
 const cx = classNames.bind(styles);
-const SidebarHistory = () => {
+const SidebarHistory = ({ art }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(false);
@@ -50,144 +46,106 @@ const SidebarHistory = () => {
 
   return (
     <>
-      <div className={cx("sidebar__modul")}>
-        <div className={cx("sidebar__modul-refresh")}>
-          <span>
-            <FaHistory />
-          </span>
-          <span>View All</span>
+      <li className={cx('sidebar__modul-list-item')}>
+        <img src={art.image} alt="" className={cx('sidebar__modul-image-song')} />
+        <div className={cx('sidebar__modul-item-info')}>
+          <div className={cx('sidebar__modul-item-head')}>
+            <div className={cx('sidebar__modul-item-name')}>{art.name}</div>
+          </div>
+          <div className={cx('sidebar__modul-item-body')}>{art.songName}</div>
+          <div className={cx('sidebar__modul-item-bottom')}>
+            <div className="sidebar__modul-item-bottom-left">
+              <span className={cx('sidebar__modul-item-quantity-follower')}>
+                <FaPlay />
+                {art.follower} M
+              </span>
+              <span className={cx('sidebar__modul-item-quantity-song')}>
+                <IoHeart />
+                {art.song}
+              </span>
+              <span className={cx('sidebar__modul-item-repeat')}>
+                <RiRepeatLine />
+                {art.repeat}
+              </span>
+            </div>
+          </div>
         </div>
-        <div className={cx("sidebar__modul-container")}>
-          <ul className={cx("sidebar__modul-list")}>
-            {artirstFollow.map((art, index) => {
-              return (
-                <li className={cx("sidebar__modul-list-item")}>
-                  <img
-                    src={art.image1}
-                    alt=""
-                    className={cx("sidebar__modul-image-song")}
-                  />
-                  <div className={cx("sidebar__modul-item-info")}>
-                    <div className={cx("sidebar__modul-item-head")}>
-                      <div className={cx("sidebar__modul-item-name")}>
-                        {art.name}
-                      </div>
-                    </div>
-                    <div className={cx("sidebar__modul-item-body")}>
-                      {art.songName}
-                    </div>
-                    <div className={cx("sidebar__modul-item-bottom")}>
-                      <div className="sidebar__modul-item-bottom-left">
-                        <span
-                          className={cx(
-                            "sidebar__modul-item-quantity-follower"
-                          )}
-                        >
-                          <FaPlay />
-                          {art.follower} M
-                        </span>
-                        <span
-                          className={cx("sidebar__modul-item-quantity-song")}
-                        >
-                          <IoHeart />
-                          {art.song}
-                        </span>
-                        <span className={cx("sidebar__modul-item-repeat")}>
-                          <RiRepeatLine />
-                          {art.repeat}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={cx('Playsidebar__modul-item-container')}>
-                    <div
-                      className={cx('sidebar__modul-item-play')}
-                      onClick={() => {
-                        setIsPlay(!isPlay);
-                      }}
+        <div className={cx('Playsidebar__modul-item-container')}>
+          <div
+            className={cx('sidebar__modul-item-play')}
+            onClick={() => {
+              setIsPlay(!isPlay);
+            }}
+          >
+            <FontAwesomeIcon
+              className={cx('sidebar__modul-play-icon')}
+              icon={isPlay ? faPause : faPlay}
+            />
+          </div>
+          <div className={cx('sidebar__modul-item-option')}>
+            <Tippy animation={'scale-subtle'} content={'Like'}>
+              <>
+                <span
+                  className={cx('sidebar__modul-option-btn')}
+                  onClick={() => {
+                    setIsLiked(!isLiked);
+                  }}
+                >
+                  <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+                </span>
+              </>
+            </Tippy>
+            <HeadlessTippy
+              visible={moreMenu}
+              interactive
+              placement="bottom-start"
+              offset={[0, 0]}
+              delay={300}
+              render={(atr) => {
+                return (
+                  <Wrapper className={cx('more-menu')}>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      separate
                     >
-                      <FontAwesomeIcon
-                        className={cx('sidebar__modul-play-icon')}
-                        icon={isPlay ? faPause : faPlay}
-                      />
-                    </div>
-                    <div className={cx('sidebar__modul-item-option')}>
-                      <Tippy animation={'scale-subtle'} content={'Like'}>
-                        <>
-                          <span
-                            className={cx('sidebar__modul-option-btn')}
-                            onClick={() => {
-                              setIsLiked(!isLiked);
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              className={cx('', { liked: isLiked })}
-                              icon={faHeart}
-                            />
-                          </span>
-                        </>
-                      </Tippy>
-                      <HeadlessTippy
-                        visible={moreMenu}
-                        interactive
-                        placement="bottom-start"
-                        offset={[0, 0]}
-                        delay={300}
-                        render={(atr) => {
-                          return (
-                            <Wrapper className={cx('more-menu')}>
-                              <MenuItem
-                                className={cx('menu-item')}
-                                icon={
-                                  <FontAwesomeIcon
-                                    className={cx('menu-item-icon')}
-                                    icon={faListUl}
-                                  />
-                                }
-                                separate
-                              >
-                                Add to Next up
-                              </MenuItem>
-                              <MenuItem
-                                className={cx('menu-item')}
-                                icon={<AddToList className={cx('menu-item-icon')} />}
-                              >
-                                Add to Playlist
-                              </MenuItem>
-                              <MenuItem
-                                className={cx('menu-item')}
-                                icon={<AddToList className={cx('menu-item-icon')} />}
-                              >
-                                Repost
-                              </MenuItem>
-                              <MenuItem
-                                className={cx('menu-item')}
-                                icon={<AddToList className={cx('menu-item-icon')} />}
-                              >
-                                Copylink
-                              </MenuItem>
-                            </Wrapper>
-                          );
-                        }}
-                      >
-                        <span
-                          ref={moreBtnRef}
-                          onClick={(e) => {
-                            setMoreMenu(!moreMenu);
-                          }}
-                          className={cx('option-btn')}
-                        >
-                          <FontAwesomeIcon icon={faEllipsis} />
-                        </span>
-                      </HeadlessTippy>
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                      Add to Next up
+                    </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<AddToList className={cx('menu-item-icon')} />}
+                    >
+                      Add to Playlist
+                    </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<AddToList className={cx('menu-item-icon')} />}
+                    >
+                      Repost
+                    </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<AddToList className={cx('menu-item-icon')} />}
+                    >
+                      Copylink
+                    </MenuItem>
+                  </Wrapper>
+                );
+              }}
+            >
+              <span
+                ref={moreBtnRef}
+                onClick={(e) => {
+                  setMoreMenu(!moreMenu);
+                }}
+                className={cx('option-btn')}
+              >
+                <FontAwesomeIcon icon={faEllipsis} />
+              </span>
+            </HeadlessTippy>
+          </div>
         </div>
-      </div>
+      </li>
     </>
   );
 };

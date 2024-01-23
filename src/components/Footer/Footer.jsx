@@ -4,8 +4,8 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer class="footer">
-        <div class="column">
+      <footer className="footer">
+        <div className="column">
           <h3>Column 1</h3>
           <ul>
             <li>Item 1</li>
@@ -16,7 +16,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div class="column">
+        <div className="column">
           <h3>Column 2</h3>
           <ul>
             <li>Item 1</li>
@@ -27,7 +27,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div class="column">
+        <div className="column">
           <h3>Column 3</h3>
           <ul>
             <li>Item 1</li>

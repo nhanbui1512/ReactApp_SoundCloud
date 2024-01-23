@@ -1,0 +1,133 @@
+@import url('../Home.module.scss');
+
+.sidebar__modul {
+    color: #999;
+    font-size: 0.8rem;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.sidebar__modul-container {
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.sidebar__modul-list-item {
+    align-items: center;
+}
+
+.sidebar__modul-refresh {
+    display: flex;
+    font-size: 1rem;
+    
+}
+
+.sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
+    font-size: 1.3rem;
+    margin-right: 8px;
+}
+
+.sidebar__modul-container {
+    padding-top: 12px;
+}
+
+.sidebar__modul-list {
+    padding: 10px 0;
+    padding-left: 0;
+}
+
+.sidebar__modul-list-item {
+    display: flex;
+}
+
+.sidebar__modul-image {
+    width: 42px;
+    height: 42px;
+    margin: 8px;
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+}
+
+.sidebar__modul-item-info {
+    width: 100%;
+    margin: 8px 8px 8px 0;
+}
+
+.sidebar__modul-item-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar__modul-item-name {
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.sidebar__modul-item-body {
+    line-height: 2rem;
+    max-height: 4rem;
+    font-weight: 400;
+    color: #999;
+    margin: 0;
+    overflow: hidden;
+    flex: 1;
+    padding-right: 8px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.sidebar__modul-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar__modul-item-bottom-left {
+    font-size: 0.8rem;
+    display: flex;
+}
+
+.sidebar__modul-item-bottom-icon {
+    align-items: center;
+    display: flex;
+}
+
+.sidebar__modul-item-bottom span {
+    margin:0 2px;
+}
+
+.sidebar__modul-item-people {
+    font-size: 1rem;
+    height: 15px;
+}
+
+.sidebar__modul-item-quantity-follower, .sidebar__modul-item-quantity-song {
+    font-size: 0.7rem;
+    margin: 0 3px;
+}
+
+.sidebar__modul-item-follower {
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 2px;
+    color: #000;
+    padding: 2px;
+    font-size: 0.6rem;
+}
+
+.sidebar__modul-item-following {
+    margin-left: 4px;
+}
+
+/*PHAN STICKY TOP*/
+.sticky-topbar {
+    position: sticky;
+    top: 30px;
+}
+
+.sidebar__modul-image-song {
+    width: 52px;
+    height: 52px;
+    margin: 8px;
+    border: 1px solid #dbdbdb;
+}

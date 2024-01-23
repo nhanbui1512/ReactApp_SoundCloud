@@ -2,10 +2,10 @@ import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import app from '../app';
 
 const storage = getStorage(app);
-const imagesFolder = ref(storage, 'images');
+const audioFolder = ref(storage, 'audio');
 
-export async function getImageUrlByPath(path) {
-    const pathRef = ref(imagesFolder, path) 
+export async function getAudioUrlByPath(path) {
+    const pathRef = ref(audioFolder, path) 
     getDownloadURL(pathRef)
         .then(url => {
             console.log(url)

@@ -1,4 +1,5 @@
 import "./Sidebar.module.scss";
+import "../Playmedia_Sidebar/PlaySidebar.module.scss";
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import artirstFollow from "./data";
@@ -26,8 +27,9 @@ const Sidebar = () => {
           <ul className={cx("sidebar__modul-list")}>
             {artirstFollow.map((art, index) => {
               return (
-                <li className={cx("sidebar__modul-list-item")}>
+                <li key={index} className={cx("sidebar__modul-list-item")}>
                   <img src={art.image} alt="" className={cx("sidebar__modul-image")} />
+                  
                   <div className={cx("sidebar__modul-item-info")}>
                     <div className={cx("sidebar__modul-item-head")}>
                       <div className={cx("sidebar__modul-item-name")}>

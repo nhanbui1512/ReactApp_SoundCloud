@@ -4,7 +4,7 @@ const artirstFollow = [
     image: "./img/sontung.jpg",
     image1: "./img/goeun.jpg",
     name: "son tung mtp",
-    songName: "I will go to the first snow",
+    songName: "I will go to the like first snow fsfsdgg  dfgdh hfh",
     follower: "1.000.000",
     song: "100",
     repeat: "1.267",

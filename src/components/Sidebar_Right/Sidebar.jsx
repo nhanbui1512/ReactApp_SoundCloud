@@ -7,8 +7,8 @@ import { FaRegChartBar } from "react-icons/fa";
 import { SlUserFollow } from "react-icons/sl";
 
 import React from "react";
-import SidebarHeart from "./SidebarHeart";
-import SidebarHistory from "./SibarHistory";
+import SidebarHeart from "../SidebarHeart/SidebarHeart";
+import SidebarHistory from "../SidebarHistory/SidebarHistory";
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {

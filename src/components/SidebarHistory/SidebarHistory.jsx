@@ -1,19 +1,21 @@
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./Sidebar.module.scss";
-import artirstFollow from "./data";
+import styles from "../Sidebar_Right/Sidebar.module.scss";
+import artirstFollow from "../Sidebar_Right/data";
 import { FaPlay } from "react-icons/fa";
 import { IoHeart } from "react-icons/io5";
 import { RiRepeatLine } from "react-icons/ri";
+import { FaHistory } from "react-icons/fa";
+
 
 const cx = classNames.bind(styles);
-const SidebarHeart = () => {
+const SidebarHistory = () => {
   return (
     <>
       <div className={cx("sidebar__modul")}>
         <div className={cx("sidebar__modul-refresh")}>
           <span>
-            <IoHeart />
+            <FaHistory />
           </span>
           <span>View All</span>
         </div>
@@ -75,4 +77,4 @@ const SidebarHeart = () => {
     </>
   );
 };
-export default SidebarHeart;
+export default SidebarHistory;

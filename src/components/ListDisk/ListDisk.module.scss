@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 34px;
+}
+.header {
+  margin-bottom: 24px;
+  h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: 700;
+  }
+}

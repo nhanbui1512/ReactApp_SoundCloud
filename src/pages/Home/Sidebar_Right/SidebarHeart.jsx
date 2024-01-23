@@ -45,16 +45,16 @@ const SidebarHeart = () => {
                     </div>
                     <div className={cx("sidebar__modul-item-bottom")}>
                       <div className="sidebar__modul-item-bottom-left">
-                        <div className={cx("sidebar__modul-item-bottom-icon")}>
-                          <span
-                            className={cx(
-                              "sidebar__modul-item-quantity-follower"
-                            )}
-                          >
-                            <FaPlay />
-                            {art.follower} M
-                          </span>
-                        </div>
+                        <span
+                          className={cx(
+                            "sidebar__modul-item-quantity-follower"
+                          )}
+                        >
+                          <FaPlay />
+                          {art.follower} M
+                        </span>
+                        {/* <div className={cx("sidebar__modul-item-bottom-icon")}>
+                        </div> */}
                         <span
                           className={cx("sidebar__modul-item-quantity-song")}
                         >

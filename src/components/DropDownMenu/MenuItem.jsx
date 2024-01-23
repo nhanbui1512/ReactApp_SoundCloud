@@ -8,6 +8,7 @@ function MenuItem({ children, icon, className, separate }) {
       className={cx("menuitem-wrapper", {
         icon,
         separate,
+        [className]: className,
       })}
     >
       {icon && <div className={cx("icon-wrapper")}>{icon}</div>}

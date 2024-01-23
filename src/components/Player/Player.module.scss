@@ -1,0 +1,31 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  height: 48px;
+  width: 100%;
+  background-color: #f2f2f2;
+  border-top: 1px solid #cecece;
+}
+.inner {
+  width: 1240px;
+  margin: 0 auto;
+}
+.control-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.player-btn {
+  width: 24px;
+  height: 100%;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.player-icon {
+  font-size: 16px;
+}

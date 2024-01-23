@@ -13,6 +13,8 @@ import Stream from 'pages/Stream/Stream';
 import Library from 'pages/Library/Library';
 import Upload from 'pages/Upload/Upload';
 import Feed from 'pages/Feed';
+import Login from 'pages/Login';
+import HeaderOnly from 'Layouts/HeaderOnly';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -24,6 +26,9 @@ const App = () => {
           <Route path="/Library" element={<Library />}></Route>
           <Route path="/Upload" element={<Upload />}></Route>
           <Route path="/feed" element={<Feed />}></Route>
+        </Route>
+        <Route path="/login" element={<HeaderOnly />}>
+          <Route path="/login" element={<Login></Login>} />
         </Route>
       </>,
     ),

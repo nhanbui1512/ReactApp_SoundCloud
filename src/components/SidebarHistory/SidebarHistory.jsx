@@ -12,35 +12,56 @@ const cx = classNames.bind(styles);
 const SidebarHistory = () => {
   return (
     <>
-      <div className={cx('sidebar__modul')}>
-        <div className={cx('sidebar__modul-refresh')}>
+      <div className={cx("sidebar__modul")}>
+        <div className={cx("sidebar__modul-refresh")}>
           <span>
             <FaHistory />
           </span>
           <span>View All</span>
         </div>
-        <div className={cx('sidebar__modul-container')}>
-          <ul className={cx('sidebar__modul-list')}>
+        <div className={cx("sidebar__modul-container")}>
+          <ul className={cx("sidebar__modul-list")}>
             {artirstFollow.map((art, index) => {
               return (
-                <li key={index} className={cx('sidebar__modul-list-item')}>
-                  <img src={art.image1} alt="" className={cx('sidebar__modul-image-song')} />
-                  <div className={cx('sidebar__modul-item-info')}>
-                    <div className={cx('sidebar__modul-item-head')}>
-                      <div className={cx('sidebar__modul-item-name')}>{art.name}</div>
+                <li className={cx("sidebar__modul-list-item")}>
+                  <img
+                    src={art.image1}
+                    alt=""
+                    className={cx("sidebar__modul-image-song")}
+                  />
+                  <div className={cx("sidebar__modul-item-info")}>
+                    <div className={cx("sidebar__modul-item-head")}>
+                      <div className={cx("sidebar__modul-item-name")}>
+                        {art.name}
+                      </div>
+                      {/* <div className={cx("sidebar__modul-item-wrap")}>
+                                                        <span className={cx("sidebar__modul-item-know")}>
+                                                            {art.follower} K
+                                                        </span>
+                                                    </div> */}
+                      
+                    
                     </div>
-                    <div className={cx('sidebar__modul-item-body')}>{art.songName}</div>
-                    <div className={cx('sidebar__modul-item-bottom')}>
+                    <div className={cx("sidebar__modul-item-body")}>
+                      {art.songName}
+                    </div>
+                    <div className={cx("sidebar__modul-item-bottom")}>
                       <div className="sidebar__modul-item-bottom-left">
-                        <span className={cx('sidebar__modul-item-quantity-follower')}>
+                        <span
+                          className={cx(
+                            "sidebar__modul-item-quantity-follower"
+                          )}
+                        >
                           <FaPlay />
                           {art.follower} M
                         </span>
-                        <span className={cx('sidebar__modul-item-quantity-song')}>
+                        <span
+                          className={cx("sidebar__modul-item-quantity-song")}
+                        >
                           <IoHeart />
                           {art.song}
                         </span>
-                        <span className={cx('sidebar__modul-item-repeat')}>
+                        <span className={cx("sidebar__modul-item-repeat")}>
                           <RiRepeatLine />
                           {art.repeat}
                         </span>

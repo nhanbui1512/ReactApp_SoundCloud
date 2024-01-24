@@ -1,5 +1,4 @@
 import './Sidebar.module.scss';
-import '../Playmedia_Sidebar/PlaySidebar.module.scss';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import artirstFollow from './data';

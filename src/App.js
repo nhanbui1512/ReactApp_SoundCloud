@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/feed" element={<Feed />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
-          <Route path="/login" element={<Login></Login>} />
+          <Route index element={<Login></Login>} />
         </Route>
       </>,
     ),

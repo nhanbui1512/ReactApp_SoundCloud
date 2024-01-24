@@ -1,17 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App.js";
-import reportWebVitals from "./reportWebVitals";
-import GlobalStyles from "GlobalStyles";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App.js';
+import reportWebVitals from './reportWebVitals';
+import GlobalStyles from 'GlobalStyles';
+import { isMobile } from 'react-device-detect';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      <App />
+      {isMobile ? <div>Mobile app</div> : <App />}
+      {/* <App /> */}
     </GlobalStyles>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

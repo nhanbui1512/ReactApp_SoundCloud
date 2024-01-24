@@ -1,4 +1,4 @@
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import app from '../app';
 
 const storage = getStorage(app);
@@ -17,28 +17,14 @@ export async function getImageUrlByPath(path) {
 
 export async function uploadImage(file, path) {
     const imageRef = ref(imagesFolder, path)
-    const uploadTask = uploadBytesResumable(imageRef, file)
-    uploadTask.on('state_changed',
-        // uploading
-        (snapshot) => {
-            const progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes)*100)
-            console.log(progress)
-        },
-        // failed
-        (error) => {
+    const uploadUrl = await uploadBytes(imageRef, file)
+        .then(async snapshot => {
+            const url = await getDownloadURL(snapshot.ref);
+            return url;
+        })
+        .catch(error => {
             console.log(error)
-        },
-        // success
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref)
-                .then(url => {
-                    console.log(url)
-                    return url
-                })
-                .catch(error => {
-                    console.log(error)
-                    return null
-                })
-        }
-    )
+            return null
+        })
+    return uploadUrl
 }

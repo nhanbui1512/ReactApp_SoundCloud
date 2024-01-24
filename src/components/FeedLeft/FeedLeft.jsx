@@ -2,7 +2,7 @@ import styles from './FeedLeft.module.scss';
 import classNames from 'classnames/bind';
 import React from 'react';
 import dataFeed from './dataFeed';
-import FeedLeftItem from 'components/FeedLeftItem/FeedLeftItem';
+import FeedLeftItem from 'components/FeedLeft/FeedLeftItem/FeedLeftItem';
 
 
 

@@ -1,5 +1,4 @@
 import './Sidebar.module.scss';
-import '../Playmedia_Sidebar/PlaySidebar.module.scss';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import artirstFollow from './data';
@@ -8,8 +7,8 @@ import { FaHistory, FaRegChartBar } from 'react-icons/fa';
 import { SlUserFollow } from 'react-icons/sl';
 
 import React from 'react';
-import SidebarHeart from '../SidebarHeart/SidebarHeart';
-import SidebarHistory from '../SidebarHistory/SidebarHistory';
+import SidebarHeart from './SidebarHeart/SidebarHeart';
+import SidebarHistory from './SidebarHistory/SidebarHistory';
 import { IoHeart } from 'react-icons/io5';
 
 const cx = classNames.bind(styles);

@@ -1,4 +1,4 @@
-import styles from '../FeedLeft/FeedLeft.module.scss';
+import styles from '../FeedLeft.module.scss';
 import classNames from 'classnames/bind';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import styles from '../Sidebar_Right/Sidebar.module.scss';
+import styles from '../Sidebar.module.scss';
 import { FaPlay } from 'react-icons/fa';
 import { IoHeart } from 'react-icons/io5';
 import { RiRepeatLine } from 'react-icons/ri';
@@ -23,7 +23,7 @@ import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
-const SidebarHeart = ({ art }) => {
+const SidebarHistory = ({ art }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(false);
@@ -43,12 +43,11 @@ const SidebarHeart = ({ art }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   return (
     <>
       <li className={cx('sidebar__modul-list-item')}>
-        <img src={art.image1} alt="" className={cx('sidebar__modul-image-song')} />
-        {/* <PlaySidebar/> */}
-
+        <img src={art.image} alt="" className={cx('sidebar__modul-image-song')} />
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
             <div className={cx('sidebar__modul-item-name')}>{art.name}</div>
@@ -150,4 +149,4 @@ const SidebarHeart = ({ art }) => {
     </>
   );
 };
-export default SidebarHeart;
+export default SidebarHistory;

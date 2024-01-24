@@ -1,14 +1,16 @@
 import './Sidebar.module.scss';
+import '../Playmedia_Sidebar/PlaySidebar.module.scss';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import artirstFollow from './data';
 import { IoIosPeople } from 'react-icons/io';
-import { FaRegChartBar } from 'react-icons/fa';
+import { FaHistory, FaRegChartBar } from 'react-icons/fa';
 import { SlUserFollow } from 'react-icons/sl';
 
 import React from 'react';
-import SidebarHeart from './SidebarHeart';
-import SidebarHistory from './SibarHistory';
+import SidebarHeart from '../SidebarHeart/SidebarHeart';
+import SidebarHistory from '../SidebarHistory/SidebarHistory';
+import { IoHeart } from 'react-icons/io5';
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
@@ -27,6 +29,7 @@ const Sidebar = () => {
               return (
                 <li key={index} className={cx('sidebar__modul-list-item')}>
                   <img src={art.image} alt="" className={cx('sidebar__modul-image')} />
+
                   <div className={cx('sidebar__modul-item-info')}>
                     <div className={cx('sidebar__modul-item-head')}>
                       <div className={cx('sidebar__modul-item-name')}>{art.name}</div>
@@ -58,8 +61,39 @@ const Sidebar = () => {
         </div>
       </div>
       <div className={cx('sticky-topbar')}>
-        <SidebarHeart />
-        <SidebarHistory />
+        <div className={cx('sidebar__modul')}>
+          <div className={cx('sidebar__modul-refresh')}>
+            <span>
+              <IoHeart />
+            </span>
+            <span>View All</span>
+          </div>
+          <div className={cx('sidebar__modul-container')}>
+            <ul className={cx('sidebar__modul-list')}>
+              {artirstFollow.map((art, index) => (
+                <SidebarHeart key={index} art={art} />
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className={cx("sidebar__modul")}>
+        <div className={cx("sidebar__modul-refresh")}>
+          <span>
+            <FaHistory />
+          </span>
+          <span>View All</span>
+        </div>
+        <div className={cx("sidebar__modul-container")}>
+          <ul className={cx("sidebar__modul-list")}>
+            {artirstFollow.map((art, index) => {
+              return (
+                <SidebarHistory key={index} art={art} />
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+        
       </div>
     </>
   );

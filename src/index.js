@@ -5,13 +5,18 @@ import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from 'GlobalStyles';
 import { isMobile } from 'react-device-detect';
+import { ToastProvider } from '../src/context/ToastContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      {isMobile ? <div>Mobile app</div> : <App />}
-      {/* <App /> */}
+      <ToastProvider>
+        {isMobile ? <div>Mobile app</div> : <App />}
+        {/* <App /> */}
+        {/* <App /> */}
+      </ToastProvider>
     </GlobalStyles>
   </React.StrictMode>,
 );

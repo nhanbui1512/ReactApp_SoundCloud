@@ -1,0 +1,100 @@
+.play-list-item {
+  height: 48px;
+  padding: 8px 24px;
+}
+.play-list-item:hover {
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+.play-list-item:hover .play-list-item_total-time {
+  display: none;
+}
+.play-list-item:hover .play-list-item_group-btn {
+  display: flex;
+}
+
+.play-list-item_img {
+  width: 32px;
+  height: 32px;
+}
+.play-list-item_img img {
+  height: 100%;
+  width: 100%;
+}
+.play-list-item_info {
+  flex: 1;
+  margin-left: 8px;
+}
+.play-list-item_info a {
+  color: #999;
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  padding: 2px 0px;
+  line-height: 10px;
+}
+.play-list-item_info span {
+  color: #333;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+.play-list-item_footer {
+  padding: 9px 0px;
+  font-size: 12px;
+  flex: 0.16;
+}
+.play-list-item_footer span {
+  float: right;
+}
+.play-list-item_footer button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.play-list-item_group-btn {
+  position: absolute;
+  right: 0px;
+  top: 5px;
+  display: none;
+}
+.play-list-item_status-btn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: #f50;
+  border-radius: 50%;
+  color: #fff;
+
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  display: none;
+}
+
+.play-list-item:hover .play-list-item_status-btn {
+  display: flex;
+}
+
+.play-list-item_drag-btn {
+  position: absolute;
+  width: 24px;
+  left: 0;
+  top: 17px;
+  text-align: center;
+  font-size: 12px;
+  cursor: move;
+  display: none;
+}
+.play-list-item:hover .play-list-item_drag-btn {
+  display: block;
+}
+.active {
+  background-color: #f8f8f8;
+}

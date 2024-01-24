@@ -13,7 +13,17 @@ function Information() {
   const [isLiked, setIsLiked] = useState(false);
   const [isFollowed, setisFollowed] = useState(false);
   const [openPlayList, setopenPlayList] = useState(false);
-
+  const [isClosing, setIsClosing] = useState(false);
+  const handleHidden = () => {
+    if (!openPlayList) {
+      return setopenPlayList(true);
+    }
+    setIsClosing(true);
+    setTimeout(() => {
+      setopenPlayList(!openPlayList);
+      setIsClosing(false);
+    }, 300);
+  };
   return (
     <div className={cx('wrapper')}>
       <Link className={cx('avatar')}>
@@ -69,14 +79,12 @@ function Information() {
           offset={[0, 18]}
           render={() => {
             return (
-              <PlayList className={!openPlayList ? cx('hidden') : ''} setClose={setopenPlayList} />
+              <PlayList className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />
             );
           }}
         >
           <div
-            onClick={() => {
-              setopenPlayList(!openPlayList);
-            }}
+            onClick={handleHidden}
             className={cx('action-btn', {
               isActive: openPlayList,
             })}

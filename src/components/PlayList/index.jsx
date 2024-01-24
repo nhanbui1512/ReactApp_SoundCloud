@@ -7,11 +7,7 @@ import PlayListItem from './Item';
 
 const cx = classNames.bind(styles);
 
-function PlayList({ setClose, className }) {
-  const handleHidden = () => {
-    setClose(false);
-  };
-
+function PlayList({ handleHidden, className }) {
   return (
     <div
       className={cx('wrapper', {

@@ -13,7 +13,7 @@ import Stream from 'pages/Stream/Stream';
 import Library from 'pages/Library/Library';
 import Upload from 'pages/Upload/Upload';
 import Feed from 'pages/Feed';
-import Login from 'pages/Login';
+import Login from 'pages/Login/index.jsx';
 import HeaderOnly from 'Layouts/HeaderOnly';
 
 const App = () => {

@@ -11,10 +11,11 @@ function Upload() {
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
   return (
     <div>
-      {selectedFile && <DetailFile />}
+      {selectedFile && <DetailFile selectedFile={selectedFile}/>}
       {selectedFile !== null || (
         <div className={cx('wrapper')}>
           <div className={cx('uploadmain')}>

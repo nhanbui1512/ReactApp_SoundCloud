@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PlayListItem from './Item';
+import SwitchButton from 'components/SwitchButton';
 
 const cx = classNames.bind(styles);
 
@@ -49,6 +50,17 @@ function PlayList({ handleHidden, className }) {
               <PlayListItem />
               <PlayListItem />
             </div>
+          </div>
+        </div>
+        <div className={cx('footer')}>
+          <div className={cx('col')}>
+            <div className={cx('title')}>Autoplay Station</div>
+            <div className={cx('description')}>
+              Hear related tracks based on what’s playing now.
+            </div>
+          </div>
+          <div>
+            <SwitchButton />
           </div>
         </div>
       </div>

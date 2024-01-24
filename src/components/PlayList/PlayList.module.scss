@@ -44,10 +44,25 @@
 }
 
 .hidden {
-  // transform: translate(0, 150%);
-  // opacity: 0;
-  // transition: all 0.3s ease;
   animation: hiddenDown 0.3s ease;
+}
+
+.footer {
+  height: 80px;
+  border-top: 1px solid #e5e5e5;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  line-height: 32px;
+  font-size: 18px;
+}
+.description {
+  line-height: 20px;
+  color: #999;
+  font-size: 14px;
 }
 
 @keyframes slideFromBottom {
@@ -68,15 +83,6 @@
 }
 
 @keyframes hiddenDown {
-  // from {
-  //   opacity: 1;
-  //   transform: translate(0);
-  // }
-  // to {
-  //   opacity: 0;
-  //   transform: translate(0, 200px);
-  // }
-
   0% {
     opacity: 1;
     transform: translate(0, 0);

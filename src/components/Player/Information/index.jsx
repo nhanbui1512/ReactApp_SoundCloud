@@ -14,6 +14,7 @@ function Information() {
   const [isFollowed, setisFollowed] = useState(false);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
   const handleHidden = () => {
     if (!openPlayList) {
       return setopenPlayList(true);

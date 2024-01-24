@@ -85,7 +85,7 @@ const FeedLeftItem = ({ data }) => {
                 </button>
               </>
             </Tippy>
-            <Tippy animation={'scale-subtle'} content={'Like'}>
+            <Tippy animation={'scale-subtle'} content={'Repost'}>
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
@@ -93,13 +93,13 @@ const FeedLeftItem = ({ data }) => {
                     setRePost(!isRepost);
                   }}
                 >
-                  <FontAwesomeIcon className={cx('', { repost: isRepost })} icon={faRepeat} />
+                  <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
                   
                   Repost
                 </button>
               </>
             </Tippy>
-            <Tippy animation={'scale-subtle'} content={'Like'}>
+            <Tippy animation={'scale-subtle'} content={'Share'}>
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
@@ -112,7 +112,7 @@ const FeedLeftItem = ({ data }) => {
                 </button>
               </>
             </Tippy>
-            <Tippy animation={'scale-subtle'} content={'Like'}>
+            <Tippy animation={'scale-subtle'} content={'Copy'}>
               <>
                 <button
                   className={cx('feed__modul-option-btn')}

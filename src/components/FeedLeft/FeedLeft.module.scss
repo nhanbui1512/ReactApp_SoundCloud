@@ -86,6 +86,10 @@
     cursor: pointer;
 }
 
+.liked, .reposted, .shared, .copyed {
+    color: var(--orange-primary);
+}
+
 /*MORE*/
 .option-btn-more{
     margin: 0 12px;

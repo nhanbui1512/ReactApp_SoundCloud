@@ -15,6 +15,7 @@ import {
 import Image from "../Image";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { MenuItem, Wrapper } from "components/DropDownMenu";
+import SearchBar from "./SearchBar";
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -110,12 +111,7 @@ const Header = () => {
         </NavLink>
         <div className={cx("header-items")}>Library</div>
 
-        <div className={cx("search-container")}>
-          <input />
-          <button className={cx("search-btn")}>
-            <FontAwesomeIcon className={cx("search-icon")} icon={faSearch} />
-          </button>
-        </div>
+        <SearchBar/>
         <div
           style={{
             color: `var(--orange-primary)`,

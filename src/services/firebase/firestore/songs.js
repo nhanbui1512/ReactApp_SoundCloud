@@ -35,6 +35,18 @@ export async function getSongsByName(name) {
     return songs
 }
 
+export async function getSongsByGenre(genreId) {
+    const q = query(songsCol, where('genre', '==', genreId))
+    const songsSnap = await getDocs(q)
+        .catch(error => {
+            console.log(error)
+            return null
+        })
+    const songs = songsSnap.docs.map(doc => doc.data())
+    // console.log(songs)
+    return songs
+}
+
 export async function createSongs(name, artistId, genreId, uploaderId, mediaUrl, description = String()) {
     const id = uuidv4()
     const songField = {

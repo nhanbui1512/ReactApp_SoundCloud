@@ -126,3 +126,17 @@
   .footer {
     margin-left: 20px;
   }
+
+  .img_choose button {
+    background-color: #d0d0d0;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .img_choose input {
+    display: none;
+  }

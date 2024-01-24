@@ -48,7 +48,8 @@ const Signup = () => {
         <br></br>
         <button type="submit" className='signup-button'>Signup</button>
         <br></br>
-        <p>Need to Login? <Link to="/login">Login</Link></p>
+        <div className="div-p0"><p>Need to Login? <Link to="/login">Login</Link></p></div>
+        
       </form>
       
     </div>

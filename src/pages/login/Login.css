@@ -1,19 +1,23 @@
-body {
-  background-color: rgb(219, 126, 20);
-  font-family: sans-serif;
+
+
+.container{
+  width: 100%;
+  height: 100%;
+ 
 }
 .login-form {
-  width: 400px;
-  height: 350px;
+  width: 500px;
+  height: 520px;
   border: 1px solid grey;
   border-radius: 10px;
   text-align: center;
   margin:  0 auto;
-  margin-top: 200px;
-  background-color: rgb(248, 242, 231);
+  margin-top: 100px;
+  background-color: rgb(241, 164, 20);
 }
 .login-form h1{
   display: inline-block;
+  
 }
 .login-form input {
   width: 280px;
@@ -29,9 +33,9 @@ body {
   height: 40px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(220, 140, 20);
-  color: rgb(22, 5, 5)
-  
+  background-color: rgb(39, 104, 195);
+  color: white;
+  border: 1px solid grey;
   
 }
 .login-button {
@@ -41,4 +45,43 @@ body {
   /* Thay đổi thiết lập để đưa nút Google vào giữa form */
   width: 280px;
   margin: 0 auto;
+}
+.line-container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px 0;
+  
+}
+
+.line-left {
+  flex: 1;
+  height: 1px;
+  background-color: #000; 
+  margin-left: 100px;
+  
+}
+.line-right {
+  flex: 1;
+  height: 1px;
+  background-color: #000; 
+  margin-right: 100px;
+}
+
+.or {
+  margin: 0 10px; 
+}
+b{
+  color:blue;
+}
+.p1 {
+  margin-right: 20px;
+  margin-left: 40px;
+  text-align: left;
+  font-size: 14px;
+  color: rgba(93, 78, 78, 0.829);
+  margin-top: 1.5em;
+}
+.div-p0{
+  font-size: 17px;
 }

@@ -60,12 +60,20 @@ const Login = () => {
         />
         <br></br>
         <button type="submit" className='login-button'>Login</button>
-        <p>Need to Signup? <Link to="/signup">Create Account</Link></p>
+        <div class="div-p0"><p class= "p0" >Need to Signup? <Link to="/signup">Create Account</Link></p></div>
         
-        <p>Login with: </p>
+        <div className="line-container">
+          <div className="line-left"></div>
+          <div className="or">or</div>
+          <div className="line-right"></div>
+        </div>
         <GoogleButton class="google-button"
           onClick={handleSignInWithGoogle}
         />
+        <p class="p1">When registering, you agree that we may use your provided data for the 
+          registration and to send you notifications on our products and services. 
+          You can unsubscribe from notifications at any time in your settings.
+           For additional info please refer to our <b>Privacy Policy.</b></p>
       </form>
       
     </div>

@@ -22,27 +22,37 @@ reportWebVitals();
 // import React from 'react';
 // import ReactDOM from 'react-dom/client';
 // import './index.css';
-// import App from './App';
 // import {
 //   createBrowserRouter,
 //   createRoutesFromElements,
 //   RouterProvider,
 //   Route,
+//   Outlet,
 // } from "react-router-dom";
 // import Protected from 'pages/login/authentication/Protected';
 // import Login from 'pages/login/Login';
 // import Signup from 'pages/signup/Signup';
 // import Home from 'pages/Home/Home';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+// import Layout from 'Layouts/DefaultLayout/Layout';
+// import Stream from 'pages/Stream/Stream';
+// import Library from 'pages/Library/Library';
+// import Upload from 'pages/Upload/Upload';
+// import Feed from 'pages/Feed';
 
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
-//     <Route path="/" element={<App />}>
+//     <Route path="/" element={<Outlet />}>
 //       <Route path="signup" element={<Signup />} />
 //       <Route path="login" element={<Login />} />
 //       <Route path="/" element={<Protected />} >
-//         <Route path="/" index element={<Home />} />
+//         <Route path="/" element={<Layout />}>
+//         <Route index element={<Home />}></Route>
+//           <Route path="/Stream" element={<Stream />}></Route>
+//           <Route path="/Library" element={<Library />}></Route>
+//           <Route path="/Upload" element={<Upload />}></Route>
+//           <Route path="/feed" element={<Feed />}></Route>
+//         </Route>
 //       </Route>
 //     </Route>
 //   )

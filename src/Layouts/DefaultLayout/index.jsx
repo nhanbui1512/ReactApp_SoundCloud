@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Player from 'components/Player';
 const cx = classNames.bind(styles);
 
-function Layout() {
+function DefaultLayout() {
   return (
     <div>
       <Header />
@@ -16,4 +16,4 @@ function Layout() {
     </div>
   );
 }
-export default Layout;
+export default DefaultLayout;

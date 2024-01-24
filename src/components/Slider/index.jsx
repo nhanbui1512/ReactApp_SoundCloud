@@ -71,10 +71,12 @@ const galleries = [
   },
 ];
 const totalPage = Math.ceil(galleries.length / 4) - 1;
+
 function Slider() {
   const listRef = useRef();
   const [page, setPage] = useState(0);
-
+  const [vibrateRight, setVibrateRight] = useState(false);
+  const [vibrateLeft, setVibrateLeft] = useState(false);
   let distanceSlide = page * 734;
   if (page === totalPage) {
     const residual = galleries.length % 4;
@@ -92,7 +94,10 @@ function Slider() {
           style={{
             '--distance-slide': `-${distanceSlide}px`,
           }}
-          className={cx('list-gallery')}
+          className={cx('list-gallery', {
+            vibrateRight: vibrateRight,
+            vibrateLeft: vibrateLeft,
+          })}
           ref={listRef}
         >
           {galleries.map((item, index) => (
@@ -109,6 +114,12 @@ function Slider() {
               setPage(newPage);
             }
           }}
+          onMouseOver={() => {
+            setVibrateRight(true);
+            setTimeout(() => {
+              setVibrateRight(false);
+            }, 500);
+          }}
           className={cx('right-wraper')}
         >
           <button className={cx('slide-btn')}>
@@ -119,6 +130,12 @@ function Slider() {
 
       {page !== 0 && (
         <div
+          onMouseOver={() => {
+            setVibrateLeft(true);
+            setTimeout(() => {
+              setVibrateLeft(false);
+            }, 500);
+          }}
           onClick={() => {
             if (page > 0) {
               const newPage = page - 1;

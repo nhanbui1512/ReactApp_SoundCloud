@@ -88,7 +88,7 @@ const moreMenuItem = [
   },
 ];
 const Header = () => {
-  const [currentUser] = useState(false);
+  const [currentUser] = useState(true);
 
   return (
     <div className={cx('header')}>

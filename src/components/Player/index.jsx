@@ -11,11 +11,12 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { IoIosRepeat } from 'react-icons/io';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { BsRepeat1 } from 'react-icons/bs';
 import Information from './Information';
 import 'tippy.js/animations/scale.css';
 import HeadlessTippy from '@tippyjs/react/headless';
+import musics from 'assets/musics';
 
 const cx = classNames.bind(styles);
 
@@ -35,17 +36,32 @@ const loopModes = [
 
 function Player() {
   const [percent, setPercent] = useState(0);
-  const [volume, setVolume] = useState(25);
+  const [volume, setVolume] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [loop, setLoop] = useState(0);
-
+  const audioRef = useRef();
+  const currentTimeRef = useRef();
+  const durationTimeRef = useRef();
   const handleChangeLoopMode = () => {
     if (loop === loopModes.length - 1) {
       return setLoop(0);
     }
     setLoop(loop + 1);
+  };
+
+  const handlePlayingAudio = (e) => {
+    const currentPercent = (e.target.currentTime / e.target.duration) * 100;
+
+    let currentTime = e.target.currentTime;
+
+    let realTime = new Date(currentTime * 1000);
+    let secondStr = String(realTime.getSeconds()).padStart(2, '0');
+    let minutesStr = String(realTime.getMinutes()).padStart(2, '0');
+    currentTimeRef.current.innerText = `${minutesStr}:${secondStr}`;
+
+    setPercent(currentPercent);
   };
 
   return (
@@ -58,6 +74,7 @@ function Player() {
           <div
             onClick={() => {
               setIsPlaying(!isPlaying);
+              isPlaying ? audioRef.current.pause() : audioRef.current.play();
             }}
             className={cx('player-btn')}
           >
@@ -102,12 +119,13 @@ function Player() {
             <div className={cx('progress-wrapper')}>
               <div className={cx('time-wrapper')}>
                 <span
+                  ref={currentTimeRef}
                   style={{
                     fontSize: 12,
                     color: 'var(--orange-primary)',
                   }}
                 >
-                  0:00
+                  00:00
                 </span>
               </div>
               <div
@@ -119,7 +137,10 @@ function Player() {
                 <div className={cx('time-line-background')}></div>
                 <input
                   onChange={(e) => {
-                    setPercent(e.target.value);
+                    let percent = e.target.value;
+                    const secondTarget = (audioRef.current.duration * percent) / 100;
+                    audioRef.current.currentTime = secondTarget;
+                    setPercent(percent);
                   }}
                   className={cx('time-line-input')}
                   type="range"
@@ -129,15 +150,34 @@ function Player() {
               </div>
               <div className={cx('time-wrapper')}>
                 <span
+                  ref={durationTimeRef}
                   style={{
                     fontSize: 12,
                   }}
                 >
-                  3:24
+                  00:00
                 </span>
               </div>
             </div>
           </div>
+          <audio
+            onTimeUpdate={handlePlayingAudio}
+            onLoadedData={(e) => {
+              const duration = e.target.duration;
+
+              let realTime = new Date(duration * 1000);
+              let secondStr = String(realTime.getSeconds()).padStart(2, '0');
+              let minutesStr = String(realTime.getMinutes()).padStart(2, '0');
+              durationTimeRef.current.innerText = `${minutesStr}:${secondStr}`;
+            }}
+            onEnded={() => {
+              setIsPlaying(false);
+            }}
+            volume={0.2}
+            ref={audioRef}
+            id="audio"
+            src={musics.enchanted}
+          ></audio>
 
           {/* volume */}
 
@@ -156,7 +196,10 @@ function Player() {
                   }}
                 >
                   <input
-                    onChange={(e) => setVolume(e.target.value)}
+                    onChange={(e) => {
+                      audioRef.current.volume = e.target.value / 100;
+                      setVolume(e.target.value);
+                    }}
                     className={cx('input-volume')}
                     type="range"
                   />
@@ -174,6 +217,7 @@ function Player() {
               className={cx('player-btn')}
               onClick={() => {
                 setIsMuted(!isMuted);
+                audioRef.current.muted = !isMuted;
               }}
             >
               <FontAwesomeIcon

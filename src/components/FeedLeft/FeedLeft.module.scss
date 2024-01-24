@@ -2,12 +2,28 @@
     display: flex;
     margin-bottom: 40px;
     font-size: 1rem;
-    // align-items: center;
+    //background-color: var(--white);  /* Màu nền trong suốt ban đầu */
+    transition: background-color 0.3s ease;  /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.feed__modul-list-item:hover {
+    background-color: hsl(0deg 64.52% 71.47% / 10%);
+    //background-color: hsl(0deg 0% 100% / 10%);
 }
 
 .feed__modul-item-authorname-main {
     display: flex;
     margin: 0 8px;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.feed__modul-authorname-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
 }
 
 .feed__modul-item-image {
@@ -15,6 +31,7 @@
     height: 160px;
     align-items: center;
     margin: 8px;
+    border: 1px solid #dbdbdb;
 }
 
 .feed__modul-item-info{
@@ -88,6 +105,10 @@
 
 .liked, .reposted, .shared, .copyed {
     color: var(--orange-primary);
+}
+
+.btn-option-icon {
+    margin-left: 4px;
 }
 
 /*MORE*/

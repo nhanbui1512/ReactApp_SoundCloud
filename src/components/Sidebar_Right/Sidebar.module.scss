@@ -12,15 +12,17 @@
 }
 
 .sidebar__modul-list-item {
-    align-items: center;
+  align-items: center;
   display: flex;
   position: relative; // Cần thiết để định vị `PlaySidebar`
   cursor: pointer;
 }
 
-.sidebar__modul-list-item {
-  
+.sidebar__modul-list-item:hover {
+  background-color: hsl(0deg 64.52% 71.47% / 10%);
+}
 
+.sidebar__modul-list-item {
   &:hover {
     .Playsidebar__modul-item-container {
       display: block; // Hiển thị PlaySidebar khi hover
@@ -40,13 +42,6 @@
     }
   }
 }
-
-// .Playsidebar__modul-item-container {
-//     display: none; // Ẩn PlaySidebar mặc định
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-// }
 
 .sidebar__modul-refresh {
   display: flex;
@@ -95,7 +90,7 @@
 }
 
 .sidebar__modul-item-body {
-  line-height: 0.8rem;
+  line-height: 1.2rem;
   max-height: 4rem;
   font-weight: 400;
   color: #999;

@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./App.js";
 import reportWebVitals from "./reportWebVitals";
 import GlobalStyles from "GlobalStyles";
+import { ToastProvider } from '../src/context/ToastContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      <App />
+      <ToastProvider>
+        <App />
+      </ToastProvider>
     </GlobalStyles>
   </React.StrictMode>
 );

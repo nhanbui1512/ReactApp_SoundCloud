@@ -11,7 +11,16 @@ function Upload() {
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
-    console.log(e.target.files[0]);
+    const test = e.target.files[0];
+
+    if (test) {
+      if (test.name.endsWith('.mp3')) {
+        setSelectedFile(test);
+      } else {
+        setSelectedFile(null);
+        alert('Please select the audio file');
+      }
+    }
   };
   return (
     <div>
@@ -22,7 +31,7 @@ function Upload() {
             <div className={cx('upload_content')}>
               <h1>Drag and drop your tracks & albums here</h1>
               <div className={cx('upload_choose')}>
-                <input ref={inputref} type="file" onChange={handleFileChange} />
+                <input ref={inputref} type="file"  onChange={handleFileChange} accept="audio/*"/>
                 <button
                   className={cx('but_chooseFile')}
                   onClick={(e) => {

@@ -28,6 +28,12 @@
   }
   
   .fieldTitle {
+    width: auto;
+    font-size: 12px;
+  }
+
+  .fieldArtist {
+    width: auto;
     font-size: 12px;
   }
   
@@ -39,6 +45,16 @@
     border-radius: 3px;
     padding: 2px 7px;
   }
+
+  .fields_customGen input {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    border: solid 1px #d0d0d0;
+    border-radius: 3px;
+    padding: 2px 7px;
+  }
+  
   
   .fields_description textarea {
     display: flex;
@@ -61,6 +77,10 @@
   }
   
   .genrerow {
+    text-align: left;
+  }
+
+  .artist {
     text-align: left;
   }
   
@@ -140,3 +160,22 @@
   .img_choose input {
     display: none;
   }
+
+.genrerow select {
+  margin-left: 9px;
+  opacity: 0.9;
+  padding-right: 60px;
+}
+
+.artist input {
+  width: 90%;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+  margin-left: 12px;
+}
+
+.dis {
+  display: inline-block;
+}

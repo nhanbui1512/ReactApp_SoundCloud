@@ -1,40 +1,57 @@
-import React, { useState } from 'react'
-import { auth } from '../login/authentication/firebase';
+import React, { useState, useContext } from 'react'
+import { auth } from '../../services/firebase/app';
+import { StorageContext } from 'context/Storage'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import "./Signup.css";
+import "./Signup.scss";
 const Signup = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(StorageContext);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
-      const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate("/");
-    } catch (error) {
-      console.error(error);
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    if (!email || !password) {
+      alert("Please enter email or password");
+      return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          setCurrentUser(true);
+          console.log(user);
+          navigate("/")
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          alert('The email address is already in use. Please use a different email.');
+          
+      });
+
+ 
   }
 
   return (
-    <div class="container">
+    <div className="container">
       
-      <form onSubmit={handleSubmit} className='signup-form'>
+      <form className='signup-form'>
       <h1>Signup </h1>
       <br></br>
         <input
           type="email"
           placeholder="Your Email"
           required
-          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <br></br>
@@ -42,11 +59,10 @@ const Signup = () => {
           type="password"
           placeholder="Your Password"
           required
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button type="submit" className='signup-button'>Signup</button>
+        <button type="submit" onClick={onSubmit} className='signup-button'>Signup</button>
         <br></br>
         <div className="div-p0"><p>Need to Login? <Link to="/login">Login</Link></p></div>
         

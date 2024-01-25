@@ -6,12 +6,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
+import PlayList from 'components/PlayList';
 const cx = classNames.bind(styles);
 
 function Information() {
   const [isLiked, setIsLiked] = useState(false);
   const [isFollowed, setisFollowed] = useState(false);
+  const [openPlayList, setopenPlayList] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
+  const handleHidden = () => {
+    if (!openPlayList) {
+      return setopenPlayList(true);
+    }
+    setIsClosing(true);
+    setTimeout(() => {
+      setopenPlayList(!openPlayList);
+      setIsClosing(false);
+    }, 300);
+  };
   return (
     <div className={cx('wrapper')}>
       <Link className={cx('avatar')}>
@@ -61,12 +74,22 @@ function Information() {
           </div>
         </Tippy>
         <Tippy
-          visible
+          visible={openPlayList}
+          placement="top-end"
+          interactive
+          offset={[0, 18]}
           render={() => {
-            return <div className={cx('playlist')}>playlist</div>;
+            return (
+              <PlayList className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />
+            );
           }}
         >
-          <div className={cx('action-btn')}>
+          <div
+            onClick={handleHidden}
+            className={cx('action-btn', {
+              isActive: openPlayList,
+            })}
+          >
             <FontAwesomeIcon className={cx('action-icon')} icon={faListUl} />
           </div>
         </Tippy>

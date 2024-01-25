@@ -2,24 +2,12 @@ import classNames from "classnames/bind";
 import styles from "./PostSearch.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEllipsis,
-  faHeart,
-  faListOl,
-  faListUl,
-  faPause,
-  faPeopleArrows,
-  faPlay,
-  faUsd,
   faUserAlt,
   faUserCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
-import HeadlessTippy from "@tippyjs/react/headless";
-import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale-subtle.css";
-import { MenuItem, Wrapper } from "components/DropDownMenu";
-import { AddToList } from "components/Icons";
 import { useEffect, useRef, useState } from "react";
 
 const cx = classNames.bind(styles);
@@ -27,8 +15,6 @@ const cx = classNames.bind(styles);
 function PostSearch({ data }) {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isPlay, setIsPlay] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false)
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,7 +55,7 @@ const handleFollowing = () => {
             <span className={cx("box-followers")}>
                 <a className={cx("box-followers_users")} href="/">
                     <FontAwesomeIcon
-                        className={cx("", { liked: isLiked })}
+                        className={cx("")}
                         icon={faUserAlt}
                     />
                     <span className={cx("followers-post")}>1,728 followers</span>
@@ -78,7 +64,7 @@ const handleFollowing = () => {
                 <div  onClick={() => {handleFollowing()}} className={cx("box-btn", { following: isFollowing })}>
                     <div className={cx("btn")}>
                         <FontAwesomeIcon
-                            className={cx("", { liked: isLiked })}
+                            className={cx("")}
                             icon={faUserCheck}
                         />
                         <span className={cx("followers-post")}>Follow</span>

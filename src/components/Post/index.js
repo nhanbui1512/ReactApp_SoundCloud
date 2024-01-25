@@ -2,24 +2,12 @@ import classNames from "classnames/bind";
 import styles from "./Post.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEllipsis,
-  faHeart,
-  faListOl,
-  faListUl,
-  faPause,
-  faPeopleArrows,
-  faPlay,
-  faUsd,
   faUserAlt,
   faUserCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
-import HeadlessTippy from "@tippyjs/react/headless";
-import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale-subtle.css";
-import { MenuItem, Wrapper } from "components/DropDownMenu";
-import { AddToList } from "components/Icons";
 import { useEffect, useRef, useState } from "react";
 
 const cx = classNames.bind(styles);
@@ -27,8 +15,6 @@ const cx = classNames.bind(styles);
 function Post({ data }) {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isPlay, setIsPlay] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false)
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -62,7 +48,7 @@ const handleFollowing = () => {
       <span className={cx("name-post")}>
         <div>
             <FontAwesomeIcon
-                className={cx("", { liked: isLiked })}
+                className={cx("")}
                 icon={faUserAlt}
             />
             <span className={cx("followers-post")}>1,728 followers</span>
@@ -71,7 +57,7 @@ const handleFollowing = () => {
         <div className={cx('box-btn')}>
             <div onClick={() => {handleFollowing()}} className={cx("btn", { following: isFollowing })}>
                 <FontAwesomeIcon
-                    className={cx("", { liked: isLiked })}
+                    className={cx("")}
                     icon={faUserCheck}
                 />
                 <span className={cx("followers-post")}>Following</span>

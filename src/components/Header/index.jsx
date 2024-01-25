@@ -7,7 +7,6 @@ import {
   faChevronDown,
   faEllipsis,
   faHeart,
-  faSearch,
   faStar,
   faUser,
   faUsers,
@@ -15,8 +14,10 @@ import {
 import Image from '../Image';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Button from 'components/Button';
+import { StorageContext } from 'context/Storage';
+import SearchBar from './SearchBar';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -87,8 +88,10 @@ const moreMenuItem = [
     title: 'Sign out',
   },
 ];
+
 const Header = () => {
-  const [currentUser] = useState(false);
+  const globalStates = useContext(StorageContext);
+  const [currentUser, setCurrentUser] = [globalStates.currentUser, globalStates.setCurrentUser];
 
   return (
     <div className={cx('header')}>
@@ -103,14 +106,14 @@ const Header = () => {
         <NavLink to={'/feed'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Feed
         </NavLink>
-        <div className={cx('header-items')}>Library</div>
+        <NavLink
+          to={'/library/overview'}
+          className={(nav) => cx('header-items', { active: nav.isActive })}
+        >
+          Library
+        </NavLink>
 
-        <div className={cx('search-container')}>
-          <input />
-          <button className={cx('search-btn')}>
-            <FontAwesomeIcon className={cx('search-icon')} icon={faSearch} />
-          </button>
-        </div>
+        <SearchBar />
 
         {currentUser && (
           <div

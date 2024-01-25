@@ -47,6 +47,7 @@ const FeedLeftItem = ({ data }) => {
   }, []);
   return (
     <>
+      
       <div className={cx('feed__modul-item-authorname-main')}>
         <img src={data.image} alt='' className={cx('feed__modul-authorname-avatar')}/>
         <div className={cx('feed__modul-authorname-name')}>

@@ -11,6 +11,7 @@ const FeedLeft = () => {
   return (
     <>
       <div className={cx('feed__modul')}>
+      <h4 className={cx('feed__heading')}>Hear the latest posts from the people you’re following:</h4>  
         <ul className={cx('feed__modul-list')}>
           {dataFeed.map((data, index) => (
             <FeedLeftItem data={data} key={index}/>

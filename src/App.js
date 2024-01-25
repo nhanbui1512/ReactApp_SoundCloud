@@ -15,6 +15,7 @@ import Upload from 'pages/Upload/Upload';
 import Feed from 'pages/Feed';
 import Login from 'pages/Login/index.jsx';
 import HeaderOnly from 'Layouts/HeaderOnly';
+import Signup from 'pages/signup/Signup';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -28,7 +29,10 @@ const App = () => {
           <Route path="/feed" element={<Feed />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
-          <Route index element={<Login></Login>} />
+          <Route index element={<Login></Login>} />    
+        </Route>
+        <Route path="/signup" element={<HeaderOnly />}>
+          <Route index element={<Signup></Signup>} />
         </Route>
       </>,
     ),

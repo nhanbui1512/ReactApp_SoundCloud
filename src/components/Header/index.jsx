@@ -92,6 +92,7 @@ const moreMenuItem = [
 const Header = () => {
   const globalStates = useContext(StorageContext);
   const [currentUser, setCurrentUser] = [globalStates.currentUser, globalStates.setCurrentUser];
+  
   return (
     <div className={cx('header')}>
       <div className={cx('header-container')}>

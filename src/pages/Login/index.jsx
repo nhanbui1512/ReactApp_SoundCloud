@@ -1,50 +1,71 @@
-import React, { useState } from 'react';
-// import { auth, googleAuthProvider } from './authentication/firebase';
-// import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import React, { useState,useContext } from 'react';
+import { auth } from '../../services/firebase/app';
+import { signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider } from 'firebase/auth';
+import { Link ,useNavigate} from 'react-router-dom';
 import GoogleButton from 'react-google-button';
-import './Login.css';
+import { StorageContext } from 'context/Storage'; 
+
+import './Login.scss';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setCurrentUser } = useContext(StorageContext);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  //     // console.log(userCredential);
-  //     const user = userCredential.user;
-  //     localStorage.setItem('token', user.accessToken);
-  //     localStorage.setItem('user', JSON.stringify(user));
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const handleSignInWithGoogle = async () => {
-  //   try {
-  //     const result = await signInWithPopup(auth, googleAuthProvider);
-  //     console.log(result);
-  //     localStorage.setItem('token', result.user.accessToken);
-  //     localStorage.setItem('user', JSON.stringify(result.user));
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const onLogin = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Please enter email or password");
+      return;
+    }
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {   
+        const user = userCredential.user;
+        setCurrentUser(true);
+        navigate("/")
+        console.log(user);
+    })
+    .catch((error) => {
+      
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+        alert("Email or password is not error");
+    });
+   
+  }
+
+  const handleSignInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        //const credential = GoogleAuthProvider.credentialFromResult(result);
+        //const token = credential.accessToken;
+        const user = result.user;
+        setCurrentUser(true);
+        navigate('/');
+        console.log(user);
+        // onLoginSuccess();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        
+      });
+  };
 
   return (
     <div className="container">
-      <form onSubmit={() => {}} className="login-form">
+      <form  className="login-form">
         <h1>Login </h1>
         <br></br>
         <input
           type="email"
           placeholder="Your Email"
           required
-          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <br></br>
@@ -52,11 +73,10 @@ const Login = () => {
           type="password"
           placeholder="Your Password"
           required
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button type="submit" className="login-button">
+        <button  onClick={onLogin} className="login-button">
           Login
         </button>
         <div className="div-p0">
@@ -70,7 +90,9 @@ const Login = () => {
           <div className="or">or</div>
           <div className="line-right"></div>
         </div>
-        <GoogleButton className="google-button" />
+        <GoogleButton className="google-button"
+        onClick={handleSignInWithGoogle}
+        />
         <p className="p1">
           When registering, you agree that we may use your provided data for the registration and to
           send you notifications on our products and services. You can unsubscribe from

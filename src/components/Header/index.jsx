@@ -15,8 +15,9 @@ import {
 import Image from '../Image';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Button from 'components/Button';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -87,9 +88,10 @@ const moreMenuItem = [
     title: 'Sign out',
   },
 ];
-const Header = () => {
-  const [currentUser] = useState(true);
 
+const Header = () => {
+  const globalStates = useContext(StorageContext);
+  const [currentUser, setCurrentUser] = [globalStates.currentUser, globalStates.setCurrentUser];
   return (
     <div className={cx('header')}>
       <div className={cx('header-container')}>

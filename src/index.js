@@ -5,18 +5,20 @@ import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from 'GlobalStyles';
 import { isMobile } from 'react-device-detect';
-import { ToastProvider } from '../src/context/ToastContext.js';
-
+import { ToastProvider } from './context/ToastContext.js';
+import Storage from 'context/Storage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      <ToastProvider>
-        {isMobile ? <div>Mobile app</div> : <App />}
-        {/* <App /> */}
-        {/* <App /> */}
-      </ToastProvider>
+      <Storage>
+        <ToastProvider>
+          {isMobile ? <div>Mobile app</div> : <App />}
+          {/* <App /> */}
+          {/* <App /> */}
+        </ToastProvider>
+      </Storage>
     </GlobalStyles>
   </React.StrictMode>,
 );
@@ -45,7 +47,6 @@ reportWebVitals();
 // import Library from 'pages/Library/Library';
 // import Upload from 'pages/Upload/Upload';
 // import Feed from 'pages/Feed';
-
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(

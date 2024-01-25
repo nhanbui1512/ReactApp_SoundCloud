@@ -106,7 +106,12 @@ const Header = () => {
         <NavLink to={'/feed'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Feed
         </NavLink>
-        <div className={cx('header-items')}>Library</div>
+        <NavLink
+          to={'/library/overview'}
+          className={(nav) => cx('header-items', { active: nav.isActive })}
+        >
+          Library
+        </NavLink>
 
         <SearchBar />
 

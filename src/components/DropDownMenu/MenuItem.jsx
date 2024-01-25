@@ -1,5 +1,5 @@
-import classNames from "classnames/bind";
-import styles from "./DropDownMenu.module.scss";
+import classNames from 'classnames/bind';
+import styles from './DropDownMenu.module.scss';
 const cx = classNames.bind(styles);
 
 function MenuItem({ children, icon, className, separate, onClick }) {
@@ -12,7 +12,7 @@ function MenuItem({ children, icon, className, separate, onClick }) {
         [className]: className,
       })}
     >
-      {icon && <div className={cx("icon-wrapper")}>{icon}</div>}
+      {icon && <div className={cx('icon-wrapper')}>{icon}</div>}
       <div>{children}</div>
     </button>
   );

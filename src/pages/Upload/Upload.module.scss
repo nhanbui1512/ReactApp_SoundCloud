@@ -1,3 +1,104 @@
 .wrapper {
   display: flex;
+  flex-direction: column;
+}
+
+.uploadmain {
+  //width: 800px;
+  margin: 20px 150px;
+  border-radius: 5px;
+  padding: 100px 100px 20px 100px;
+  text-align: center;
+  box-shadow: 0 0 10px #ebebeb;
+}
+
+.upload_content h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: inherit;
+}
+
+.but_chooseFile {
+  background-color: #f50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.upload_choose input {
+  position: relative;
+  max-width: 200px;
+  height: 46px;
+}
+
+.upload_additional {
+  justify-content: center;
+}
+
+.upload_defaultShare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.upload_defaultShare span {
+  margin-right: 10px;
+}
+
+.sr_radio_input {
+  margin-right: 10px;
+}
+
+.sc_text_secondary {
+  margin-top: 100px;
+}
+
+.sc_text_secondary a {
+  font-size: 12px;
+  text-decoration: none;
+  margin-left: 5px;
+  color: #38d;
+}
+
+.sc_text_secondary a:hover {
+  color: #333;
+}
+
+.sc_text_secondary label {
+  font-size: 12px;
+}
+
+.uploadFooter {
+  margin: 0px 150px;
+}
+
+.uploadFooter a {
+  color: #38d;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.uploadFooter a:hover {
+  color: #333;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.uploadFooter p {
+  font-size: 12px;
+}
+
+.uploadNotice {
+  margin-bottom: 50px;
+}
+
+.upload_choose input {
+  display: none;
 }

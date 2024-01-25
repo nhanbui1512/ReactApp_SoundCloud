@@ -1,8 +1,8 @@
-import classNames from "classnames/bind";
-import styles from "./Header.module.scss";
-import { Logo, PlayList } from "components/Icons";
-import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from 'classnames/bind';
+import styles from './Header.module.scss';
+import { Logo, PlayList } from 'components/Icons';
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
   faEllipsis,
@@ -11,169 +11,169 @@ import {
   faStar,
   faUser,
   faUsers,
-} from "@fortawesome/free-solid-svg-icons";
-import Image from "../Image";
-import HeadlessTippy from "@tippyjs/react/headless";
-import { MenuItem, Wrapper } from "components/DropDownMenu";
+} from '@fortawesome/free-solid-svg-icons';
+import Image from '../Image';
+import HeadlessTippy from '@tippyjs/react/headless';
+import { MenuItem, Wrapper } from 'components/DropDownMenu';
+import { useState } from 'react';
+import Button from 'components/Button';
 import SearchBar from "./SearchBar";
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
   {
-    title: "Profile",
+    title: 'Profile',
     icon: <FontAwesomeIcon icon={faUser} />,
   },
   {
-    title: "Like",
+    title: 'Like',
     icon: <FontAwesomeIcon icon={faHeart} />,
   },
   {
-    title: "Playlist",
+    title: 'Playlist',
     icon: <PlayList />,
   },
   {
-    title: "Following",
+    title: 'Following',
     icon: <FontAwesomeIcon icon={faUsers} />,
   },
   {
-    title: "Try Next Pro",
+    title: 'Try Next Pro',
     icon: <FontAwesomeIcon icon={faStar} />,
   },
 ];
 
 const moreMenuItem = [
   {
-    title: "About us",
+    title: 'About us',
   },
   {
-    title: "Legal",
+    title: 'Legal',
   },
   {
-    title: "Coppyright",
+    title: 'Coppyright',
     separate: true,
   },
   {
-    title: "Mobile apps",
+    title: 'Mobile apps',
   },
   {
-    title: "For creators",
+    title: 'For creators',
   },
   {
-    title: "Blog",
+    title: 'Blog',
   },
   {
-    title: "Jobs",
+    title: 'Jobs',
   },
 
   {
-    title: "Developers",
+    title: 'Developers',
     separate: true,
   },
   {
-    title: "Support",
+    title: 'Support',
   },
   {
-    title: "Keyboard shortcuts",
+    title: 'Keyboard shortcuts',
     separate: true,
   },
   {
-    title: "Subscription",
+    title: 'Subscription',
   },
   {
-    title: "Settings",
+    title: 'Settings',
   },
   {
-    title: "Sign out",
+    title: 'Sign out',
   },
 ];
 const Header = () => {
+  const [currentUser] = useState(false);
+
   return (
-    <div className={cx("header")}>
-      <div className={cx("header-container")}>
-        <NavLink
-          to="/"
-          className={(nav) => cx("logo", { active: nav.isActive })}
-        >
+    <div className={cx('header')}>
+      <div className={cx('header-container')}>
+        <NavLink to="/" className={(nav) => cx('logo', { active: nav.isActive })}>
           <Logo />
         </NavLink>
 
-        <NavLink
-          to="/"
-          className={(nav) => cx("header-items", { active: nav.isActive })}
-        >
+        <NavLink to="/" className={(nav) => cx('header-items', { active: nav.isActive })}>
           Home
         </NavLink>
-        <NavLink
-          to={"/feed"}
-          className={(nav) => cx("header-items", { active: nav.isActive })}
-        >
+        <NavLink to={'/feed'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Feed
         </NavLink>
-        <div className={cx("header-items")}>Library</div>
+        <div className={cx('header-items')}>Library</div>
 
         <SearchBar/>
-        <div
-          style={{
-            color: `var(--orange-primary)`,
-          }}
-          className={cx("header-items")}
-        >
-          Try Next Pro
-        </div>
 
-        <div className={cx("header-items")}>For Artists</div>
+        {currentUser && (
+          <div
+            style={{
+              color: `var(--orange-primary)`,
+            }}
+            className={cx('header-items')}
+          >
+            Try Next Pro
+          </div>
+        )}
 
-        <NavLink
-          to={"/upload"}
-          className={(nav) => cx("header-items", { active: nav.isActive })}
-        >
+        {currentUser && <div className={cx('header-items')}>For Artists</div>}
+
+        {currentUser || (
+          <div className={cx('login-menu')}>
+            <Button to={'/login'} outline>
+              Sign in
+            </Button>
+            <Button to={'/login'} primary>
+              Create Account
+            </Button>
+          </div>
+        )}
+        <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Upload
         </NavLink>
 
-        <HeadlessTippy
-          interactive
-          offset={[33, 0]}
-          render={(atr) => {
-            return (
-              <Wrapper className={cx("dropdown-menu")}>
-                {menuUserItem.map((item, index) => {
-                  return (
-                    <MenuItem key={index} icon={item.icon}>
-                      {item.title}
-                    </MenuItem>
-                  );
-                })}
-              </Wrapper>
-            );
-          }}
-        >
-          <div className={cx("avatar-wrapper")}>
-            <Image
-              className={cx("avatar-img")}
-              src={
-                "https://i1.sndcdn.com/avatars-000656606957-0tv0jo-t50x50.jpg"
-              }
-            />
-            <FontAwesomeIcon
-              className={cx("dropdown-icon")}
-              icon={faChevronDown}
-            />
-          </div>
-        </HeadlessTippy>
+        {/* Avatar DropDown Menu */}
+        {currentUser && (
+          <HeadlessTippy
+            interactive
+            offset={[33, 0]}
+            render={(atr) => {
+              return (
+                <Wrapper className={cx('dropdown-menu')}>
+                  {menuUserItem.map((item, index) => {
+                    return (
+                      <MenuItem key={index} icon={item.icon}>
+                        {item.title}
+                      </MenuItem>
+                    );
+                  })}
+                </Wrapper>
+              );
+            }}
+          >
+            <div className={cx('avatar-wrapper')}>
+              <Image
+                className={cx('avatar-img')}
+                src={'https://i1.sndcdn.com/avatars-000656606957-0tv0jo-t50x50.jpg'}
+              />
+              <FontAwesomeIcon className={cx('dropdown-icon')} icon={faChevronDown} />
+            </div>
+          </HeadlessTippy>
+        )}
 
+        {/* More DropDown Menu */}
         <HeadlessTippy
           interactive
           offset={[-60, 0]}
           render={(atr) => {
             return (
-              <Wrapper className={cx("more-menu")}>
+              <Wrapper className={cx('more-menu')}>
                 {moreMenuItem.map((item, index) => {
                   return (
-                    <MenuItem
-                      separate={item.separate}
-                      key={index}
-                      icon={item.icon}
-                    >
+                    <MenuItem separate={item.separate} key={index} icon={item.icon}>
                       {item.title}
                     </MenuItem>
                   );
@@ -182,8 +182,8 @@ const Header = () => {
             );
           }}
         >
-          <div className={cx("more-btn")}>
-            <FontAwesomeIcon className={cx("more-icon")} icon={faEllipsis} />
+          <div className={cx('more-btn')}>
+            <FontAwesomeIcon className={cx('more-icon')} icon={faEllipsis} />
           </div>
         </HeadlessTippy>
       </div>

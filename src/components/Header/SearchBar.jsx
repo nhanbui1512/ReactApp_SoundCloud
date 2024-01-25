@@ -55,9 +55,7 @@ const SearchBar = () => {
 					{[].concat(songsSuggest, artistsSuggest, genresSuggest, playlistsSuggest).map((item, index) => 
 						<MenuItem key={index+1} icon={<FontAwesomeIcon icon={faSearch}/>}
 							onClick={(e) => setKeyword(e.target.innerHTML)}
-						>{item.name}
-							{/* <button onClick={(e) => setKeyword(e.target.innerHTML)}>{item.name}</button> */}
-						</MenuItem>
+						>{item.name}</MenuItem>
 					)}
 				</div>
 			)

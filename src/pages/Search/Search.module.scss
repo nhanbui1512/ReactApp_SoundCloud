@@ -6,8 +6,18 @@
   margin: 0 330px 0 0;
   border-right: 1px solid #f2f2f2;
 }
+.side-bar {
+  bottom: 0;
+  right: 0;
+  top: 30px;
+  width: 330px;
+  position: absolute;
+  font-size: 1rem;
+  padding: 30px 0 0 10px;
+}
 .header {
-  margin-top: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   h2 {
     font-size: 24px;
     color: #333;

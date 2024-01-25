@@ -10,6 +10,7 @@ import { getArtistsByName } from 'services/firebase/firestore/artists';
 import { getPlaylistsByName } from 'services/firebase/firestore/playlist';
 import { useNavigate } from 'react-router-dom';
 import { getGenresByName } from 'services/firebase/firestore/genres';
+import { useDebounce } from 'hooks';
 
 const cx = classNames.bind(styles);
 const SearchBar = () => {
@@ -20,6 +21,8 @@ const SearchBar = () => {
   const [genresSuggest, setGenresSuggest] = useState([]);
   const [playlistsSuggest, setPlaylistSuggest] = useState([]);
   const navigate = useNavigate();
+
+	const debounceKeyword = useDebounce(keyword, 700);
 
   const getSuggest = async (keyword) => {
     const songs = await getSongsByName(keyword);
@@ -33,9 +36,8 @@ const SearchBar = () => {
     setLoading(false);
   };
   useEffect(() => {
-    if (keyword !== '') {
-      setLoading(true);
-      getSuggest(keyword);
+    if (debounceKeyword !== '') {
+      getSuggest(debounceKeyword);
     } else {
       setSongsSuggest([]);
       setArtistsSuggest([]);
@@ -43,20 +45,21 @@ const SearchBar = () => {
       setPlaylistSuggest([]);
       setLoading(false);
     }
-  }, [keyword]);
+  }, [debounceKeyword]);
 
   const showSuggest = () => {
-    if (keyword !== '') {
+    if (debounceKeyword.trim() !== '') {
       return (
         <div>
-          <MenuItem key={0}>Search for "{keyword}"</MenuItem>
-          {[]
-            .concat(songsSuggest, artistsSuggest, genresSuggest, playlistsSuggest)
+          <MenuItem key={0}
+						onClick={() => handleSearch()}
+					>Search for "{debounceKeyword}"</MenuItem>
+          {[].concat(songsSuggest, artistsSuggest, genresSuggest, playlistsSuggest)
             .map((item, index) => (
               <MenuItem
                 key={index + 1}
                 icon={<FontAwesomeIcon icon={faSearch} />}
-                onClick={(e) => setKeyword(e.target.innerHTML)}
+                onClick={(e) => setKeyword(e.target.innerText)}
               >
                 {item.name}
               </MenuItem>
@@ -67,7 +70,7 @@ const SearchBar = () => {
   };
 
   const handleSearch = () => {
-    if (keyword !== '') {
+    if (keyword.trim() !== '') {
       navigate(`/search?keyword=${keyword.trim()}`);
     }
   };
@@ -92,10 +95,13 @@ const SearchBar = () => {
       <div className={cx('search-container')}>
         <input
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={(e) => {
+						setKeyword(e.target.value)
+						setLoading(true)
+					}}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
-        <button className={cx('search-btn')} onClick={handleSearch}>
+        <button className={cx('search-btn')} onClick={() => handleSearch()}>
           <FontAwesomeIcon className={cx('search-icon')} icon={faSearch} />
         </button>
         <button

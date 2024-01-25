@@ -8,6 +8,8 @@ import { getPlaylistsByName } from "services/firebase/firestore/playlist";
 import { getGenresByName } from "services/firebase/firestore/genres";
 import FeedLeftItem from "components/FeedLeft/FeedLeftItem/FeedLeftItem";
 import { MenuItem } from "components/DropDownMenu";
+import PostSearch from "components/PostSearch";
+import Gallery from "components/Gallery";
 
 const cx = classNames.bind(styles);
 
@@ -65,7 +67,7 @@ const Search = () => {
 						{songsByGenresResult.map((item, index) => 
 							<div>
 								<h4>{item.genreName}</h4>
-								{item.songs.map((item) => <FeedLeftItem data={item}/>)}
+								{item.songs.map((item, index) => <FeedLeftItem key={index} data={item}/>)}
 							</div>
 						)}
 					</div>
@@ -74,14 +76,14 @@ const Search = () => {
 				return (
 					<div>
 						<h2 className={cx("header")}>Artists</h2>
-						{artistsResult.map((item, index) => <h5>{item.name}</h5>)}
+						{artistsResult.map((item, index) => <PostSearch key={index} data={item}/>)}
 					</div>
 				)
 			case 3:
 				return (
 					<div>
 						<h2 className={cx("header")}>Playlists</h2>
-						{playlistsResult.map((item, index) => <h5>{item.name}</h5>)}
+						{playlistsResult.map((item, index) => <Gallery key={index} data={item}/>)}
 					</div>
 				)
 			default:

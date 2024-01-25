@@ -7,7 +7,6 @@ import {
   faChevronDown,
   faEllipsis,
   faHeart,
-  faSearch,
   faStar,
   faUser,
   faUsers,
@@ -18,6 +17,7 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useContext } from 'react';
 import Button from 'components/Button';
 import { StorageContext } from 'context/Storage';
+import SearchBar from './SearchBar';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -92,7 +92,7 @@ const moreMenuItem = [
 const Header = () => {
   const globalStates = useContext(StorageContext);
   const [currentUser, setCurrentUser] = [globalStates.currentUser, globalStates.setCurrentUser];
-  
+
   return (
     <div className={cx('header')}>
       <div className={cx('header-container')}>
@@ -108,12 +108,7 @@ const Header = () => {
         </NavLink>
         <div className={cx('header-items')}>Library</div>
 
-        <div className={cx('search-container')}>
-          <input />
-          <button className={cx('search-btn')}>
-            <FontAwesomeIcon className={cx('search-icon')} icon={faSearch} />
-          </button>
-        </div>
+        <SearchBar />
 
         {currentUser && (
           <div

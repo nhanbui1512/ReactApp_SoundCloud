@@ -31,12 +31,16 @@ body {
   border: none;
   border-radius: 5px;
   background-color: rgb(39, 104, 195);
-  color: rgb(22, 5, 5)
+  color: white
   
   
 }
 .signup-button {
   margin-top: 10px;
+}
+.signup-button:disabled {
+  color: grey;
+  background-color: darkgray;
 }
 .div-p0{
   font-size: 17px;

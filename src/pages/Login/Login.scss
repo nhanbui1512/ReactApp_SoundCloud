@@ -41,6 +41,10 @@
 .login-button {
   margin-top: 10px;
 }
+.login-button:disabled {
+  color: grey;
+  background-color: darkgray;
+}
 .google-button{
   
   width: 280px;

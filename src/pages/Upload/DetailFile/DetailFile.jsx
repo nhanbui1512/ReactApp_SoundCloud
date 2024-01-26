@@ -44,7 +44,7 @@ function DetailFile({ selectedFile }) {
   const handleSave = () => {
     if (nameAudio !== '') {
       createSongs(nameAudio, textArt, textGen, null, selectedFile, textDes, image);
-      alert('Upload success');
+      alert('Uploading...');
       setIsCancel(true);
     } else {
       alert('Please enter the name of audio!');

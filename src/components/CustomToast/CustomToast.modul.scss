@@ -1,0 +1,32 @@
+/* styles.css hoặc FavoriteSongs.css */
+.custom-toast {
+  display: flex;
+  align-items: center;
+  background-color: #4caf50;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.8rem;
+  width: 245px;
+  text-align: left;
+}
+
+.toast-image {
+  margin-right: 8px;
+  width: 42px;
+  height: 42px;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-title {
+  font-weight: bold;
+  text-align: left;
+}
+
+.toast-message {
+  margin-top: 2px;
+}

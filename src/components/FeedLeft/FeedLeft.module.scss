@@ -1,20 +1,42 @@
+.feed__heading {
+    font-weight: 500;
+}
+
 .feed__modul-list-item {
     display: flex;
     margin-bottom: 40px;
     font-size: 1rem;
-    // align-items: center;
+    //background-color: var(--white);  /* Màu nền trong suốt ban đầu */
+    transition: background-color 0.3s ease;  /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.feed__modul-list-item:hover {
+    background-color: hsl(0deg 64.52% 71.47% / 10%);
+    //background-color: hsl(0deg 0% 100% / 10%);
 }
 
 .feed__modul-item-authorname-main {
     display: flex;
     margin: 0 8px;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    margin-top: 24px;
+}
+
+.feed__modul-authorname-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
 }
 
 .feed__modul-item-image {
-    width: 160px;
-    height: 160px;
+    width: 110px;
+    height: 110px;
     align-items: center;
     margin: 8px;
+    border: 1px solid #dbdbdb;
 }
 
 .feed__modul-item-info{
@@ -35,14 +57,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     //transform: translate(-50%, -50%);
     // display: none;
     //z-index: 10;
     background-color: #f50;
-    font-size: 30px !important;
+    font-size: 25px !important;
     color: #fff !important;
     cursor: pointer;
     &:hover {
@@ -54,11 +76,16 @@
 
 // }
 
+.feed__modul-item-authorname {
+    font-size: 1rem;
+    color: #999;
+}
+
 .feed__modul-item-songname {
     line-height: 1.2rem;
     max-height: 4rem;
     font-weight: 400;
-    color: #999;
+    color: var(--text-color);
     margin: 0;
     overflow: hidden;
     flex: 1 1;
@@ -88,6 +115,10 @@
 
 .liked, .reposted, .shared, .copyed {
     color: var(--orange-primary);
+}
+
+.btn-option-icon {
+    margin-left: 4px;
 }
 
 /*MORE*/

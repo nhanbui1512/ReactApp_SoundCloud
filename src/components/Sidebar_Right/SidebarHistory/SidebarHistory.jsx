@@ -1,18 +1,14 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from '../Sidebar.module.scss';
-import { FaPlay } from 'react-icons/fa';
-import { IoHeart } from 'react-icons/io5';
-import { RiRepeatLine } from 'react-icons/ri';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faHeart,
-  // faListOl,
   faListUl,
   faPause,
   faPlay,
+  faRepeat
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -56,16 +52,22 @@ const SidebarHistory = ({ art }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FaPlay />
-                {art.follower} M
+              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
+                <span className={cx('sidebar-data')}>
+                {art.follower}
+                </span> 
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
-                <IoHeart />
-                {art.song}
+              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
+                <span className={cx('sidebar-data')}>
+                  {art.song}
+                </span> 
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
-                <RiRepeatLine />
-                {art.repeat}
+              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
+                <span className={cx('sidebar-data')}>
+                  {art.repeat}
+                </span> 
               </span>
             </div>
           </div>

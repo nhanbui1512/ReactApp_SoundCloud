@@ -19,7 +19,7 @@ export const ToastProvider = ({ children }) => {
   const show = () => {
     const { message, type } = toastConfig;
     toast[type](message, {
-      position: "bottom-right",
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,

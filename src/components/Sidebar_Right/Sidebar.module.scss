@@ -11,6 +11,18 @@
   border-bottom: 1px solid #dbdbdb;
 }
 
+/*ARTIST*/
+.sidebar__modul-refresh {
+  display: flex;
+  font-size: 1rem;
+}
+
+.sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
+  font-size: 1.3rem;
+  margin-right: 8px;
+}
+
+/*sidebarHeart*/
 .sidebar__modul-list-item {
   align-items: center;
   display: flex;
@@ -41,16 +53,6 @@
         align-items: center;
     }
   }
-}
-
-.sidebar__modul-refresh {
-  display: flex;
-  font-size: 1rem;
-}
-
-.sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
-  font-size: 1.3rem;
-  margin-right: 8px;
 }
 
 .sidebar__modul-container {
@@ -115,24 +117,26 @@
   justify-content: space-between;
 }
 
-.sidebar__modul-item-bottom-icon {
-  align-items: center;
-  display: flex;
+// .sidebar-icon {
+//   margin-right: 4px;
+// }
+.sidebar-data {
+  margin:0 4px;
+  font-size: 0.8rem;
 }
 
-.sidebar__modul-item-bottom span {
-  margin: 0 2px;
-}
+// .sidebar__modul-item-bottom span {
+//   margin: 0 2px;
+// }
 
-.sidebar__modul-item-people {
-  font-size: 1rem;
-  height: 15px;
-}
+// .sidebar__modul-item-people {
+//   font-size: 1rem;
+//   height: 15px;
+// }
 
 .sidebar__modul-item-quantity-follower,
 .sidebar__modul-item-quantity-song {
   font-size: 0.7rem;
-  margin: 0 3px;
 }
 
 .sidebar__modul-item-follower {

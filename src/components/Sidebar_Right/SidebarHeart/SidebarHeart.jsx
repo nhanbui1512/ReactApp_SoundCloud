@@ -1,18 +1,15 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from '../Sidebar.module.scss';
-import { FaPlay } from 'react-icons/fa';
-import { IoHeart } from 'react-icons/io5';
-import { RiRepeatLine } from 'react-icons/ri';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faHeart,
-  // faListOl,
   faListUl,
   faPause,
   faPlay,
+  faRepeat,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -21,6 +18,8 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
+import CustomToast from 'components/CustomToast/CustomToast';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ art }) => {
@@ -28,6 +27,16 @@ const SidebarHeart = ({ art }) => {
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
+  const [favoriteSongs, setFavoriteSongs] = useState([]);
+  const addToFavorites = (art) => {
+    setFavoriteSongs([...favoriteSongs, art]);
+    showToast(art);
+  };
+  const showToast = (art) => {
+    toast.success(<CustomToast art={art} isLiked={isLiked}/>, {
+      position: 'top-right',
+    });
+  };
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -57,16 +66,22 @@ const SidebarHeart = ({ art }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FaPlay />
-                {art.follower} M
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
+                <span className={cx('sidebar-data')}>
+                  {art.follower}
+                </span> 
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
-                <IoHeart />
-                {art.song}
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
+                <span className={cx('sidebar-data')}>
+                  {art.song}
+                </span> 
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
-                <RiRepeatLine />
-                {art.repeat}
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
+                <span className={cx('sidebar-data')}>
+                  {art.repeat}
+                </span> 
               </span>
             </div>
           </div>
@@ -90,6 +105,7 @@ const SidebarHeart = ({ art }) => {
                   className={cx('sidebar__modul-option-btn')}
                   onClick={() => {
                     setIsLiked(!isLiked);
+                    addToFavorites(art)
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

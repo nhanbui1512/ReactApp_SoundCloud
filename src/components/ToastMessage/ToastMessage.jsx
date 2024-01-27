@@ -1,6 +1,6 @@
 // ToastMessage.js
 import React from 'react';
-import { useToast } from './ToastContext';
+import { useToast } from '../../context/ToastContext';
 
 const ToastMessage = () => {
   const { show } = useToast();

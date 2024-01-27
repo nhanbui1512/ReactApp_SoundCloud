@@ -5,21 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faHeart,
-  // faListOl,
   faListUl,
   faPause,
   faPlay,
   faRepeat,
   faShare,
-  faCopy
+  faLink
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
-import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
+//import ToastMessage from 'components/ToastMessage/ToastMessage';
 
 const cx = classNames.bind(styles);
 const FeedLeftItem = ({ data }) => {
@@ -30,6 +29,7 @@ const FeedLeftItem = ({ data }) => {
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -47,8 +47,12 @@ const FeedLeftItem = ({ data }) => {
   }, []);
   return (
     <>
+      
       <div className={cx('feed__modul-item-authorname-main')}>
-        {data.author}
+        <img src={data.image} alt='' className={cx('feed__modul-authorname-avatar')}/>
+        <div className={cx('feed__modul-authorname-name')}>
+          {data.author}
+        </div>
       </div>
       <li className={cx('feed__modul-list-item')}>
         <img src={data.image} alt="" className={cx('feed__modul-item-image')} />
@@ -71,7 +75,8 @@ const FeedLeftItem = ({ data }) => {
               <div className={cx('feed__modul-item-songname')}>{data.name}</div>
             </div>
           </div>
-          <div className={cx('feed__modul-item-range')}></div>
+          <div className={cx('feed__modul-item-range')}>
+          </div>
           <div className={cx('feed__modul-option-group')}>
             <Tippy animation={'scale-subtle'} content={'Like'}>
               <>
@@ -82,6 +87,7 @@ const FeedLeftItem = ({ data }) => {
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+                  <span className={cx('btn-option-icon')}>{data.like}</span>
                 </button>
               </>
             </Tippy>
@@ -95,7 +101,7 @@ const FeedLeftItem = ({ data }) => {
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
                   
-                  Repost
+                  <span className={cx('btn-option-icon')}>{data.repost}</span>
                 </button>
               </>
             </Tippy>
@@ -108,7 +114,7 @@ const FeedLeftItem = ({ data }) => {
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { shared: isShare })} icon={faShare} />
-                  Share
+                  <span className={cx('btn-option-icon')}>Share</span>
                 </button>
               </>
             </Tippy>
@@ -120,8 +126,8 @@ const FeedLeftItem = ({ data }) => {
                     setCopy(!isCopy);
                   }}
                 >
-                  <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faCopy} />
-                  Copy
+                  <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faLink} />
+                  <span className={cx('btn-option-icon')}>Copy</span>
                 </button>
               </>
             </Tippy>
@@ -143,21 +149,10 @@ const FeedLeftItem = ({ data }) => {
                     </MenuItem>
                     <MenuItem
                       className={cx('menu-item')}
-                      icon={<AddToList className={cx('menu-item-icon')} />}
+                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      separate
                     >
                       Add to Playlist
-                    </MenuItem>
-                    <MenuItem
-                      className={cx('menu-item')}
-                      icon={<AddToList className={cx('menu-item-icon')} />}
-                    >
-                      Repost
-                    </MenuItem>
-                    <MenuItem
-                      className={cx('menu-item')}
-                      icon={<AddToList className={cx('menu-item-icon')} />}
-                    >
-                      Copylink
                     </MenuItem>
                   </Wrapper>
                 );
@@ -171,7 +166,7 @@ const FeedLeftItem = ({ data }) => {
                 className={cx('option-btn-more')}
               >
                 <FontAwesomeIcon icon={faEllipsis} />
-                More
+                <span className={cx('btn-option-icon')}>More</span>
               </button>
             </HeadlessTippy>
           </div>

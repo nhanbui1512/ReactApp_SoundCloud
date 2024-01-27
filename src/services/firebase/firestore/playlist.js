@@ -12,7 +12,7 @@ export async function getAllPlaylists() {
             return null
         })
     const playlists = playlistsSnap.docs.map(doc => doc.data())
-    // console.log(playlists)
+    // console.log('all playlist', playlists)
     return playlists
 }
 
@@ -30,8 +30,8 @@ export async function getPlaylistsById(id) {
 
 export async function getPlaylistsByName(name) {
     const allPlaylists = await getAllPlaylists()
-    const playlists = allPlaylists?.filter(playlist => playlist.name.toLowerCase().includes(name.toLowerCase))
-    // console.log(playlists)
+    const playlists = allPlaylists?.filter(playlist => playlist.name.toLowerCase().includes(name.toLowerCase()))
+    // console.log('play list by name', name, playlists)
     return playlists
 }
 

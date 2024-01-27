@@ -17,6 +17,8 @@ import Search from 'pages/Search/Search';
 import Login from 'pages/Login/index.jsx';
 import HeaderOnly from 'Layouts/HeaderOnly';
 import Signup from 'pages/signup/Signup';
+// import ToastMessage from 'components/ToastMessage/ToastMessage';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -42,7 +44,8 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      {/* <ToastContainer /> */}
+      <ToastContainer />
+      {/* <ToastMessage/> */}
     </>
   );
 };

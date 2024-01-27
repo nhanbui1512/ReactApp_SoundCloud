@@ -51,7 +51,7 @@ const moreMenuItem = [
     title: 'Legal',
   },
   {
-    title: 'Coppyright',
+    title: 'Copyright',
     separate: true,
   },
   {
@@ -133,14 +133,17 @@ const Header = () => {
             <Button to={'/login'} outline>
               Sign in
             </Button>
-            <Button to={'/login'} primary>
+            <Button to={'/signup'} primary>
               Create Account
             </Button>
           </div>
         )}
-        <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
-          Upload
-        </NavLink>
+        
+        {currentUser && (
+          <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
+            Upload
+          </NavLink>
+        )}
 
         {/* Avatar DropDown Menu */}
         {currentUser && (

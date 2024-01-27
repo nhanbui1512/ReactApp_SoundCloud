@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import "./Signup.scss";
 const Signup = () => {
-
+  const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,6 +23,8 @@ const Signup = () => {
       alert("Please enter a valid email address");
       return;
     }
+    
+    setSubmitted(true);
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
           // Signed in
@@ -36,7 +38,7 @@ const Signup = () => {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
           alert('The email address is already in use. Please use a different email.');
-          
+          setSubmitted(false);
       });
 
  
@@ -62,7 +64,7 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button type="submit" onClick={onSubmit} className='signup-button'>Signup</button>
+        <button type="submit" onClick={onSubmit} className='signup-button' disabled={submitted}>Signup</button>
         <br></br>
         <div className="div-p0"><p>Need to Login? <Link to="/login">Login</Link></p></div>
         

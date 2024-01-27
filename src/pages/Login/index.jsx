@@ -9,7 +9,7 @@ import './Login.scss';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
   const { setCurrentUser } = useContext(StorageContext);
@@ -20,6 +20,7 @@ const Login = () => {
       alert("Please enter email or password");
       return;
     }
+    setSubmitted(true);
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {   
         const user = userCredential.user;
@@ -28,7 +29,7 @@ const Login = () => {
         console.log(user);
     })
     .catch((error) => {
-      
+        setSubmitted(false);
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(errorCode, errorMessage);
@@ -76,7 +77,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button  onClick={onLogin} className="login-button">
+        <button  onClick={onLogin} disabled={submitted} className="login-button">
           Login
         </button>
         <div className="div-p0">

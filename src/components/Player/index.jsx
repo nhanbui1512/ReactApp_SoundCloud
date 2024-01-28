@@ -11,12 +11,12 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { IoIosRepeat } from 'react-icons/io';
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { BsRepeat1 } from 'react-icons/bs';
 import Information from './Information';
 import 'tippy.js/animations/scale.css';
 import HeadlessTippy from '@tippyjs/react/headless';
-import musics from 'assets/musics';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
@@ -35,6 +35,11 @@ const loopModes = [
 ];
 
 function Player() {
+  const storage = useContext(StorageContext);
+
+  const music = storage.currentMusic;
+  console.log(music);
+
   const [percent, setPercent] = useState(0);
   const [volume, setVolume] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
@@ -63,6 +68,10 @@ function Player() {
 
     setPercent(currentPercent);
   };
+
+  useEffect(() => {
+    audioRef.current.loop = loopModes[loop].isLoop;
+  }, [loop]);
 
   return (
     <div className={cx('wrapper')}>
@@ -176,7 +185,7 @@ function Player() {
             volume={0.2}
             ref={audioRef}
             id="audio"
-            src={musics.enchanted}
+            src={music.linkFile}
           ></audio>
 
           {/* volume */}
@@ -234,7 +243,7 @@ function Player() {
               height: '100%',
             }}
           >
-            <Information />
+            <Information data={music} />
           </div>
         </div>
       </div>

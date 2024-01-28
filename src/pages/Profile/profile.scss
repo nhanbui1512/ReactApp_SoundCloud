@@ -1,0 +1,89 @@
+.container{
+    width: 1200px;
+
+}
+.info-user {
+    display: flex;
+    width: 1200px;
+    height: 250px;   
+    // background-position: center; 
+    // background-repeat: no-repeat; 
+    // background-size: 100% 100%;
+    background-color: #e49368;
+}
+.img-email{
+    border-radius: 100px;
+    width: 200px;
+    height: 200px;
+    margin-top: 25px;
+    margin-left: 25px;
+    border:  1px solid black;
+}
+.btn-update-img {
+    width: 180px;
+    height: 30px;
+    margin-top: 25px;
+    margin-left: 500px;
+    border-radius: 5px;
+}
+.name-user{
+    margin-top: 25px;
+
+}
+.lb1{
+    font-size: 25px;
+    background-color: black;
+    color: white;
+    height: 40px;
+    
+    margin-left: 10px;
+    display: inline;
+}
+.lb2{
+    font-size: 15px;
+    background-color: black;
+    color: rgb(164, 161, 161);
+    margin-top: 0;
+    margin-left: 10px;
+    display: inline;
+}
+.camera{
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-bottom: 2px;
+}
+.nav-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+.nav-list li {
+    margin-right: 15px; 
+    font-size: 20px;
+    margin-top: 10px;   
+    margin-left: 20px;
+
+}
+.btn-share{
+    margin-left: auto;
+    background-color: white;
+    color: black;
+    border: 1px solid rgb(189, 184, 184);
+    width: 80px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.btn-edit{
+    margin-right: 50px;
+    margin-left: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid rgb(189, 184, 184);
+    width: 80px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+}

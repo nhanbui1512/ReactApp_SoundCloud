@@ -19,6 +19,7 @@ import HeaderOnly from 'Layouts/HeaderOnly';
 import Signup from 'pages/signup/Signup';
 // import ToastMessage from 'components/ToastMessage/ToastMessage';
 import { ToastContainer } from 'react-toastify';
+import Profile from 'pages/Profile/profile';
 
 
 const App = () => {
@@ -36,8 +37,11 @@ const App = () => {
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />    
         </Route>
-        <Route path="/signup" element={<HeaderOnly />}>
+        {/* <Route path="/signup" element={<HeaderOnly />}>
           <Route index element={<Signup></Signup>} />
+        </Route> */}
+        <Route path="/profile" element={<HeaderOnly />}>
+          <Route index element={<Profile></Profile>} />
         </Route>
       </>,
     ),

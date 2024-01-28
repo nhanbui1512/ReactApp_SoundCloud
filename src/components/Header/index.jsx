@@ -133,7 +133,7 @@ const Header = () => {
             <Button to={'/login'} outline>
               Sign in
             </Button>
-            <Button to={'/signup'} primary>
+            <Button to={'/profile'} primary>
               Create Account
             </Button>
           </div>

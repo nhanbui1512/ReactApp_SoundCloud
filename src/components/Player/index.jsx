@@ -38,7 +38,6 @@ function Player() {
   const storage = useContext(StorageContext);
 
   const music = storage.currentMusic;
-  console.log(music);
 
   const [percent, setPercent] = useState(0);
   const [volume, setVolume] = useState(100);
@@ -46,7 +45,7 @@ function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [loop, setLoop] = useState(0);
-  const audioRef = useRef();
+  const audioRef = storage.audioRef;
   const currentTimeRef = useRef();
   const durationTimeRef = useRef();
   const handleChangeLoopMode = () => {
@@ -71,7 +70,7 @@ function Player() {
 
   useEffect(() => {
     audioRef.current.loop = loopModes[loop].isLoop;
-  }, [loop]);
+  }, [loop, audioRef]);
 
   return (
     <div className={cx('wrapper')}>
@@ -82,7 +81,6 @@ function Player() {
           </div>
           <div
             onClick={() => {
-              setIsPlaying(!isPlaying);
               isPlaying ? audioRef.current.pause() : audioRef.current.play();
             }}
             className={cx('player-btn')}
@@ -164,22 +162,20 @@ function Player() {
                     fontSize: 12,
                   }}
                 >
-                  00:00
+                  {music.durationTime || '00:00'}
                 </span>
               </div>
             </div>
           </div>
           <audio
             onTimeUpdate={handlePlayingAudio}
-            onLoadedData={(e) => {
-              const duration = e.target.duration;
-
-              let realTime = new Date(duration * 1000);
-              let secondStr = String(realTime.getSeconds()).padStart(2, '0');
-              let minutesStr = String(realTime.getMinutes()).padStart(2, '0');
-              durationTimeRef.current.innerText = `${minutesStr}:${secondStr}`;
-            }}
             onEnded={() => {
+              setIsPlaying(false);
+            }}
+            onPlay={() => {
+              setIsPlaying(true);
+            }}
+            onPause={() => {
               setIsPlaying(false);
             }}
             volume={0.2}

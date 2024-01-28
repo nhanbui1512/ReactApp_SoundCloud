@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import images from 'assets/images';
 import musics from 'assets/musics';
 
@@ -40,11 +40,18 @@ function GlobalStates({ children }) {
     isLiked: false,
   });
 
+  const [userData, setUserData] = useState({});
+
+  const audioRef = useRef();
+
   const states = {
     currentUser: currentUser,
-    setCurrentUser: setCurrentUser,
-    currentMusic,
+    setCurrentUser: setCurrentUser, // Đẵ đăng nhập hay chưa
+    currentMusic, // Thông tin bài hát đang phát
     setCurrentMusic,
+    audioRef, // Thẻ audio
+    userData, // dữ liệu người dùng sau khi đăng nhập
+    setUserData,
   };
 
   return <StorageContext.Provider value={states}>{children}</StorageContext.Provider>;

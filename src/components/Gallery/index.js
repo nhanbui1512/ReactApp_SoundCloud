@@ -16,7 +16,8 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +26,39 @@ function Gallery({ data }) {
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
+
+  const storage = useContext(StorageContext);
+
+  // Hàm xử lý khi nút Play/Pause được nhấn
+  const handlePlay = (e) => {
+    e.preventDefault();
+    const audioTag = storage.audioRef.current;
+
+    // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
+    if (storage.currentMusic.id !== data.id) {
+      storage.setCurrentMusic(data);
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlay(true);
+        audioTag.removeEventListener('loadeddata', playMusic);
+      };
+      audioTag.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
+    }
+
+    // Nếu đang bài đang phát giống với bài của gallary
+    if (audioTag.paused) {
+      // Đang dừng thì hiển thị nút Play
+      audioTag.play();
+      // setIsPlay(true);
+    } else {
+      // Đang phát thì hiển thị nút pause
+      audioTag.pause();
+      // setIsPlay(false);
+    }
+  };
+
+  //xử lý khi người dùng click ngoài more button thì tự động tắt menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -40,18 +74,45 @@ function Gallery({ data }) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
+  useEffect(() => {
+    if (storage.currentMusic.id !== data.id) {
+      setIsPlay(false);
+    }
+  }, [storage.currentMusic, data.id]);
+
+  useEffect(() => {
+    const audioTag = storage.audioRef.current;
+
+    const handlePlay = () => {
+      if (data.id === storage.currentMusic.id) {
+        setIsPlay(true);
+      }
+    };
+
+    const handlePause = () => {
+      if (data.id === storage.currentMusic.id) {
+        setIsPlay(false);
+      }
+    };
+
+    audioTag.addEventListener('play', handlePlay);
+    audioTag.addEventListener('pause', handlePause);
+
+    return () => {
+      audioTag.removeEventListener('play', handlePlay);
+      audioTag.removeEventListener('pause', handlePlay);
+    };
+  }, [storage.audioRef, storage.currentMusic.id, data.id]);
+
   return (
     <div className={cx('modul-left_item')}>
       <div className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.thumbNail || ''} alt="" />
 
         <div className={cx('modul-left_backgroud')}></div>
-        <div
-          onClick={() => {
-            setIsPlay(!isPlay);
-          }}
-          className={cx('modul-left_playbtn')}
-        >
+        <div onClick={handlePlay} className={cx('modul-left_playbtn')}>
           <FontAwesomeIcon
             className={cx('modul-left_playbtn-icon')}
             icon={isPlay ? faPause : faPlay}
@@ -126,7 +187,7 @@ function Gallery({ data }) {
       <a href="/" className={cx('name-gallery')}>
         {data.name}
       </a>
-      <span className={cx('name-track')}>{data.owner.userName}</span>
+      <span className={cx('name-track')}>{data.artistName}</span>
     </div>
   );
 }

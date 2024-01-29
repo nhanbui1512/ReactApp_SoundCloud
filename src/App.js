@@ -40,9 +40,6 @@ const App = () => {
         <Route path="/signup" element={<HeaderOnly />}>
           <Route index element={<Signup></Signup>} />
         </Route>
-        {/* <Route path="/profile" element={<HeaderOnly />}>
-          <Route index element={<Profile></Profile>} />
-        </Route> */}
       </>,
     ),
   );

@@ -1,0 +1,171 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: hsla(0, 0%, 94.9%, 0.9);
+  z-index: 999;
+}
+
+.content {
+  background-color: #fff;
+  padding: 22px;
+  width: 850px;
+  left: 142px;
+  height: auto;
+}
+
+.content h2 {
+  font-size: 22px;
+  line-height: 1;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 24px;
+}
+
+.img {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  margin-right: 18px;
+  background-image: linear-gradient(135deg, #846170, #70929c);
+}
+
+.butUpload {
+  text-align: center;
+}
+
+.butUpload button {
+  background-color: #d0d0d0;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.editProfile input {
+  display: none;
+}
+
+.editProfile {
+  display: flex;
+}
+
+.field span {
+  font-size: 14px;
+}
+
+.name input {
+  display: flex;
+  width: 100%;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.first_name input {
+  display: flex;
+  width: 260px;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.last_name input {
+  display: flex;
+  width: 260px;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.city input {
+  display: flex;
+  width: 260px;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.country input {
+  display: flex;
+  width: 260px;
+  height: 25px;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.display {
+  display: flex;
+  flex-direction: row;
+}
+
+.last_name {
+  margin-left: 8px;
+}
+
+.country {
+  margin-left: 8px;
+}
+
+.sc_text_light {
+  font-size: 12px;
+  color: #999;
+}
+
+.bio textarea {
+  display: flex;
+  width: 100%;
+  height: 70px;
+  resize: vertical;
+  font-family: Arial;
+  border: solid 1px #d0d0d0;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.activeUpdate {
+  text-align: right;
+  padding: 10px 20px;
+  border-top: 1px solid #f2f2f2;
+  margin-top: 30px;
+}
+
+.butCancel {
+  font-size: 14px;
+  background-color: #fff;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.butSave {
+  background-color: #f50;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fielLabel {
+  color: red;
+  font-size: 12px;
+}
+.close-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  float: right;
+}

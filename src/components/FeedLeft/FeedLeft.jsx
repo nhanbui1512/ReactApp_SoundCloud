@@ -1,22 +1,39 @@
 import styles from './FeedLeft.module.scss';
 import classNames from 'classnames/bind';
-import React from 'react';
-import dataFeed from './dataFeed';
-import FeedLeftItem from './FeedLeftItem/FeedLeftItem';
+import React, { useEffect, useState } from 'react';
+//import dataFeed from './dataFeed';
+//import FeedLeftItem from './FeedLeftItem/FeedLeftItem';
+import apiHandleFeed from 'api/apiHandleFeed';
+import FeedLeftULList from './FeedLeftULList';
 
 
 const cx = classNames.bind(styles);
 const FeedLeft = () => {
+  const [feedSong, setFeedSong] = useState([]);
+  useEffect(() => {
+    const getSongFeed = async () => {
+      try {
+        const res = await apiHandleFeed.getAllSong();
+        setFeedSong(res.data.data);
+        console.log(res.data.data);
+      } catch(error) {
+        console.error(error);
+      }
+    }
+    getSongFeed();
+  },[])
   
   return (
     <>
       <div className={cx('feed__modul')}>
       <h4 className={cx('feed__heading')}>Hear the latest posts from the people you’re following:</h4>  
-        <ul className={cx('feed__modul-list')}>
-          {dataFeed.map((data, index) => (
+        {/* <ul className={cx('feed__modul-list')}>
+          {feedSong.map((data, index) => (
             <FeedLeftItem data={data} key={index}/>
           ))}
-        </ul>
+          
+        </ul> */}
+        <FeedLeftULList data={feedSong}/>
       </div>
     </>
   );

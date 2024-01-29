@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://37fc-113-166-1-15.ngrok-free.app',
+  baseURL: 'http://localhost:3000',
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'multipart/form-data',

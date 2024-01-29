@@ -14,6 +14,7 @@ function ListDisk({ title }) {
       .get('http://localhost:3000/song/get-songs?page=1&per_page=20')
       .then((res) => {
         setData(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);

@@ -1,8 +1,6 @@
 import Slider from 'components/Slider';
 import classNames from 'classnames/bind';
 import styles from './ListDisk.module.scss';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 

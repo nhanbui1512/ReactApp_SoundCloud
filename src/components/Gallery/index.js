@@ -109,7 +109,6 @@ function Gallery({ data }) {
 
   const handleLiked = async () => {
     const isLikeSong = async (data) => {
-      console.log(data.id);
       const dataResult = await likeSong(data.id);
       return dataResult;
     };

@@ -129,7 +129,7 @@ const FeedSong = ({ data }) => {
               />
             </div>
             <div className={cx('feed__modul-item-song')}>
-              <div className={cx('feed__modul-item-authorname')}>{data.userName}</div>
+              <div className={cx('feed__modul-item-authorname')}>{data.artistName}</div>
               <div className={cx('feed__modul-item-songname')}>{data.name}</div>
             </div>
           </div>

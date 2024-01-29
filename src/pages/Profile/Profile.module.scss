@@ -1,4 +1,4 @@
-.container{
+.wrapper{
     width: 1200px;
 
 }
@@ -73,7 +73,7 @@
     border: 1px solid rgb(189, 184, 184);
     width: 80px;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 15px;
     border-radius: 5px;
 }
 .btn-edit{
@@ -84,6 +84,80 @@
     border: 1px solid rgb(189, 184, 184);
     width: 80px;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 15px;
     border-radius: 5px;
+}
+.navbar {
+    font-size: 16px;
+    padding: 15px;
+    text-decoration: none;
+    color: #000;
+    border-bottom: 0.5px #f2f2f2 solid;
+}
+
+.active {
+    color: #f50;
+    border-bottom: 2px solid #f50;
+}
+.info-music{
+    display: flex;
+}
+.nav-info-left {
+    display: flex;
+    height: 50px;
+    flex-direction: column;
+    
+}
+.nav-info-left-head {
+    padding: 0px;
+    height: 50px;
+    
+}
+.nav-info-right{
+   width: 400px;
+   display: flex;
+   flex-direction: column;
+   
+}
+.follwer-body {
+    margin-top: 20px;
+    display: flex;
+    font-size: 18px;
+    padding-left: 30px;
+
+}
+.follower, .following, .tracks{
+    margin-left: 10px;
+    padding: 10px;
+    
+}
+
+.follwer-item{
+    border-left: 0.5px #f2f2f2 solid;
+    margin-top: 15px;
+    height: 500px;
+}
+.info-music-list {
+    width:  850px;
+    height: 500px;
+    // align-items: center;  
+    // justify-content: center; 
+    
+}
+
+.router-item{
+    margin-top: 15px;
+    height: 500;
+}
+.button-item{
+    margin-left: auto;
+    margin-right: 10px;
+}
+.btn-route-upload {
+    width: 80px;
+    height: 30px;
+    background-color: #f50;
+    color: black;
+    text-decoration: none;
+    margin-left: 200px;
 }

@@ -23,7 +23,8 @@ const cx = classNames.bind(styles);
 const menuUserItem = [
   {
     title: 'Profile',
-    icon: <FontAwesomeIcon icon={faUser} />,
+    to: '/profile',
+    icon: <FontAwesomeIcon className={cx('icon-menu')} icon={faUser} />,
   },
   {
     title: 'Like',
@@ -130,15 +131,15 @@ const Header = () => {
 
         {currentUser || (
           <div className={cx('login-menu')}>
-            <Button to={'/login'} outline>
+            <Button className={cx('sigin-btn')} to={'/login'} outline>
               Sign in
             </Button>
-            <Button to={'/profile'} primary>
+            <Button to={'/signup'} primary>
               Create Account
             </Button>
           </div>
         )}
-        
+
         {currentUser && (
           <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
             Upload
@@ -155,7 +156,7 @@ const Header = () => {
                 <Wrapper className={cx('dropdown-menu')}>
                   {menuUserItem.map((item, index) => {
                     return (
-                      <MenuItem key={index} icon={item.icon}>
+                      <MenuItem to={item.to} key={index} icon={item.icon}>
                         {item.title}
                       </MenuItem>
                     );

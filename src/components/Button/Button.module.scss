@@ -2,7 +2,6 @@
   font-family: 'ProximaNova', sans-serif;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   font-size: 14px;
   font-weight: 700;
   min-width: 100px;
@@ -12,13 +11,16 @@
   user-select: none;
   background-color: transparent;
   text-decoration: none;
+
   .title {
     color: var(--white);
     font-weight: 400;
   }
-  + .wrapper {
-    margin-left: 8px;
+
+  .textBlack {
+    color: var(--black);
   }
+
   &.disabled {
     pointer-events: none;
     opacity: 0.4;
@@ -100,4 +102,8 @@
   &:hover {
     background-color: rgba(255, 255, 255, 0.04);
   }
+}
+
+.separate {
+  border-bottom: 1px solid #f2f2f2;
 }

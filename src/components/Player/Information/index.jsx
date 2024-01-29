@@ -9,8 +9,8 @@ import Tippy from '@tippyjs/react/headless';
 import PlayList from 'components/PlayList';
 const cx = classNames.bind(styles);
 
-function Information() {
-  const [isLiked, setIsLiked] = useState(false);
+function Information({ data }) {
+  const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isFollowed, setisFollowed] = useState(false);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -28,18 +28,18 @@ function Information() {
   return (
     <div className={cx('wrapper')}>
       <Link className={cx('avatar')}>
-        <Image src="https://i1.sndcdn.com/artworks-1yP6LpbI38XjSL6f-vyPXXw-t50x50.jpg" alt="" />
+        <Image src={data.thumbNail} alt="" />
       </Link>
 
       <div className={cx('information')}>
         <div className={cx('text-wrap')}>
           <Link href="/oh-putitbackon" className={cx('artist')} title="putitbackon">
-            putitbackon
+            {data.artistName}
           </Link>
         </div>
         <div className={cx('text-wrap')}>
           <Link href="/oh-putitbackon" className={cx('song')} title="putitbackon">
-            Tearliner - 이끌림 (Vocal by Kim Go Eun 김고은) [치즈인더트랩 Cheese in the Trap OST‬]
+            {data.name}
           </Link>
         </div>
       </div>

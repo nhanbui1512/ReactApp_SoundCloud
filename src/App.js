@@ -13,14 +13,13 @@ import Stream from 'pages/Stream/Stream';
 import Library from 'pages/Library/Library';
 import Upload from 'pages/Upload/Upload';
 import Feed from 'pages/Feed';
-import Search from "pages/Search/Search";
+import Search from 'pages/Search/Search';
 import Login from 'pages/Login/index.jsx';
 import HeaderOnly from 'Layouts/HeaderOnly';
 import Signup from 'pages/signup/Signup';
 // import ToastMessage from 'components/ToastMessage/ToastMessage';
 import { ToastContainer } from 'react-toastify';
 import Profile from 'pages/Profile/profile';
-
 
 const App = () => {
   const router = createBrowserRouter(
@@ -32,17 +31,18 @@ const App = () => {
           <Route path="/Library/*" element={<Library />}></Route>
           <Route path="/Upload" element={<Upload />}></Route>
           <Route path="/feed" element={<Feed />}></Route>
-          <Route path="/search" element={<Search/>}></Route>
+          <Route path="/search" element={<Search />}></Route>
+          <Route path="/profile/*" element={<Profile />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
-          <Route index element={<Login></Login>} />    
+          <Route index element={<Login></Login>} />
         </Route>
-        {/* <Route path="/signup" element={<HeaderOnly />}>
+        <Route path="/signup" element={<HeaderOnly />}>
           <Route index element={<Signup></Signup>} />
-        </Route> */}
-        <Route path="/profile" element={<HeaderOnly />}>
-          <Route index element={<Profile></Profile>} />
         </Route>
+        {/* <Route path="/profile" element={<HeaderOnly />}>
+          <Route index element={<Profile></Profile>} />
+        </Route> */}
       </>,
     ),
   );

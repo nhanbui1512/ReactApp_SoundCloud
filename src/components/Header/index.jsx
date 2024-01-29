@@ -138,7 +138,7 @@ const Header = () => {
             </Button>
           </div>
         )}
-        
+
         {currentUser && (
           <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
             Upload

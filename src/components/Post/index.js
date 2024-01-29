@@ -6,6 +6,7 @@ import { faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { useEffect, useRef, useState } from 'react';
+import { unfollowUser } from 'api/follow';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +28,8 @@ function Post({ data }) {
     };
   }, []);
 
-  const handleFollowing = () => {
+  const handleFollowing = async () => {
+    const Unfollow = await unfollowUser(data.followed);
     setIsFollowing(!isFollowing);
   };
   return (

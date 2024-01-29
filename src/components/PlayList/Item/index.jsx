@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Item.module.scss';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList, AddToPlaylist } from 'components/Icons';
 
@@ -19,8 +19,6 @@ const { FontAwesomeIcon } = require('@fortawesome/react-fontawesome');
 const cx = classNames.bind(styles);
 
 function Item({ active }) {
-  const menuRef = useRef();
-
   const [isLiked, setIsLiked] = useState(false);
 
   const menuItems = [
@@ -85,7 +83,7 @@ function Item({ active }) {
             <HeadlessTippy
               interactive
               render={() => (
-                <Wrapper ref={menuRef} className={cx('menu-wrapper')}>
+                <Wrapper className={cx('menu-wrapper')}>
                   {menuItems.map((item, index) => (
                     <MenuItem
                       className={cx('menu-item')}

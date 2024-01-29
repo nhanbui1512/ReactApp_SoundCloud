@@ -13,7 +13,6 @@ function Overview() {
   useEffect(() => {
     const getData = async () => {
       const dataSongs = await getSongs();
-      console.log(dataSongs.data);
       setData(dataSongs.data);
     };
     getData();

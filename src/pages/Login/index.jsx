@@ -1,9 +1,9 @@
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { auth } from '../../services/firebase/app';
-import { signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider } from 'firebase/auth';
-import { Link ,useNavigate} from 'react-router-dom';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
-import { StorageContext } from 'context/Storage'; 
+import { StorageContext } from 'context/Storage';
 
 import './Login.scss';
 const Login = () => {
@@ -17,26 +17,24 @@ const Login = () => {
   const onLogin = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Please enter email or password");
+      alert('Please enter email or password');
       return;
     }
     setSubmitted(true);
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {   
+      .then((userCredential) => {
         const user = userCredential.user;
         setCurrentUser(true);
-        navigate("/")
-        console.log(user);
-    })
-    .catch((error) => {
+        navigate('/');
+      })
+      .catch((error) => {
         setSubmitted(false);
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(errorCode, errorMessage);
-        alert("Email or password is not error");
-    });
-   
-  }
+        alert('Email or password is not error');
+      });
+  };
 
   const handleSignInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
@@ -47,20 +45,18 @@ const Login = () => {
         const user = result.user;
         setCurrentUser(true);
         navigate('/');
-        console.log(user);
         // onLoginSuccess();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        
       });
   };
 
   return (
     <div className="container">
-      <form  className="login-form">
+      <form className="login-form">
         <h1>Login </h1>
         <br></br>
         <input
@@ -77,7 +73,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button  onClick={onLogin} disabled={submitted} className="login-button">
+        <button onClick={onLogin} disabled={submitted} className="login-button">
           Login
         </button>
         <div className="div-p0">
@@ -91,9 +87,7 @@ const Login = () => {
           <div className="or">or</div>
           <div className="line-right"></div>
         </div>
-        <GoogleButton className="google-button"
-        onClick={handleSignInWithGoogle}
-        />
+        <GoogleButton className="google-button" onClick={handleSignInWithGoogle} />
         <p className="p1">
           When registering, you agree that we may use your provided data for the registration and to
           send you notifications on our products and services. You can unsubscribe from

@@ -44,6 +44,7 @@ function GlobalStates({ children }) {
 
   const [userData, setUserData] = useState({});
 
+  console.log(userData);
   const audioRef = useRef();
 
   const states = {

@@ -12,7 +12,7 @@ export async function createPlaylist(name, listOfSongsId = []) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -28,7 +28,7 @@ export async function addSongsToPlaylist(playlistId, listOfSongsId = []) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -41,7 +41,7 @@ export async function getPlaylists(page = 1, perPage = 10) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -51,7 +51,7 @@ export async function getPlaylistsById(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -62,7 +62,7 @@ export async function getPlaylistsByName(name) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -73,7 +73,7 @@ export async function getMyFollowingPlaylist() {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -83,7 +83,7 @@ export async function deletePlaylist(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -96,6 +96,6 @@ export async function getUsersFollowingPlaylist(playlistId) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }

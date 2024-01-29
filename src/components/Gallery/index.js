@@ -18,14 +18,17 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
-import { likeSong } from 'api/songs';
+import axiosClient from 'api/axiosClient';
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 
 function Gallery({ data }) {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(data.isLiked);
+  const navigate = useNavigate();
+
   const [isPlay, setIsPlay] = useState(false);
 
   const storage = useContext(StorageContext);
@@ -107,16 +110,6 @@ function Gallery({ data }) {
     };
   }, [storage.audioRef, storage.currentMusic.id, data.id]);
 
-  const handleLiked = async () => {
-    const isLikeSong = async (data) => {
-      const dataResult = await likeSong(data.id);
-      return dataResult;
-    };
-    const dataResult = await isLikeSong(data);
-    setIsLiked(!isLiked);
-    console.log(dataResult);
-  };
-
   return (
     <div className={cx('modul-left_item')}>
       <div className={cx('modul-left_item-container-img')}>
@@ -135,11 +128,19 @@ function Gallery({ data }) {
             <>
               <span
                 onClick={() => {
-                  handleLiked();
+                  axiosClient
+                    .post('/song/like?song_id=14')
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      if (err.response.data.error.authorize) navigate('/login');
+                    });
+                  setIsLiked(!isLiked);
                 }}
                 className={cx('option-btn')}
               >
-                <FontAwesomeIcon className={cx('', { liked: data.isLiked })} icon={faHeart} />
+                <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
               </span>
             </>
           </Tippy>

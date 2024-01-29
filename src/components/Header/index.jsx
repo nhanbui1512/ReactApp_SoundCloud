@@ -18,6 +18,7 @@ import { useContext } from 'react';
 import Button from 'components/Button';
 import { StorageContext } from 'context/Storage';
 import SearchBar from './SearchBar';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -87,6 +88,10 @@ const moreMenuItem = [
   },
   {
     title: 'Sign out',
+    onClick: () => {
+      Cookies.remove('authToken');
+      window.location.replace('/');
+    },
   },
 ];
 
@@ -182,7 +187,12 @@ const Header = () => {
               <Wrapper className={cx('more-menu')}>
                 {moreMenuItem.map((item, index) => {
                   return (
-                    <MenuItem separate={item.separate} key={index} icon={item.icon}>
+                    <MenuItem
+                      onClick={item.onClick}
+                      separate={item.separate}
+                      key={index}
+                      icon={item.icon}
+                    >
                       {item.title}
                     </MenuItem>
                   );

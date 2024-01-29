@@ -39,15 +39,17 @@ function Player() {
 
   const music = storage.currentMusic;
 
-  const [percent, setPercent] = useState(0);
-  const [volume, setVolume] = useState(100);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isShuffle, setIsShuffle] = useState(false);
-  const [loop, setLoop] = useState(0);
-  const audioRef = storage.audioRef;
+  const [percent, setPercent] = useState(0); // Bài hát đã load được bao nhiêu %
+  const [volume, setVolume] = useState(100); // Volume hiện tại của media
+  const [isMuted, setIsMuted] = useState(false); // Mute Media
+  const [isPlaying, setIsPlaying] = useState(false); // Media có đang phát nhạc hay không
+  const [isShuffle, setIsShuffle] = useState(false); // Media có đang trộn lẫn hay không
+  const [loop, setLoop] = useState(0); // Chế độ lặp
+
+  const audioRef = storage.audioRef; // thẻ audio
   const currentTimeRef = useRef();
-  const durationTimeRef = useRef();
+
+  // xử lý khi người dùng nhấn thay đổi vòng lặp
   const handleChangeLoopMode = () => {
     if (loop === loopModes.length - 1) {
       return setLoop(0);
@@ -55,6 +57,7 @@ function Player() {
     setLoop(loop + 1);
   };
 
+  // Cập nhật thời gian hiện tại của bài hát
   const handlePlayingAudio = (e) => {
     const currentPercent = (e.target.currentTime / e.target.duration) * 100;
 
@@ -157,7 +160,6 @@ function Player() {
               </div>
               <div className={cx('time-wrapper')}>
                 <span
-                  ref={durationTimeRef}
                   style={{
                     fontSize: 12,
                   }}
@@ -167,6 +169,8 @@ function Player() {
               </div>
             </div>
           </div>
+
+          {/* Thẻ Audio */}
           <audio
             onTimeUpdate={handlePlayingAudio}
             onEnded={() => {
@@ -185,7 +189,6 @@ function Player() {
           ></audio>
 
           {/* volume */}
-
           <HeadlessTippy
             interactive
             offset={[0, 50]}
@@ -231,14 +234,8 @@ function Player() {
               />
             </div>
           </HeadlessTippy>
-
-          <div
-            className="pd_0_8"
-            style={{
-              width: 360,
-              height: '100%',
-            }}
-          >
+          {/* Information */}
+          <div className={cx(['information-container', 'pd_0_8'])}>
             <Information data={music} />
           </div>
         </div>

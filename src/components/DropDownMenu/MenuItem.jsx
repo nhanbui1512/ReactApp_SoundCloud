@@ -3,9 +3,10 @@ import styles from './DropDownMenu.module.scss';
 import Button from 'components/Button';
 const cx = classNames.bind(styles);
 
-function MenuItem({ to, children, icon, className, separate, onClick }) {
+function MenuItem({ to, children, icon, className, separate, onClick, primary }) {
   const classes = cx('menuitem-wrapper', {
     [className]: className,
+    primary,
   });
   return (
     <Button

@@ -33,7 +33,7 @@ const SidebarHeart = ({ art }) => {
     showToast(art);
   };
   const showToast = (art) => {
-    toast.success(<CustomToast art={art} isLiked={isLiked}/>, {
+    toast.success(<CustomToast art={art} isLiked={isLiked} />, {
       position: 'top-right',
     });
   };
@@ -67,21 +67,15 @@ const SidebarHeart = ({ art }) => {
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>
-                  {art.follower}
-                </span> 
+                <span className={cx('sidebar-data')}>{art.follower}</span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-                <span className={cx('sidebar-data')}>
-                  {art.song}
-                </span> 
+                <span className={cx('sidebar-data')}>{art.song}</span>
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
-                <span className={cx('sidebar-data')}>
-                  {art.repeat}
-                </span> 
+                <span className={cx('sidebar-data')}>{art.repeat}</span>
               </span>
             </div>
           </div>
@@ -105,7 +99,7 @@ const SidebarHeart = ({ art }) => {
                   className={cx('sidebar__modul-option-btn')}
                   onClick={() => {
                     setIsLiked(!isLiked);
-                    addToFavorites(art)
+                    addToFavorites(art);
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

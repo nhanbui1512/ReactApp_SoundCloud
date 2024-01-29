@@ -5,7 +5,7 @@ import musics from 'assets/musics';
 export const StorageContext = createContext();
 
 function GlobalStates({ children }) {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(true);
   const [currentMusic, setCurrentMusic] = useState({
     thumbNail: images.taylorSwift,
     linkFile: musics.enchanted,

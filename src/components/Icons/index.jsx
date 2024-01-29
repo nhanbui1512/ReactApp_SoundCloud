@@ -17,12 +17,13 @@ export const Logo = ({ width = 50, height = 22, className = {} }) => {
   );
 };
 
-export const PlayList = () => {
+export const PlayList = ({ width = 18, height = 18, className = {} }) => {
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
+      width={width}
+      height={height}
       viewBox="0 0 18 18"
     >
       <g fill="#333" fillRule="evenodd">
@@ -33,7 +34,7 @@ export const PlayList = () => {
   );
 };
 
-export const AddToList = (className = {}) => {
+export const AddToPlaylist = (className = {}) => {
   return (
     <svg
       className={className}
@@ -46,19 +47,34 @@ export const AddToList = (className = {}) => {
       <title>Group</title>
       <desc>Created with Sketch.</desc>
       <defs />
-      <g
-        id="Page-1"
-        stroke="none"
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-      >
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="add-to-playlist" fill="rgb(34, 34, 34)">
           <path
             d="M12,3 L12,1 L14,1 L14,3 L16,3 L16,5 L14,5 L14,7 L12,7 L12,5 L10,5 L10,3 L12,3 Z M0,3 L0,5 L8,5 L8,3 L0,3 Z M0,7 L0,9 L10,9 L10,7 L0,7 Z M0,11 L0,13 L10,13 L10,11 L0,11 Z"
             id="Rectangle-20"
           />
         </g>
+      </g>
+    </svg>
+  );
+};
+
+export const AddToList = ({ width = 20, height = 20, className = {} }) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 20 20"
+    >
+      <g fill="none" fillRule="evenodd">
+        <path d="M0 0h20v20H0z" />
+        <path
+          fill="rgb(34, 34, 34)"
+          fillRule="nonzero"
+          d="M4 9h10v2H4V9zm0 4h10v2H4v-2zm0-8h8v2H4V5zm10-4l4 3-4 3V1z"
+        />
       </g>
     </svg>
   );

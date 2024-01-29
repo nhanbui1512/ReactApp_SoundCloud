@@ -2,36 +2,31 @@ import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
 import Upload from '../Upload';
 import styles from './DetailFile.module.scss';
-import { createSongs } from 'services/firebase/firestore/songs';
+import { createSong, createSongs } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
 function DetailFile({ selectedFile }) {
   const genre = [
-    'Country',
-    'Blue',
     'Classical',
-    'Latin',
     'EDM',
     'Indie',
     'Jazz',
     'Hip hop',
-    'Folk',
     'Funk',
     'Disco',
     'Pop',
-    'Rock',
-    'Metal'
+    'Rock'
   ]
+  
   const [image, setImage] = useState('');
   const [isCancel, setIsCancel] = useState(false);
   const [textDes, setTextDes] = useState('');
   const [textArt, setTextArt] = useState('');
-  const [textGen, setTextGen] = useState('');
+  const [gengreId, setGengreId] = useState('');
   const [nameAudio, setNameAudio] = useState('');
   const [selectedValue, setSelectedValue] = useState(30);
   const inputref = useRef();
-  const [showCustomField, setShowCustomField] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -42,12 +37,28 @@ function DetailFile({ selectedFile }) {
   };
 
   const handleSave = () => {
-    if (nameAudio !== '') {
-      createSongs(nameAudio, textArt, textGen, null, selectedFile, textDes, image);
-      alert('Uploading...');
-      setIsCancel(true);
-    } else {
-      alert('Please enter the name of audio!');
+    try {
+      if (nameAudio !== '') {
+        // Gọi API createSongs với các thông tin từ state
+        const response = createSong({
+          songName: nameAudio,
+          description: textDes,
+          artistName: textArt,
+          audioFile: selectedFile,
+          imageFile: image,
+          genreId: gengreId,
+        });
+
+        // Xử lý kết quả từ API nếu cần
+        console.log(response);
+
+        alert('Uploading...');
+        setIsCancel(true);
+      } else {
+        alert('Please enter the name of audio!');
+      }
+    } catch (error) {
+      console.error('Error creating song:', error);
     }
   };
 
@@ -99,22 +110,15 @@ function DetailFile({ selectedFile }) {
                 </div>
                 <div className={cx('genrerow')}>
                   <span className={cx('fieldTitle', 'dis')}>Genre</span>
-                  {/* <input type="text" placeholder='Genre' value={textGen} onChange={(e) => setTextGen(e.target.value)}/> */}
                   <select
                     value={selectedValue}
                     onChange={(e) => {
                       setSelectedValue(e.target.value);
-                      setTextGen(e.target.value)
-                      if (e.target.value === "10") { // Show custom field if "10" (Custom) is selected
-                          setShowCustomField(true);
-                      } else {
-                          setShowCustomField(false);
-                      }
+                      setGengreId(e.target.selectedIndex)
                     }}
                   >
                     <optgroup>
                       <option value={''}>None</option>
-                      <option value={10}>Custom</option>
                     </optgroup>
                     <optgroup label="Music">
                       {genre.map((genreOption, index) => (
@@ -124,12 +128,6 @@ function DetailFile({ selectedFile }) {
                       ))}
                     </optgroup>
                   </select>
-                  {showCustomField && (
-                      <div className={cx('fields_customGen')}>
-                          <span className={cx('fieldTitle', 'dis')}>Custom genre</span>
-                          <input type="text" placeholder="Custom genre" onChange={(e) => setTextGen(e.target.value)} />
-                      </div>
-                  )}
                 </div>
                 <div className={cx('fields_title')}>
                   <span className={cx('fieldTitle', 'dis')}>Additional tags</span>

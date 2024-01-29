@@ -2,14 +2,12 @@ import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getSongsByGenre, getSongsByName } from "services/firebase/firestore/songs";
-import { getArtistsByName } from "services/firebase/firestore/artists";
-import { getPlaylistsByName } from "services/firebase/firestore/playlist";
-import { getGenresByName } from "services/firebase/firestore/genres";
 import FeedLeftItem from "components/FeedLeft/FeedLeftItem/FeedLeftItem";
 import { MenuItem } from "components/DropDownMenu";
 import PostSearch from "components/PostSearch";
 import Gallery from "components/Gallery";
+import { getSongsByName } from "api/songs";
+import { getPlaylistsByName } from "api/playlist";
 
 const cx = classNames.bind(styles);
 
@@ -24,24 +22,15 @@ const Search = () => {
 	const [playlistsResult, setPlaylistResult] = useState([])
 
 	const getResult = async (keyword) => {
-		const songs = await getSongsByName(keyword)
-		const genres = await getGenresByName(keyword)
-		let songsByGenre = []
-		if (genres.lenght !== 0) {
-			genres.forEach(async genre => {
-				const result = await getSongsByGenre(genre.id)
-				songsByGenre.push({
-					genreName: genre.name,
-					songs: result.slice(0,4)
-				})
-			})
-		}
-		const artists = await getArtistsByName(keyword)
-		const playlists = await getPlaylistsByName(keyword)
-		setSongsResult(songs)
-		setSongsByGenresResult(songsByGenre)
-		setArtistsResult(artists)
-		setPlaylistResult(playlists)
+		await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword)])
+      .then(([songsResult, playlistsResult]) => {
+				if (songsResult.status === "fulfilled") {
+					setSongsResult(songsResult.value.songs)
+				}
+				if (playlistsResult.status === "fulfilled") {
+					setPlaylistResult(playlistsResult.value.playlists)
+				}
+      })
 		setLoading(false)
 	}
 	useEffect(() => {
@@ -57,18 +46,20 @@ const Search = () => {
 				return (
 					<div>
 						<h2 className={cx("header")}>Songs</h2>
-						{songsResult.map((item, index) => <FeedLeftItem data={item}/>)}
+						{songsResult.length === 0 ? <h4 style={{ color: "gray" }}>Sorry we didn't find any results for "{keyword}"</h4>
+						  : songsResult.map((item, index) => <FeedLeftItem data={item}/>)}
 					</div>
 				)
 			case 1:
 				return (
 					<div>
 						<h2 className={cx("header")}>Songs by Genre</h2>
-						{songsByGenresResult.map((item, index) => 
-							<div>
-								<h4>{item.genreName}</h4>
-								{item.songs.map((item, index) => <FeedLeftItem key={index} data={item}/>)}
-							</div>
+						{songsByGenresResult.length === 0 ? <h4 style={{ color: "gray" }}>Sorry we didn't find any results for "{keyword}"</h4>
+						  : songsByGenresResult.map((item, index) => 
+								<div>
+									<h4>{item.genreName}</h4>
+									{item.songs.map((item, index) => <FeedLeftItem key={index} data={item}/>)}
+								</div>
 						)}
 					</div>
 				)
@@ -76,14 +67,16 @@ const Search = () => {
 				return (
 					<div>
 						<h2 className={cx("header")}>Artists</h2>
-						{artistsResult.map((item, index) => <PostSearch key={index} data={item}/>)}
+						{artistsResult.length === 0 ? <h4 style={{ color: "gray" }}>Sorry we didn't find any results for "{keyword}"</h4>
+							: artistsResult.map((item, index) => <PostSearch key={index} data={item}/>)}
 					</div>
 				)
 			case 3:
 				return (
 					<div>
 						<h2 className={cx("header")}>Playlists</h2>
-						{playlistsResult.map((item, index) => <Gallery key={index} data={item}/>)}
+						{playlistsResult.length === 0 ? <h4 style={{ color: "gray" }}>Sorry we didn't find any results for "{keyword}"</h4> 
+							: playlistsResult.map((item, index) => <Gallery key={index} data={item}/>)}
 					</div>
 				)
 			default:

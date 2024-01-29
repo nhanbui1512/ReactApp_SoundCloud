@@ -5,44 +5,34 @@ import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useState } from 'react';
-import { getSongsByName } from 'services/firebase/firestore/songs';
-import { getArtistsByName } from 'services/firebase/firestore/artists';
-import { getPlaylistsByName } from 'services/firebase/firestore/playlist';
 import { useNavigate } from 'react-router-dom';
-import { getGenresByName } from 'services/firebase/firestore/genres';
 import { useDebounce } from 'hooks';
+import { getSongsByName } from 'api/songs';
+import { getPlaylistsByName } from 'api/playlist';
 
 const cx = classNames.bind(styles);
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [songsSuggest, setSongsSuggest] = useState([]);
-  const [artistsSuggest, setArtistsSuggest] = useState([]);
-  const [genresSuggest, setGenresSuggest] = useState([]);
-  const [playlistsSuggest, setPlaylistSuggest] = useState([]);
+  const [suggest, setSuggest] = useState([])
   const navigate = useNavigate();
 
 	const debounceKeyword = useDebounce(keyword, 700);
 
   const getSuggest = async (keyword) => {
-    const songs = await getSongsByName(keyword);
-    const artists = await getArtistsByName(keyword);
-    const genres = await getGenresByName(keyword);
-    const playlists = await getPlaylistsByName(keyword);
-    setSongsSuggest(songs.slice(0, 4));
-    setArtistsSuggest(artists.slice(0, 4));
-    setGenresSuggest(genres.slice(0, 4));
-    setPlaylistSuggest(playlists.slice(0, 4));
+    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword)])
+      .then(([songsResult, playlistsResult]) => {
+        const suggest = [].concat(songsResult.value?.songs.slice(0,4), playlistsResult.value?.playlists.slice(0,4))
+        // console.log(suggest)
+        setSuggest(suggest)
+      })
     setLoading(false);
   };
   useEffect(() => {
     if (debounceKeyword !== '') {
       getSuggest(debounceKeyword);
     } else {
-      setSongsSuggest([]);
-      setArtistsSuggest([]);
-      setGenresSuggest([]);
-      setPlaylistSuggest([]);
+      setSuggest([])
       setLoading(false);
     }
   }, [debounceKeyword]);
@@ -54,8 +44,7 @@ const SearchBar = () => {
           <MenuItem key={0}
 						onClick={() => handleSearch()}
 					>Search for "{debounceKeyword}"</MenuItem>
-          {[].concat(songsSuggest, artistsSuggest, genresSuggest, playlistsSuggest)
-            .map((item, index) => (
+          {suggest.map((item, index) => (
               <MenuItem
                 key={index + 1}
                 icon={<FontAwesomeIcon icon={faSearch} />}

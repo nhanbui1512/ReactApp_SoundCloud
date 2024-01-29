@@ -19,6 +19,7 @@ import HeaderOnly from 'Layouts/HeaderOnly';
 import Signup from 'pages/signup/Signup';
 // import ToastMessage from 'components/ToastMessage/ToastMessage';
 import { ToastContainer } from 'react-toastify';
+import Profile from 'pages/Profile/profile';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/Upload" element={<Upload />}></Route>
           <Route path="/feed" element={<Feed />}></Route>
           <Route path="/search" element={<Search />}></Route>
+          <Route path="/profile/*" element={<Profile />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />
@@ -38,6 +40,9 @@ const App = () => {
         <Route path="/signup" element={<HeaderOnly />}>
           <Route index element={<Signup></Signup>} />
         </Route>
+        {/* <Route path="/profile" element={<HeaderOnly />}>
+          <Route index element={<Profile></Profile>} />
+        </Route> */}
       </>,
     ),
   );

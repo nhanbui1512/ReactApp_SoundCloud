@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { auth } from '../../services/firebase/app';
 import { StorageContext } from 'context/Storage';
+import classNames from 'classnames/bind';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import './Signup.scss';
+import styles from './Signup.module.scss';
+const cx = classNames.bind(styles);
+
 const Signup = () => {
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState('');
@@ -42,8 +45,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
-      <form className="signup-form">
+    <div className={cx('wrapper')}>
+      <form className={cx('signup-form')}>
         <h1>Signup </h1>
         <br></br>
         <input
@@ -60,11 +63,16 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button type="submit" onClick={onSubmit} className="signup-button" disabled={submitted}>
+        <button
+          type="submit"
+          onClick={onSubmit}
+          className={cx('signup-button')}
+          disabled={submitted}
+        >
           Signup
         </button>
         <br></br>
-        <div className="div-p0">
+        <div className={cx('div-p0')}>
           <p>
             Need to Login? <Link to="/login">Login</Link>
           </p>

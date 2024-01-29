@@ -8,7 +8,7 @@ export async function signIn(email, password) {
         const response = await axiosClient.post(`/login`, formdata)
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -21,7 +21,7 @@ export async function registerUser({username, email, password}) {
         const response = await axiosClient.post(`/user/register`, formdata)
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -34,7 +34,7 @@ export async function changePassword({currentPassword, newPassword, confirmPassw
         const response = await axiosClient.put(`/user/change-password`, formdata)
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -48,7 +48,7 @@ export async function getCurrentUserProfile() {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -58,7 +58,7 @@ export async function getUsersById(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -68,7 +68,7 @@ export async function getUsersByName(name) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -86,6 +86,6 @@ export async function updateUserDetails({username = "", city = "", country = "",
             return response.data
         }
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }

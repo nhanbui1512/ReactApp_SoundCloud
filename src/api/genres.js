@@ -8,7 +8,7 @@ export async function createGenre(formdata) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -20,7 +20,7 @@ export async function createGenreByDetails(genreName) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -30,7 +30,7 @@ export async function getGenres() {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 

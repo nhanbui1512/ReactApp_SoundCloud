@@ -6,7 +6,7 @@ export async function getFollowing() {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -16,7 +16,7 @@ export async function getFollowers() {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }
 
@@ -26,7 +26,7 @@ export async function followUser(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -36,7 +36,7 @@ export async function unfollowUser(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -46,7 +46,7 @@ export async function followPlaylist(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -56,6 +56,6 @@ export async function unfollowPlaylist(id) {
         // console.log(response);
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }

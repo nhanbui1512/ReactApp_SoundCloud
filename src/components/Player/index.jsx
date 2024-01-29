@@ -11,12 +11,12 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { IoIosRepeat } from 'react-icons/io';
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { BsRepeat1 } from 'react-icons/bs';
 import Information from './Information';
 import 'tippy.js/animations/scale.css';
 import HeadlessTippy from '@tippyjs/react/headless';
-import musics from 'assets/musics';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
@@ -35,13 +35,17 @@ const loopModes = [
 ];
 
 function Player() {
+  const storage = useContext(StorageContext);
+
+  const music = storage.currentMusic;
+
   const [percent, setPercent] = useState(0);
   const [volume, setVolume] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [loop, setLoop] = useState(0);
-  const audioRef = useRef();
+  const audioRef = storage.audioRef;
   const currentTimeRef = useRef();
   const durationTimeRef = useRef();
   const handleChangeLoopMode = () => {
@@ -64,6 +68,10 @@ function Player() {
     setPercent(currentPercent);
   };
 
+  useEffect(() => {
+    audioRef.current.loop = loopModes[loop].isLoop;
+  }, [loop, audioRef]);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -73,7 +81,6 @@ function Player() {
           </div>
           <div
             onClick={() => {
-              setIsPlaying(!isPlaying);
               isPlaying ? audioRef.current.pause() : audioRef.current.play();
             }}
             className={cx('player-btn')}
@@ -155,28 +162,26 @@ function Player() {
                     fontSize: 12,
                   }}
                 >
-                  00:00
+                  {music.durationTime || '00:00'}
                 </span>
               </div>
             </div>
           </div>
           <audio
             onTimeUpdate={handlePlayingAudio}
-            onLoadedData={(e) => {
-              const duration = e.target.duration;
-
-              let realTime = new Date(duration * 1000);
-              let secondStr = String(realTime.getSeconds()).padStart(2, '0');
-              let minutesStr = String(realTime.getMinutes()).padStart(2, '0');
-              durationTimeRef.current.innerText = `${minutesStr}:${secondStr}`;
-            }}
             onEnded={() => {
+              setIsPlaying(false);
+            }}
+            onPlay={() => {
+              setIsPlaying(true);
+            }}
+            onPause={() => {
               setIsPlaying(false);
             }}
             volume={0.2}
             ref={audioRef}
             id="audio"
-            src={musics.enchanted}
+            src={music.linkFile}
           ></audio>
 
           {/* volume */}
@@ -234,7 +239,7 @@ function Player() {
               height: '100%',
             }}
           >
-            <Information />
+            <Information data={music} />
           </div>
         </div>
       </div>

@@ -6,19 +6,20 @@ import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function ListDisk({ title }) {
-  const [data, setData] = useState([]);
+function ListDisk({ title, data }) {
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3000/song/get-songs?page=1&per_page=20')
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:3000/song/get-songs?page=1&per_page=20')
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       setData(res.data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>

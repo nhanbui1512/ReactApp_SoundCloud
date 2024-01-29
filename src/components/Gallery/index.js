@@ -18,6 +18,7 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
+import { likeSong } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -106,6 +107,17 @@ function Gallery({ data }) {
     };
   }, [storage.audioRef, storage.currentMusic.id, data.id]);
 
+  const handleLiked = async () => {
+    const isLikeSong = async (data) => {
+      console.log(data.id);
+      const dataResult = await likeSong(data.id);
+      return dataResult;
+    };
+    const dataResult = await isLikeSong(data);
+    setIsLiked(!isLiked);
+    console.log(dataResult);
+  };
+
   return (
     <div className={cx('modul-left_item')}>
       <div className={cx('modul-left_item-container-img')}>
@@ -124,11 +136,11 @@ function Gallery({ data }) {
             <>
               <span
                 onClick={() => {
-                  setIsLiked(!isLiked);
+                  handleLiked();
                 }}
                 className={cx('option-btn')}
               >
-                <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+                <FontAwesomeIcon className={cx('', { liked: data.isLiked })} icon={faHeart} />
               </span>
             </>
           </Tippy>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import Albums from './Albums/album';
 import Playlists from './Playlists/playlists';
 import All from './All/all';
@@ -15,8 +15,9 @@ const cx = classNames.bind(styles);
 
 function Profile() {
   const [popperEdit, setPopperEdit] = useState(false);
-
   const [userData, setUserData] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCurrentUserProfile()
@@ -25,8 +26,9 @@ function Profile() {
       })
       .catch((err) => {
         console.log(err);
+        navigate('/login');
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -128,7 +130,7 @@ function Profile() {
         </div>
       </div>
 
-      {popperEdit && <EditProfile setPopperEdit={setPopperEdit} />}
+      {popperEdit && <EditProfile userData={userData} setPopperEdit={setPopperEdit} />}
     </div>
   );
 }

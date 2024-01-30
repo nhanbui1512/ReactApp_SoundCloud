@@ -32,11 +32,11 @@ function Profile() {
     <div>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
-          <img className={cx('img-email')} src={userData.avatar} alt="" />
+          <img className={cx('img-email')} src={userData.avatar || ''} alt="" />
           <div className={cx('name-user')}>
-            <div className={cx('lb1')}>{userData.userName}</div>
+            <div className={cx('lb1')}>{userData.userName || ''}</div>
             <br />
-            <div className={cx('lb2')}>{userData.bio}</div>
+            <div className={cx('lb2')}>{userData.bio || ''}</div>
           </div>
           <button className={cx('btn-update-img')}>
             <span className={cx('camera')} role="img" aria-label="camera icon">

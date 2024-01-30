@@ -128,12 +128,6 @@ function Gallery({ data }) {
             <>
               <span
                 onClick={() => {
-                  axiosClient
-                    .post('/song/like?song_id=14')
-                    .then((res) => {})
-                    .catch((err) => {
-                      if (err.response.data.error.authorize) navigate('/login');
-                    });
                   setIsLiked(!isLiked);
                 }}
                 className={cx('option-btn')}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
   // if local server: 'http://localhost:3000'
@@ -13,7 +14,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = JSON.parse(sessionStorage.getItem('auth'))?.access_token;
+    const accessToken = Cookies.get('authToken') || '';
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     } else {
@@ -40,6 +41,7 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
 export const setHeaderConfigAxios = (token) => {
   if (token) {
     axiosClient.defaults.headers.common['Authorization'] = token ? 'Bearer ' + token : '';

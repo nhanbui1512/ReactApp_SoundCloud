@@ -1,8 +1,12 @@
 import classNames from 'classnames/bind'
 import styles from './Playlist.module.scss'
 import Popup from "components/Popup"
-import { useEffect, useState } from "react"
-import { getPlaylists } from 'api/playlist'
+import { useContext, useEffect, useState } from "react"
+import { addSongsToPlaylist, createPlaylist, getPlaylistsByUserId, removeSongsFromPlaylist } from 'api/playlist'
+import { StorageContext } from 'context/Storage'
+import { ToastContainer, toast } from 'react-toastify';
+
+const cx = classNames.bind(styles)
 
 /* Usage:
   const [openPlaylistPopup, setOpenPlaylistPopup] = useState(false)
@@ -10,14 +14,13 @@ import { getPlaylists } from 'api/playlist'
   return (
     ...
       <button onClick={() => setOpenPlaylistPopup(true)}>Add to playlist</button>
-      <PlaylistPopup open={openPlaylistPopup} onClose={setOpenPlaylistPopup}/>
+      <PlaylistPopup open={openPlaylistPopup} onClose={setOpenPlaylistPopup} songData={}/>
     ...
   )
 */
 
-const cx = classNames.bind(styles)
-
-const example = {
+// songData = example
+/* const example = {
   "thumbNail": "http://localhost:3000/uploads/images/thumbNail-1706279697257",
   "linkFile": "http://localhost:3000/uploads/audios/song-1706279696740",
   "durationTime": "02:13",
@@ -48,11 +51,17 @@ const example = {
       "createAt": "2024-01-26T14:12:37.000Z",
       "updateAt": null
   }
-}
-export const PlaylistPopup = ({ open, onClose, songData = example }) => {
+} */
+
+export const PlaylistPopup = ({ open, onClose, songData }) => {
   const [tab, setTab] = useState(0)
   const [myPlaylist, setMyPlaylist] = useState([])
   const [filter, setFilter] = useState('')
+  const [creatingPlaylist, setCreatingPlaylist] = useState(false)
+
+  // get user id
+  const storage = useContext(StorageContext)
+  const userId = storage.userData.id
 
   useEffect(() => {
     if (open) {
@@ -61,25 +70,67 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   }, [open])
 
   const RefreshPlaylist = () => {
-    getPlaylists()
+    getPlaylistsByUserId(userId)
       .then(result => {
-        // console.log('get playlist', result.data.sort((a, b) => a.id - b.id))
+        console.log('get playlist', result.data.sort((a, b) => a.id - b.id))
         setMyPlaylist(result.data.sort((a, b) => a.id - b.id))
       })
       .catch(error => console.log(error))
   }
-  const AddToPlaylist = (playlistId) => {
-    alert(`Added songId ${songData.id} to playlistId ${playlistId}`)
-    RefreshPlaylist()
+
+  const AddToPlaylist = (playlistId, playlistName) => {
+    addSongsToPlaylist(playlistId, playlistName, [songData.id])
+      .then(result => {
+        if (result.result) {
+          // success
+          RefreshPlaylist()
+          toast.success('Added to playlist.')
+        } else {
+          // error
+          toast.error('Added to playlist failed. Try again.')
+        }
+      })
+      .catch(error => console.log(error))
   }
+
+  const RemoveFromPlaylist = (playlistId) => {
+    removeSongsFromPlaylist(playlistId, [songData.id])
+      .then(result => {
+        if (result.result) {
+          // success
+          RefreshPlaylist()
+          toast.success('Removed from playlist.')
+        } else {
+          // error
+          toast.error('Removed from playlist failed. Try again.')
+        }
+      })
+      .catch(error => console.log(error))
+  }
+
   const CreateNewPlaylist = () => {
     const name = document.getElementById('new-playlist-name').value
     if (name === "") {
-      alert('Enter playlist name!')
+      toast.warn('Enter playlist name.')
     } else {
-      alert(`Playlist ${name} created`)
-      document.getElementById('new-playlist-name').value = ""
-      onClose(false)
+      setCreatingPlaylist(true)
+      createPlaylist(name, [songData.id])
+        .then(result => {
+          if (result.result) {
+            // success
+            document.getElementById('new-playlist-name').value = ""
+            onClose(false)
+            toast.success('Playlist created.')
+          } else {
+            // error
+            toast.error('Create playlist failed. Try again.')
+          }
+          setCreatingPlaylist(false)
+        })
+        .catch(error => {
+          console.log(error)
+          setCreatingPlaylist(false)
+        })
     }
   }
 
@@ -96,6 +147,18 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
         </div>
       }
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* Song info */}
       <div className={cx('song-info')}>
         <img src={songData.thumbNail}/>
@@ -119,13 +182,15 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
             <h6>No playlist found</h6>
           }
           {myPlaylist.filter(x => x.name.toLowerCase().includes(filter.toLowerCase()))
-            .map((item, index) => 
+            .map((item, index) => (
               <div className={cx('playlist-item')} key={index}>
                 <label>{item.name}</label>
-                <button onClick={() => AddToPlaylist(item.id)}>Add to playlist</button>
-                {/* <button className={cx('added')}>Added</button> */}
+                {item.songs.map(song => song.id).includes(songData.id) ? 
+                  <button className={cx('added')} onClick={() => RemoveFromPlaylist(item.id)}>Added</button>
+                  : <button onClick={() => AddToPlaylist(item.id, item.name)}>Add to playlist</button>
+                }
               </div>
-          )}
+          ))}
         </div>
       </div>
       {/* Create Playlist */}
@@ -137,7 +202,9 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
           required
           placeholder='Required' 
         />
-        <button onClick={CreateNewPlaylist}>Save</button>
+        <button disabled={creatingPlaylist} 
+          onClick={CreateNewPlaylist}
+        >{creatingPlaylist ? 'Saving...' : 'Save'}</button>
       </div>
     </Popup>
   )

@@ -15,9 +15,9 @@ const FeedLeftItem = ({ data }) => {
         </div>
       </div>
       {data.songs && data.songs.length > 0 ? (
-        data.songs?.map((song, index) =>(
+        data.songs?.map((song) =>(
         <>
-          <FeedSong data={song} key={index}/> 
+          <FeedSong data={song} /> 
         </>
         ))
       ):(

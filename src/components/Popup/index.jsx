@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
   return (
     ...
       <button onClick={() => setOpen(true)}>Open popup</button>
-      <Popup open={open} onClose={() => setOpen(false)} header={'Title'}>
+      <Popup open={open} onClose={setOpen} header={<h5>Title</h5>}>
         Content
       </Popup>
     ...
@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 const Popup = ({ open, onClose, header, children }) => {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   
   useEffect(() => {
     setShow(open)
@@ -36,7 +36,7 @@ const Popup = ({ open, onClose, header, children }) => {
     }}>
       <div className={cx('overlay')} onClick={close}/>
       <div className={cx('popup')}>
-        <h3>{header}</h3>
+        {header}
         <button className={cx('close')} onClick={close}>&times;</button>
         <div className={cx('content')}>
           {children}

@@ -7,7 +7,7 @@
     background: rgba(0, 0, 0, 0.6);
     transition: opacity 300ms;
     opacity: 0;
-    z-index: 10;
+    z-index: 20;
 }
 
 .overlay {
@@ -16,7 +16,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 12;
+    z-index: 25;
 }
 
 .popup {
@@ -24,26 +24,21 @@
     padding: 20px;
     background: #fff;
     border-radius: 5px;
-    width: 30%;
+    width: 50%;
     position: relative;
     transition: all 5s ease-in-out;
-    z-index: 15;
-
-    .h3 {
-        margin-top: 0;
-        color: #333;
-    }
+    z-index: 30;
 
     .close {
         position: absolute;
-        top: 20px;
-        right: 30px;
+        top: 5px;
+        right: 10px;
         transition: all 200ms;
         font-size: 30px;
         font-weight: bold;
         text-decoration: none;
         color: #333;
-        background-color: #fff;
+        background-color: transparent;
     }
     .close:hover {
         color: #ff5500;

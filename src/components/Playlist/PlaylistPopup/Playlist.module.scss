@@ -1,0 +1,103 @@
+.tab-select {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 8px;
+    
+    button {
+        padding: 8px 8px;
+        margin-bottom: 4px;
+        font-size: large;
+        font-weight: 500;
+        background-color: transparent;
+    }
+    button:hover {
+        margin-bottom: 2px;
+        border-bottom: 2px solid #000;
+    }
+    button:disabled {
+        color: #f50;
+        margin-bottom: 2px;
+        border-bottom: 2px solid #f50;
+    }
+}
+
+.add-to-playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 4px;
+
+    input {
+        margin-bottom: 16px;
+        display: flex;
+        width: 100%;
+        font-weight: 100;
+        font-size: 14px;
+        padding: 2px 7px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .playlist-item {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ccc;
+
+        label {
+            display: flex;
+            font-size: 14px;
+            font-weight: bold;
+            align-self: center;
+        }
+        button {
+            cursor: pointer;
+            padding: 4px 10px;
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button:hover {
+            border: 1px solid #f50;
+        }
+        button.added {
+            color: #f50;
+        }
+    }
+}
+
+.create-playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 4px;
+    gap: 4px;
+
+    label {
+        display: flex;
+        font-size: 14px;
+    }
+    input {
+        display: flex;
+        width: 100%;
+        font-weight: 100;
+        font-size: 14px;
+        padding: 2px 7px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        cursor: pointer;
+        align-self: flex-end;
+        padding: 4px 10px;
+        color: #fff;
+        background-color: #f50;
+        border-radius: 3px;
+        border-color: #f50;
+    }
+}

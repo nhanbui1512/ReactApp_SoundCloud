@@ -1,8 +1,10 @@
 import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
+
+import { createSong } from 'api/songs';
+import { useNavigate } from 'react-router-dom';
 import Upload from '../Upload';
 import styles from './DetailFile.module.scss';
-import { createSong } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +17,9 @@ function DetailFile({ selectedFile }) {
   const [textArt, setTextArt] = useState('');
   const [gengreId, setGengreId] = useState(9);
   const [nameAudio, setNameAudio] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
   const [selectedValue, setSelectedValue] = useState(30);
+  const navigate = useNavigate();
   const inputref = useRef();
 
   const handleFileChange = (e) => {
@@ -44,12 +48,16 @@ function DetailFile({ selectedFile }) {
           .catch((err) => {
             console.log(err);
           });
-
-        setIsCancel(true);
+        setShowLoader(true);
+        setTimeout(() => {
+          navigate('/profile');
+        }, 1800)
       } else {
       }
     } catch (error) {
       console.error('Error creating song:', error);
+      alert('Upload fail');
+      setIsCancel(false);
     }
   };
 
@@ -60,6 +68,9 @@ function DetailFile({ selectedFile }) {
       ) : (
         <div className={cx('wrapper')}>
           <div className={cx('main')}>
+            <div className={cx('progress_loader')}>
+              {showLoader && <div className={cx('progress')}></div>}
+            </div>
             <div className={cx('content')}>
               <div className={cx('filds_img')}>
                 {image ? (

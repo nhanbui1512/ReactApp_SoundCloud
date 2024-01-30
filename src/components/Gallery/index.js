@@ -18,8 +18,6 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
-import axiosClient from 'api/axiosClient';
-import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +25,6 @@ function Gallery({ data }) {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(data.isLiked);
-  const navigate = useNavigate();
 
   const [isPlay, setIsPlay] = useState(false);
 

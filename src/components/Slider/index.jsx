@@ -21,9 +21,9 @@ function Slider({ data = [] }) {
   const totalPage = Math.ceil((190 * data.length) / countWidths.current) - 1;
 
   if (page === 1) {
-    distanceSlide = page * (countWidths.current - 80);
+    distanceSlide = page * (countWidths.current - 86);
   } else {
-    distanceSlide = page * (countWidths.current - 60);
+    distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
   }
   // if (page === totalPage) {
   //   const residual = data.length % 4;

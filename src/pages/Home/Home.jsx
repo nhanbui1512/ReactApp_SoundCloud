@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000/song/get-songs?page=1&per_page=20')
+      .get('http://localhost:3000/song/get-songs?page=1&per_page=25')
       .then((res) => {
         setData(res.data.data);
       })

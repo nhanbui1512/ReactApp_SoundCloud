@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
-import PlayList from 'components/PlayList';
+import Queue from 'components/Queue';
 const cx = classNames.bind(styles);
 
 function Information({ data }) {
@@ -80,7 +80,7 @@ function Information({ data }) {
           offset={[0, 18]}
           render={() => {
             return (
-              <PlayList className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />
+              <Queue className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />
             );
           }}
         >

@@ -4,13 +4,15 @@ import Image from 'components/Image';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import PlayList from 'components/PlayList';
+import { StorageContext } from 'context/Storage';
 const cx = classNames.bind(styles);
 
 function Information({ data }) {
-  const [isLiked, setIsLiked] = useState(data.isLiked);
+  const storage = useContext(StorageContext);
+
   const [isFollowed, setisFollowed] = useState(false);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -24,6 +26,26 @@ function Information({ data }) {
       setopenPlayList(!openPlayList);
       setIsClosing(false);
     }, 300);
+  };
+
+  const handleLike = (e) => {
+    storage.setCurrentMusic((prev) => {
+      var newState = { ...prev };
+      newState.isLiked = !prev.isLiked;
+      return newState;
+    });
+
+    storage.setCurrentPlayList((prev) => {
+      var newPrev = [...prev];
+
+      newPrev = newPrev.map((song) => {
+        if (song.id === data.id) {
+          song.isLiked = !data.isLiked;
+        }
+        return song;
+      });
+      return newPrev;
+    });
   };
   return (
     <div className={cx('wrapper')}>
@@ -51,12 +73,7 @@ function Information({ data }) {
         }}
       >
         <Tippy offset={[0, 8]} render={() => <div className={cx('like-tippy')}>Like</div>}>
-          <div
-            onClick={() => {
-              setIsLiked(!isLiked);
-            }}
-            className={cx('action-btn', { isActive: isLiked })}
-          >
+          <div onClick={handleLike} className={cx('action-btn', { isActive: data.isLiked })}>
             <FontAwesomeIcon className={cx('action-icon')} icon={faHeart} />
           </div>
         </Tippy>

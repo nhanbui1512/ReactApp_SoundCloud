@@ -5,10 +5,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PlayListItem from './Item';
 import SwitchButton from 'components/SwitchButton';
+import { useContext } from 'react';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
 function PlayList({ handleHidden, className }) {
+  const storage = useContext(StorageContext);
+  const [setCurrentPlayList] = [storage.setCurrentPlayList];
+
+  const handleClear = (e) => {
+    setCurrentPlayList((prev) => {
+      var newState = prev.filter((song) => song.id === storage.currentMusic.id);
+      return newState;
+    });
+    storage.setIndexSong(0);
+  };
+
   return (
     <div
       className={cx('wrapper', {
@@ -18,7 +31,7 @@ function PlayList({ handleHidden, className }) {
       <div className="col flex_1">
         <div className={cx('header')}>
           <div className={cx(['flex_1', 'title'])}>Next up</div>
-          <Button small outline className={cx('clear-btn')}>
+          <Button onClick={handleClear} small outline className={cx('clear-btn')}>
             Clear
           </Button>
           <div onClick={handleHidden} className={cx('close-btn')}>
@@ -33,7 +46,16 @@ function PlayList({ handleHidden, className }) {
         >
           <div className={cx('play-list-container')}>
             <div className={cx('col')}>
-              <PlayListItem active />
+              {storage.currentPlayList.map((song, index) => {
+                return (
+                  <PlayListItem
+                    active={index === storage.indexSong}
+                    index={index}
+                    data={song}
+                    key={index}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

@@ -1,50 +1,19 @@
 import { createContext, useEffect, useRef, useState } from 'react';
-import images from 'assets/images';
-import musics from 'assets/musics';
+
 import { getCookie } from 'services/local/cookie';
 import { getCurrentUserProfile } from 'api/users';
+import { currentPlaylist, music } from './data';
 
 export const StorageContext = createContext();
 
 function GlobalStates({ children }) {
   const [currentUser, setCurrentUser] = useState(false);
-  const [currentMusic, setCurrentMusic] = useState({
-    thumbNail: images.taylorSwift,
-    linkFile: musics.enchanted,
-    durationTime: '5:53',
-    createAtTimeFormat: '22:05 26/01/2024',
-    id: 35,
-    name: 'Enchanted',
-    description: 'From Cytus',
-    numberOfListen: 0,
-    numberOfLoop: 0,
-    duration: 166.752,
-    artistName: 'Tayler Swift',
-    createAt: '2024-01-26T15:05:31.000Z',
-    updateAt: null,
-    genre: {
-      id: 1,
-      name: 'Classical',
-    },
-    owner: {
-      avatar: 'http://localhost:3000/uploads/images/defaultAvatar.png',
-      createAtFormatTime: '22:01:38 26/01/2024',
-      id: 9,
-      userName: 'Nhật Huy',
-      email: 'notanemail@mail.com',
-      city: '',
-      country: '',
-      bio: '',
-      createAt: '2024-01-26T15:01:38.000Z',
-      updateAt: null,
-    },
-    likeCount: 0,
-    isLiked: false,
-  });
-
+  const [currentMusic, setCurrentMusic] = useState(music);
   const [userData, setUserData] = useState({});
 
   const audioRef = useRef();
+  const [currentPlayList, setCurrentPlayList] = useState(currentPlaylist); // playlist đang phát
+  const [indexSong, setIndexSong] = useState(0); // vị trí bài hát đang play trong playlist
 
   const states = {
     currentUser: currentUser,
@@ -54,7 +23,18 @@ function GlobalStates({ children }) {
     audioRef, // Thẻ audio
     userData, // dữ liệu người dùng sau khi đăng nhập
     setUserData,
+    currentPlayList, // playlist đang chơi
+    setCurrentPlayList,
+    indexSong,
+    setIndexSong,
   };
+
+  useEffect(() => {
+    if (currentPlayList.length > 0) {
+      setCurrentMusic(currentPlayList[indexSong]);
+    }
+    // eslint-disable-next-line
+  }, [indexSong]);
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken') || getCookie('authToken');

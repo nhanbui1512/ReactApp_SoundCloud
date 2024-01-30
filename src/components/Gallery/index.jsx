@@ -20,6 +20,7 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
+import { likeSong, unlikeSong } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -62,6 +63,26 @@ function Gallery({ data, playList }) {
     }
   };
 
+  const handleLike = (e) => {
+    if (isLiked) {
+      setIsLiked(!isLiked);
+      unlikeSong(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(true);
+        });
+    } else {
+      setIsLiked(!isLiked);
+      likeSong(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(false);
+        });
+    }
+  };
+
   //xử lý khi người dùng click ngoài more button thì tự động tắt menu
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -86,6 +107,7 @@ function Gallery({ data, playList }) {
     }
   }, [storage.currentMusic, data.id]);
 
+  // Xử lý thay đổi state của icon khi nhạc ở Player dừng hoặc Phát
   useEffect(() => {
     const audioTag = storage.audioRef.current;
 
@@ -124,18 +146,15 @@ function Gallery({ data, playList }) {
         </div>
 
         <div className={cx('modul-left_option-group')}>
-          <Tippy animation={'scale-subtle'} content={'Like'}>
-            <>
-              <span
-                onClick={() => {
-                  setIsLiked(!isLiked);
-                }}
-                className={cx('option-btn')}
-              >
-                <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
-              </span>
-            </>
-          </Tippy>
+          {playList || (
+            <Tippy animation={'scale-subtle'} content={'Like'}>
+              <>
+                <span onClick={handleLike} className={cx('option-btn')}>
+                  <FontAwesomeIcon className={cx('', { primary: isLiked })} icon={faHeart} />
+                </span>
+              </>
+            </Tippy>
+          )}
 
           {playList && (
             <Tippy animation={'scale-subtle'} content={'Follow'}>
@@ -147,7 +166,7 @@ function Gallery({ data, playList }) {
                   className={cx('option-btn')}
                 >
                   <FontAwesomeIcon
-                    className={cx('', { liked: isFollow })}
+                    className={cx('', { primary: isFollow })}
                     icon={isFollow ? faUserCheck : faUserPlus}
                   />
                 </span>

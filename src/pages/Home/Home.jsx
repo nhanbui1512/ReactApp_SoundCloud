@@ -14,7 +14,7 @@ const Home = () => {
     axios
       .get('http://localhost:3000/song/get-songs?page=1&per_page=20')
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((err) => {

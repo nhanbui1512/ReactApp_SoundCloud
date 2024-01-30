@@ -130,9 +130,7 @@ function Gallery({ data }) {
                 onClick={() => {
                   axiosClient
                     .post('/song/like?song_id=14')
-                    .then((res) => {
-                      console.log(res);
-                    })
+                    .then((res) => {})
                     .catch((err) => {
                       if (err.response.data.error.authorize) navigate('/login');
                     });

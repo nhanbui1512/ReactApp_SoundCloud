@@ -3,29 +3,34 @@ import styles from './Slider.module.scss';
 import Gallery from 'components/Gallery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Slider({ data = [] }) {
-  const totalPage = Math.ceil(data.length / 4) - 1;
-  const listRef = useRef();
+  const widthSlide = useRef();
+  const countWidths = useRef();
   const [page, setPage] = useState(0);
   const [vibrateRight, setVibrateRight] = useState(false);
   const [vibrateLeft, setVibrateLeft] = useState(false);
 
   let distanceSlide = 0;
+  useEffect(() => {
+    countWidths.current = widthSlide.current.getBoundingClientRect().width;
+  }, []);
+
+  const totalPage = Math.ceil((190 * data.length) / countWidths.current) - 1;
 
   if (page === 1) {
-    distanceSlide = page * 734;
+    distanceSlide = page * (countWidths.current - 80);
   } else {
-    distanceSlide = page * 750;
+    distanceSlide = page * (countWidths.current - 60);
   }
   // if (page === totalPage) {
   //   const residual = data.length % 4;
   //   distanceSlide -= (4 - residual) * 190;
   // }
   return (
-    <div className={cx('wrapper')}>
+    <div ref={widthSlide} className={cx('wrapper')}>
       <div
         style={{
           width: '100%',
@@ -40,7 +45,6 @@ function Slider({ data = [] }) {
             vibrateRight: vibrateRight,
             vibrateLeft: vibrateLeft,
           })}
-          ref={listRef}
         >
           {data.map((item, index) => (
             <Gallery key={index} data={item} />

@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 
 import { getSongs, getSongsLiked } from 'api/songs';
-import { getMyFollowingUsers, getMyFollowingPlaylist } from 'api/playlist';
+import { getMyFollowingPlaylist } from 'api/playlist';
+import { getFollowing } from 'api/follow';
 
 export const LibraryContext = createContext();
 
@@ -30,8 +31,11 @@ function GlobalLibrary({ children }) {
       setDataPlaylists(Playlists.data);
 
       // getUserFollowed
-      const Users = await getMyFollowingUsers();
-      setDataUsers(Users.data);
+      var Users = await getFollowing();
+      Users = Users.data.data.map((user) => {
+        return user.following;
+      });
+      setDataUsers(Users);
     };
     getData();
   }, []);

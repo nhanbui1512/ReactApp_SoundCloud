@@ -54,6 +54,8 @@ function DetailFile({ selectedFile }) {
       setIsEnter(true);
       setEnter('Please upload image.')
     }
+    if (textDes !== '' && gengreId !== 20 && textArt !== '' && nameAudio !== '' && image !== '' )
+    {
       try {
         createSong({
           songName: nameAudio,
@@ -78,6 +80,7 @@ function DetailFile({ selectedFile }) {
         toast.error('Upload fail')
       }
       setIsCancel(false);
+    }
   };
 
   return (

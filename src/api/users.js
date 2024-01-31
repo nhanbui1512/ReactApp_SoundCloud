@@ -77,9 +77,9 @@ export async function getUsersByName(name) {
   }
 }
 
-export async function updateUserDetails({ username = '', city = '', country = '', bio = '' }) {
+export async function updateUserDetails({ username = '', city = '', country = '', bio = '', avatar = ''}) {
   try {
-    if (username === '' && city === '' && country === '' && bio === '') {
+    if (username === '' && city === '' && country === '' && bio === '' && avatar === '') {
       return null;
     } else {
       const formdata = new FormData();
@@ -87,6 +87,7 @@ export async function updateUserDetails({ username = '', city = '', country = ''
       city !== '' && formdata.append('city', city);
       country !== '' && formdata.append('country', country);
       bio !== '' && formdata.append('bio', bio);
+      avatar !== '' && formdata.append('avatar', avatar);
       const response = await axiosClient.put(`/user/update`, formdata);
       return response.data;
     }

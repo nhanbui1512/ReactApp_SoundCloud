@@ -2,12 +2,15 @@ import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
 import styles from './Upload.module.scss';
 import DetailFile from './DetailFile/DetailFile';
+//import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const inputref = useRef();
+  //const location = useLocation();
+  //const isBug = location.state?.isBug || false;
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);

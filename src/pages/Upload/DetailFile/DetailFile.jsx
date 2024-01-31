@@ -5,6 +5,7 @@ import { createSong } from 'api/songs';
 import { useNavigate } from 'react-router-dom';
 import Upload from '../Upload';
 import styles from './DetailFile.module.scss';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -15,9 +16,11 @@ function DetailFile({ selectedFile }) {
   const [isCancel, setIsCancel] = useState(false);
   const [textDes, setTextDes] = useState('');
   const [textArt, setTextArt] = useState('');
-  const [gengreId, setGengreId] = useState(9);
+  const [gengreId, setGengreId] = useState(20);
   const [nameAudio, setNameAudio] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [isEnter, setIsEnter] = useState(false);
+  const [enter, setEnter] = useState('');
   const [selectedValue, setSelectedValue] = useState(30);
   const navigate = useNavigate();
   const inputref = useRef();
@@ -31,9 +34,27 @@ function DetailFile({ selectedFile }) {
   };
 
   const handleSave = () => {
-    try {
-      if (nameAudio !== '') {
-        // Gọi API createSongs với các thông tin từ state
+    if (textDes === '') {
+      setIsEnter(true);
+      setEnter('Please enter description.')
+    }
+    if (gengreId === 20) {
+      setIsEnter(true);
+      setEnter('Please choose genre.')
+    }
+    if (textArt === '') {
+      setIsEnter(true);
+      setEnter('Please enter artist.')
+    }
+    if (nameAudio === '') {
+      setIsEnter(true);
+      setEnter('Please enter name audio.')
+    }
+    if (image === '') {
+      setIsEnter(true);
+      setEnter('Please upload image.')
+    }
+      try {
         createSong({
           songName: nameAudio,
           description: textDes,
@@ -44,21 +65,20 @@ function DetailFile({ selectedFile }) {
         })
           .then((res) => {
             console.log(res);
+            setShowLoader(true);
+            setTimeout(() => {
+              navigate('/profile');
+            }, 1800)
           })
           .catch((err) => {
             console.log(err);
           });
-        setShowLoader(true);
-        setTimeout(() => {
-          navigate('/profile');
-        }, 1800)
-      } else {
+
+      } catch (error) {
+        console.error('Error creating song:', error);
+        toast.error('Upload fail')
       }
-    } catch (error) {
-      console.error('Error creating song:', error);
-      alert('Upload fail');
       setIsCancel(false);
-    }
   };
 
   return (
@@ -162,6 +182,9 @@ function DetailFile({ selectedFile }) {
                     value={textDes}
                     onChange={(e) => setTextDes(e.target.value)}
                   />
+                </div>
+                <div className={cx('active')}>
+                  {isEnter && <p>*{enter}</p>}
                 </div>
               </div>
             </div>

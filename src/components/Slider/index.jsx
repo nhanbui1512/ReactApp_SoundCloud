@@ -21,7 +21,7 @@ function Slider({ data, playLists }) {
   const totalPage = Math.ceil((190 * data.length) / countWidths.current) - 1;
 
   if (page === totalPage) {
-    distanceSlide = 190 * data.length - countWidths.current;
+    distanceSlide = 192 * data.length - countWidths.current;
   } else {
     if (page === 1) {
       distanceSlide = page * (countWidths.current - 86);

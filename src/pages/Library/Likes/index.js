@@ -1,22 +1,11 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
 
 import styles from '../../Home/Home.module.scss';
 import ListDisk from '../../../components/ListDisk';
-import { getSongs } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
-const Likes = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      const dataSongs = await getSongs();
-      setData(dataSongs.data);
-    };
-    getData();
-  }, []);
+const Likes = ({ data }) => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('trending-wrapper')}>

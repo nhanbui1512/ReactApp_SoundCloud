@@ -4,14 +4,14 @@ import styles from './ListDisk.module.scss';
 
 const cx = classNames.bind(styles);
 
-function ListDisk({ title, data }) {
+function ListDisk({ title, data = [], playLists = [] }) {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
         <h2>{title || 'Recently Played'}</h2>
       </div>
       <div>
-        <Slider data={data} />
+        <Slider data={data} playLists={playLists} />
       </div>
     </div>
   );

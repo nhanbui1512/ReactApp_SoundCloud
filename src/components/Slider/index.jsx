@@ -6,7 +6,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import React, { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
-function Slider({ data = [] }) {
+function Slider({ data, playLists }) {
   const widthSlide = useRef();
   const countWidths = useRef();
   const [page, setPage] = useState(0);
@@ -48,6 +48,9 @@ function Slider({ data = [] }) {
         >
           {data.map((item, index) => (
             <Gallery key={index} data={item} />
+          ))}
+          {playLists.map((item, index) => (
+            <Gallery key={index} data={item} playLists={[]} />
           ))}
         </div>
       </div>

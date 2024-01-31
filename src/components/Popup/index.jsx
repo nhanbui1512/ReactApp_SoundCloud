@@ -31,8 +31,9 @@ const Popup = ({ open, onClose, header, children }) => {
 
   return (
     <div className={cx('container')} style={{
-      visibility: show ? 'visible' : 'hidden',
-      opacity: show ? '1' : '0'
+      // visibility: show ? 'visible' : 'hidden',
+      display: show ? 'flex' : 'none',
+      opacity: show ? '1' : '0',
     }}>
       <div className={cx('overlay')} onClick={close}/>
       <div className={cx('popup')}>

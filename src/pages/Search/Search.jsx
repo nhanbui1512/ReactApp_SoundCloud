@@ -2,12 +2,13 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import FeedLeftItem from 'components/FeedLeft/FeedLeftItem/FeedLeftItem';
+import FeedSong from 'components/FeedLeft/FeedSong/FeedSong';
 import { MenuItem } from 'components/DropDownMenu';
 import PostSearch from 'components/PostSearch';
 import Gallery from 'components/Gallery';
 import { getSongsByName } from 'api/songs';
 import { getPlaylistsByName } from 'api/playlist';
+import { getGenres, getSongsByGenreId } from 'api/genres';
 
 const cx = classNames.bind(styles);
 
@@ -17,18 +18,34 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(0);
   const [songsResult, setSongsResult] = useState([]);
-  const [songsByGenresResult] = useState([]);
+  const [songsByGenresResult, setSongsByGenresResult] = useState([]);
   const [artistsResult] = useState([]);
   const [playlistsResult, setPlaylistResult] = useState([]);
 
   const getResult = async (keyword) => {
-    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword)]).then(
-      ([songsResult, playlistsResult]) => {
+    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword), getGenres()]).then(
+      ([songsResult, playlistsResult, genresResult]) => {
         if (songsResult.status === 'fulfilled') {
           setSongsResult(songsResult.value.songs);
         }
         if (playlistsResult.status === 'fulfilled') {
           setPlaylistResult(playlistsResult.value.playlists);
+        }
+        if (genresResult.status === 'fulfilled') {
+          // filter genre contain keyword
+          const matchGenres = []
+          genresResult.value.data.forEach(genre => 
+            genre.name.toLowerCase().includes(keyword.toLowerCase()) && matchGenres.push(genre)
+          )
+          // for each match genre, get songs by genre id
+          const getSongsByGenre = matchGenres.map(genre => getSongsByGenreId(genre.id, 1, 5))
+          Promise.allSettled(getSongsByGenre)
+            .then(results => {
+              const songsByGenre = []
+              results.filter(result => result.status === "fulfilled")
+                .forEach(result => songsByGenre.push(result.value.data))
+              setSongsByGenresResult(songsByGenre)
+            })
         }
       },
     );
@@ -39,6 +56,7 @@ const Search = () => {
     setKeyword(kw);
     setLoading(true);
     getResult(kw);
+    window.scrollTo(0,0); // scroll to top upon render
   }, [searchParams]);
 
   const showResult = () => {
@@ -50,7 +68,7 @@ const Search = () => {
             {songsResult.length === 0 ? (
               <h4 style={{ color: 'gray' }}>Sorry we didn't find any results for "{keyword}"</h4>
             ) : (
-              songsResult.map((item, index) => <FeedLeftItem data={item} />)
+              songsResult.map((item, index) => <FeedSong data={item} />)
             )}
           </div>
         );
@@ -63,9 +81,9 @@ const Search = () => {
             ) : (
               songsByGenresResult.map((item, index) => (
                 <div>
-                  <h4>{item.genreName}</h4>
+                  <h4>{item.name}</h4>
                   {item.songs.map((item, index) => (
-                    <FeedLeftItem key={index} data={item} />
+                    <FeedSong key={index} data={item} />
                   ))}
                 </div>
               ))

@@ -8,11 +8,11 @@ export const StorageContext = createContext();
 
 function GlobalStates({ children }) {
   const [currentUser, setCurrentUser] = useState(false);
-  const [currentMusic, setCurrentMusic] = useState(music);
   const [userData, setUserData] = useState({});
 
   const audioRef = useRef();
   const [currentPlayList, setCurrentPlayList] = useState(currentPlaylist); // playlist đang phát
+  const [currentMusic, setCurrentMusic] = useState(currentPlayList[0] || music);
   const [indexSong, setIndexSong] = useState(0); // vị trí bài hát đang play trong playlist
 
   const states = {
@@ -29,12 +29,12 @@ function GlobalStates({ children }) {
     setIndexSong,
   };
 
-  useEffect(() => {
-    if (currentPlayList.length > 0) {
-      setCurrentMusic(currentPlayList[indexSong]);
-    }
-    // eslint-disable-next-line
-  }, [indexSong]);
+  // useEffect(() => {
+  //   if (currentPlayList.length > 0) {
+  //     setCurrentMusic(currentPlayList[indexSong]);
+  //   }
+  //   // eslint-disable-next-line
+  // }, [indexSong]);
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken') || getCookie('authToken');

@@ -21,13 +21,14 @@ import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Gallery({ data, playList }) {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(false);
@@ -64,6 +65,7 @@ function Gallery({ data, playList }) {
   };
 
   const handleLike = (e) => {
+    if (!storage.currentUser) navigate('/login');
     if (isLiked) {
       setIsLiked(!isLiked);
       unlikeSong(data.id)

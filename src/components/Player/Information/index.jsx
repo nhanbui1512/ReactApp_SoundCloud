@@ -1,22 +1,23 @@
 import classNames from 'classnames/bind';
 import styles from './Information.module.scss';
 import Image from 'components/Image';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import PlayList from 'components/PlayList';
 import { StorageContext } from 'context/Storage';
+import { likeSong, unlikeSong } from 'api/songs';
+import { followUser, unfollowUser } from 'api/follow';
 const cx = classNames.bind(styles);
 
 function Information({ data }) {
   const storage = useContext(StorageContext);
-
-  const [isFollowed, setisFollowed] = useState(false);
+  const navigate = useNavigate();
+  const [isFollowed, setisFollowed] = useState(data.owner.isFollowed);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
   const handleHidden = () => {
     if (!openPlayList) {
       return setopenPlayList(true);
@@ -28,7 +29,42 @@ function Information({ data }) {
     }, 300);
   };
 
+  const hanleFollow = () => {
+    if (!storage.currentUser) navigate('/lofin');
+    if (!isFollowed) {
+      followUser(data.owner.id).then((res) => {
+        setisFollowed(!isFollowed);
+      });
+    } else {
+      unfollowUser(data.owner.id)
+        .then((res) => {
+          setisFollowed(!isFollowed);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   const handleLike = (e) => {
+    if (!storage.currentUser) {
+      return navigate('/login');
+    }
+
+    if (data.isLiked === false) {
+      likeSong(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      unlikeSong(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     storage.setCurrentMusic((prev) => {
       var newState = { ...prev };
       newState.isLiked = !prev.isLiked;
@@ -37,7 +73,6 @@ function Information({ data }) {
 
     storage.setCurrentPlayList((prev) => {
       var newPrev = [...prev];
-
       newPrev = newPrev.map((song) => {
         if (song.id === data.id) {
           song.isLiked = !prev.isLiked;
@@ -47,6 +82,11 @@ function Information({ data }) {
       return newPrev;
     });
   };
+
+  useEffect(() => {
+    setisFollowed(data.owner.isFollowed);
+  }, [data]);
+
   return (
     <div className={cx('wrapper')}>
       <Link className={cx('avatar')}>
@@ -78,12 +118,7 @@ function Information({ data }) {
           </div>
         </Tippy>
         <Tippy offset={[0, 8]} render={() => <div className={cx('like-tippy')}>Follow</div>}>
-          <div
-            onClick={() => {
-              setisFollowed(!isFollowed);
-            }}
-            className={cx('action-btn', { isActive: isFollowed })}
-          >
+          <div onClick={hanleFollow} className={cx('action-btn', { isActive: isFollowed })}>
             <FontAwesomeIcon
               className={cx('action-icon')}
               icon={isFollowed ? faUserCheck : faUserPlus}

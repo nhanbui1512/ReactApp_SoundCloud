@@ -46,15 +46,8 @@ function PlayList({ handleHidden, className }) {
         >
           <div className={cx('play-list-container')}>
             <div className={cx('col')}>
-              {storage.currentPlayList.map((song, index) => {
-                return (
-                  <PlayListItem
-                    active={index === storage.indexSong}
-                    index={index}
-                    data={song}
-                    key={index}
-                  />
-                );
+              {storage.currentPlayList.map((song) => {
+                return <PlayListItem data={song} key={song.id} />;
               })}
             </div>
           </div>

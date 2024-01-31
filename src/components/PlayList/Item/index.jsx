@@ -20,7 +20,7 @@ const {
 const { FontAwesomeIcon } = require('@fortawesome/react-fontawesome');
 const cx = classNames.bind(styles);
 
-function Item({ data, active, index }) {
+function Item({ data }) {
   const storage = useContext(StorageContext);
   const [isPlay, setIsPlay] = useState(false);
 
@@ -28,7 +28,7 @@ function Item({ data, active, index }) {
     const audioTag = storage.audioRef.current;
 
     if (data.id !== storage.currentMusic.id) {
-      storage.setIndexSong(index);
+      storage.setCurrentMusic(data);
       setIsPlay(!isPlay);
       const playMusic = (event) => {
         event.target.play();
@@ -68,10 +68,22 @@ function Item({ data, active, index }) {
     }
   };
 
+  const handleRemovePlaylist = () => {
+    storage.setCurrentPlayList((prev) => {
+      var newState = [...prev];
+      newState = newState.filter((song) => song.id !== data.id);
+      return newState;
+    });
+  };
+
   useEffect(() => {
     if (storage.currentMusic.id !== data.id) {
       setIsPlay(false);
     }
+    if (storage.currentMusic.id === data.id && storage.audioRef.current.paused === false) {
+      setIsPlay(true);
+    }
+    // eslint-disable-next-line
   }, [storage.currentMusic, data.id]);
 
   // Xử lý thay đổi state của icon khi nhạc ở Player dừng hoặc Phát
@@ -99,31 +111,57 @@ function Item({ data, active, index }) {
     };
   }, [storage.audioRef, storage.currentMusic.id, data.id]);
 
-  const menuItems = [
-    {
-      icon: <FontAwesomeIcon height={12} width={12} icon={faHeart} />,
-      title: 'Like',
-      onClick: handleLike,
-      isLiked: data.isLiked,
-    },
-    { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
-    { icon: <AddToList />, title: 'Add to Next up' },
-    {
-      icon: <FontAwesomeIcon height={12} width={12} icon={faXmark} />,
-      title: 'Remove from Next up',
-    },
-    { icon: <AddToPlaylist />, title: 'Add to Playlist' },
-    { icon: <FontAwesomeIcon height={12} width={12} icon={faTowerBroadcast} />, title: 'Station' },
-    {
-      icon: <FontAwesomeIcon height={12} width={12} icon={faExclamationCircle} />,
-      title: 'Report',
-    },
-  ];
+  let menuItems =
+    data.id !== storage.currentMusic.id
+      ? [
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faHeart} />,
+            title: 'Like',
+            onClick: handleLike,
+            isLiked: data.isLiked,
+          },
+          { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
+          { icon: <AddToList />, title: 'Add to Next up' },
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faXmark} />,
+            title: 'Remove from Playlist',
+            onClick: handleRemovePlaylist,
+          },
+          { icon: <AddToPlaylist />, title: 'Add to Playlist' },
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faTowerBroadcast} />,
+            title: 'Station',
+          },
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faExclamationCircle} />,
+            title: 'Report',
+          },
+        ]
+      : [
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faHeart} />,
+            title: 'Like',
+            onClick: handleLike,
+            isLiked: data.isLiked,
+          },
+          { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
+          { icon: <AddToList />, title: 'Add to Next up' },
+
+          { icon: <AddToPlaylist />, title: 'Add to Playlist' },
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faTowerBroadcast} />,
+            title: 'Station',
+          },
+          {
+            icon: <FontAwesomeIcon height={12} width={12} icon={faExclamationCircle} />,
+            title: 'Report',
+          },
+        ];
 
   return (
     <div
       className={cx('wrapper', {
-        active: active,
+        active: data.id === storage.currentMusic.id,
       })}
     >
       <div className={cx(['play-list-item', 'row', ' relative'])}>

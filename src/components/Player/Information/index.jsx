@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
-import PlayList from 'components/PlayList';
+// import PlayList from 'components/PlayList';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
 import { followUser, unfollowUser } from 'api/follow';
+import Queue from 'components/Queue';
 const cx = classNames.bind(styles);
 
 function Information({ data }) {
@@ -131,9 +132,7 @@ function Information({ data }) {
           interactive
           offset={[0, 18]}
           render={() => {
-            return (
-              <PlayList className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />
-            );
+            return <Queue className={isClosing ? cx('hidden') : ''} handleHidden={handleHidden} />;
           }}
         >
           <div

@@ -12,18 +12,24 @@ export async function signIn(email, password) {
   }
 }
 
-export async function registerUser({ username, email, password }) {
+export async function registerUser({username, email, password}) {
   try {
-    const formdata = new FormData();
-    formdata.append('userName', username);
-    formdata.append('email', email);
-    formdata.append('password', password);
-    const response = await axiosClient.post(`/user/register`, formdata);
-    return response.data;
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("userName", username);
+      urlencoded.append("email", email);
+      urlencoded.append("password", password);
+      const response = await axiosClient.post(`/user/register`, urlencoded, {
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+          }
+      })
+      return response.data
   } catch (error) {
-    console.log(error);
+      throw error
   }
 }
+
+
 
 export async function changePassword({ currentPassword, newPassword, confirmPassword }) {
   try {
@@ -71,9 +77,9 @@ export async function getUsersByName(name) {
   }
 }
 
-export async function updateUserDetails({ username = '', city = '', country = '', bio = '' }) {
+export async function updateUserDetails({ username = '', city = '', country = '', bio = '', avatar = ''}) {
   try {
-    if (username === '' && city === '' && country === '' && bio === '') {
+    if (username === '' && city === '' && country === '' && bio === '' && avatar === '') {
       return null;
     } else {
       const formdata = new FormData();
@@ -81,6 +87,7 @@ export async function updateUserDetails({ username = '', city = '', country = ''
       city !== '' && formdata.append('city', city);
       country !== '' && formdata.append('country', country);
       bio !== '' && formdata.append('bio', bio);
+      avatar !== '' && formdata.append('avatar', avatar);
       const response = await axiosClient.put(`/user/update`, formdata);
       return response.data;
     }

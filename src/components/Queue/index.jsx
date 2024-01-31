@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './PlayList.module.scss';
+import styles from './Queue.module.scss';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';

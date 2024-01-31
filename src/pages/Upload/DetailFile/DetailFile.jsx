@@ -65,15 +65,14 @@ function DetailFile({ selectedFile }) {
         })
           .then((res) => {
             console.log(res);
-            setShowLoader(true);
-            setTimeout(() => {
-              navigate('/profile');
-            }, 1800)
           })
           .catch((err) => {
             console.log(err);
           });
-
+        setShowLoader(true);
+        setTimeout(() => {
+          navigate('/profile');
+        }, 1800)
       } catch (error) {
         console.error('Error creating song:', error);
         toast.error('Upload fail')

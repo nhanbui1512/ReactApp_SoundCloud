@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateUserDetails } from 'api/users';
 import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './EditProfile.module.scss';
 
 const cx = classNames.bind(styles);
 
 function EditProfile({ setPopperEdit, userData = {} }) {
   const [image, setImage] = useState('');
+  const navigate = useNavigate();
   const inputref = useRef();
 
   const handleFileChange = (e) => {
@@ -39,6 +41,7 @@ function EditProfile({ setPopperEdit, userData = {} }) {
       console.error('Error updating user details:', error);
     }
     setPopperEdit(false);
+    navigate('/profile');
   }
 
   const [userName, setUserName] = useState(userData.userName || '');

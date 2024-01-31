@@ -40,7 +40,7 @@ function Information({ data }) {
 
       newPrev = newPrev.map((song) => {
         if (song.id === data.id) {
-          song.isLiked = !data.isLiked;
+          song.isLiked = !prev.isLiked;
         }
         return song;
       });

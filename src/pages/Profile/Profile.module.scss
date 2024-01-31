@@ -8,8 +8,9 @@
   // background-position: center;
   // background-repeat: no-repeat;
   // background-size: 100% 100%;
-  background-color: #e49368;
+  background: linear-gradient(45deg, #ff7147, #f3e9ec);
 }
+
 .img-email {
   border-radius: 100px;
   width: 200px;
@@ -18,15 +19,17 @@
   margin-left: 25px;
   border: 1px solid black;
 }
-.btn-update-img {
+
+.btn-update-header-img {
   width: 180px;
   height: 30px;
   margin-top: 25px;
-  margin-left: 500px;
+  margin-left: 200px;
   border-radius: 5px;
 }
 .name-user {
   margin-top: 25px;
+  width: 500px;
 }
 .lb1 {
   font-size: 25px;
@@ -125,6 +128,8 @@
 .tracks {
   margin-left: 10px;
   padding: 10px;
+  border-left: 0.5px #f2f2f2 solid;
+  height: 40px;
 }
 
 .follwer-item {
@@ -132,9 +137,19 @@
   margin-top: 15px;
   height: 500px;
 }
+.brand-items{
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 30px;
+  text-align: left;
+  color: #ccc
+
+}
 .info-music-list {
   width: 850px;
   height: 500px;
+  text-align: center;
+  font-size: 18px;
   // align-items: center;
   // justify-content: center;
 }
@@ -142,6 +157,9 @@
 .router-item {
   margin-top: 15px;
   height: 500;
+}
+.router-item-right{
+  width: 850px;
 }
 .button-item {
   margin-left: auto;
@@ -153,5 +171,14 @@
   background-color: #f50;
   color: black;
   text-decoration: none;
-  margin-left: 200px;
+  margin-left: 0px;
+  padding: 5px;
+  margin-top: 5px;
+}
+.router-view{
+  padding: 50px;
+}
+.p-title{
+  color: blue;
+  font-size: 15px;
 }

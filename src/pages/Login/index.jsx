@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { StorageContext } from 'context/Storage';
 import { CheckLogin } from 'api/Login';
-
 import styles from './Login.module.scss';
 import { setToken } from 'services/local/cookie';
 
@@ -37,7 +36,7 @@ const Login = () => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('login-form')}>
-        <h1>Login </h1>
+        <h1 className={cx('login-title')}>Login </h1>
         <br></br>
         <input
           value={email}
@@ -62,7 +61,7 @@ const Login = () => {
               fontSize: 14,
             }}
           >
-            *Email hoặc mật khẩu không đúng
+            *Email or password is incorrect
           </p>
         )}
         <button onClick={handleLogin} className={cx('login-button')}>
@@ -74,11 +73,7 @@ const Login = () => {
           </p>
         </div>
 
-        <div className={cx('line-container')}>
-          <div className={cx('line-left')}></div>
-          <div className={cx('or')}>or</div>
-          <div className={cx('line-right')}></div>
-        </div>
+        
         <p className={cx('p1')}>
           When registering, you agree that we may use your provided data for the registration and to
           send you notifications on our products and services. You can unsubscribe from

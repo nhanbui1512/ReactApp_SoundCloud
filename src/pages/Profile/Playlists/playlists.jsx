@@ -10,9 +10,10 @@ const Playlists = () => {
  
   return (
     <div className={cx('info-music-list')}>
-       <Link to="/upload" className={cx('btn-route-upload')}>
-          Upload
-        </Link>
+      <div className={cx('router-view')}></div>
+      <img src="" alt="" />
+      <p>Seems a little quiet over here</p>
+      <p className={cx('p-title')}>Lear about playlists.</p>
     </div>
   );
 };

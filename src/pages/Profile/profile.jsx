@@ -10,11 +10,13 @@ import Tracks from './Tracks/tracks';
 import Reposts from './Reposts/reposts';
 import EditProfile from './Edit_profile/EditProfile';
 import { getCurrentUserProfile } from 'api/users';
+import ShowImage from './Show_Image/ShowImage';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
   const [popperEdit, setPopperEdit] = useState(false);
+  const [popperImage, setPopperImage] = useState(false);
   const [userData, setUserData] = useState({});
 
   const navigate = useNavigate();
@@ -23,24 +25,26 @@ function Profile() {
     getCurrentUserProfile()
       .then((res) => {
         setUserData(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
         navigate('/login');
       });
+      
   }, [navigate]);
 
   return (
     <div>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
-          <img className={cx('img-email')} src={userData.avatar || ''} alt="" />
+          <img onClick={() => {setPopperImage(true);}}className={cx('img-email')} src={userData.avatar || ''} alt="" />
           <div className={cx('name-user')}>
             <div className={cx('lb1')}>{userData.userName || ''}</div>
             <br />
             <div className={cx('lb2')}>{userData.bio || ''}</div>
           </div>
-          <button className={cx('btn-update-img')}>
+          <button className={cx('btn-update-header-img')} type="file">
             <span className={cx('camera')} role="img" aria-label="camera icon">
               📷
             </span>{' '}
@@ -50,6 +54,7 @@ function Profile() {
         <div className={cx('info-music')}>
           <div className={cx('nav-info-left')}>
             <div className={cx('nav-info-left-head')}>
+              
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
                 to={'/profile/all'}
@@ -88,6 +93,7 @@ function Profile() {
               </NavLink>
             </div>
             <div className={cx('router-item')}>
+              <div className={cx("router-item-right")}></div>
               <Routes>
                 <Route path="/all" element={<All />} />
                 <Route path="/popular" element={<PopularTracks />} />
@@ -125,12 +131,17 @@ function Profile() {
                   <p style={{ textAlign: 'center' }}>{userData.track || 0}</p>
                 </div>
               </div>
+              <div className={cx('brand-items')}>
+                Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog - Charts 
+                <p><span style={{color: "blue"}}>Language</span>: English</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
+                
       {popperEdit && <EditProfile userData={userData} setPopperEdit={setPopperEdit} />}
+      {popperImage && <ShowImage  userData={userData} setPopperEdit={setPopperImage} />}
     </div>
   );
 }

@@ -98,3 +98,16 @@
 .active {
   background-color: #f8f8f8;
 }
+.appear {
+  display: flex;
+}
+.disappear {
+  display: none;
+}
+.menu-wrapper {
+  width: 180px;
+}
+.menu-item {
+  width: 100% !important;
+  font-size: 12px;
+}

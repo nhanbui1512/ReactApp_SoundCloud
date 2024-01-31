@@ -18,12 +18,14 @@ import { useContext } from 'react';
 import Button from 'components/Button';
 import { StorageContext } from 'context/Storage';
 import SearchBar from './SearchBar';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
   {
     title: 'Profile',
-    icon: <FontAwesomeIcon icon={faUser} />,
+    to: '/profile',
+    icon: <FontAwesomeIcon className={cx('icon-menu')} icon={faUser} />,
   },
   {
     title: 'Like',
@@ -86,12 +88,17 @@ const moreMenuItem = [
   },
   {
     title: 'Sign out',
+    onClick: () => {
+      Cookies.remove('authToken');
+      window.location.replace('/');
+    },
   },
 ];
 
 const Header = () => {
   const globalStates = useContext(StorageContext);
-  const [currentUser, setCurrentUser] = [globalStates.currentUser, globalStates.setCurrentUser];
+  const [currentUser] = [globalStates.currentUser];
+  const [user] = [globalStates.userData];
 
   return (
     <div className={cx('header')}>
@@ -130,15 +137,15 @@ const Header = () => {
 
         {currentUser || (
           <div className={cx('login-menu')}>
-            <Button to={'/login'} outline>
+            <Button className={cx('sigin-btn')} to={'/login'} outline>
               Sign in
             </Button>
-            <Button to={'/signup'} primary>
+            <Button className={cx('sigin-btn')} to={'/signup'} primary>
               Create Account
             </Button>
           </div>
         )}
-        
+
         {currentUser && (
           <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
             Upload
@@ -155,7 +162,7 @@ const Header = () => {
                 <Wrapper className={cx('dropdown-menu')}>
                   {menuUserItem.map((item, index) => {
                     return (
-                      <MenuItem key={index} icon={item.icon}>
+                      <MenuItem to={item.to} key={index} icon={item.icon}>
                         {item.title}
                       </MenuItem>
                     );
@@ -165,10 +172,7 @@ const Header = () => {
             }}
           >
             <div className={cx('avatar-wrapper')}>
-              <Image
-                className={cx('avatar-img')}
-                src={'https://i1.sndcdn.com/avatars-000656606957-0tv0jo-t50x50.jpg'}
-              />
+              <Image className={cx('avatar-img')} src={user.avatar} />
               <FontAwesomeIcon className={cx('dropdown-icon')} icon={faChevronDown} />
             </div>
           </HeadlessTippy>
@@ -183,7 +187,12 @@ const Header = () => {
               <Wrapper className={cx('more-menu')}>
                 {moreMenuItem.map((item, index) => {
                   return (
-                    <MenuItem separate={item.separate} key={index} icon={item.icon}>
+                    <MenuItem
+                      onClick={item.onClick}
+                      separate={item.separate}
+                      key={index}
+                      icon={item.icon}
+                    >
                       {item.title}
                     </MenuItem>
                   );

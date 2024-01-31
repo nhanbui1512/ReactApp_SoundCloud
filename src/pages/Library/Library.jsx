@@ -37,13 +37,6 @@ const Library = () => {
         >
           Following
         </NavLink>
-
-        <NavLink
-          className={(nav) => cx('navbar', { active: nav.isActive })}
-          to={'/library/History'}
-        >
-          History
-        </NavLink>
       </div>
       <Routes>
         <Route index path="/Overview" element={<Overview />} />

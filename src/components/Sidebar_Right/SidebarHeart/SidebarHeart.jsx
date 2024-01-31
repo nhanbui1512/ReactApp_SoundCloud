@@ -20,20 +20,24 @@ import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
 import CustomToast from 'components/CustomToast/CustomToast';
 import { toast } from 'react-toastify';
+//import apiHandleFeed from 'api/apiHandleFeed';
 
 const cx = classNames.bind(styles);
-const SidebarHeart = ({ art }) => {
+const SidebarHeart = ({songsLiked}) => {
+  console.log('bai hat trong song', songsLiked);
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [favoriteSongs, setFavoriteSongs] = useState([]);
-  const addToFavorites = (art) => {
-    setFavoriteSongs([...favoriteSongs, art]);
-    showToast(art);
+  
+
+  const addToFavorites = (songsLiked) => {
+    setFavoriteSongs([...favoriteSongs, songsLiked]);
+    showToast(songsLiked);
   };
   const showToast = (art) => {
-    toast.success(<CustomToast art={art} isLiked={isLiked}/>, {
+    toast.success(<CustomToast art={art} isLiked={isLiked} />, {
       position: 'top-right',
     });
   };
@@ -55,33 +59,27 @@ const SidebarHeart = ({ art }) => {
   return (
     <>
       <li className={cx('sidebar__modul-list-item')}>
-        <img src={art.image1} alt="" className={cx('sidebar__modul-image-song')} />
+        <img src={songsLiked.thumbNail || ''} alt="" className={cx('sidebar__modul-image-song')} />
         {/* <PlaySidebar/> */}
 
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
-            <div className={cx('sidebar__modul-item-name')}>{art.name}</div>
+            <div className={cx('sidebar__modul-item-name')}>{songsLiked.artistName}</div>
           </div>
-          <div className={cx('sidebar__modul-item-body')}>{art.songName}</div>
+          <div className={cx('sidebar__modul-item-body')}>{songsLiked.name}</div>
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>
-                  {art.follower}
-                </span> 
+                <span className={cx('sidebar-data')}>{songsLiked.follower}</span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-                <span className={cx('sidebar-data')}>
-                  {art.song}
-                </span> 
+                <span className={cx('sidebar-data')}>{songsLiked.song}</span>
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
-                <span className={cx('sidebar-data')}>
-                  {art.repeat}
-                </span> 
+                <span className={cx('sidebar-data')}>{songsLiked.repeat}</span>
               </span>
             </div>
           </div>
@@ -105,7 +103,7 @@ const SidebarHeart = ({ art }) => {
                   className={cx('sidebar__modul-option-btn')}
                   onClick={() => {
                     setIsLiked(!isLiked);
-                    addToFavorites(art)
+                    addToFavorites(favoriteSongs);
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

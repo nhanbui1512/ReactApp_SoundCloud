@@ -1,9 +1,51 @@
 import classNames from 'classnames/bind';
 import styles from './Item.module.scss';
-const { faBars, faPlay, faHeart, faEllipsis } = require('@fortawesome/free-solid-svg-icons');
+import HeadlessTippy from '@tippyjs/react/headless';
+import { useState } from 'react';
+import { MenuItem, Wrapper } from 'components/DropDownMenu';
+import { AddToList, AddToPlaylist } from 'components/Icons';
+
+const {
+  faBars,
+  faPlay,
+  faHeart,
+  faEllipsis,
+  faRepeat,
+  faXmark,
+  faTowerBroadcast,
+  faExclamationCircle,
+} = require('@fortawesome/free-solid-svg-icons');
 const { FontAwesomeIcon } = require('@fortawesome/react-fontawesome');
 const cx = classNames.bind(styles);
+
 function Item({ active }) {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const menuItems = [
+    {
+      icon: <FontAwesomeIcon height={12} width={12} icon={faHeart} />,
+      title: 'Like',
+      onClick: (e) => {
+        e.preventDefault();
+        console.log('set like');
+        setIsLiked(!isLiked);
+      },
+      isLiked: isLiked,
+    },
+    { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
+    { icon: <AddToList />, title: 'Add to Next up' },
+    {
+      icon: <FontAwesomeIcon height={12} width={12} icon={faXmark} />,
+      title: 'Remove from Next up',
+    },
+    { icon: <AddToPlaylist />, title: 'Add to Playlist' },
+    { icon: <FontAwesomeIcon height={12} width={12} icon={faTowerBroadcast} />, title: 'Station' },
+    {
+      icon: <FontAwesomeIcon height={12} width={12} icon={faExclamationCircle} />,
+      title: 'Report',
+    },
+  ];
+
   return (
     <div
       className={cx('wrapper', {
@@ -37,13 +79,34 @@ function Item({ active }) {
             >
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button
-              style={{
-                fontSize: 12,
-              }}
+
+            <HeadlessTippy
+              interactive
+              render={() => (
+                <Wrapper className={cx('menu-wrapper')}>
+                  {menuItems.map((item, index) => (
+                    <MenuItem
+                      className={cx('menu-item')}
+                      key={index}
+                      icon={item.icon}
+                      separate
+                      onClick={item.onClick}
+                      primary={item.isLiked}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Wrapper>
+              )}
             >
-              <FontAwesomeIcon icon={faEllipsis} />
-            </button>
+              <button
+                style={{
+                  fontSize: 12,
+                }}
+              >
+                <FontAwesomeIcon icon={faEllipsis} />
+              </button>
+            </HeadlessTippy>
           </div>
         </div>
       </div>

@@ -70,14 +70,17 @@ const posts = [
       'https://al.sndcdn.com/labs-9576a784-0-t200x200.jpg?q=YXJ0d29ya190eXBlOiBTQ19XRUVLTFkKdXJuczogInNvdW5kY2xvdWQ6dHJhY2tzOjEwMDY0ODgzMjIiCnVybnM6ICJzb3VuZGNsb3VkOnRyYWNrczo1MjEwMjA4MzkiCnVybnM6ICJzb3VuZGNsb3VkOnRyYWNrczo4ODEyMTc5NDYiCnVybnM6ICJzb3VuZGNsb3VkOnRyYWNrczo3Nzk1Mjc2MDAiCnVybnM6ICJzb3VuZGNsb3VkOnRyYWNrczoxMDg2MTQ0OTEzIgo=',
   },
 ];
-const totalPage = Math.ceil(posts.length / 4) - 1;
-function SliderLibrary() {
+function SliderLibrary({ data = [] }) {
+  if (data.length <= 0) {
+    data = posts;
+  }
+  const totalPage = Math.ceil(data.length / 4) - 1;
   const listRef = useRef();
   const [page, setPage] = useState(0);
 
   let distanceSlide = page * 734;
   if (page === totalPage) {
-    const residual = posts.length % 4;
+    const residual = data.length % 4;
     distanceSlide -= (4 - residual) * 190;
   }
   return (
@@ -95,7 +98,7 @@ function SliderLibrary() {
           className={cx('list-gallery')}
           ref={listRef}
         >
-          {posts.map((item, index) => (
+          {data.map((item, index) => (
             <Post key={index} data={item} />
           ))}
         </div>

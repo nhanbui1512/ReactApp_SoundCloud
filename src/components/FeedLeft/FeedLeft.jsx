@@ -7,9 +7,11 @@ import apiHandleFeed from 'api/apiHandleFeed';
 import FeedLeftULList from './FeedLeftULList';
 
 
+
 const cx = classNames.bind(styles);
 const FeedLeft = () => {
   const [feedSong, setFeedSong] = useState([]);
+
   useEffect(() => {
     const getSongFeed = async () => {
       try {

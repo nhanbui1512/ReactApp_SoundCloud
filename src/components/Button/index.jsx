@@ -17,6 +17,8 @@ function Button({
   disabled = false,
   rounded = false,
   divbox = false,
+  textBlack = false,
+  separate = false,
   leftIcon,
   rightIcon,
   children,
@@ -32,6 +34,7 @@ function Button({
     outline,
     small,
     rounded,
+    separate,
     large,
     text,
     divbox,
@@ -59,7 +62,7 @@ function Button({
   return (
     <Comp className={classes} {...Props}>
       {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-      <span className={cx('title')}>{children}</span>
+      <span className={cx('title', { textBlack: textBlack })}>{children}</span>
       {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
     </Comp>
   );

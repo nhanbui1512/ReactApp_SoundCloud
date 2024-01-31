@@ -19,17 +19,22 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
+import axiosClient from 'api/axiosClient';
+import { useNavigate } from 'react-router';
 //import ToastMessage from 'components/ToastMessage/ToastMessage';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ data }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(false);
+  //const [isLiked, setIsLiked] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
+
+  const [isLiked, setIsLiked] = useState(data.isLiked);
+  const navigate = useNavigate();
 
   const storage = useContext(StorageContext);
 
@@ -140,6 +145,12 @@ const FeedSong = ({ data }) => {
                 <button
                   className={cx('feed__modul-option-btn')}
                   onClick={() => {
+                    axiosClient
+                      .post('/song/like?song_id=14')
+                      .then((res) => {})
+                      .catch((err) => {
+                        if (err.response.data.error.authorize) navigate('/login');
+                      });
                     setIsLiked(!isLiked);
                   }}
                 >

@@ -1,106 +1,91 @@
-import React, { useState,useContext } from 'react';
-import { auth } from '../../services/firebase/app';
-import { signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider } from 'firebase/auth';
-import { Link ,useNavigate} from 'react-router-dom';
-import GoogleButton from 'react-google-button';
-import { StorageContext } from 'context/Storage'; 
+import React, { useContext, useState } from 'react';
+import classNames from 'classnames/bind';
+import { Link, useNavigate } from 'react-router-dom';
+import { StorageContext } from 'context/Storage';
+import { CheckLogin } from 'api/Login';
 
-import './Login.scss';
+import styles from './Login.module.scss';
+import { setToken } from 'services/local/cookie';
+
+const cx = classNames.bind(styles);
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [fail, setFail] = useState(false);
+
+  const storage = useContext(StorageContext);
 
   const navigate = useNavigate();
-  const { setCurrentUser } = useContext(StorageContext);
-
-  const onLogin = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert("Please enter email or password");
-      return;
-    }
-    setSubmitted(true);
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {   
-        const user = userCredential.user;
-        setCurrentUser(true);
-        navigate("/")
-        console.log(user);
+  const handleLogin = () => {
+    CheckLogin({
+      email: email,
+      password: password,
     })
-    .catch((error) => {
-        setSubmitted(false);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-        alert("Email or password is not error");
-    });
-   
-  }
-
-  const handleSignInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        //const credential = GoogleAuthProvider.credentialFromResult(result);
-        //const token = credential.accessToken;
-        const user = result.user;
-        setCurrentUser(true);
+      .then((res) => {
+        setToken({ token: res.token });
+        storage.setCurrentUser(true);
+        storage.setUserData(res.user);
         navigate('/');
-        console.log(user);
-        // onLoginSuccess();
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        
+      .catch((err) => {
+        setFail(true);
+        setEmail('');
+        setPassword('');
       });
   };
 
   return (
-    <div className="container">
-      <form  className="login-form">
+    <div className={cx('wrapper')}>
+      <div className={cx('login-form')}>
         <h1>Login </h1>
         <br></br>
         <input
-          type="email"
+          value={email}
           placeholder="Your Email"
           required
           onChange={(e) => setEmail(e.target.value)}
         />
         <br></br>
         <input
+          value={password}
           type="password"
           placeholder="Your Password"
           required
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        <button  onClick={onLogin} disabled={submitted} className="login-button">
+
+        {fail && (
+          <p
+            style={{
+              marginTop: 10,
+              fontSize: 14,
+            }}
+          >
+            *Email hoặc mật khẩu không đúng
+          </p>
+        )}
+        <button onClick={handleLogin} className={cx('login-button')}>
           Login
         </button>
-        <div className="div-p0">
-          <p className="p0">
+        <div className={cx('div-p0')}>
+          <p className={cx('p0')}>
             Need to Signup? <Link to="/signup">Create Account</Link>
           </p>
         </div>
 
-        <div className="line-container">
-          <div className="line-left"></div>
-          <div className="or">or</div>
-          <div className="line-right"></div>
+        <div className={cx('line-container')}>
+          <div className={cx('line-left')}></div>
+          <div className={cx('or')}>or</div>
+          <div className={cx('line-right')}></div>
         </div>
-        <GoogleButton className="google-button"
-        onClick={handleSignInWithGoogle}
-        />
-        <p className="p1">
+        <p className={cx('p1')}>
           When registering, you agree that we may use your provided data for the registration and to
           send you notifications on our products and services. You can unsubscribe from
           notifications at any time in your settings. For additional info please refer to our{' '}
           <b>Privacy Policy.</b>
         </p>
-      </form>
+      </div>
     </div>
   );
 };

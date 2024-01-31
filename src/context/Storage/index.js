@@ -1,6 +1,8 @@
-import { createContext, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import images from 'assets/images';
 import musics from 'assets/musics';
+import { getCookie } from 'services/local/cookie';
+import { getCurrentUserProfile } from 'api/users';
 
 export const StorageContext = createContext();
 
@@ -53,6 +55,31 @@ function GlobalStates({ children }) {
     userData, // dữ liệu người dùng sau khi đăng nhập
     setUserData,
   };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken') || getCookie('authToken');
+    if (authToken) {
+      getCurrentUserProfile()
+        .then((res) => {
+          const userData = {
+            id: res.data.id,
+            avatar: res.data.avatar,
+            email: res.data.email,
+            userName: res.data.userName,
+            bio: res.data.bio,
+            country: res.data.country,
+            followerNumber: res.data.followerNumber,
+            followingNumber: res.data.followingNumber,
+          };
+          setUserData(userData);
+          setCurrentUser(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+    }
+  }, []);
 
   return <StorageContext.Provider value={states}>{children}</StorageContext.Provider>;
 }

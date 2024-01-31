@@ -1,20 +1,24 @@
 import classNames from 'classnames/bind';
 import styles from './DropDownMenu.module.scss';
+import Button from 'components/Button';
 const cx = classNames.bind(styles);
 
-function MenuItem({ children, icon, className, separate, onClick }) {
+function MenuItem({ to, children, icon, className, separate, onClick, primary }) {
+  const classes = cx('menuitem-wrapper', {
+    [className]: className,
+    primary,
+  });
   return (
-    <button
+    <Button
+      textBlack
+      className={classes}
+      separate={separate}
+      leftIcon={icon}
+      to={to}
       onClick={onClick}
-      className={cx("menuitem-wrapper", {
-        icon,
-        separate,
-        [className]: className,
-      })}
     >
-      {icon && <div className={cx('icon-wrapper')}>{icon}</div>}
-      <div>{children}</div>
-    </button>
+      {children}
+    </Button>
   );
 }
 export default MenuItem;

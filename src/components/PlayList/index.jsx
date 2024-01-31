@@ -34,21 +34,6 @@ function PlayList({ handleHidden, className }) {
           <div className={cx('play-list-container')}>
             <div className={cx('col')}>
               <PlayListItem active />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
-              <PlayListItem />
             </div>
           </div>
         </div>

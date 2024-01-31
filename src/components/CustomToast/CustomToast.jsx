@@ -9,7 +9,7 @@ const CustomToast = ({ art, isLiked }) => (
   <div className={cx("custom-toast")}>
     <img src={art.image} alt="" className={cx("toast-image")} />
     <div className={cx('toast-content')}>
-      <span className={cx('toast-title')}>{art.name}</span>
+      <span className={cx('toast-title')}>{art.song?.name}</span>
       <span className={cx('toast-title')}>{!isLiked ? "Đã thêm vào danh sách yêu thích" : "Xóa khỏi danh sách"}</span>
     </div>
   </div>

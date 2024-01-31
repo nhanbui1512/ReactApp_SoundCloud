@@ -1,9 +1,6 @@
-
-
-.container{
+.wrapper {
   width: 100%;
   height: 100%;
- 
 }
 .login-form {
   width: 500px;
@@ -11,13 +8,12 @@
   border: 1px solid grey;
   border-radius: 10px;
   text-align: center;
-  margin:  0 auto;
+  margin: 0 auto;
   margin-top: 100px;
   background-color: rgb(241, 164, 20);
 }
-.login-form h1{
+.login-form h1 {
   display: inline-block;
-  
 }
 .login-form input {
   width: 280px;
@@ -36,17 +32,19 @@
   background-color: rgb(39, 104, 195);
   color: white;
   border: 1px solid grey;
-  
 }
 .login-button {
   margin-top: 10px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
 }
 .login-button:disabled {
   color: grey;
   background-color: darkgray;
 }
-.google-button{
-  
+.google-button {
   width: 280px;
   margin: 0 auto;
 }
@@ -55,28 +53,26 @@
   align-items: center;
   text-align: center;
   margin: 10px 0;
-  
 }
 
 .line-left {
   flex: 1;
   height: 1px;
-  background-color: #000; 
+  background-color: #000;
   margin-left: 100px;
-  
 }
 .line-right {
   flex: 1;
   height: 1px;
-  background-color: #000; 
+  background-color: #000;
   margin-right: 100px;
 }
 
 .or {
-  margin: 0 10px; 
+  margin: 0 10px;
 }
-b{
-  color:blue;
+b {
+  color: blue;
 }
 .p1 {
   margin-right: 20px;
@@ -86,6 +82,6 @@ b{
   color: rgba(93, 78, 78, 0.829);
   margin-top: 1.5em;
 }
-.div-p0{
+.div-p0 {
   font-size: 17px;
 }

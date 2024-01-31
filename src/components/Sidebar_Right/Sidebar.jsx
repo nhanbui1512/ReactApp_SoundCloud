@@ -10,10 +10,29 @@ import SidebarHistory from './SidebarHistory/SidebarHistory';
 import { IoHeart } from 'react-icons/io5';
 import SidebarArtist from './SidebarArtist/SidebarArtist';
 import apiHandleFeed from 'api/apiHandleFeed';
+import SidebarHeartUL from './SidebarHeart/SidebarHeartUL/SidebarHeartUL';
+//import SidebarHeartUL from './SidebarHeart/SidebarHeartUL/SidebarHeartUL';
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
   const [rmdUser, setRmdUser] = useState([]);
+  const [listSongLiked, setListSongLiked] = useState([]);
+  console.log('danh sach bai hat da liked',listSongLiked);
+  listSongLiked.map((item) => (
+    <>{item.song?.thumbNail}</>
+  ))
+  useEffect(() => {
+    const getSongLiked = async () => {
+      try {
+        const res1 = await apiHandleFeed.getSongLiked();
+        setListSongLiked(res1.data.data);
+        console.log(res1.data.data);
+      } catch(error) {
+        console.error('error fetch data', error);
+      }
+    }
+    getSongLiked();
+  },[])  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -54,11 +73,12 @@ const Sidebar = () => {
             <span>View All</span>
           </div>
           <div className={cx('sidebar__modul-container')}>
-            <ul className={cx('sidebar__modul-list')}>
+            <SidebarHeartUL  listSongLiked={listSongLiked} />
+            {/* <ul className={cx('sidebar__modul-list')}>
               {artirstFollow.map((art, index) => (
-                <SidebarHeart key={index} art={art} />
+                <SidebarHeart  songListLiked={listSongLiked} />
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div className={cx('sidebar__modul')}>

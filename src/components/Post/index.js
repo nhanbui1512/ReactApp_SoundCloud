@@ -27,7 +27,7 @@ function Post({ data }) {
     };
   }, []);
 
-  const handleFollowing = () => {
+  const handleFollowing = async () => {
     setIsFollowing(!isFollowing);
   };
   return (

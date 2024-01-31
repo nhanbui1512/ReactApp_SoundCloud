@@ -15,6 +15,7 @@
 .sidebar__modul-refresh {
   display: flex;
   font-size: 1rem;
+  justify-content: space-between;
 }
 
 .sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
@@ -27,6 +28,7 @@
   align-items: center;
   display: flex;
   position: relative; // Cần thiết để định vị `PlaySidebar`
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -49,8 +51,8 @@
 
   &:hover {
     .sidebar__modul-item-option {
-        display: flex;
-        align-items: center;
+      display: flex;
+      align-items: center;
     }
   }
 }
@@ -121,7 +123,7 @@
 //   margin-right: 4px;
 // }
 .sidebar-data {
-  margin:0 4px;
+  margin: 0 4px;
   font-size: 0.8rem;
 }
 
@@ -141,11 +143,12 @@
 
 .sidebar__modul-item-follower {
   background-color: #fff;
-  border: 1px solid #999;
+  border: 1px solid #e5e5e5;
   border-radius: 2px;
-  color: #000;
-  padding: 2px;
+  color: #333;
+  padding: 2px 9px 2px 8px;
   font-size: 0.6rem;
+  cursor: pointer;
 }
 
 .sidebar__modul-item-following {
@@ -178,35 +181,35 @@
 // }
 
 .sidebar__modul-item-play {
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    /* top: 225%; */
-    top: 30px;
-    right: 696%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-    z-index: 10;
-    background-color: #f50;
-    font-size: 20px !important;
-    color: #fff !important;
-    cursor: pointer;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  /* top: 225%; */
+  top: 30px;
+  right: 696%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 10;
+  background-color: #f50;
+  font-size: 20px !important;
+  color: #fff !important;
+  cursor: pointer;
   &:hover {
     background-color: #f30;
   }
 }
 
 .sidebar__modul-item-option {
-    color: #999 !important;
-    position: relative;
-    bottom: 16px;
-    align-items: center;
-    right: 79%;
-    z-index: 2;
-    display: none;
+  color: #999 !important;
+  position: relative;
+  bottom: 16px;
+  align-items: center;
+  right: 79%;
+  z-index: 2;
+  display: none;
 }
 
 .sidebar__modul-play-icon {
@@ -235,4 +238,9 @@
 }
 .liked {
   color: var(--orange-primary);
+}
+
+.following {
+  color: var(--orange-primary);
+  border-color: var(--orange-primary);
 }

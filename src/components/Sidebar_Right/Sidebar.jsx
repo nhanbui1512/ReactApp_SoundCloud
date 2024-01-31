@@ -10,34 +10,42 @@ import SidebarHistory from './SidebarHistory/SidebarHistory';
 import { IoHeart } from 'react-icons/io5';
 import SidebarArtist from './SidebarArtist/SidebarArtist';
 import apiHandleFeed from 'api/apiHandleFeed';
-import SidebarHeartUL from './SidebarHeart/SidebarHeartUL/SidebarHeartUL';
-//import SidebarHeartUL from './SidebarHeart/SidebarHeartUL/SidebarHeartUL';
+import { Link, Routes, Route } from 'react-router-dom';
+
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
   const [rmdUser, setRmdUser] = useState([]);
   const [listSongLiked, setListSongLiked] = useState([]);
-  console.log('danh sach bai hat da liked',listSongLiked);
-  listSongLiked.map((item) => (
-    <>{item.song?.thumbNail}</>
-  ))
+  const [randomSongs, setRandomSongs] = useState([]);
   useEffect(() => {
     const getSongLiked = async () => {
       try {
         const res1 = await apiHandleFeed.getSongLiked();
-        setListSongLiked(res1.data.data);
-        console.log(res1.data.data);
+        const combinedSongs = res1.data.data.map(item => item.song);
+        setListSongLiked(combinedSongs);
+        //console.log(combinedSongs);
       } catch(error) {
         console.error('error fetch data', error);
       }
     }
     getSongLiked();
-  },[])  
+  },[])
+  useEffect(() => {
+    // Lấy ngẫu nhiên 4 bài hát từ mảng songs
+    const getRandomSongs = () => {
+      const shuffledSongs = listSongLiked.sort(() => 0.5 - Math.random());
+      const selectedSongs = shuffledSongs.slice(0, 4);
+      setRandomSongs(selectedSongs);
+    };
+
+    getRandomSongs();
+  }, [listSongLiked]); // useEffect sẽ chạy lại mỗi khi mảng songs thay đổi  
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await apiHandleFeed.getUser();
-        setRmdUser(res.data.data)
+        setRmdUser(res.data.data.slice(0, 9))
       } catch(error) {
         console.error(error);
       }
@@ -70,15 +78,15 @@ const Sidebar = () => {
             <span>
               <IoHeart />
             </span>
-            <span>View All</span>
+            <Link to='/libary/Likes' >View All</Link>
           </div>
           <div className={cx('sidebar__modul-container')}>
-            <SidebarHeartUL  listSongLiked={listSongLiked} />
-            {/* <ul className={cx('sidebar__modul-list')}>
-              {artirstFollow.map((art, index) => (
-                <SidebarHeart  songListLiked={listSongLiked} />
+            {/* <SidebarHeartUL  data={listSongLiked} /> */}
+            <ul className={cx('sidebar__modul-list')}>
+              {randomSongs.map((songsLiked, index) => (
+                <SidebarHeart  songsLiked={songsLiked} key={index} />
               ))}
-            </ul> */}
+            </ul>
           </div>
         </div>
         <div className={cx('sidebar__modul')}>
@@ -95,8 +103,11 @@ const Sidebar = () => {
               })}
             </ul>
           </div>
-        </div>
+        </div> 
       </div>
+      <Routes>
+        <Route path='/Likes'></Route>
+      </Routes>
     </>
   );
 };

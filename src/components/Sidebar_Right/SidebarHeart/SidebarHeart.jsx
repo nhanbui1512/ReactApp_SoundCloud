@@ -17,27 +17,87 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import CustomToast from 'components/CustomToast/CustomToast';
 import { toast } from 'react-toastify';
-//import apiHandleFeed from 'api/apiHandleFeed';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
-const SidebarHeart = ({songsLiked}) => {
-  console.log('bai hat trong song', songsLiked);
+const SidebarHeart = ({ songsLiked }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(songsLiked.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [favoriteSongs, setFavoriteSongs] = useState([]);
   
+  const storage = useContext(StorageContext);
+
+  // Hàm xử lý khi nút Play/Pause được nhấn
+  const handlePlay = (e) => {
+    e.preventDefault();
+    const audioTag = storage.audioRef.current;
+
+    // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
+    if (storage.currentMusic.id !== songsLiked.id) {
+      storage.setCurrentMusic(songsLiked);
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlay(true);
+        audioTag.removeEventListener('loadeddata', playMusic);
+      };
+      audioTag.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
+    }
+
+    // Nếu đang bài đang phát giống với bài của gallary
+    if (audioTag.paused) {
+      // Đang dừng thì hiển thị nút Play
+      audioTag.play();
+      // setIsPlay(true);
+    } else {
+      // Đang phát thì hiển thị nút pause
+      audioTag.pause();
+      // setIsPlay(false);
+    }
+  };
+
+  // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
+  useEffect(() => {
+    if (storage.currentMusic.id !== songsLiked.id) {
+      setIsPlay(false);
+    }
+  }, [storage.currentMusic, songsLiked.id]);
+
+  useEffect(() => {
+    const audioTag = storage.audioRef.current;
+
+    const handlePlay = () => {
+      if (songsLiked.id === storage.currentMusic.id) {
+        setIsPlay(true);
+      }
+    };
+
+    const handlePause = () => {
+      if (songsLiked.id === storage.currentMusic.id) {
+        setIsPlay(false);
+      }
+    };
+
+    audioTag.addEventListener('play', handlePlay);
+    audioTag.addEventListener('pause', handlePause);
+
+    return () => {
+      audioTag.removeEventListener('play', handlePlay);
+      audioTag.removeEventListener('pause', handlePlay);
+    };
+  }, [storage.audioRef, storage.currentMusic.id, songsLiked.id]);
 
   const addToFavorites = (songsLiked) => {
     setFavoriteSongs([...favoriteSongs, songsLiked]);
     showToast(songsLiked);
   };
-  const showToast = (art) => {
-    toast.success(<CustomToast art={art} isLiked={isLiked} />, {
+  const showToast = (songsLiked) => {
+    toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
       position: 'top-right',
     });
   };
@@ -60,8 +120,6 @@ const SidebarHeart = ({songsLiked}) => {
     <>
       <li className={cx('sidebar__modul-list-item')}>
         <img src={songsLiked.thumbNail || ''} alt="" className={cx('sidebar__modul-image-song')} />
-        {/* <PlaySidebar/> */}
-
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
             <div className={cx('sidebar__modul-item-name')}>{songsLiked.artistName}</div>
@@ -87,9 +145,7 @@ const SidebarHeart = ({songsLiked}) => {
         <div className={cx('Playsidebar__modul-item-container')}>
           <div
             className={cx('sidebar__modul-item-play')}
-            onClick={() => {
-              setIsPlay(!isPlay);
-            }}
+            onClick={handlePlay}
           >
             <FontAwesomeIcon
               className={cx('sidebar__modul-play-icon')}

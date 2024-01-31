@@ -22,7 +22,7 @@ export async function createSong({
     // console.log(response);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -31,7 +31,7 @@ export async function getSongs(page = 1, perPage = 10) {
     const response = await axiosClient.get(`/song/get-songs?page=${page}&per_page=${perPage}`);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -40,7 +40,7 @@ export async function getSongsById(id) {
     const response = await axiosClient.get(`/song/getsong?song_id=${id}`);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -51,7 +51,7 @@ export async function getSongsByName(name) {
     // console.log(response);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -64,7 +64,7 @@ export async function deleteSong(id) {
     // console.log(response);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -76,7 +76,7 @@ export async function likeSong(id) {
     const response = await axiosClient.post(`/song/like?song_id=${id}`);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -86,7 +86,7 @@ export async function unlikeSong(id) {
     // console.log(response);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -100,6 +100,15 @@ export async function increaseListenCount(songId) {
     // console.log(response);
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
+  }
+}
+
+export async function recommendSongs() {
+  try {
+    const response = await axiosClient.get('/song/recommend');
+    return response.data;
+  } catch (error) {
+    throw error;
   }
 }

@@ -17,7 +17,6 @@ const FeedLeft = () => {
       try {
         const res = await apiHandleFeed.getAllSong();
         setFeedSong(res.data.data);
-        console.log(res.data.data);
       } catch(error) {
         console.error(error);
       }

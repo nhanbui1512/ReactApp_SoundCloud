@@ -7,11 +7,11 @@ import SidebarHeart from '../SidebarHeart';
 //import apiHandleFeed from 'api/apiHandleFeed';
 
 const cx = classNames.bind(styles);
-const SidebarHeartUL = (listSongLiked = []) => {
+const SidebarHeartUL = (data = []) => {
   return (
     <>
       <ul className={cx('sidebar__modul-list')}>
-        {listSongLiked.song?.map((songsLiked, index) => (
+        {data.song?.map((songsLiked, index) => (
           <SidebarHeart songsLiked={songsLiked} key={index} />
         ))}
       </ul>

@@ -17,6 +17,10 @@ const apiHandleFeed = {
     const url = `/follow?user_id=${id}`;
     return axiosClient.post(url);
   },
+  unFollowUser(id) {
+    const url = `/follow?user_id=${id}`;
+    return axiosClient.delete(url);
+  },
   getSongLiked() {
     const url = `/song/liked`;
     return axiosClient.get(url);

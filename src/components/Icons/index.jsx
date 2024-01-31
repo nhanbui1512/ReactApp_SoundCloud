@@ -79,3 +79,15 @@ export const AddToList = ({ width = 20, height = 20, className = {} }) => {
     </svg>
   );
 };
+
+export const WaveForm = ({ width = 28, height = 28, className = {} }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height}>
+      <rect x="5" y="12" fill="rgb(34, 34, 34)" width="2" height="4" />
+      <rect x="21" y="12" fill="rgb(34, 34, 34)" width="2" height="4" />
+      <rect x="17" y="10" fill="rgb(34, 34, 34)" width="2" height="8" />
+      <rect x="9" y="8" fill="rgb(34, 34, 34)" width="2" height="12" />
+      <rect x="13" y="5" fill="rgb(34, 34, 34)" width="2" height="18" />
+    </svg>
+  );
+};

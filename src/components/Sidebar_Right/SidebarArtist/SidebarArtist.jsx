@@ -1,37 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from '../Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUser, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
 import apiHandleFeed from 'api/apiHandleFeed';
-import { useParams } from 'react-router-dom';
-
 
 const cx = classNames.bind(styles);
 const SidebarArtist = ({ art }) => {
-  const {id} = useParams();
   const [isFollow, setIsFollowed] = useState(false);
-  //const [followUser, setFollowUser] = useState(false);
-  useEffect(() => {
-    const fetchFollow = async (id) => {
-      try {
-        const res = await apiHandleFeed.followUser(id);
-        setIsFollowed(res.data.data);
-        console.log(res.data.data);
-      } catch(error) {
-        console.log(error);
+
+  // const handleFollow = () => {
+  //   apiHandleFeed.followUser(art.id).then(res => {  
+  //     setIsFollowed(true);
+  //   }).catch(error => {
+  //     console.log(error);
+  //   });
+  //   apiHandleFeed.unFollowUser(art.id).then(res => {
+  //     setIsFollowed(false);
+  //   }).catch(error => {
+  //     console.log(error);
+  //   });
+  //   // Đảo ngược giá trị của isFollow
+  //   //setIsFollowed(!isFollow);
+  //   // Hiển thị toast tương ứng
+  // }
+  const handleFollow = async () => {
+    try {
+      if (!isFollow) {
+        // Nếu chưa theo dõi, gọi followUser
+        await apiHandleFeed.followUser(art.id);
+        setIsFollowed(true);
+      } else {
+        // Nếu đã theo dõi, gọi unFollowUser
+        await apiHandleFeed.unFollowUser(art.id);
+        setIsFollowed(false);
       }
+    } catch (error) {
+      console.error('Error following/unfollowing user:', error);
     }
-    fetchFollow(id);
-  }, [id])
-  const handleFollow = () => {
-    // Đảo ngược giá trị của isFollow
-    setIsFollowed(!isFollow);
-    // Hiển thị toast tương ứng
-    const toastMessage = isFollow ? 'Hủy theo dõi' : 'Đang theo dõi';
-    toast.success(toastMessage);
-  }
+  };
+  
   return (
     <li className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />
@@ -64,10 +72,10 @@ const SidebarArtist = ({ art }) => {
           >
             <span className={cx('sidebar__modul-item-quantity-follower')}>
               <FontAwesomeIcon
-               className={cx('sidebar-icon')} 
-               icon={!isFollow ? faUserPlus : faUserCheck} 
+                className={cx('sidebar-icon')}
+                icon={!isFollow ? faUserPlus : faUserCheck}
               />
-              <span className={cx('sidebar-data')}>{!isFollow ? "follow" : "following"}</span>
+              <span className={cx('sidebar-data')}>{!isFollow ? 'Follow' : 'Following'}</span>
             </span>
           </button>
         </div>

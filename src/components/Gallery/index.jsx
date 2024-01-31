@@ -22,7 +22,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
 import { useNavigate } from 'react-router-dom';
-import { followUser, unfollowUser } from 'api/follow';
+import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 
 const cx = classNames.bind(styles);
@@ -111,34 +111,34 @@ function Gallery({ data, playLists }) {
   const handleFollow = () => {
     if (isFollow) {
       setIsFollow(!isFollow);
-      unfollowUser(data.id)
+      unfollowPlaylist(data.id)
         .then((res) => {})
         .catch((err) => {
           console.log(err);
           setIsFollow(true);
         });
-      // if (context) {
-      //   context.setDataPlaylists((prev) => {
-      //     var newPlaylists = [...prev];
-      //     newPlaylists = newPlaylists.filter((playlist) => playlist.id !== data.id);
-      //     return newPlaylists;
-      //   });
-      // }
+      if (context) {
+        context.setDataPlaylists((prev) => {
+          var newPlaylists = [...prev];
+          newPlaylists = newPlaylists.filter((playlist) => playlist.id !== data.id);
+          return newPlaylists;
+        });
+      }
     } else {
       setIsFollow(!isFollow);
-      followUser(data.id)
+      followPlaylist(data.id)
         .then((res) => {})
         .catch((err) => {
           console.log(err);
           setIsFollow(false);
         });
-      // if (context) {
-      //   context.setDataPlaylists((prev) => {
-      //     var newPlaylists = [...prev];
-      //     newPlaylists = newPlaylists.filter((playlist) => playlist.id !== data.id);
-      //     return newPlaylists;
-      //   });
-      // }
+      if (context) {
+        context.setDataPlaylists((prev) => {
+          var newPlaylists = [...prev];
+          newPlaylists = newPlaylists.push(data);
+          return newPlaylists;
+        });
+      }
     }
   };
 

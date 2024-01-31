@@ -20,10 +20,14 @@ function Slider({ data, playLists }) {
 
   const totalPage = Math.ceil((190 * data.length) / countWidths.current) - 1;
 
-  if (page === 1) {
-    distanceSlide = page * (countWidths.current - 86);
+  if (page === totalPage) {
+    distanceSlide = 190 * data.length - countWidths.current;
   } else {
-    distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
+    if (page === 1) {
+      distanceSlide = page * (countWidths.current - 86);
+    } else {
+      distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
+    }
   }
   // if (page === totalPage) {
   //   const residual = data.length % 4;

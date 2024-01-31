@@ -6,7 +6,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
-function ShowImage({ setPopperEdit, userData = {} }) {
+function ShowImage({ setPopperImage, userData = {} }) {
   const [image] = useState('');
   return (
     <div className={cx('wrapper')}>
@@ -14,7 +14,7 @@ function ShowImage({ setPopperEdit, userData = {} }) {
         <div className={cx('content')}>
           <button
             onClick={() => {
-              setPopperEdit(false);
+              setPopperImage(false);
             }}
             className={cx('close-btn')}
           >

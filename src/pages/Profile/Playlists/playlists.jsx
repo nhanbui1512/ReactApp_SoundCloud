@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 
 import styles from '../Profile.module.scss';
-import { Link } from "react-router-dom";
 
 
 const cx = classNames.bind(styles);
@@ -13,7 +12,7 @@ const Playlists = () => {
       <div className={cx('router-view')}></div>
       <img src="" alt="" />
       <p>Seems a little quiet over here</p>
-      <p className={cx('p-title')}>Lear about playlists.</p>
+      <p className={cx('p-title')}>Learn about playlists.</p>
     </div>
   );
 };

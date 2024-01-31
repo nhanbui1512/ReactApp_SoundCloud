@@ -11,12 +11,14 @@ import Reposts from './Reposts/reposts';
 import EditProfile from './Edit_profile/EditProfile';
 import { getCurrentUserProfile } from 'api/users';
 import ShowImage from './Show_Image/ShowImage';
+import Share from './Share/Share';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
   const [popperEdit, setPopperEdit] = useState(false);
   const [popperImage, setPopperImage] = useState(false);
+  const [popperShare, setPopperShare] = useState(false);
   const [userData, setUserData] = useState({});
 
   const navigate = useNavigate();
@@ -106,14 +108,31 @@ function Profile() {
           </div>
           <div className={cx('nav-info-right')}>
             <div className={cx('button-item')}>
-              <button className={cx('btn-share')}>Share</button>
+              <button 
+                onClick={() => {
+                  setPopperShare(true);
+                }}
+                className={cx('btn-share')}
+              >
+                <img
+                  src="https://a-v2.sndcdn.com/assets/images/share-e2febe1d.svg"
+                  alt="Share Icon"
+                  className={cx('share-icon')}
+                /> 
+                <span style={{marginTop: "2px", fontSize:"16px"}}>Share</span>
+              </button>
               <button
                 onClick={() => {
                   setPopperEdit(true);
                 }}
                 className={cx('btn-edit')}
               >
-                Edit
+                <img
+                  src="https://a-v2.sndcdn.com/assets/images/edit-2fe52d66.svg"
+                  alt="Edit Icon"
+                  className={cx('edit-icon')}
+                /> 
+                <span style={{marginTop: "2px", fontSize:"16px"}}>Edit</span>
               </button>
             </div>
             <div className={cx('follwer-item')}>
@@ -140,8 +159,9 @@ function Profile() {
         </div>
       </div>
                 
+      {popperShare && <Share userData={userData} setPopperShare={setPopperShare} />}
       {popperEdit && <EditProfile userData={userData} setPopperEdit={setPopperEdit} />}
-      {popperImage && <ShowImage  userData={userData} setPopperEdit={setPopperImage} />}
+      {popperImage && <ShowImage  userData={userData} setPopperImage={setPopperImage} />}
     </div>
   );
 }

@@ -1,13 +1,16 @@
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { updateUserDetails } from 'api/users';
 import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './EditProfile.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function EditProfile({ setPopperEdit, userData = {} }) {
   const [image, setImage] = useState('');
+  const navigate = useNavigate();
   const inputref = useRef();
 
   const handleFileChange = (e) => {
@@ -17,6 +20,29 @@ function EditProfile({ setPopperEdit, userData = {} }) {
       setImage(e.target.files[0]);
     }
   };
+
+  const handleSave = () => {
+    const updatedUserData = {
+      username: userName, 
+      city: city,
+      country: country, 
+      bio: bio, 
+      avatar: image
+    };
+    console.log(updatedUserData);
+    try {
+      const response = updateUserDetails(updatedUserData);
+      if (response) {
+        console.log('User details updated successfully:', response);
+      } else {
+        console.log('No changes to update or something went wrong.');
+      }
+    } catch (error) {
+      console.error('Error updating user details:', error);
+    }
+    setPopperEdit(false);
+    navigate('/profile');
+  }
 
   const [userName, setUserName] = useState(userData.userName || '');
   const [bio, setBio] = useState(userData.bio || '');
@@ -123,7 +149,7 @@ function EditProfile({ setPopperEdit, userData = {} }) {
             >
               Cancel
             </button>
-            <button className={cx('butSave')}>Save changes</button>
+            <button className={cx('butSave')} onClick={handleSave}>Save changes</button>
           </div>
         </div>
       </div>

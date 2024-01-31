@@ -35,6 +35,15 @@ export async function getSongs(page = 1, perPage = 10) {
   }
 }
 
+export async function getSongsLiked() {
+  try {
+    const response = await axiosClient.get(`/song/liked`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getSongsById(id) {
   try {
     const response = await axiosClient.get(`/song/getsong?song_id=${id}`);

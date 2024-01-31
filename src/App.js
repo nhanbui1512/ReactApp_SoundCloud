@@ -20,6 +20,7 @@ import Signup from 'pages/signup/Signup';
 // import ToastMessage from 'components/ToastMessage/ToastMessage';
 import { ToastContainer } from 'react-toastify';
 import Profile from 'pages/Profile/profile';
+import GlobalLibrary from 'context/Library';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -28,7 +29,14 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
           <Route path="/Stream" element={<Stream />}></Route>
-          <Route path="/Library/*" element={<Library />}></Route>
+          <Route
+            path="/Library/*"
+            element={
+              <GlobalLibrary>
+                <Library />
+              </GlobalLibrary>
+            }
+          ></Route>
           <Route path="/Upload" element={<Upload />}></Route>
           <Route path="/feed" element={<Feed />}></Route>
           <Route path="/search" element={<Search />}></Route>

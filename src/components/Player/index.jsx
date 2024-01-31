@@ -84,7 +84,9 @@ function Player() {
           </div>
           <div
             onClick={() => {
-              isPlaying ? audioRef.current.pause() : audioRef.current.play();
+              if (audioRef.current.readyState !== 0) {
+                isPlaying ? audioRef.current.pause() : audioRef.current.play();
+              }
             }}
             className={cx('player-btn')}
           >
@@ -148,8 +150,10 @@ function Player() {
                 <input
                   onChange={(e) => {
                     let percent = e.target.value;
-                    const secondTarget = (audioRef.current.duration * percent) / 100;
-                    audioRef.current.currentTime = secondTarget;
+                    if (audioRef.current.readyState !== 0) {
+                      const secondTarget = (audioRef.current.duration * percent) / 100;
+                      audioRef.current.currentTime = secondTarget;
+                    }
                     setPercent(percent);
                   }}
                   className={cx('time-line-input')}
@@ -236,7 +240,7 @@ function Player() {
           </HeadlessTippy>
           {/* Information */}
           <div className={cx(['information-container', 'pd_0_8'])}>
-            <Information data={music} />
+            <Information data={storage.currentMusic} />
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const SidebarArtist = ({ art }) => {
   const [isFollow, setIsFollowed] = useState(false);
 
   // const handleFollow = () => {
-  //   apiHandleFeed.followUser(art.id).then(res => {  
+  //   apiHandleFeed.followUser(art.id).then(res => {
   //     setIsFollowed(true);
   //   }).catch(error => {
   //     console.log(error);
@@ -39,7 +39,7 @@ const SidebarArtist = ({ art }) => {
       console.error('Error following/unfollowing user:', error);
     }
   };
-  
+
   return (
     <li className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />
@@ -66,11 +66,8 @@ const SidebarArtist = ({ art }) => {
               </span>
             </span>
           </div>
-          <button 
-            className={cx('sidebar__modul-item-follower')}
-            onClick={handleFollow}
-          >
-            <span className={cx('sidebar__modul-item-quantity-follower')}>
+          <button className={cx('sidebar__modul-item-follower')} onClick={handleFollow}>
+            <span className={cx('sidebar__modul-item-quantity-follower', { following: isFollow })}>
               <FontAwesomeIcon
                 className={cx('sidebar-icon')}
                 icon={!isFollow ? faUserPlus : faUserCheck}

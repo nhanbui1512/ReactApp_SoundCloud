@@ -3,8 +3,7 @@ import styles from './Home.module.scss';
 import ListDisk from 'components/ListDisk';
 import Sidebar from 'components/Sidebar_Right/Sidebar';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { recommendSongs } from 'api/songs';
+import { getSongs, recommendSongs } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -13,10 +12,9 @@ const Home = () => {
   const [recommendData, setRecommendData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/song/get-songs?page=1&per_page=25')
+    getSongs()
       .then((res) => {
-        setData(res.data.data);
+        setData(res.data);
       })
       .catch((err) => {
         console.log(err);

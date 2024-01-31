@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: hsla(0, 0%, 94.9%, 0.9);
+  z-index: 999;
+}
+
+.content {
+  background-color: #fff;
+  padding: 22px;
+  width: 450px;
+  left: 142px;
+  height: auto;
+  margin-top: 100px;
+  
+}
+
+.content h2 {
+  font-size: 22px;
+  line-height: 1;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 24px;
+  color: #f50;
+}
+
+
+.close-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  float: right;
+}
+.social-icon{
+  margin-left: 5px;
+}
+.copylink {
+  width: 400px;
+  display: flex;
+
+}
+.copylink input{
+  border: #ccc 0.25px solid;
+  width: 300px;
+  border-radius: 2px;
+  height: 25px;
+
+}.copylink button{
+  width: 100px;
+  height: 25px;
+  background-color: #f50;
+  margin-left: 30px;
+  border-radius: 4px;
+
+}

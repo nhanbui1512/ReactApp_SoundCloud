@@ -6,7 +6,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import React, { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
-function Slider({ data = [] }) {
+function Slider({ data, playLists }) {
   const widthSlide = useRef();
   const countWidths = useRef();
   const [page, setPage] = useState(0);
@@ -20,10 +20,14 @@ function Slider({ data = [] }) {
 
   const totalPage = Math.ceil((190 * data.length) / countWidths.current) - 1;
 
-  if (page === 1) {
-    distanceSlide = page * (countWidths.current - 86);
+  if (page === totalPage) {
+    distanceSlide = 192 * data.length - countWidths.current;
   } else {
-    distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
+    if (page === 1) {
+      distanceSlide = page * (countWidths.current - 86);
+    } else {
+      distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
+    }
   }
   // if (page === totalPage) {
   //   const residual = data.length % 4;
@@ -48,6 +52,9 @@ function Slider({ data = [] }) {
         >
           {data.map((item, index) => (
             <Gallery key={index} data={item} />
+          ))}
+          {playLists.map((item, index) => (
+            <Gallery key={index} data={item} playLists={[]} />
           ))}
         </div>
       </div>

@@ -18,6 +18,10 @@
   justify-content: space-between;
 }
 
+.sidebar__modul-refresh .sidebar-icon {
+  font-size: 1rem;
+}
+
 .sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
   font-size: 1.3rem;
   margin-right: 8px;
@@ -104,7 +108,7 @@
   padding-right: 8px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .sidebar__modul-item-bottom {

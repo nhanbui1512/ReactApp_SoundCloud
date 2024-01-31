@@ -1,8 +1,6 @@
 import styles from './FeedLeft.module.scss';
 import classNames from 'classnames/bind';
 import React, { useEffect, useState } from 'react';
-//import dataFeed from './dataFeed';
-//import FeedLeftItem from './FeedLeftItem/FeedLeftItem';
 import apiHandleFeed from 'api/apiHandleFeed';
 import FeedLeftULList from './FeedLeftULList';
 
@@ -15,8 +13,8 @@ const FeedLeft = () => {
   useEffect(() => {
     const getSongFeed = async () => {
       try {
-        const res = await apiHandleFeed.getAllSong();
-        setFeedSong(res.data.data);
+        const res = await apiHandleFeed.getFollowing();
+        setFeedSong(res.data.data.data);
       } catch(error) {
         console.error(error);
       }

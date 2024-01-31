@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Post({ data }) {
+  console.log(data);
   const moreBtnRef = useRef();
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {

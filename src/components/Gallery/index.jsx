@@ -21,16 +21,20 @@ import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
+import { followUser, unfollowUser } from 'api/follow';
+import { LibraryContext } from 'context/Library';
 
 const cx = classNames.bind(styles);
 
-function Gallery({ data, playList }) {
+function Gallery({ data, playLists }) {
+  const context = useContext(LibraryContext);
+
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
 
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
-  const [isFollow, setIsFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState(data.isFollow);
 
   const storage = useContext(StorageContext);
 
@@ -63,23 +67,76 @@ function Gallery({ data, playList }) {
     }
   };
 
-  const handleLike = (e) => {
+  const handleLike = () => {
+    data.isLiked = !data.isLiked;
+    setIsLiked(!isLiked);
+
     if (isLiked) {
-      setIsLiked(!isLiked);
       unlikeSong(data.id)
-        .then((res) => {})
+        .then((res) => {
+          setIsLiked(false);
+        })
         .catch((err) => {
           console.log(err);
           setIsLiked(true);
         });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [...prev];
+          newSongs = newSongs.filter((song) => song.id !== data.id);
+          return newSongs;
+        });
+      }
     } else {
-      setIsLiked(!isLiked);
       likeSong(data.id)
-        .then((res) => {})
+        .then((res) => {
+          setIsLiked(true);
+        })
         .catch((err) => {
           console.log(err);
           setIsLiked(false);
         });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [...prev];
+          newSongs.push(data);
+          return newSongs;
+        });
+      }
+    }
+  };
+
+  const handleFollow = () => {
+    if (isFollow) {
+      setIsFollow(!isFollow);
+      unfollowUser(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollow(true);
+        });
+      // if (context) {
+      //   context.setDataPlaylists((prev) => {
+      //     var newPlaylists = [...prev];
+      //     newPlaylists = newPlaylists.filter((playlist) => playlist.id !== data.id);
+      //     return newPlaylists;
+      //   });
+      // }
+    } else {
+      setIsFollow(!isFollow);
+      followUser(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollow(false);
+        });
+      // if (context) {
+      //   context.setDataPlaylists((prev) => {
+      //     var newPlaylists = [...prev];
+      //     newPlaylists = newPlaylists.filter((playlist) => playlist.id !== data.id);
+      //     return newPlaylists;
+      //   });
+      // }
     }
   };
 
@@ -146,22 +203,27 @@ function Gallery({ data, playList }) {
         </div>
 
         <div className={cx('modul-left_option-group')}>
-          {playList || (
+          {playLists || (
             <Tippy animation={'scale-subtle'} content={'Like'}>
               <>
-                <span onClick={handleLike} className={cx('option-btn')}>
+                <span
+                  onClick={() => {
+                    handleLike();
+                  }}
+                  className={cx('option-btn')}
+                >
                   <FontAwesomeIcon className={cx('', { primary: isLiked })} icon={faHeart} />
                 </span>
               </>
             </Tippy>
           )}
 
-          {playList && (
+          {playLists && (
             <Tippy animation={'scale-subtle'} content={'Follow'}>
               <>
                 <span
                   onClick={() => {
-                    setIsFollow(!isFollow);
+                    handleFollow();
                   }}
                   className={cx('option-btn')}
                 >

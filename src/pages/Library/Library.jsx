@@ -7,9 +7,12 @@ import Overview from './Overview';
 import Likes from './Likes';
 import Playlists from './Playlists';
 import Following from './Following';
+import { useContext } from 'react';
+import { LibraryContext } from 'context/Library';
 
 const cx = classNames.bind(styles);
 const Library = () => {
+  const context = useContext(LibraryContext);
   return (
     <div className={cx('app')}>
       <div style={{ display: 'flex' }}>
@@ -39,10 +42,10 @@ const Library = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route index path="/Overview" element={<Overview />} />
-        <Route path="/Likes" element={<Likes />} />
-        <Route path="/Playlists" element={<Playlists />} />
-        <Route path="/Following" element={<Following />} />
+        <Route index path="/Overview" element={<Overview data={context.dataSongs} />} />
+        <Route path="/Likes" element={<Likes data={context.dataSongLikes} />} />
+        <Route path="/Playlists" element={<Playlists playLists={context.dataPlaylists} />} />
+        <Route path="/Following" element={<Following data={context.dataUsers} />} />
       </Routes>
     </div>
   );

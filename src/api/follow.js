@@ -23,7 +23,7 @@ export async function getFollowers() {
 export async function followUser(id) {
     try {
         const response = await axiosClient.post(`/follow?user_id=${id}`);
-        // console.log(response);
+        console.log(response);
         return response.data
     } catch (error) {
         throw error

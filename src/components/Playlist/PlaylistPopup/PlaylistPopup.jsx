@@ -4,7 +4,6 @@ import Popup from "components/Popup"
 import { useContext, useEffect, useState } from "react"
 import { addSongsToPlaylist, createPlaylist, getPlaylistsByUserId, removeSongsFromPlaylist } from 'api/playlist'
 import { StorageContext } from 'context/Storage'
-import { ToastContainer, toast } from 'react-toastify';
 
 const cx = classNames.bind(styles)
 
@@ -22,35 +21,9 @@ const cx = classNames.bind(styles)
 // songData = example
 /* const example = {
   "thumbNail": "http://localhost:3000/uploads/images/thumbNail-1706279697257",
-  "linkFile": "http://localhost:3000/uploads/audios/song-1706279696740",
-  "durationTime": "02:13",
-  "createAtTimeFormat": "21:34 26/01/2024",
-  "id": 12,
-  "name": "Alea jacta est",
-  "description": "Final showdown",
-  "numberOfListen": 0,
-  "numberOfLoop": 0,
-  "duration": 133.752,
-  "artistName": "BlackY",
-  "createAt": "2024-01-26T14:34:57.000Z",
-  "updateAt": null,
-  "genre": {
-      "id": 1,
-      "name": "Classical"
-  },
-  "owner": {
-      "avatar": "http://localhost:3000/uploads/images/defaultAvatar.png",
-      "createAtFormatTime": "21:12:37 26/01/2024",
-      "updateAtFormatTime": null,
-      "id": 6,
-      "userName": "Quốc",
-      "email": "quoc@gmail.com",
-      "city": "",
-      "country": "",
-      "bio": "",
-      "createAt": "2024-01-26T14:12:37.000Z",
-      "updateAt": null
-  }
+  "id": 0,
+  "name": "Example",
+  //...
 } */
 
 export const PlaylistPopup = ({ open, onClose, songData }) => {
@@ -84,10 +57,9 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
         if (result.result) {
           // success
           RefreshPlaylist()
-          toast.success('Added to playlist.')
         } else {
           // error
-          toast.error('Added to playlist failed. Try again.')
+          alert('Added to playlist failed. Try again.')
         }
       })
       .catch(error => console.log(error))
@@ -99,10 +71,9 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
         if (result.result) {
           // success
           RefreshPlaylist()
-          toast.success('Removed from playlist.')
         } else {
           // error
-          toast.error('Removed from playlist failed. Try again.')
+          alert('Removed from playlist failed. Try again.')
         }
       })
       .catch(error => console.log(error))
@@ -111,7 +82,7 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
   const CreateNewPlaylist = () => {
     const name = document.getElementById('new-playlist-name').value
     if (name === "") {
-      toast.warn('Enter playlist name.')
+      alert('Enter playlist name.')
     } else {
       setCreatingPlaylist(true)
       createPlaylist(name, [songData.id])
@@ -120,10 +91,9 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
             // success
             document.getElementById('new-playlist-name').value = ""
             onClose(false)
-            toast.success('Playlist created.')
           } else {
             // error
-            toast.error('Create playlist failed. Try again.')
+            alert('Create playlist failed. Try again.')
           }
           setCreatingPlaylist(false)
         })
@@ -147,18 +117,6 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
         </div>
       }
     >
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {/* Song info */}
       <div className={cx('song-info')}>
         <img src={songData.thumbNail}/>

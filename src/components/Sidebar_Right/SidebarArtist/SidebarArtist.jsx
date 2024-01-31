@@ -47,16 +47,16 @@ const SidebarArtist = ({ art }) => {
       <div className={cx('sidebar__modul-item-info')}>
         <div className={cx('sidebar__modul-item-head')}>
           <div className={cx('sidebar__modul-item-name')}>{art.userName}</div>
-          <div className={cx('sidebar__modul-item-wrap')}>
-            <span className={cx('sidebar__modul-item-know')}>{art.follower} K</span>
-          </div>
+          {/* <div className={cx('sidebar__modul-item-wrap')}>
+            <span className={cx('sidebar__modul-item-know')}>{art.follower}</span>
+          </div> */}
         </div>
         <div className={cx('sidebar__modul-item-bottom')}>
           <div className="sidebar__modul-item-bottom-left">
             <span className={cx('sidebar__modul-item-quantity-follower')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>{art.follower}</span>
+                <span className={cx('sidebar-data')}>{art.followerNumber}</span>
               </span>
             </span>
             <span className={cx('sidebar__modul-item-quantity-song')}>

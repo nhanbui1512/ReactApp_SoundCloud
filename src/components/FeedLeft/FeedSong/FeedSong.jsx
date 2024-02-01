@@ -22,17 +22,15 @@ import { StorageContext } from 'context/Storage';
 
 
 const cx = classNames.bind(styles);
-const FeedSong = ({ data }) => {
+const FeedSong = ({ dataSong }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
-
-  const [isLiked, setIsLiked] = useState(data.isLiked);
-  //const navigate = useNavigate();
-
+  const [isLiked, setIsLiked] = useState(dataSong.isLiked);
+  
   const storage = useContext(StorageContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -41,8 +39,8 @@ const FeedSong = ({ data }) => {
     const audioTag = storage.audioRef.current;
 
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
-    if (storage.currentMusic.id !== data.id) {
-      storage.setCurrentMusic(data);
+    if (storage.currentMusic.id !== dataSong.id) {
+      storage.setCurrentMusic(dataSong);
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -66,22 +64,22 @@ const FeedSong = ({ data }) => {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    if (storage.currentMusic.id !== data.id) {
+    if (storage.currentMusic.id !== dataSong.id) {
       setIsPlay(false);
     }
-  }, [storage.currentMusic, data.id]);
+  }, [storage.currentMusic, dataSong.id]);
 
   useEffect(() => {
     const audioTag = storage.audioRef.current;
 
     const handlePlay = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (dataSong.id === storage.currentMusic.id) {
         setIsPlay(true);
       }
     };
 
     const handlePause = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (dataSong.id === storage.currentMusic.id) {
         setIsPlay(false);
       }
     };
@@ -93,7 +91,7 @@ const FeedSong = ({ data }) => {
       audioTag.removeEventListener('play', handlePlay);
       audioTag.removeEventListener('pause', handlePlay);
     };
-  }, [storage.audioRef, storage.currentMusic.id, data.id]);
+  }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -113,7 +111,7 @@ const FeedSong = ({ data }) => {
   return (
     <>
       <li className={cx('feed__modul-list-item')}>
-        <img src={data.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+        <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
             <div
@@ -126,8 +124,8 @@ const FeedSong = ({ data }) => {
               />
             </div>
             <div className={cx('feed__modul-item-song')}>
-              <div className={cx('feed__modul-item-authorname')}>{data.artistName}</div>
-              <div className={cx('feed__modul-item-songname')}>{data.name}</div>
+              <div className={cx('feed__modul-item-authorname')}>{dataSong.artistName}</div>
+              <div className={cx('feed__modul-item-songname')}>{dataSong.name}</div>
             </div>
           </div>
           <div className={cx('feed__modul-item-range')}></div>
@@ -142,7 +140,7 @@ const FeedSong = ({ data }) => {
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
-                  <span className={cx('btn-option-icon')}>{data.likeCount}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
                 </button>
               </>
             </Tippy>
@@ -156,7 +154,7 @@ const FeedSong = ({ data }) => {
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
 
-                  <span className={cx('btn-option-icon')}>{data.repost}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.repost}</span>
                 </button>
               </>
             </Tippy>

@@ -1,6 +1,9 @@
 import axios from 'axios';
 const request = axios.create({
   baseURL: 'http://localhost:3000',
+  headers: {
+    'ngrok-skip-browser-warning': 'true',
+  },
 });
 
 export const get = async (path, options = {}) => {

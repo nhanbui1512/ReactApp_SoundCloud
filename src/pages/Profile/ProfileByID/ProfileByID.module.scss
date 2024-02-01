@@ -1,0 +1,190 @@
+.wrapper {
+  width: 1200px;
+}
+.info-user {
+  display: flex;
+  width: 1200px;
+  height: 250px;
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  background: linear-gradient(45deg, #ff7147, #f3e9ec);
+}
+
+.img-email {
+  border-radius: 100px;
+  width: 200px;
+  height: 200px;
+  margin-top: 25px;
+  margin-left: 25px;
+  border: 1px solid black;
+}
+
+.btn-update-header-img {
+  width: 180px;
+  height: 30px;
+  margin-top: 25px;
+  margin-left: 200px;
+  border-radius: 5px;
+}
+.name-user {
+  margin-top: 25px;
+  width: 500px;
+}
+.lb1 {
+  font-size: 25px;
+  background-color: black;
+  color: white;
+  height: 40px;
+
+  margin-left: 10px;
+  display: inline;
+}
+.lb2 {
+  font-size: 15px;
+  background-color: black;
+  color: rgb(164, 161, 161);
+  margin-top: 0;
+  margin-left: 10px;
+  display: inline;
+}
+.camera {
+  margin-left: 0px;
+  margin-right: 5px;
+  margin-bottom: 2px;
+}
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li {
+  margin-right: 15px;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+.btn-share {
+  margin-left: auto;
+  background-color: white;
+  color: black;
+  border: 1px solid rgb(189, 184, 184);
+  width: 80px;
+  height: 30px;
+  margin-top: 15px;
+  border-radius: 5px;
+}
+.btn-edit {
+  cursor: pointer;
+  margin-right: 50px;
+  margin-left: 10px;
+  background-color: white;
+  color: black;
+  border: 1px solid rgb(189, 184, 184);
+  width: 80px;
+  height: 30px;
+  margin-top: 15px;
+  border-radius: 5px;
+}
+.navbar {
+  font-size: 16px;
+  padding: 15px;
+  text-decoration: none;
+  color: #000;
+  border-bottom: 0.5px #f2f2f2 solid;
+}
+
+.active {
+  color: #f50;
+  border-bottom: 2px solid #f50;
+}
+.info-music {
+  display: flex;
+}
+.nav-info-left {
+  display: flex;
+  height: 50px;
+  flex-direction: column;
+}
+.nav-info-left-head {
+  padding: 0px;
+  height: 50px;
+}
+.nav-info-right {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.follwer-body {
+  margin-top: 20px;
+  display: flex;
+  font-size: 18px;
+  padding-left: 30px;
+}
+.follower,
+.following,
+.tracks {
+  margin-left: 10px;
+  padding: 10px;
+  border-left: 0.5px #f2f2f2 solid;
+  height: 40px;
+}
+
+.follwer-item {
+  border-left: 0.5px #f2f2f2 solid;
+  margin-top: 15px;
+  height: 500px;
+}
+.brand-items{
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 30px;
+  text-align: left;
+  color: #ccc
+
+}
+.info-music-list {
+  width: 850px;
+  height: 500px;
+  text-align: center;
+  font-size: 18px;
+  // align-items: center;
+  // justify-content: center;
+}
+
+.router-item {
+  margin-top: 15px;
+  height: 500;
+}
+.router-item-right{
+  width: 850px;
+}
+.button-item {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.btn-route-upload {
+  width: 80px;
+  height: 30px;
+  background-color: #f50;
+  color: black;
+  text-decoration: none;
+  margin-left: 0px;
+  padding: 5px;
+  margin-top: 5px;
+}
+.router-view{
+  padding: 50px;
+}
+.p-title{
+  color: blue;
+  font-size: 15px;
+}
+.edit-icon, .share-icon{
+  margin-right: 5px;
+  margin-top: 2px;
+  height: 15px;
+  width: auto;
+}

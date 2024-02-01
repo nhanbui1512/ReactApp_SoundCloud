@@ -2,7 +2,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
-  // if local server: 'http://localhost:3000'
   baseURL: 'http://localhost:3000',
   headers: {
     'ngrok-skip-browser-warning': 'true',

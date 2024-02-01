@@ -101,7 +101,6 @@ const FeedSong = ({ data }) => {
   };
 
   const handleCopy = async () => {
-    console.log(data);
     var urlPage = `http://localhost:3000/song/getsong?song_id=${data.id}`;
     navigator.clipboard.writeText(urlPage);
     setCopy(!isCopy);

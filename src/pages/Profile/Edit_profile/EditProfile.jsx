@@ -44,9 +44,8 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
         confirmPassword: confirmPass,
       };
       try {
-        const result = changePassword(passData);
+        changePassword(passData);
         setPopperEdit(false);
-        console.log(result);
       } catch (error) {
         console.error('Error while changing password:', error);
       }

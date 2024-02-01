@@ -1,22 +1,20 @@
-
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ProfileByID.module.scss';
-import { NavLink, Route, Routes, useNavigate, useParams} from 'react-router-dom';
+import { NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import Albums from '../Albums/album';
 import Playlists from '../Playlists/playlists';
 import All from '../All/all';
 import PopularTracks from '../Popular_tracks/popular';
 import Tracks from '../Tracks/tracks';
 import Reposts from '../Reposts/reposts';
-import {  getUsersById  } from 'api/users';
+import { getUsersById } from 'api/users';
 import ShowImage from '../Show_Image/ShowImage';
 import Share from '../Share/Share';
 
 const cx = classNames.bind(styles);
 
 function ProfileByID() {
-
   const [popperImage, setPopperImage] = useState(false);
   const [popperShare, setPopperShare] = useState(false);
   const [userData, setUserData] = useState({});
@@ -25,24 +23,32 @@ function ProfileByID() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(`/${id}`);
     getUsersById(id)
       .then((res) => {
-        setUserData(res.data);
-        console.log(res.data);
+        if (userData.id === id) {
+          setUserData(res.data);
+          navigate(`/${id}`);
+        } else {
+          navigate('/');
+        }
       })
       .catch((err) => {
-        console.log(err);
-        navigate('/login');
+        alert('User ID not found');
       });
-      
-  },[id,navigate]);
+  }, [id, navigate, userData]);
 
   return (
     <div>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
-          <img onClick={() => {setPopperImage(true);}}className={cx('img-email')} src={userData.avatar || ''} alt="" />
+          <img
+            onClick={() => {
+              setPopperImage(true);
+            }}
+            className={cx('img-email')}
+            src={userData.avatar || ''}
+            alt=""
+          />
           <div className={cx('name-user')}>
             <div className={cx('lb1')}>{userData.userName || ''}</div>
             <br />
@@ -58,7 +64,6 @@ function ProfileByID() {
         <div className={cx('info-music')}>
           <div className={cx('nav-info-left')}>
             <div className={cx('nav-info-left-head')}>
-              
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
                 to={`/${id}/all`}
@@ -74,7 +79,6 @@ function ProfileByID() {
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
                 to={`/${id}/tracks`}
-                
               >
                 Tracks
               </NavLink>
@@ -98,7 +102,7 @@ function ProfileByID() {
               </NavLink>
             </div>
             <div className={cx('router-item')}>
-              <div className={cx("router-item-right")}></div>
+              <div className={cx('router-item-right')}></div>
               <Routes>
                 <Route path="/all" element={<All />} />
                 <Route path="/popular" element={<PopularTracks />} />
@@ -111,7 +115,7 @@ function ProfileByID() {
           </div>
           <div className={cx('nav-info-right')}>
             <div className={cx('button-item')}>
-              <button 
+              <button
                 onClick={() => {
                   setPopperShare(true);
                 }}
@@ -121,8 +125,8 @@ function ProfileByID() {
                   src="https://a-v2.sndcdn.com/assets/images/share-e2febe1d.svg"
                   alt="Share Icon"
                   className={cx('share-icon')}
-                /> 
-                <span style={{marginTop: "2px", fontSize:"16px"}}>Share</span>
+                />
+                <span style={{ marginTop: '2px', fontSize: '16px' }}>Share</span>
               </button>
             </div>
             <div className={cx('follwer-item')}>
@@ -141,16 +145,19 @@ function ProfileByID() {
                 </div>
               </div>
               <div className={cx('brand-items')}>
-                Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog - Charts 
-                <p><span style={{color: "blue"}}>Language</span>: English</p>
+                Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog
+                - Charts
+                <p>
+                  <span style={{ color: 'blue' }}>Language</span>: English
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-                
+
       {popperShare && <Share userData={userData} setPopperShare={setPopperShare} />}
-      {popperImage && <ShowImage  userData={userData} setPopperImage={setPopperImage} />}
+      {popperImage && <ShowImage userData={userData} setPopperImage={setPopperImage} />}
     </div>
   );
 }

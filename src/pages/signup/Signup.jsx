@@ -5,7 +5,6 @@ import styles from './Signup.module.scss';
 import { registerUser } from 'api/users';
 const cx = classNames.bind(styles);
 
-
 const Signup = () => {
   const [submitted, setSubmitted] = useState(false);
   const [username, setUsername] = useState('');
@@ -14,7 +13,6 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
- 
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +28,9 @@ const Signup = () => {
     }
     const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,30}$/;
     if (!passRegex.test(password)) {
-      alert('Please enter password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character,length of 10-30');
+      alert(
+        'Please enter password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character,length of 10-30',
+      );
       return;
     }
 
@@ -49,13 +49,11 @@ const Signup = () => {
       console.log('Registration successful:', response);
       alert('Signup successful');
       navigate('/login');
-      console.log(response);
     } catch (error) {
       console.error('Registration failed:', error);
       alert('The email address is already in use. Please use a different email.');
       setSubmitted(false);
     }
-
   };
 
   return (
@@ -84,7 +82,7 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br></br>
-        
+
         <input
           type="password"
           placeholder="Confirm Password"

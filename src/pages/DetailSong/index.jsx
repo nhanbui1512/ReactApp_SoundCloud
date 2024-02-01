@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './DetailSong.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -104,17 +104,17 @@ function Song() {
             </div>
             <div className={cx('song-box')}>
               <div className={cx('song-box_playlist')}>
-                <a href="">
+                <a href="/">
                   <img
                     className={cx('song-box_img')}
                     src="https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
                     alt=""
                   />
                 </a>
-                <a href="" className={cx('playlist_name')}>
+                <a href="/" className={cx('playlist_name')}>
                   Trending Music
                 </a>
-                <a href="" className={cx('playlist_countfollow')}>
+                <a href="/" className={cx('playlist_countfollow')}>
                   <FontAwesomeIcon icon={faUser} />
                   <span>534</span>
                 </a>
@@ -140,7 +140,7 @@ function Song() {
                 </div>
               </div>
               <div className={cx('song-box_info')}>
-                <a href="" className={cx('info_nameart')}>
+                <a href="/" className={cx('info_nameart')}>
                   Hoàng nhật huy
                 </a>
                 <span className={cx('info_desc')}>

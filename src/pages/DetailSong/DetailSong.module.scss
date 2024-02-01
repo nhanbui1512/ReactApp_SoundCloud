@@ -1,6 +1,12 @@
 .wrapper {
   width: 1200px;
 }
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
 .info-user {
   display: flex;
   justify-content: space-between;
@@ -272,4 +278,85 @@
 .side-bar {
   padding-left: 16px;
   border-left: 1px solid #eaeaea;
+}
+
+.song-box {
+  display: flex;
+  margin: 20px;
+}
+
+.song-box_playlist {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+}
+
+.song-box_img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+
+.playlist_name {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.playlist_countfollow,
+.playlist_btnfollow {
+  font-size: 12px;
+  color: #787878;
+  margin-bottom: 4px;
+}
+
+.playlist_countfollow span,
+.playlist_btnfollow span {
+  line-height: 1.5;
+  margin-left: 4px;
+}
+
+.playlist_btnfollow {
+  display: flex;
+  max-width: 80px;
+  border: 1px solid #f50;
+  background-color: #f50;
+  padding: 2px 0;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.playlist_btnfollow--auto {
+  margin: auto;
+}
+
+.follow {
+  max-width: 100px;
+  border: 1px solid #f50;
+  background-color: transparent;
+  padding: 2px 0;
+  border-radius: 4px;
+  color: #f50;
+}
+
+.song-box_info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info_nameart {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin: 10px 10px 0 0;
+}
+
+.info_desc {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 10px 10px 0;
 }

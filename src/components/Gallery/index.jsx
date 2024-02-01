@@ -181,7 +181,11 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data}/> 
       
       <div className={cx('modul-left_item-container-img')}>
-        <img className={cx('modul-left_image')} src={data.thumbNail || ''} alt="" />
+        <img
+          className={cx('modul-left_image')}
+          src={data.thumbNail || data.songs[0].thumbNail}
+          alt=""
+        />
 
         <div className={cx('modul-left_backgroud')}></div>
         <div onClick={handlePlay} className={cx('modul-left_playbtn')}>

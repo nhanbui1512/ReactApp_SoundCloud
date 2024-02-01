@@ -44,11 +44,12 @@ const Sidebar = () => {
 
     getRandomSongs();
   }, [listSongLiked]); // useEffect sẽ chạy lại mỗi khi mảng songs thay đổi
+  // lấy ra danh sách tài khoản
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await apiHandleFeed.getUser();
-        setRmdUser(res.data.data.slice(0, 9));
+        setRmdUser(res.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -74,8 +75,10 @@ const Sidebar = () => {
         </div>
         <div className={cx('sidebar__modul-container')}>
           <ul className={cx('sidebar__modul-list')}>
-            {rmdUser.map((art, index) => {
-              return <SidebarArtist art={art} key={index} />;
+            {rmdUser
+              // .filter((art) => art.followerNumber === 0)
+              .map((art, index) => {
+                return <SidebarArtist art={art} key={index} />;
             })}
           </ul>
         </div>

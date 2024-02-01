@@ -1,4 +1,4 @@
-import styles from '../FeedLeft.module.scss';
+import styles from '../../FeedLeft/FeedLeft.module.scss';
 import classNames from 'classnames/bind';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +22,7 @@ import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist';
 
 const cx = classNames.bind(styles);
-const FeedSong = ({ dataSong }) => {
+const TrackSong = ({ dataSong }) => {
   //const [moreMenu, setMoreMenu] = useState(false);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
@@ -31,7 +31,7 @@ const FeedSong = ({ dataSong }) => {
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
 
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked);
+  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
   //const navigate = useNavigate();
 
   const storage = useContext(StorageContext);
@@ -96,21 +96,7 @@ const FeedSong = ({ dataSong }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-  //     if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-  //       // Thực hiện hành động khi click ra ngoài
-  //       setMoreMenu(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
+  
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -246,4 +232,4 @@ const FeedSong = ({ dataSong }) => {
     </>
   );
 };
-export default FeedSong;
+export default TrackSong;

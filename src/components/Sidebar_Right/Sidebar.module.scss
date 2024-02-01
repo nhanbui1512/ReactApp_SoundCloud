@@ -95,6 +95,17 @@
 .sidebar__modul-item-name {
   text-align: left;
   text-transform: uppercase;
+  line-height: 1.2rem;
+  max-height: 4rem;
+  font-weight: 400;
+  color: #999;
+  margin: 0;
+  overflow: hidden;
+  flex: 1;
+  padding-right: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .sidebar__modul-item-body {

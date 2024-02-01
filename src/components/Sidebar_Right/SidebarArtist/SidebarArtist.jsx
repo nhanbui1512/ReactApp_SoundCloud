@@ -10,19 +10,24 @@ const SidebarArtist = ({ art }) => {
   const [isFollow, setIsFollowed] = useState(false);
 
   // const handleFollow = () => {
-  //   apiHandleFeed.followUser(art.id).then(res => {
-  //     setIsFollowed(true);
-  //   }).catch(error => {
-  //     console.log(error);
-  //   });
-  //   apiHandleFeed.unFollowUser(art.id).then(res => {
-  //     setIsFollowed(false);
-  //   }).catch(error => {
-  //     console.log(error);
-  //   });
-  //   // Đảo ngược giá trị của isFollow
-  //   //setIsFollowed(!isFollow);
-  //   // Hiển thị toast tương ứng
+  //   if(!isFollow) {
+  //     apiHandleFeed.followUser(art.id).then(res => {
+  //       setIsFollowed(true);
+  //     }).catch(error => {
+  //       console.log(error);
+  //     });
+  //   }
+  //   else {
+  //     apiHandleFeed.unFollowUser(art.id).then(res => {
+  //       setIsFollowed(false);
+  //     }).catch(error => {
+  //       console.log(error);
+  //     });
+  //   }
+  // }
+    // Đảo ngược giá trị của isFollow
+    //setIsFollowed(!isFollow);
+    // Hiển thị toast tương ứng
   // }
   const handleFollow = async () => {
     try {
@@ -41,6 +46,9 @@ const SidebarArtist = ({ art }) => {
   };
 
   return (
+    // {art.isFollowed === false && (
+      
+    // )}
     <li className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />
 

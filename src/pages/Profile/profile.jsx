@@ -9,9 +9,9 @@ import PopularTracks from './Popular_tracks/popular';
 import Tracks from './Tracks/tracks';
 import Reposts from './Reposts/reposts';
 import EditProfile from './Edit_profile/EditProfile';
-import { getCurrentUserProfile } from 'api/users';
 import ShowImage from './Show_Image/ShowImage';
 import Share from './Share/Share';
+import { getCurrentUserProfile } from 'api/users';
 
 const cx = classNames.bind(styles);
 

@@ -96,6 +96,23 @@ const FeedSong = ({ data }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, data.id]);
 
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const handleCopy = async () => {
+    console.log(data);
+    var urlPage = `http://localhost:3000/song/getsong?song_id=${data.id}`;
+    navigator.clipboard.writeText(urlPage);
+    setCopy(!isCopy);
+
+    const timeReset = setTimeout(() => {
+      setCopy(isCopy);
+    }, 500);
+
+    await sleep(1000);
+    return clearTimeout(timeReset);
+  };
   return (
     <>
       {/* Add to Playlist popup */}
@@ -163,7 +180,7 @@ const FeedSong = ({ data }) => {
                 <button
                   className={cx('feed__modul-option-btn')}
                   onClick={() => {
-                    setCopy(!isCopy);
+                    handleCopy();
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faLink} />

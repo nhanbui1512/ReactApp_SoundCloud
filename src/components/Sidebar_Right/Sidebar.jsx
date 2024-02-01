@@ -1,8 +1,6 @@
 import './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHeart,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import artirstFollow from './data';
@@ -27,7 +25,6 @@ const Sidebar = () => {
         const res1 = await apiHandleFeed.getSongLiked();
         const combinedSongs = res1.data.data.map((item) => item.song);
         setListSongLiked(combinedSongs);
-        //console.log('in ra',combinedSongs);
       } catch (error) {
         console.error('error fetch data', error);
       }
@@ -60,8 +57,8 @@ const Sidebar = () => {
     const newTotalLike = listSongLiked.reduce((acc, curr) => {
       return acc + curr.likeCount;
     }, 0);
-    setTotalLike(newTotalLike)
-  }, [listSongLiked])
+    setTotalLike(newTotalLike);
+  }, [listSongLiked]);
 
   return (
     <>
@@ -87,6 +84,7 @@ const Sidebar = () => {
               <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
               <span className={cx('sidebar-data')}>{totalLike}</span>
             </div>
+            <span>{/* <IoHeart /> */}</span>
             <Link to="/libary/Likes">View All</Link>
           </div>
           <div className={cx('sidebar__modul-container')}>

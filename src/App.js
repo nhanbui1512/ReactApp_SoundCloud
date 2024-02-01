@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify';
 import Profile from 'pages/Profile/profile';
 import GlobalLibrary from 'context/Library';
 import ProfileByID from 'pages/Profile/ProfileByID/ProfileByID';
+import Song from 'pages/DetailSong';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -43,7 +44,7 @@ const App = () => {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/profile/*" element={<Profile />}></Route>
           <Route path="/:id/*" element={<ProfileByID />}></Route>
-          {/* <Route path='/library/Likes' element={<Library/>}></Route> */}
+          <Route path="/song" element={<Song />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />

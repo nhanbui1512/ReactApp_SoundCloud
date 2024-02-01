@@ -1,6 +1,5 @@
 .wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
   position: fixed;
   top: 0;
@@ -10,7 +9,9 @@
   background-color: hsla(0, 0%, 94.9%, 0.9);
   z-index: 999;
 }
-
+.main {
+  padding-top: 80px;
+}
 .content {
   background-color: #fff;
   padding: 22px;
@@ -174,7 +175,7 @@
   float: right;
 }
 
-.change-state{
+.change-state {
   display: flex;
   list-style-type: none;
 }

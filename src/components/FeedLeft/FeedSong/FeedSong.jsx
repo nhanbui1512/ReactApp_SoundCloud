@@ -19,20 +19,17 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-// import axiosClient from 'api/axiosClient';
-// import { useNavigate } from 'react-router';
 import { PlaylistPopup } from 'components/Playlist';
-//import ToastMessage from 'components/ToastMessage/ToastMessage';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
   //const [moreMenu, setMoreMenu] = useState(false);
+  const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
-  const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
 
   const [isLiked, setIsLiked] = useState(dataSong.isLiked);
   //const navigate = useNavigate();

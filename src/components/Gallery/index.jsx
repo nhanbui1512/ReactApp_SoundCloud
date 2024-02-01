@@ -24,18 +24,19 @@ import { likeSong, unlikeSong } from 'api/songs';
 import { useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
+import { PlaylistPopup } from 'components/Playlist';
 
 const cx = classNames.bind(styles);
 
 function Gallery({ data, playLists }) {
   const context = useContext(LibraryContext);
 
-  const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
+  const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
 
   const storage = useContext(StorageContext);
 
@@ -142,23 +143,6 @@ function Gallery({ data, playLists }) {
     }
   };
 
-  //xử lý khi người dùng click ngoài more button thì tự động tắt menu
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-      if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-        // Thực hiện hành động khi click ra ngoài
-        setMoreMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     if (storage.currentMusic.id !== data.id) {
@@ -193,6 +177,9 @@ function Gallery({ data, playLists }) {
 
   return (
     <div className={cx('modul-left_item')}>
+      {/* Add to Playlist popup */}
+      <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data}/> 
+      
       <div className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.thumbNail || ''} alt="" />
 
@@ -239,11 +226,10 @@ function Gallery({ data, playLists }) {
           )}
 
           <HeadlessTippy
-            visible={moreMenu}
             interactive
             placement="bottom-start"
             offset={[0, 0]}
-            delay={300}
+            delay={[0, 300]}
             render={(atr) => {
               return (
                 <Wrapper className={cx('more-menu')}>
@@ -251,12 +237,14 @@ function Gallery({ data, playLists }) {
                     className={cx('menu-item')}
                     icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                     separate
+                    onClick={() => console.log('add to Next up')}
                   >
                     Add to Next up
                   </MenuItem>
                   <MenuItem
                     className={cx('menu-item')}
                     icon={<AddToList className={cx('menu-item-icon')} />}
+                    onClick={() => setOpenAddToPlaylist(true)}
                   >
                     Add to Playlist
                   </MenuItem>
@@ -266,9 +254,6 @@ function Gallery({ data, playLists }) {
           >
             <span
               ref={moreBtnRef}
-              onClick={(e) => {
-                setMoreMenu(!moreMenu);
-              }}
               className={cx('option-btn')}
             >
               <FontAwesomeIcon icon={faEllipsis} />

@@ -19,14 +19,15 @@ const cx = classNames.bind(styles)
 */
 
 // songData = example
-/* const example = {
-  "thumbNail": "http://localhost:3000/uploads/images/thumbNail-1706279697257",
-  "id": 0,
-  "name": "Example",
+const example = {
+  thumbNail: "http://localhost:3000/uploads/images/thumbNail-1706279697257",
+  id: 12,
+  name: "Example",
+  artistName: "artist name"
   //...
-} */
+}
 
-export const PlaylistPopup = ({ open, onClose, songData }) => {
+export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   const [tab, setTab] = useState(0)
   const [myPlaylist, setMyPlaylist] = useState([])
   const [filter, setFilter] = useState('')
@@ -137,7 +138,7 @@ export const PlaylistPopup = ({ open, onClose, songData }) => {
         />
         <div className={cx('playlist-group')}>
           {myPlaylist.filter(x => x.name.toLowerCase().includes(filter.toLowerCase())).length === 0 &&
-            <h6>No playlist found</h6>
+            <label style={{ fontWeight: 'bold' }}>No playlist found</label>
           }
           {myPlaylist.filter(x => x.name.toLowerCase().includes(filter.toLowerCase()))
             .map((item, index) => (

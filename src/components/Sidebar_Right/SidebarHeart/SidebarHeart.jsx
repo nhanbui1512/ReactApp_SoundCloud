@@ -8,8 +8,8 @@ import {
   faListUl,
   faPause,
   faPlay,
-  // faRepeat,
-  // faUser,
+  faRepeat,
+  //faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -127,18 +127,18 @@ const SidebarHeart = ({ songsLiked }) => {
           <div className={cx('sidebar__modul-item-body')}>{songsLiked.name}</div>
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
-              {/* <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>{songsLiked.follower}</span>
-              </span> */}
+              <span className={cx('sidebar__modul-item-quantity-follower')}>
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
+                <span className={cx('sidebar-data')}>{songsLiked.numberOfListen}</span>
+              </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
                 <span className={cx('sidebar-data')}>{songsLiked.likeCount}</span>
               </span>
-              {/* <span className={cx('sidebar__modul-item-repeat')}>
+              <span className={cx('sidebar__modul-item-repeat')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
-                <span className={cx('sidebar-data')}>{songsLiked.repeat}</span>
-              </span> */}
+                <span className={cx('sidebar-data')}>{songsLiked.numberOfLoop}</span>
+              </span>
             </div>
           </div>
         </div>

@@ -8,11 +8,11 @@ import styles from './EditProfile.module.scss';
 
 const cx = classNames.bind(styles);
 
-function EditProfile({ setPopperEdit, userData = {} }) {
+function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
   const [image, setImage] = useState('');
-  const navigate = useNavigate();
   const inputref = useRef();
 
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
@@ -21,19 +21,19 @@ function EditProfile({ setPopperEdit, userData = {} }) {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const updatedUserData = {
-      username: userName, 
+      username: userName,
       city: city,
-      country: country, 
-      bio: bio, 
-      avatar: image
+      country: country,
+      bio: bio,
+      avatar: image,
     };
-    console.log(updatedUserData);
+
     try {
-      const response = updateUserDetails(updatedUserData);
+      const response = await updateUserDetails(updatedUserData);
       if (response) {
-        console.log('User details updated successfully:', response);
+        setUserData(response.data);
       } else {
         console.log('No changes to update or something went wrong.');
       }
@@ -42,7 +42,7 @@ function EditProfile({ setPopperEdit, userData = {} }) {
     }
     setPopperEdit(false);
     navigate('/profile');
-  }
+  };
 
   const [userName, setUserName] = useState(userData.userName || '');
   const [bio, setBio] = useState(userData.bio || '');
@@ -149,7 +149,9 @@ function EditProfile({ setPopperEdit, userData = {} }) {
             >
               Cancel
             </button>
-            <button className={cx('butSave')} onClick={handleSave}>Save changes</button>
+            <button className={cx('butSave')} onClick={handleSave}>
+              Save changes
+            </button>
           </div>
         </div>
       </div>

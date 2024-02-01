@@ -24,6 +24,7 @@ import { likeSong, unlikeSong } from 'api/songs';
 import { useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
+import { BsMusicNoteList } from 'react-icons/bs';
 
 const cx = classNames.bind(styles);
 
@@ -69,7 +70,7 @@ function Gallery({ data, playLists }) {
   };
 
   const handleLike = (e) => {
-    if (!storage.currentUser) navigate('/login');
+    if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
     data.isLiked = !data.isLiked;
     setIsLiked(!isLiked);
 
@@ -100,8 +101,7 @@ function Gallery({ data, playLists }) {
         });
       if (context) {
         context.setDataSongLikes((prev) => {
-          var newSongs = [...prev];
-          newSongs.push(data);
+          var newSongs = [data, ...prev];
           return newSongs;
         });
       }
@@ -196,6 +196,7 @@ function Gallery({ data, playLists }) {
       <div className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.thumbNail || ''} alt="" />
 
+        {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
         <div className={cx('modul-left_backgroud')}></div>
         <div onClick={handlePlay} className={cx('modul-left_playbtn')}>
           <FontAwesomeIcon

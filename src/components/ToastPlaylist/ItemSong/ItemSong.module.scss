@@ -1,0 +1,80 @@
+.list-music-item {
+  height: 40px;
+  color: hsla(0, 0%, 100%, 0.7);
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+  list-style: none;
+  padding: 11px 8px;
+  overflow: hidden;
+  display: flex;
+}
+
+.list-music-item span {
+  font-size: 14px;
+}
+.list-music-item:hover {
+  background-color: hsla(0, 0%, 100%, 0.1);
+  border-bottom: 1px solid transparent;
+  outline: 0;
+  cursor: pointer;
+}
+
+.list-music-item_detail-song {
+  // overflow: hidden;
+  display: flex;
+  // justify-content: center;
+  flex: 1;
+}
+
+.color-opa-07 {
+  color: hsla(0, 0%, 100%, 0.7) !important;
+}
+
+.color-white {
+  color: #fff !important;
+}
+
+.list-music-item:hover .list-music-item_group {
+  flex: 0.6;
+}
+
+.list-music-item:hover .list-music-item_play-rate {
+  display: none;
+}
+
+.relative {
+  position: relative;
+}
+
+.list-music-item_play-rate {
+  float: right;
+  display: flex;
+}
+
+.font-11 {
+  font-size: 11px !important;
+  line-height: 1.2rem;
+  margin: 0 2px;
+}
+
+.group-btn_right {
+  position: absolute;
+  left: 50px;
+  top: -2px;
+  background-color: rgba(255, 255, 255, 0);
+  display: none;
+  z-index: 99;
+}
+.group-btn_right button {
+  margin-right: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-music-item:hover .group-btn_right {
+  display: flex;
+}

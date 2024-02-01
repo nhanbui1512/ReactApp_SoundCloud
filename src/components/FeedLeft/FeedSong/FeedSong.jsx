@@ -113,6 +113,24 @@ const FeedSong = ({ data }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const handleCopy = async () => {
+    console.log(data);
+    var urlPage = `http://localhost:3000/song/getsong?song_id=${data.id}`;
+    navigator.clipboard.writeText(urlPage);
+    setCopy(!isCopy);
+
+    const timeReset = setTimeout(() => {
+      setCopy(isCopy);
+    }, 500);
+
+    await sleep(1000);
+    return clearTimeout(timeReset);
+  };
   return (
     <>
       {/* <div className={cx('feed__modul-item-authorname-main')}>
@@ -124,10 +142,7 @@ const FeedSong = ({ data }) => {
         <img src={data.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
-            <div
-              className={cx('feed__modul-item-play')}
-              onClick={handlePlay}
-            >
+            <div className={cx('feed__modul-item-play')} onClick={handlePlay}>
               <FontAwesomeIcon
                 className={cx('feed__modul-play-icon')}
                 icon={isPlay ? faPause : faPlay}
@@ -191,7 +206,7 @@ const FeedSong = ({ data }) => {
                 <button
                   className={cx('feed__modul-option-btn')}
                   onClick={() => {
-                    setCopy(!isCopy);
+                    handleCopy();
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faLink} />

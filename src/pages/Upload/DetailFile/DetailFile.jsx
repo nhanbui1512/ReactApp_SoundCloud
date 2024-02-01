@@ -106,7 +106,7 @@ function DetailFile({ selectedFile }) {
                   <img className={cx('img')} alt="" accept="image/*" />
                 )}
                 <div className={cx('img_choose')}>
-                  <input ref={inputref} type="file" onChange={handleFileChange} />
+                  <input ref={inputref} type="file" onChange={handleFileChange} accept="image/*"/>
                   <button
                     onClick={(e) => {
                       inputref.current.click();

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import axiosClient from './axiosClient';
 
 export async function signIn(email, password) {
@@ -29,21 +30,24 @@ export async function registerUser({username, email, password}) {
   }
 }
 
-
-
 export async function changePassword({ currentPassword, newPassword, confirmPassword }) {
   try {
-    const formdata = new FormData();
-    formdata.append('ownPassWord', currentPassword);
-    formdata.append('newPassWord', newPassword);
-    formdata.append('confirmPassWord', confirmPassword);
-    const response = await axiosClient.put(`/user/change-password`, formdata);
+    var urlencoded = new URLSearchParams();
+    urlencoded.append('ownPassWord', currentPassword);
+    urlencoded.append('newPassWord', newPassword);
+    urlencoded.append('confirmPassWord', confirmPassword);
+    const response = await axiosClient.put(`/user/change-password`, urlencoded, {
+      headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+      }
+  });
+    toast.success('Update sucess');
     return response.data;
   } catch (error) {
+    toast.error('Old password is incorrect');
     console.log(error);
   }
 }
-
 //==========================================================================================
 // Profile
 

@@ -1,7 +1,5 @@
 import axiosClient from "./axiosClient";
 
-// to do: getGenresById
-
 export async function createGenre(formdata) {
     try {
         const response = await axiosClient.post(`/genre/create`, formdata);
@@ -34,5 +32,12 @@ export async function getGenres() {
     }
 }
 
-// to do
-/* export async function getGenresById(id) {} */
+export async function getSongsByGenreId(genreId, page = 1, perPage = 10) {
+    try {
+        const response = await axiosClient.get(`/genre/get-songs?id=${genreId}&page=${page}&per_page=${perPage}`);
+        // console.log(response);
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}

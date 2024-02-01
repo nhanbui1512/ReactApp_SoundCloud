@@ -19,16 +19,19 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-
+// import axiosClient from 'api/axiosClient';
+// import { useNavigate } from 'react-router';
+import { PlaylistPopup } from 'components/Playlist';
+//import ToastMessage from 'components/ToastMessage/ToastMessage';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ data }) => {
-  const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
+  const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
 
   const [isLiked, setIsLiked] = useState(data.isLiked);
   //const navigate = useNavigate();
@@ -95,23 +98,16 @@ const FeedSong = ({ data }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, data.id]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-      if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-        // Thực hiện hành động khi click ra ngoài
-        setMoreMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
   return (
     <>
+      {/* <div className={cx('feed__modul-item-authorname-main')}>
+        <img src={data.avatar} alt="" className={cx('feed__modul-authorname-avatar')} />
+        <div className={cx('feed__modul-authorname-name')}>{data.userName}</div>
+      </div> */}
+
+      {/* Add to Playlist popup */}
+      <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data}/> 
+
       <li className={cx('feed__modul-list-item')}>
         <img src={data.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
@@ -187,11 +183,11 @@ const FeedSong = ({ data }) => {
               </>
             </Tippy>
             <HeadlessTippy
-              visible={moreMenu}
+              zIndex={80}
               interactive
               placement="bottom-start"
               offset={[0, 0]}
-              delay={300}
+              delay={[0, 300]}
               render={(atr) => {
                 return (
                   <Wrapper className={cx('more-menu')}>
@@ -199,13 +195,14 @@ const FeedSong = ({ data }) => {
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                       separate
+                      onClick={() => console.log('add to next up')}
                     >
                       Add to Next up
                     </MenuItem>
                     <MenuItem
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
-                      separate
+                      onClick={() => setOpenAddToPlaylist(true)}
                     >
                       Add to Playlist
                     </MenuItem>
@@ -215,9 +212,6 @@ const FeedSong = ({ data }) => {
             >
               <button
                 ref={moreBtnRef}
-                onClick={(e) => {
-                  setMoreMenu(!moreMenu);
-                }}
                 className={cx('option-btn-more')}
               >
                 <FontAwesomeIcon icon={faEllipsis} />

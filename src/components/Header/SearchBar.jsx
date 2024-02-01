@@ -14,8 +14,22 @@ const cx = classNames.bind(styles);
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [suggest, setSuggest] = useState([])
+  const [suggest, setSuggest] = useState([]);
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
+  //     if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
+  //       // Thực hiện hành động khi click ra ngoài
+  //       setMoreMenu(false);
+  //     }
+  //   };
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
 
 	const debounceKeyword = useDebounce(keyword, 700);
 
@@ -67,17 +81,20 @@ const SearchBar = () => {
   return (
     <HeadlessTippy
       interactive
-      visible={keyword.trim() !== ''}
+      trigger='click'
+      // visible={visible}
       offset={[0, 0]}
       render={() => {
         return (
-          <Wrapper className={cx('search-suggest')}>
-            {loading ? (
-              <label style={{ fontSize: 16, fontWeight: 700, paddingLeft: 8 }}>Loading...</label>
-            ) : (
-              showSuggest()
-            )}
-          </Wrapper>
+          <div style={{ display: (keyword.trim() !== '') ? 'inline' : 'none' }}>
+            <Wrapper className={cx('search-suggest')}>
+              {loading ? (
+                <label style={{ fontSize: 16, fontWeight: 700, paddingLeft: 8 }}>Loading...</label>
+              ) : (
+                showSuggest()
+              )}
+            </Wrapper>
+          </div>
         );
       }}
     >

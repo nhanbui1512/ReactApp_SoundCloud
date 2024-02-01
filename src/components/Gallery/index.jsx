@@ -26,6 +26,7 @@ import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { PlaylistPopup } from 'components/Playlist';
+import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);
 
@@ -48,7 +49,9 @@ function Gallery({ data, playLists }) {
 
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== data.id) {
+      storage.setCurrentPlayList([data]);
       storage.setCurrentMusic(data);
+
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -140,6 +143,31 @@ function Gallery({ data, playLists }) {
           return newPlaylists;
         });
       }
+    }
+  };
+
+  const handleAddNextUp = () => {
+    var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+
+    // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
+    if (storage.currentPlayList.find((music) => music.id === data.id)) {
+      var indexOfSong = storage.currentPlayList.indexOf(data);
+
+      storage.setCurrentPlayList((prev) => {
+        var newState = [...prev];
+        changePosition(newState, indexOfSong, indexPlaying + 1);
+        return newState;
+      });
+    } else {
+      // ngược lại -> thêm vào sau bài đang phát
+
+      var target = indexPlaying + 1;
+
+      storage.setCurrentPlayList((prev) => {
+        var newState = [...prev];
+        newState.splice(target, 0, data);
+        return newState;
+      });
     }
   };
 
@@ -242,7 +270,7 @@ function Gallery({ data, playLists }) {
                     className={cx('menu-item')}
                     icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                     separate
-                    onClick={() => console.log('add to Next up')}
+                    onClick={handleAddNextUp}
                   >
                     Add to Next up
                   </MenuItem>

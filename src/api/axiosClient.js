@@ -5,6 +5,7 @@ const axiosClient = axios.create({
   // if local server: 'http://localhost:3000'
   baseURL: 'http://localhost:3000',
   headers: {
+    'ngrok-skip-browser-warning': 'true',
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'multipart/form-data',
   },

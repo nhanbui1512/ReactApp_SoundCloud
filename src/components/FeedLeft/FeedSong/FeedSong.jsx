@@ -20,9 +20,11 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
+  console.log('in ra day',dataSong);
   //const [moreMenu, setMoreMenu] = useState(false);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
@@ -120,7 +122,7 @@ const FeedSong = ({ dataSong }) => {
       {/* Add to Playlist popup */}
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={dataSong} />
 
-      <div className={cx('feed__modul-list-item')}>
+      <Link to={`/song/${dataSong.id}`} className={cx('feed__modul-list-item')}>
         <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
@@ -226,7 +228,7 @@ const FeedSong = ({ dataSong }) => {
             </HeadlessTippy>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };

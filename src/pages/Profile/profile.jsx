@@ -25,7 +25,6 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/profile/all');
     getCurrentUserProfile()
       .then((res) => {
         setUserData(res.data);

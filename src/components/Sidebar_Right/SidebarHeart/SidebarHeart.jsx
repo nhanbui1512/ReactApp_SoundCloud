@@ -40,6 +40,7 @@ const SidebarHeart = ({ songsLiked }) => {
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== songsLiked.id) {
       storage.setCurrentMusic(songsLiked);
+      storage.setCurrentPlayList([songsLiked]);
       if (storage.playlistId !== -1) storage.setPlaylistId(-1);
       const playMusic = (event) => {
         event.target.play();

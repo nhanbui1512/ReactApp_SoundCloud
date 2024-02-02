@@ -18,6 +18,7 @@
   margin-top: 25px;
   margin-left: 25px;
   border: 1px solid black;
+  cursor: pointer;
 }
 
 .btn-update-header-img {
@@ -73,20 +74,34 @@
   border: 1px solid rgb(189, 184, 184);
   width: 80px;
   height: 30px;
-  margin-top: 15px;
+  margin-top: 10px;
   border-radius: 5px;
-}
-.btn-edit {
   cursor: pointer;
-  margin-right: 50px;
-  margin-left: 10px;
+  margin-right: 15px;
+}
+.sidebar__modul-item-follower {
+  margin-left: auto;
   background-color: white;
   color: black;
   border: 1px solid rgb(189, 184, 184);
-  width: 80px;
+  width: 120px;
   height: 30px;
-  margin-top: 15px;
+  margin-top: 10px;
   border-radius: 5px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.sidebar-icon{
+  margin-right: 5px;
+}
+.sidebar-data {
+  margin: 0 4px;
+  font-size: 12px;
+}
+
+.following {
+  color: var(--orange-primary);
+  border-color: var(--orange-primary);
 }
 .navbar {
   font-size: 16px;
@@ -124,7 +139,7 @@
   padding-left: 30px;
 }
 .follower,
-.following,
+.followingitem,
 .tracks {
   margin-left: 10px;
   padding: 10px;
@@ -183,6 +198,12 @@
   font-size: 15px;
 }
 .edit-icon, .share-icon{
+  margin-right: 5px;
+  margin-top: 2px;
+  height: 15px;
+  width: auto;
+}
+.follwer-icon{
   margin-right: 5px;
   margin-top: 2px;
   height: 15px;

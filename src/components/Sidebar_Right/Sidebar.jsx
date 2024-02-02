@@ -1,15 +1,13 @@
 import './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHeart, faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faTabletScreenButton, faUser } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import artirstFollow from './data';
-import { FaHistory } from 'react-icons/fa';
+// import artirstFollow from './data';
+// import { FaHistory } from 'react-icons/fa';
+// import SidebarHistory from './SidebarHistory/SidebarHistory';
 import React, { useEffect, useState } from 'react';
 import SidebarHeart from './SidebarHeart/SidebarHeart';
-import SidebarHistory from './SidebarHistory/SidebarHistory';
 import SidebarArtist from './SidebarArtist/SidebarArtist';
 import apiHandleFeed from 'api/apiHandleFeed';
 import { Link } from 'react-router-dom';
@@ -60,8 +58,8 @@ const Sidebar = () => {
     const newTotalLike = listSongLiked.reduce((acc, curr) => {
       return acc + curr.likeCount;
     }, 0);
-    setTotalLike(newTotalLike)
-  }, [listSongLiked])
+    setTotalLike(newTotalLike);
+  }, [listSongLiked]);
 
   return (
     <>
@@ -76,7 +74,7 @@ const Sidebar = () => {
               // .filter((art) => art.followerNumber === 0)
               .map((art, index) => {
                 return <SidebarArtist art={art} key={index} />;
-            })}
+              })}
           </ul>
         </div>
       </div>
@@ -98,7 +96,7 @@ const Sidebar = () => {
             </ul>
           </div>
         </div>
-        <div className={cx('sidebar__modul')}>
+        {/* <div className={cx('sidebar__modul')}>
           <div className={cx('sidebar__modul-refresh')}>
             <span>
               <FaHistory />
@@ -111,6 +109,29 @@ const Sidebar = () => {
                 return <SidebarHistory key={index} art={art} />;
               })}
             </ul>
+          </div>
+        </div> */}
+        <div className={cx('sidebar__modul')}>
+          <div className={cx('sidebar__modul-refresh')}>
+            <span>
+              <FontAwesomeIcon icon={faTabletScreenButton} />
+            </span>
+            <span>Go Mobile</span>
+            <ul className={cx('sidebar__modul-list')}>
+              
+            </ul>
+          </div>
+          <div className={cx('sidebar__modul-container')}>
+            <ul className={cx('sidebar__modul-list')}></ul>
+          </div>
+        </div>
+        <div className={cx('sidebar__modul')}>
+          <div className={cx('brand-items')}>
+            Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog -
+            Charts
+            <p>
+              <span style={{ color: 'blue' }}>Language</span>: English
+            </p>
           </div>
         </div>
       </div>

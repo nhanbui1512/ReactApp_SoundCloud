@@ -7,7 +7,7 @@ import apiHandleFeed from 'api/apiHandleFeed';
 
 const cx = classNames.bind(styles);
 const SidebarArtist = ({ art }) => {
-  const [isFollow, setIsFollowed] = useState(false);
+  const [isFollow, setIsFollowed] = useState(art);
   // navigate('/user?user_id={art.id}')
 
   // const handleFollow = () => {

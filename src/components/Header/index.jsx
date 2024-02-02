@@ -159,7 +159,12 @@ const Header = () => {
                 <Wrapper className={cx('dropdown-menu')}>
                   {menuUserItem.map((item, index) => {
                     return (
-                      <MenuItem to={item.to} key={index} icon={item.icon}>
+                      <MenuItem
+                        className={cx('menu-item')}
+                        to={item.to}
+                        key={index}
+                        icon={item.icon}
+                      >
                         {item.title}
                       </MenuItem>
                     );

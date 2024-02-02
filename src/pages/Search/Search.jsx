@@ -23,32 +23,35 @@ const Search = () => {
   const [playlistsResult, setPlaylistResult] = useState([]);
 
   const getResult = async (keyword) => {
-    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword), getGenres()]).then(
-      ([songsResult, playlistsResult, genresResult]) => {
-        if (songsResult.status === 'fulfilled') {
-          setSongsResult(songsResult.value.songs);
-        }
-        if (playlistsResult.status === 'fulfilled') {
-          setPlaylistResult(playlistsResult.value.playlists);
-        }
-        if (genresResult.status === 'fulfilled') {
-          // filter genre contain keyword
-          const matchGenres = []
-          genresResult.value.data.forEach(genre => 
-            genre.name.toLowerCase().includes(keyword.toLowerCase()) && matchGenres.push(genre)
-          )
-          // for each match genre, get songs by genre id
-          const getSongsByGenre = matchGenres.map(genre => getSongsByGenreId(genre.id, 1, 5))
-          Promise.allSettled(getSongsByGenre)
-            .then(results => {
-              const songsByGenre = []
-              results.filter(result => result.status === "fulfilled")
-                .forEach(result => songsByGenre.push(result.value.data))
-              setSongsByGenresResult(songsByGenre)
-            })
-        }
-      },
-    );
+    await Promise.allSettled([
+      getSongsByName(keyword),
+      getPlaylistsByName(keyword),
+      getGenres(),
+    ]).then(([songsResult, playlistsResult, genresResult]) => {
+      if (songsResult.status === 'fulfilled') {
+        setSongsResult(songsResult.value.songs);
+      }
+      if (playlistsResult.status === 'fulfilled') {
+        setPlaylistResult(playlistsResult.value.playlists);
+      }
+      if (genresResult.status === 'fulfilled') {
+        // filter genre contain keyword
+        const matchGenres = [];
+        genresResult.value.data.forEach(
+          (genre) =>
+            genre.name.toLowerCase().includes(keyword.toLowerCase()) && matchGenres.push(genre),
+        );
+        // for each match genre, get songs by genre id
+        const getSongsByGenre = matchGenres.map((genre) => getSongsByGenreId(genre.id, 1, 5));
+        Promise.allSettled(getSongsByGenre).then((results) => {
+          const songsByGenre = [];
+          results
+            .filter((result) => result.status === 'fulfilled')
+            .forEach((result) => songsByGenre.push(result.value.data));
+          setSongsByGenresResult(songsByGenre);
+        });
+      }
+    });
     setLoading(false);
   };
   useEffect(() => {
@@ -56,7 +59,7 @@ const Search = () => {
     setKeyword(kw);
     setLoading(true);
     getResult(kw);
-    window.scrollTo(0,0); // scroll to top upon render
+    window.scrollTo(0, 0); // scroll to top upon render
   }, [searchParams]);
 
   const showResult = () => {
@@ -68,7 +71,7 @@ const Search = () => {
             {songsResult.length === 0 ? (
               <h4 style={{ color: 'gray' }}>Sorry we didn't find any results for "{keyword}"</h4>
             ) : (
-              songsResult.map((item, index) => <FeedSong data={item} />)
+              songsResult.map((item, index) => <FeedSong key={index} dataSong={item} />)
             )}
           </div>
         );
@@ -83,7 +86,7 @@ const Search = () => {
                 <div>
                   <h4>{item.name}</h4>
                   {item.songs.map((item, index) => (
-                    <FeedSong key={index} data={item} />
+                    <FeedSong key={index} dataSong={item} />
                   ))}
                 </div>
               ))

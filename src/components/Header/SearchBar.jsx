@@ -17,36 +17,25 @@ const SearchBar = () => {
   const [suggest, setSuggest] = useState([]);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-  //     if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-  //       // Thực hiện hành động khi click ra ngoài
-  //       setMoreMenu(false);
-  //     }
-  //   };
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
-
-	const debounceKeyword = useDebounce(keyword, 700);
+  const debounceKeyword = useDebounce(keyword, 700);
 
   const getSuggest = async (keyword) => {
-    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword)])
-      .then(([songsResult, playlistsResult]) => {
-        const suggest = [].concat(songsResult.value?.songs.slice(0,4), playlistsResult.value?.playlists.slice(0,4))
-        // console.log(suggest)
-        setSuggest(suggest)
-      })
+    await Promise.allSettled([getSongsByName(keyword), getPlaylistsByName(keyword)]).then(
+      ([songsResult, playlistsResult]) => {
+        const suggest = [].concat(
+          songsResult.value?.songs.slice(0, 4),
+          playlistsResult.value?.playlists.slice(0, 4),
+        );
+        setSuggest(suggest);
+      },
+    );
     setLoading(false);
   };
   useEffect(() => {
     if (debounceKeyword !== '') {
       getSuggest(debounceKeyword);
     } else {
-      setSuggest([])
+      setSuggest([]);
       setLoading(false);
     }
   }, [debounceKeyword]);
@@ -55,18 +44,18 @@ const SearchBar = () => {
     if (debounceKeyword.trim() !== '') {
       return (
         <div>
-          <MenuItem key={0}
-						onClick={() => handleSearch()}
-					>Search for "{debounceKeyword}"</MenuItem>
+          <MenuItem key={0} onClick={() => handleSearch()}>
+            Search for "{debounceKeyword}"
+          </MenuItem>
           {suggest.map((item, index) => (
-              <MenuItem
-                key={index + 1}
-                icon={<FontAwesomeIcon icon={faSearch} />}
-                onClick={(e) => setKeyword(e.target.innerText)}
-              >
-                {item.name}
-              </MenuItem>
-            ))}
+            <MenuItem
+              key={index + 1}
+              icon={<FontAwesomeIcon icon={faSearch} />}
+              onClick={(e) => setKeyword(e.target.innerText)}
+            >
+              {item.name}
+            </MenuItem>
+          ))}
         </div>
       );
     }
@@ -81,12 +70,12 @@ const SearchBar = () => {
   return (
     <HeadlessTippy
       interactive
-      trigger='click'
+      trigger="click"
       // visible={visible}
       offset={[0, 0]}
       render={() => {
         return (
-          <div style={{ display: (keyword.trim() !== '') ? 'inline' : 'none' }}>
+          <div style={{ display: keyword.trim() !== '' ? 'inline' : 'none' }}>
             <Wrapper className={cx('search-suggest')}>
               {loading ? (
                 <label style={{ fontSize: 16, fontWeight: 700, paddingLeft: 8 }}>Loading...</label>
@@ -102,14 +91,16 @@ const SearchBar = () => {
         <input
           value={keyword}
           onChange={(e) => {
-						setKeyword(e.target.value)
-						setLoading(true)
-					}}
+            setKeyword(e.target.value);
+            setLoading(true);
+          }}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
+
         <button className={cx('search-btn')} onClick={() => handleSearch()}>
           <FontAwesomeIcon className={cx('search-icon')} icon={faSearch} />
         </button>
+
         <button
           className={cx('search-clear-btn')}
           hidden={keyword === ''}

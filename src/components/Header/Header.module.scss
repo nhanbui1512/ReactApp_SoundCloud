@@ -68,19 +68,21 @@
 
 .search-clear-btn {
   position: absolute;
-  right: 36px;
-  width: 15px;
-  height: 15px;
   background-color: transparent;
   cursor: pointer;
+  right: 30px;
+  margin: 0;
+  top: 12px;
+  color: #333;
 }
 .search-btn {
   position: absolute;
-  right: 16px;
-  width: 15px;
-  height: 15px;
   background-color: transparent;
   cursor: pointer;
+  right: 8px;
+  margin: 0;
+  top: 12px;
+  color: #333;
 }
 .search-icon {
   width: 15;
@@ -151,4 +153,7 @@
 }
 .icon-menu {
   color: var(--black);
+}
+.menu-item {
+  color: #333;
 }

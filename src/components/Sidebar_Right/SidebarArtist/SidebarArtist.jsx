@@ -34,17 +34,12 @@ const SidebarArtist = ({ art }) => {
   };
 
   return (
-    // <Link>
-    // </Link>
     <li className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />
 
       <div className={cx('sidebar__modul-item-info')}>
         <div className={cx('sidebar__modul-item-head')}>
           <div className={cx('sidebar__modul-item-name')}>{art.userName}</div>
-          {/* <div className={cx('sidebar__modul-item-wrap')}>
-            <span className={cx('sidebar__modul-item-know')}>{art.follower}</span>
-          </div> */}
         </div>
         <div className={cx('sidebar__modul-item-bottom')}>
           <div className="sidebar__modul-item-bottom-left">

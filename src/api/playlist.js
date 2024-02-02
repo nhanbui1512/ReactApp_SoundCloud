@@ -67,7 +67,6 @@ export async function removeSongsFromPlaylist(playlistId, listOfSongsId) {
 export async function getPlaylists(page = 1, perPage = 10) {
   try {
     const response = await axiosClient.get(`/playlist/getall?page=${page}&per_page=${perPage}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -77,7 +76,6 @@ export async function getPlaylists(page = 1, perPage = 10) {
 export async function getPlaylistsById(id) {
   try {
     const response = await axiosClient.get(`/playlist?idPlaylist=${id}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;

@@ -28,7 +28,6 @@ function GlobalLibrary({ children }) {
 
       // getPlaylists
       const Playlists = await getMyFollowingPlaylist();
-      console.log(Playlists);
       setDataPlaylists(Playlists.data);
 
       // getUserFollowed

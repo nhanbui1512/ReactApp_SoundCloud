@@ -36,6 +36,10 @@ function Profile() {
       });
   }, [navigate]);
 
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+  }, []);
+
   return (
     <div>
       <div className={cx('wrapper')}>
@@ -158,7 +162,7 @@ function Profile() {
               </div>
               {/* <div className={cx('follwer-body-info')}>
               </div> */}
-              <Sidebar/>
+              <Sidebar />
               <div className={cx('brand-items')}>
                 Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog
                 - Charts

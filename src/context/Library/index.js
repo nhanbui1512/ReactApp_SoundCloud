@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from 'react';
 import { getSongs, getSongsLiked } from 'api/songs';
 import { getMyFollowingPlaylist } from 'api/playlist';
 import { getFollowing } from 'api/follow';
+import { useNavigate } from 'react-router-dom';
 
 export const LibraryContext = createContext();
 
@@ -12,33 +13,39 @@ function GlobalLibrary({ children }) {
   const [dataPlaylists, setDataPlaylists] = useState([]);
   const [dataUsers, setDataUsers] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getData = async () => {
-      // getSongs
-      const Songs = await getSongs();
-      setDataSongs(Songs.data);
+      try {
+        // getSongs
+        const Songs = await getSongs();
+        setDataSongs(Songs.data);
 
-      // getSongLikes
-      var SongLikes = await getSongsLiked();
-      SongLikes = SongLikes.data.map((songLike) => {
-        songLike.song.isLiked = true;
-        return songLike.song;
-      });
-      setDataSongLikes(SongLikes);
+        // getSongLikes
+        var SongLikes = await getSongsLiked();
+        SongLikes = SongLikes.data.map((songLike) => {
+          songLike.song.isLiked = true;
+          return songLike.song;
+        });
+        setDataSongLikes(SongLikes);
 
-      // getPlaylists
-      const Playlists = await getMyFollowingPlaylist();
-      setDataPlaylists(Playlists.data);
+        // getPlaylists
+        const Playlists = await getMyFollowingPlaylist();
+        setDataPlaylists(Playlists.data);
 
-      // getUserFollowed
-      var Users = await getFollowing();
-      Users = Users.data.data.map((user) => {
-        return user.following;
-      });
-      setDataUsers(Users);
+        // getUserFollowed
+        var Users = await getFollowing();
+        Users = Users.data.data.map((user) => {
+          return user.following;
+        });
+        setDataUsers(Users);
+      } catch (error) {
+        navigate('/login');
+      }
     };
     getData();
-  }, []);
+  }, [navigate]);
 
   const states = {
     dataSongs,

@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-
 import styles from './ItemSong.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,19 +12,19 @@ import {
 
 const cx = classNames.bind(styles);
 
-const ItemSong = () => {
+const ItemSong = ({itemMusic}) => {
   return (
     <li className={cx('list-music-item')}>
       <div className={cx('list-music-item_detail-song')}>
-        <span className={cx('color-opa-07')}>PhucXp ft. Freak D</span>
-        <span className={cx('color-white')}>Chẳng Thể Tìm Được Em - Lofi</span>
+        <span className={cx('color-opa-07')}>{itemMusic.artistName}</span>
+        <span className={cx('color-white')} style={{marginLeft: '4px'}}>{itemMusic.name}</span>
       </div>
       <div className={cx(['list-music-item_group', 'color-white', 'relative'])}>
         <div className={cx('list-music-item_play-rate')}>
           <span className={cx('font-11')}>
             <FontAwesomeIcon icon={faPlay} />
           </span>
-          <span className={cx('font-11')}>4,912</span>
+          <span className={cx('font-11')}>{itemMusic.numberOfListen}</span>
         </div>
 
         <div className={cx('group-btn_right')}>

@@ -12,6 +12,7 @@ import EditProfile from './Edit_profile/EditProfile';
 import ShowImage from './Show_Image/ShowImage';
 import Share from './Share/Share';
 import { getCurrentUserProfile } from 'api/users';
+import Sidebar from 'components/Sidebar_Right/Sidebar';
 
 const cx = classNames.bind(styles);
 
@@ -144,17 +145,20 @@ function Profile() {
               <div className={cx('follwer-body')}>
                 <div className={cx('follower')}>
                   <p>Follower</p>
-                  <p style={{ textAlign: 'center' }}>{userData.followerNumber || 0}</p>
+                  <p style={{ textAlign: 'center' }}>{userData?.followerNumber || 0}</p>
                 </div>
                 <div className={cx('following')}>
                   <p>Following</p>
-                  <p style={{ textAlign: 'center' }}>{userData.followingNumber || 0} </p>
+                  <p style={{ textAlign: 'center' }}>{userData?.followingNumber || 0} </p>
                 </div>
                 <div className={cx('tracks')}>
                   <p>Tracks</p>
-                  <p style={{ textAlign: 'center' }}>{userData.track || 0}</p>
+                  <p style={{ textAlign: 'center' }}>{userData?.track || 0}</p>
                 </div>
               </div>
+              {/* <div className={cx('follwer-body-info')}>
+              </div> */}
+              <Sidebar/>
               <div className={cx('brand-items')}>
                 Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog
                 - Charts

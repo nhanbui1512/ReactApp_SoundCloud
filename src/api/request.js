@@ -1,9 +1,6 @@
 import axios from 'axios';
 const request = axios.create({
-  baseURL: 'http://localhost:3000',
-  headers: {
-    'ngrok-skip-browser-warning': 'true',
-  },
+  baseURL: 'https://59c5-113-166-1-15.ngrok-free.app',
 });
 
 export const get = async (path, options = {}) => {

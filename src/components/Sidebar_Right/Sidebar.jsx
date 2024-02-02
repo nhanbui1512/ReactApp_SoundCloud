@@ -1,17 +1,18 @@
 import './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart, faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import artirstFollow from './data';
-import { IoIosPeople } from 'react-icons/io';
 import { FaHistory } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import SidebarHeart from './SidebarHeart/SidebarHeart';
 import SidebarHistory from './SidebarHistory/SidebarHistory';
 import SidebarArtist from './SidebarArtist/SidebarArtist';
 import apiHandleFeed from 'api/apiHandleFeed';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
@@ -25,6 +26,7 @@ const Sidebar = () => {
         const res1 = await apiHandleFeed.getSongLiked();
         const combinedSongs = res1.data.data.map((item) => item.song);
         setListSongLiked(combinedSongs);
+        //console.log('in ra',combinedSongs);
       } catch (error) {
         console.error('error fetch data', error);
       }
@@ -41,11 +43,12 @@ const Sidebar = () => {
 
     getRandomSongs();
   }, [listSongLiked]); // useEffect sẽ chạy lại mỗi khi mảng songs thay đổi
+  // lấy ra danh sách tài khoản
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await apiHandleFeed.getUser();
-        setRmdUser(res.data.data.slice(0, 9));
+        setRmdUser(res.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -57,22 +60,22 @@ const Sidebar = () => {
     const newTotalLike = listSongLiked.reduce((acc, curr) => {
       return acc + curr.likeCount;
     }, 0);
-    setTotalLike(newTotalLike);
-  }, [listSongLiked]);
+    setTotalLike(newTotalLike)
+  }, [listSongLiked])
 
   return (
     <>
       <div className={cx('sidebar__modul')}>
         <div className={cx('sidebar__modul-refresh')}>
-          <span>
-            <IoIosPeople />
-          </span>
+          <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
           <span>Artists you should follow</span>
         </div>
         <div className={cx('sidebar__modul-container')}>
           <ul className={cx('sidebar__modul-list')}>
-            {rmdUser.map((art, index) => {
-              return <SidebarArtist art={art} key={index} />;
+            {rmdUser
+              // .filter((art) => art.followerNumber === 0)
+              .map((art, index) => {
+                return <SidebarArtist art={art} key={index} />;
             })}
           </ul>
         </div>
@@ -82,9 +85,8 @@ const Sidebar = () => {
           <div className={cx('sidebar__modul-refresh')}>
             <div className={cx('sidebar-data-quantity')}>
               <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-              <span className={cx('sidebar-data')}>{totalLike}</span>
+              <span className={cx('sidebar-icon')}>{totalLike}</span>
             </div>
-            <span>{/* <IoHeart /> */}</span>
             <Link to="/libary/Likes">View All</Link>
           </div>
           <div className={cx('sidebar__modul-container')}>
@@ -112,9 +114,9 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <Routes>
+      {/* <Routes>
         <Route path="/Likes"></Route>
-      </Routes>
+      </Routes> */}
     </>
   );
 };

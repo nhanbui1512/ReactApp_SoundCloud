@@ -6,7 +6,11 @@ import {
   faLink,
   faRepeat,
   faPeopleArrows,
+  // faShare,
+  // faEllipsis,
+  // faSquareCaretUp,
   faBars,
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './ToastPlaylist.module.scss';
@@ -14,36 +18,32 @@ import ItemSong from './ItemSong/ItemSong';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = () => {
+const ToastPlaylist = ({ dataItem }) => {
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
+      <p>{dataItem.name}</p>
       <div className={cx(['col', 'relative'])}>
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              <img
-                src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
-                alt="anhr"
-              />
+              {/* {dataItem..map((itemOwner, index) => (
+                
+                ))} */}
+                <img
+                  // src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
+                  src={dataItem.owner?.avatar || ''}
+                  alt="anhr"
+                />
               <span className={cx('list-music_playbtn')}>
                 <FontAwesomeIcon icon={faPlay} />
               </span>
             </div>
             <div className={cx('list-music-container')}>
+              
               <ul className={cx(['list-music-container_scroll', 'col'])}>
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
+                {dataItem.songs?.map((itemMusic, index) => (
+                  <ItemSong itemMusic={itemMusic} key={index}/>
+                ))}
               </ul>
             </div>
           </div>
@@ -69,6 +69,10 @@ const ToastPlaylist = () => {
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faBars} />
               <span>Add to Next up</span>
+            </button>
+            <button className={cx('go-playlist-btn')}>
+              <FontAwesomeIcon icon={faEdit} />
+              <span>Edit</span>
             </button>
           </div>
         </div>

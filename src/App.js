@@ -17,7 +17,6 @@ import Search from 'pages/Search/Search';
 import Login from 'pages/Login/index.jsx';
 import HeaderOnly from 'Layouts/HeaderOnly';
 import Signup from 'pages/signup/Signup';
-// import ToastMessage from 'components/ToastMessage/ToastMessage';
 import { ToastContainer } from 'react-toastify';
 import Profile from 'pages/Profile/profile';
 import GlobalLibrary from 'context/Library';
@@ -62,7 +61,6 @@ const App = () => {
     <>
       <RouterProvider router={router} />
       <ToastContainer />
-      {/* <ToastMessage/> */}
     </>
   );
 };

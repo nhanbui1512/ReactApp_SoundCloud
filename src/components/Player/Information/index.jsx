@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 function Information({ data }) {
   const storage = useContext(StorageContext);
   const navigate = useNavigate();
-  const [isFollowed, setisFollowed] = useState(data.owner.isFollowed);
+  const [isFollowed, setisFollowed] = useState(data.owner?.isFollowed || false);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const handleHidden = () => {
@@ -85,7 +85,7 @@ function Information({ data }) {
   };
 
   useEffect(() => {
-    setisFollowed(data.owner.isFollowed);
+    setisFollowed(data.owner?.isFollowed || false);
   }, [data]);
 
   return (

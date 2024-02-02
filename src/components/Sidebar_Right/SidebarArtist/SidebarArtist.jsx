@@ -6,6 +6,7 @@ import { faChartBar, faUser, faUserCheck, faUserPlus } from '@fortawesome/free-s
 import apiHandleFeed from 'api/apiHandleFeed';
 import { StorageContext } from 'context/Storage';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -33,8 +34,9 @@ const SidebarArtist = ({ art }) => {
     }
   };
 
+  console.log(art);
   return (
-    <li className={cx('sidebar__modul-list-item')}>
+    <Link to={`/${art.id}`} className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />
 
       <div className={cx('sidebar__modul-item-info')}>
@@ -67,7 +69,7 @@ const SidebarArtist = ({ art }) => {
           </button>
         </div>
       </div>
-    </li>
+    </Link>
   );
 };
 export default SidebarArtist;

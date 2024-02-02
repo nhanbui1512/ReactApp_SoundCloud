@@ -23,17 +23,15 @@ function ProfileByID() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.documentElement.scrollTop = 0;
     getUsersById(id)
       .then((res) => {
-        if (userData.id === id) {
-          setUserData(res.data);
-          navigate(`/${id}`);
-        } else {
-          navigate('/notfound');
-        }
+        setUserData(res.data);
       })
-      .catch((err) => {});
-  }, [id, navigate, userData]);
+      .catch((err) => {
+        navigate('/notfound');
+      });
+  }, [id, navigate]);
 
   return (
     <div>

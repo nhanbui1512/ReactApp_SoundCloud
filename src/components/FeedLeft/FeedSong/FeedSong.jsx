@@ -27,11 +27,11 @@ const FeedSong = ({ dataSong }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
-  const [isRepost, setRePost] = useState(false);
+  const [isRepost, ] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
 
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked);
+  const [isLiked, ] = useState(dataSong.isLiked);
   //const navigate = useNavigate();
 
   const storage = useContext(StorageContext);
@@ -139,9 +139,9 @@ const FeedSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setIsLiked(!isLiked);
-                  }}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
@@ -152,9 +152,9 @@ const FeedSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setRePost(!isRepost);
-                  }}
+                  // onClick={() => {
+                  //   setRePost(!isRepost);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
 

@@ -19,7 +19,6 @@ export async function createSong({
     formdata.append('thumbNail', imageFile);
     formdata.append('genreId', genreId);
     const response = await axiosClient.post(`/song/create`, formdata);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -57,7 +56,6 @@ export async function getSongById(id) {
 export async function getSongsByName(name) {
   try {
     const response = await axiosClient.get(`/song/search?value=${name}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -70,7 +68,6 @@ export async function getSongsByName(name) {
 export async function deleteSong(id) {
   try {
     const response = await axiosClient.delete(`/song?song_id=${id}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -92,7 +89,6 @@ export async function likeSong(id) {
 export async function unlikeSong(id) {
   try {
     const response = await axiosClient.delete(`/song/unlike?song_id=${id}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -106,7 +102,6 @@ export async function unlikeSong(id) {
 export async function increaseListenCount(songId) {
   try {
     const response = await axiosClient.post(`/listen?song_id=${songId}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;

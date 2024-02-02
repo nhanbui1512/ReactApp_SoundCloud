@@ -24,7 +24,6 @@ const Sidebar = () => {
         const res1 = await apiHandleFeed.getSongLiked();
         const combinedSongs = res1.data.data.map((item) => item.song);
         setListSongLiked(combinedSongs);
-        //console.log('in ra',combinedSongs);
       } catch (error) {
         console.error('error fetch data', error);
       }
@@ -121,8 +120,14 @@ const Sidebar = () => {
           <div className={cx('sidebar__modul-container')}>
             <ul className={cx('sidebar__modul-list')}>
               <div className={cx('sidebar__modul-list-mobile')}>
-                <img src="https://a-v2.sndcdn.com/assets/images/appstore_badge@en-9e7292e6.png" alt="applestore" />
-                <img src="https://a-v2.sndcdn.com/assets/images/google_play_badge@en-51d52194.png" alt="chplay" />
+                <img
+                  src="https://a-v2.sndcdn.com/assets/images/appstore_badge@en-9e7292e6.png"
+                  alt="applestore"
+                />
+                <img
+                  src="https://a-v2.sndcdn.com/assets/images/google_play_badge@en-51d52194.png"
+                  alt="chplay"
+                />
               </div>
             </ul>
           </div>

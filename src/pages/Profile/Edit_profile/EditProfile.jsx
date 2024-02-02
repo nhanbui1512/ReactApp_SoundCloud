@@ -68,10 +68,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
       if (response) {
         setUserData(response.data);
       } else {
-        console.log('No changes to update or something went wrong.');
       }
     } catch (error) {
-      console.error('Error updating user details:', error);
+      console.log(error);
     }
     setShowLoader(true);
     setTimeout(() => {

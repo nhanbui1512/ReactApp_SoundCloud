@@ -34,7 +34,6 @@ const SidebarArtist = ({ art }) => {
     }
   };
 
-  console.log(art);
   return (
     <Link to={`/${art.id}`} className={cx('sidebar__modul-list-item')}>
       <img src={art.avatar} alt="" className={cx('sidebar__modul-image')} />

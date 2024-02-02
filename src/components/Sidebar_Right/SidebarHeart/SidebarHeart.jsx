@@ -18,8 +18,8 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState, useContext } from 'react';
-import CustomToast from 'components/CustomToast/CustomToast';
-import { toast } from 'react-toastify';
+// import CustomToast from 'components/CustomToast/CustomToast';
+// import { toast } from 'react-toastify';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
@@ -28,7 +28,7 @@ const SidebarHeart = ({ songsLiked }) => {
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(songsLiked.isLiked);
   const [isPlay, setIsPlay] = useState(false);
-  const [favoriteSongs, setFavoriteSongs] = useState([]);
+  //const [favoriteSongs, setFavoriteSongs] = useState([]);
   
   const storage = useContext(StorageContext);
 
@@ -92,15 +92,15 @@ const SidebarHeart = ({ songsLiked }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, songsLiked.id]);
 
-  const addToFavorites = (songsLiked) => {
-    setFavoriteSongs([...favoriteSongs, songsLiked]);
-    showToast(songsLiked);
-  };
-  const showToast = (songsLiked) => {
-    toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
-      position: 'top-right',
-    });
-  };
+  // const addToFavorites = (songsLiked) => {
+  //   setFavoriteSongs([...favoriteSongs, songsLiked]);
+  //   showToast(songsLiked);
+  // };
+  // const showToast = (songsLiked) => {
+  //   toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
+  //     position: 'top-right',
+  //   });
+  // };
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -159,7 +159,7 @@ const SidebarHeart = ({ songsLiked }) => {
                   className={cx('sidebar__modul-option-btn')}
                   onClick={() => {
                     setIsLiked(!isLiked);
-                    addToFavorites(favoriteSongs);
+                    //addToFavorites(favoriteSongs);
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

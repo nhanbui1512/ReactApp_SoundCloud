@@ -18,7 +18,11 @@ import ItemSong from './ItemSong/ItemSong';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = ({ dataItem }) => {
+const ToastPlaylist = ({ dataItem = [] }) => {
+  console.log('in ra dataItem', dataItem);
+  // Lấy thumbNail đầu tiên từ songs
+  const firstSongThumbNail = dataItem?.[0]?.songs?.[0]?.thumbNail;
+  //console.log('in ra firstSongThumbNail', firstSongThumbNail);
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
       <p>{dataItem.name}</p>
@@ -26,10 +30,24 @@ const ToastPlaylist = ({ dataItem }) => {
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              {/* {dataItem..map((itemOwner, index) => (
-                
-                ))} */}
+              {/* {firstSongThumbNail && (
                 <img
+                  // src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
+                  src={firstSongThumbNail}
+                  alt="anhr"
+                />
+              )} */}
+              {/* {dataItem.map(
+                (playlistItem) =>
+                  playlistItem.songs?.[0]?.thumbNail && (
+                    <img
+                      key={playlistItem.id} // Đặt key để tránh cảnh báo trong React
+                      src={playlistItem.songs[0].thumbNail || ''}
+                      alt="anhr"
+                    />
+                  ),
+              )} */}
+              <img
                   // src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
                   src={dataItem.owner?.avatar || ''}
                   alt="anhr"
@@ -39,10 +57,9 @@ const ToastPlaylist = ({ dataItem }) => {
               </span>
             </div>
             <div className={cx('list-music-container')}>
-              
               <ul className={cx(['list-music-container_scroll', 'col'])}>
                 {dataItem.songs?.map((itemMusic, index) => (
-                  <ItemSong itemMusic={itemMusic} key={index}/>
+                  <ItemSong itemMusic={itemMusic} key={index} />
                 ))}
               </ul>
             </div>

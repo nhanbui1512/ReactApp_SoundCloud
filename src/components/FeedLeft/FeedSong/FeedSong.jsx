@@ -43,6 +43,7 @@ const FeedSong = ({ dataSong }) => {
 
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== dataSong.id) {
+      //storage.setCurrentPlayList([dataSong]);
       storage.setCurrentMusic(dataSong);
       const playMusic = (event) => {
         event.target.play();
@@ -96,9 +97,9 @@ const FeedSong = ({ dataSong }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
+  // const sleep = (ms) => {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // };
 
   const handleCopy = async () => {
     var urlPage = `http://localhost:3000/song/getsong?song_id=${dataSong.id}`;
@@ -109,7 +110,7 @@ const FeedSong = ({ dataSong }) => {
       setCopy(isCopy);
     }, 500);
 
-    await sleep(1000);
+    //await sleep(1000);
     return clearTimeout(timeReset);
   };
   return (
@@ -121,7 +122,7 @@ const FeedSong = ({ dataSong }) => {
         <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
-            <div className={cx('feed__modul-item-play')} onClick={handlePlay}>
+            <div onClick={handlePlay} className={cx('feed__modul-item-play')} >
               <FontAwesomeIcon
                 className={cx('feed__modul-play-icon')}
                 icon={isPlay ? faPause : faPlay}

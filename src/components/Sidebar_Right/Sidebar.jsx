@@ -117,12 +117,14 @@ const Sidebar = () => {
               <FontAwesomeIcon icon={faTabletScreenButton} />
             </span>
             <span>Go Mobile</span>
-            <ul className={cx('sidebar__modul-list')}>
-              
-            </ul>
           </div>
           <div className={cx('sidebar__modul-container')}>
-            <ul className={cx('sidebar__modul-list')}></ul>
+            <ul className={cx('sidebar__modul-list')}>
+              <div className={cx('sidebar__modul-list-mobile')}>
+                <img src="https://a-v2.sndcdn.com/assets/images/appstore_badge@en-9e7292e6.png" alt="applestore" />
+                <img src="https://a-v2.sndcdn.com/assets/images/google_play_badge@en-51d52194.png" alt="chplay" />
+              </div>
+            </ul>
           </div>
         </div>
         <div className={cx('sidebar__modul')}>

@@ -13,6 +13,7 @@ import {
 const cx = classNames.bind(styles);
 
 const ItemSong = ({itemMusic}) => {
+  console.log('in ra item music', itemMusic);
   return (
     <li className={cx('list-music-item')}>
       <div className={cx('list-music-item_detail-song')}>

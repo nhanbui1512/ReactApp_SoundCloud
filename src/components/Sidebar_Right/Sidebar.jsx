@@ -69,11 +69,9 @@ const Sidebar = () => {
         </div>
         <div className={cx('sidebar__modul-container')}>
           <ul className={cx('sidebar__modul-list')}>
-            {rmdUser
-              // .filter((art) => art.followerNumber === 0)
-              .map((art, index) => {
-                return <SidebarArtist art={art} key={index} />;
-              })}
+            {rmdUser.map((art, index) => {
+              return <SidebarArtist art={art} key={index} />;
+            })}
           </ul>
         </div>
       </div>

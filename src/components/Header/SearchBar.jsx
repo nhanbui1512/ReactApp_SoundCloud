@@ -78,7 +78,7 @@ const SearchBar = () => {
           <div style={{ display: keyword.trim() !== '' ? 'inline' : 'none' }}>
             <Wrapper className={cx('search-suggest')}>
               {loading ? (
-                <label style={{ fontSize: 16, fontWeight: 700, paddingLeft: 8 }}>Loading...</label>
+                <div style={{ fontSize: 16, fontWeight: 700, paddingLeft: 8 }}>Loading...</div>
               ) : (
                 showSuggest()
               )}

@@ -51,6 +51,7 @@ function Gallery({ data, playLists }) {
     if (storage.currentMusic.id !== data.id) {
       storage.setCurrentPlayList([data]);
       storage.setCurrentMusic(data);
+      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
 
       const playMusic = (event) => {
         event.target.play();

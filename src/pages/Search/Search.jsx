@@ -129,22 +129,22 @@ const Search = () => {
       >
         <div className={cx('content')}>
           <h2 className={cx('header')}>Search result for "{keyword}"</h2>
-          {loading ? <label>Searching...</label> : showResult()}
+          {loading ? <div>Searching...</div> : showResult()}
         </div>
 
         <div className={cx('side-bar')}>
           <h3>Search filter</h3>
           <MenuItem key={0} onClick={() => setShow(0)}>
-            <label style={{ color: show === 0 && '#ff5500' }}>Songs</label>
+            <div style={{ color: show === 0 && '#ff5500' }}>Songs</div>
           </MenuItem>
           <MenuItem key={1} onClick={() => setShow(1)}>
-            <label style={{ color: show === 1 && '#ff5500' }}>Songs by Genre</label>
+            <div style={{ color: show === 1 && '#ff5500' }}>Songs by Genre</div>
           </MenuItem>
           <MenuItem key={2} onClick={() => setShow(2)}>
-            <label style={{ color: show === 2 && '#ff5500' }}>Artists</label>
+            <div style={{ color: show === 2 && '#ff5500' }}>Artists</div>
           </MenuItem>
           <MenuItem key={3} onClick={() => setShow(3)}>
-            <label style={{ color: show === 3 && '#ff5500' }}>Playlists</label>
+            <div style={{ color: show === 3 && '#ff5500' }}>Playlists</div>
           </MenuItem>
         </div>
       </div>

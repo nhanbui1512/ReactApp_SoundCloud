@@ -1,10 +1,6 @@
-// import classNames from "classnames/bind";
-
-// import styles from '../Profile.module.scss';
 import { useEffect, useState } from 'react';
 import apiHandlePlayList from 'api/apiHandlePlayList';
-import ToastTrackPlaylist from 'components/ToastTrack/ToastTrackPlaylist';
-//import { Link } from "react-router-dom";
+import ToastTrackPlaylist from 'components/ToastTrack';
 
 //const cx = classNames.bind(styles);
 

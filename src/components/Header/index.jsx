@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Logo, PlayList } from 'components/Icons';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
@@ -173,10 +173,10 @@ const Header = () => {
               );
             }}
           >
-            <div className={cx('avatar-wrapper')}>
+            <Link to="/profile" className={cx('avatar-wrapper')}>
               <Image className={cx('avatar-img')} src={user.avatar} />
               <FontAwesomeIcon className={cx('dropdown-icon')} icon={faChevronDown} />
-            </div>
+            </Link>
           </HeadlessTippy>
         )}
 

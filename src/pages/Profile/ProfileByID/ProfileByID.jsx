@@ -6,7 +6,7 @@ import Albums from '../Albums/album';
 import Playlists from '../Playlists/playlists';
 import All from '../All/all';
 import PopularTracks from '../Popular_tracks/popular';
-import Tracks from '../Tracks/tracks';
+import Tracks from '../Tracks';
 import Reposts from '../Reposts/reposts';
 import { getUsersById } from 'api/users';
 import ShowImage from '../Show_Image/ShowImage';

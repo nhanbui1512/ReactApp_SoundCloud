@@ -50,7 +50,7 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
     <Popup open={open} onClose={onClose} header={<h4>Edit</h4>}>
       <div className={cx('edit-playlist')}>
         <div className={cx('playlist-info')}>
-          <label>Playlist name</label>
+          <div>Playlist name</div>
           <input
             id="new-playlist-name"
             required
@@ -60,8 +60,8 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
           />
         </div>
         <div className={cx('playlist-songs')}>
-          {playlistData.songs.map((song) => (
-            <div className={cx('song-info')}>
+          {playlistData.songs.map((song, index) => (
+            <div key={index} className={cx('song-info')}>
               <img src={song.thumbNail} alt="" />
               <div className={cx('song-artist-name')}>
                 <h6>

@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import apiHandleFeed from 'api/apiHandleFeed';
 import FeedLeftULList from './FeedLeftULList';
 
-
-
 const cx = classNames.bind(styles);
 const FeedLeft = () => {
   const [feedSong, setFeedSong] = useState([]);
@@ -15,24 +13,20 @@ const FeedLeft = () => {
       try {
         const res = await apiHandleFeed.getFollowing();
         setFeedSong(res.data.data.data);
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
-    }
+    };
     getSongFeed();
-  },[])
-  
+  }, []);
+
   return (
     <>
       <div className={cx('feed__modul')}>
-      <h4 className={cx('feed__heading')}>Hear the latest posts from the people you’re following:</h4>  
-        {/* <ul className={cx('feed__modul-list')}>
-          {feedSong.map((data, index) => (
-            <FeedLeftItem data={data} key={index}/>
-          ))}
-          
-        </ul> */}
-        <FeedLeftULList data={feedSong}/>
+        <h4 className={cx('feed__heading')}>
+          Hear the latest posts from the people you’re following:
+        </h4>
+        <FeedLeftULList data={feedSong} />
       </div>
     </>
   );

@@ -5,14 +5,17 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import ToastPlaylist from 'components/ToastPlaylist';
 import apiHandlePlayList from 'api/apiHandlePlayList';
+import { useParams } from 'react-router-dom';
 
 //const cx = classNames.bind(styles);
 const Playlists = () => {
   const [playListSong, setPlaylistSong] = useState([]);
 
+  const id = useParams().id;
+
   const fetchPlayList = async () => {
     try {
-      const res = await apiHandlePlayList.getPlayList();
+      const res = await apiHandlePlayList.getPlayList(id);
       setPlaylistSong(res.data.data);
     } catch (error) {
       console.error('error fetching data from playlist', error);
@@ -20,6 +23,7 @@ const Playlists = () => {
   };
   useEffect(() => {
     fetchPlayList();
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -47,7 +47,7 @@ function Song() {
     const getSong = async () => {
       const song = await getSongById(id);
       setLikeSong(song.isLiked);
-      setFollowSong(song.isFollow);
+      setFollowSong(song.owner.isFollowed);
       setSong(song.song);
     };
     getSong();

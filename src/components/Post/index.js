@@ -34,32 +34,51 @@ function Post({ data }) {
   const handleFollowing = async () => {
     if (isFollowing) {
       setIsFollowing(!isFollowing);
-      unfollowUser(data.id)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-          setIsFollowing(true);
-        });
+      // unfollowUser(data.id)
+      //   .then((res) => {})
+      //   .catch((err) => {
+      //     console.log(err);
+      //     setIsFollowing(true);
+      //   });
+      console.log('unfollow');
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          newUsers = newUsers.filter((User) => User.id !== data.id);
-          console.log(newUsers);
+          console.log('unfollow');
+
+          newUsers = newUsers.map((User) => {
+            if (User.id === data.id) {
+              User.isFollow = !User.isFollow;
+              console.log(User.countFollow);
+              User.countFollow -= 1;
+            }
+            return User;
+          });
           return newUsers;
         });
       }
     } else {
       setIsFollowing(!isFollowing);
-      followUser(data.id)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-          setIsFollowing(false);
-        });
+      // followUser(data.id)
+      //   .then((res) => {})
+      //   .catch((err) => {
+      //     console.log(err);
+      //     setIsFollowing(false);
+      //   });
+      console.log('follow');
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          newUsers = newUsers.push(data);
+          console.log('follow');
+
+          newUsers = newUsers.map((User) => {
+            if (User.id === data.id) {
+              User.isFollow = !User.isFollow;
+              console.log(User.countFollow);
+              User.countFollow += 1;
+            }
+            return User;
+          });
           return newUsers;
         });
       }

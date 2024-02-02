@@ -24,7 +24,9 @@ import { likeSong, unlikeSong } from 'api/songs';
 import { useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
+import { BsMusicNoteList } from 'react-icons/bs';
 import { PlaylistPopup } from 'components/Playlist';
+import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);
 
@@ -47,7 +49,9 @@ function Gallery({ data, playLists }) {
 
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== data.id) {
+      storage.setCurrentPlayList([data]);
       storage.setCurrentMusic(data);
+
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -70,7 +74,7 @@ function Gallery({ data, playLists }) {
   };
 
   const handleLike = (e) => {
-    if (!storage.currentUser) navigate('/login');
+    if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
     data.isLiked = !data.isLiked;
     setIsLiked(!isLiked);
 
@@ -101,8 +105,7 @@ function Gallery({ data, playLists }) {
         });
       if (context) {
         context.setDataSongLikes((prev) => {
-          var newSongs = [...prev];
-          newSongs.push(data);
+          var newSongs = [data, ...prev];
           return newSongs;
         });
       }
@@ -143,6 +146,31 @@ function Gallery({ data, playLists }) {
     }
   };
 
+  const handleAddNextUp = () => {
+    var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+
+    // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
+    if (storage.currentPlayList.find((music) => music.id === data.id)) {
+      var indexOfSong = storage.currentPlayList.indexOf(data);
+
+      storage.setCurrentPlayList((prev) => {
+        var newState = [...prev];
+        changePosition(newState, indexOfSong, indexPlaying + 1);
+        return newState;
+      });
+    } else {
+      // ngược lại -> thêm vào sau bài đang phát
+
+      var target = indexPlaying + 1;
+
+      storage.setCurrentPlayList((prev) => {
+        var newState = [...prev];
+        newState.splice(target, 0, data);
+        return newState;
+      });
+    }
+  };
+
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     if (storage.currentMusic.id !== data.id) {
@@ -178,8 +206,8 @@ function Gallery({ data, playLists }) {
   return (
     <div className={cx('modul-left_item')}>
       {/* Add to Playlist popup */}
-      <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data}/> 
-      
+      <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
+
       <div className={cx('modul-left_item-container-img')}>
         <img
           className={cx('modul-left_image')}
@@ -187,6 +215,7 @@ function Gallery({ data, playLists }) {
           alt=""
         />
 
+        {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
         <div className={cx('modul-left_backgroud')}></div>
         <div onClick={handlePlay} className={cx('modul-left_playbtn')}>
           <FontAwesomeIcon
@@ -241,7 +270,7 @@ function Gallery({ data, playLists }) {
                     className={cx('menu-item')}
                     icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                     separate
-                    onClick={() => console.log('add to Next up')}
+                    onClick={handleAddNextUp}
                   >
                     Add to Next up
                   </MenuItem>
@@ -256,10 +285,7 @@ function Gallery({ data, playLists }) {
               );
             }}
           >
-            <span
-              ref={moreBtnRef}
-              className={cx('option-btn')}
-            >
+            <span ref={moreBtnRef} className={cx('option-btn')}>
               <FontAwesomeIcon icon={faEllipsis} />
             </span>
           </HeadlessTippy>

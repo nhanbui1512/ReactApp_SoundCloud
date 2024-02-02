@@ -96,30 +96,11 @@ const FeedSong = ({ dataSong }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-  //     if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-  //       // Thực hiện hành động khi click ra ngoài
-  //       setMoreMenu(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
-
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   const handleCopy = async () => {
-    console.log(
-      
-    );
     var urlPage = `http://localhost:3000/song/getsong?song_id=${dataSong.id}`;
     navigator.clipboard.writeText(urlPage);
     setCopy(!isCopy);

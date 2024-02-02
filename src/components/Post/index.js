@@ -44,7 +44,6 @@ function Post({ data }) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
           newUsers = newUsers.filter((User) => User.id !== data.id);
-          console.log(newUsers);
           return newUsers;
         });
       }

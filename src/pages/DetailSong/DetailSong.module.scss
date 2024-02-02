@@ -1,15 +1,23 @@
 .wrapper {
   width: 1200px;
-  min-height: 2200px;
 }
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
 .info-user {
   display: flex;
+  justify-content: space-between;
   width: 1200px;
   height: 250px;
+  padding: 20px;
+  margin-bottom: 24px;
   // background-position: center;
   // background-repeat: no-repeat;
   // background-size: 100% 100%;
-  background: linear-gradient(315deg, rgb(133, 131, 112) 0%, rgb(53, 63, 67) 100%);
+  background: linear-gradient(45deg, #020101, #f3e9ec);
 }
 
 .img-email {
@@ -29,15 +37,14 @@
   border-radius: 5px;
 }
 .name-user {
-  margin-top: 25px;
   width: 500px;
+  margin-left: 20px;
 }
 .lb1 {
   font-size: 25px;
   background-color: black;
   color: white;
   height: 40px;
-
   margin-left: 10px;
   display: inline;
 }
@@ -105,9 +112,13 @@
   display: flex;
 }
 .nav-info-left {
-  display: flex;
+  width: 850px;
   height: 50px;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 20px;
+  border-bottom: 1px solid #e0e0e0;
 }
 .nav-info-left-head {
   padding: 0px;
@@ -122,22 +133,15 @@
   margin-top: 20px;
   display: flex;
   font-size: 18px;
-  justify-content: space-between;
-  // padding-left: 30px;
+  padding-left: 30px;
 }
-
-// .follwer-body-info {
-//   padding-left: 30px;
-// }
-
 .follower,
 .following,
 .tracks {
-  //margin-left: 10px;
+  margin-left: 10px;
   padding: 10px;
-  border-right: 0.5px #f2f2f2 solid;
+  border-left: 0.5px #f2f2f2 solid;
   height: 40px;
-  margin-bottom: 40px;
 }
 
 .follwer-item {
@@ -148,7 +152,7 @@
 .brand-items {
   margin-top: 20px;
   font-size: 12px;
-  padding-left: 8px;
+  padding: 30px;
   text-align: left;
   color: #ccc;
 }
@@ -164,11 +168,39 @@
 .router-item {
   margin-top: 15px;
   height: 500;
-  padding-right: 30px;
 }
-.router-item-right {
-  width: 850px;
+
+.group-btn_left span {
+  margin-left: 6px;
 }
+
+.group-btn_right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.group-btn_right span {
+  margin-left: 6px;
+}
+
+.group-btn_right div {
+  font-size: 12px;
+  margin-left: 12px;
+  color: #787878;
+}
+
+.group-btn_left button {
+  margin-right: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
+  border: 1px solid #e1e1e1;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .button-item {
   margin-left: auto;
   margin-right: 10px;
@@ -196,4 +228,135 @@
   margin-top: 2px;
   height: 15px;
   width: auto;
+}
+
+.info-song {
+  display: flex;
+  justify-content: center;
+}
+
+.list-music_playbtn {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  background-color: #f50;
+  color: #fff;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.icon-play {
+  margin: auto;
+}
+
+.list-music_playbtn:hover {
+  background-color: #f30;
+}
+.list-music_playbtn i {
+  font-size: 24px !important;
+  margin-left: 2px;
+  width: 18px;
+}
+
+.box-song {
+  display: flex;
+}
+
+.duration-song {
+  color: #fff;
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+.img-song {
+  flex: 1;
+  width: 35%;
+  background-size: cover;
+}
+
+.side-bar {
+  padding-left: 16px;
+  border-left: 1px solid #eaeaea;
+}
+
+.song-box {
+  display: flex;
+  margin: 20px;
+}
+
+.song-box_playlist {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+}
+
+.song-box_img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+
+.playlist_name {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.playlist_countfollow,
+.playlist_btnfollow {
+  font-size: 12px;
+  color: #787878;
+  margin-bottom: 4px;
+}
+
+.playlist_countfollow span,
+.playlist_btnfollow span {
+  line-height: 1.5;
+  margin-left: 4px;
+}
+
+.playlist_btnfollow {
+  display: flex;
+  max-width: 80px;
+  border: 1px solid #f50;
+  background-color: #f50;
+  padding: 2px 0;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.playlist_btnfollow--auto {
+  margin: auto;
+}
+
+.follow {
+  max-width: 100px;
+  border: 1px solid #f50;
+  background-color: transparent;
+  padding: 2px 0;
+  border-radius: 4px;
+  color: #f50;
+}
+
+.song-box_info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info_nameart {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin: 10px 10px 0 0;
+}
+
+.info_desc {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 10px 10px 0;
 }

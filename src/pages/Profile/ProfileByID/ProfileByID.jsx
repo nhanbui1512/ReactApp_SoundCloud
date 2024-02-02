@@ -1,40 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Profile.module.scss';
-import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
-import Albums from './Albums/album';
-import Playlists from './Playlists/playlists';
-import All from './All/all';
-import PopularTracks from './Popular_tracks/popular';
-import Tracks from './Tracks/tracks';
-import Reposts from './Reposts/reposts';
-import EditProfile from './Edit_profile/EditProfile';
-import ShowImage from './Show_Image/ShowImage';
-import Share from './Share/Share';
-import { getCurrentUserProfile } from 'api/users';
-import Sidebar from 'components/Sidebar_Right/Sidebar';
+import styles from './ProfileByID.module.scss';
+import { NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import Albums from '../Albums/album';
+import Playlists from '../Playlists/playlists';
+import All from '../All/all';
+import PopularTracks from '../Popular_tracks/popular';
+import Tracks from '../Tracks/tracks';
+import Reposts from '../Reposts/reposts';
+import { getUsersById } from 'api/users';
+import ShowImage from '../Show_Image/ShowImage';
+import Share from '../Share/Share';
 
 const cx = classNames.bind(styles);
 
-function Profile() {
-  const [popperEdit, setPopperEdit] = useState(false);
+function ProfileByID() {
   const [popperImage, setPopperImage] = useState(false);
   const [popperShare, setPopperShare] = useState(false);
   const [userData, setUserData] = useState({});
 
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/profile/all');
-    getCurrentUserProfile()
+    getUsersById(id)
       .then((res) => {
-        setUserData(res.data);
+        if (userData.id === id) {
+          setUserData(res.data);
+          navigate(`/${id}`);
+        } else {
+          navigate('/notfound');
+        }
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/login');
-      });
-  }, [navigate]);
+      .catch((err) => {});
+  }, [id, navigate, userData]);
 
   return (
     <div>
@@ -65,37 +64,37 @@ function Profile() {
             <div className={cx('nav-info-left-head')}>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/all'}
+                to={`/${id}/all`}
               >
                 All
               </NavLink>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/popular'}
+                to={`/${id}/popular`}
               >
                 Popular tracks
               </NavLink>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/tracks'}
+                to={`/${id}/tracks`}
               >
                 Tracks
               </NavLink>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/albums'}
+                to={`/${id}/albums`}
               >
                 Albums
               </NavLink>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/playlists'}
+                to={`/${id}/playlists`}
               >
                 Playlists
               </NavLink>
               <NavLink
                 className={(nav) => cx('navbar', { active: nav.isActive })}
-                to={'/profile/reposts'}
+                to={`/${id}/reposts`}
               >
                 Reposts
               </NavLink>
@@ -127,38 +126,22 @@ function Profile() {
                 />
                 <span style={{ marginTop: '2px', fontSize: '16px' }}>Share</span>
               </button>
-              <button
-                onClick={() => {
-                  setPopperEdit(true);
-                }}
-                className={cx('btn-edit')}
-              >
-                <img
-                  src="https://a-v2.sndcdn.com/assets/images/edit-2fe52d66.svg"
-                  alt="Edit Icon"
-                  className={cx('edit-icon')}
-                />
-                <span style={{ marginTop: '2px', fontSize: '16px' }}>Edit</span>
-              </button>
             </div>
             <div className={cx('follwer-item')}>
               <div className={cx('follwer-body')}>
                 <div className={cx('follower')}>
                   <p>Follower</p>
-                  <p style={{ textAlign: 'center' }}>{userData?.followerNumber || 0}</p>
+                  <p style={{ textAlign: 'center' }}>{userData.followerNumber || 0}</p>
                 </div>
                 <div className={cx('following')}>
                   <p>Following</p>
-                  <p style={{ textAlign: 'center' }}>{userData?.followingNumber || 0} </p>
+                  <p style={{ textAlign: 'center' }}>{userData.followingNumber || 0} </p>
                 </div>
                 <div className={cx('tracks')}>
                   <p>Tracks</p>
-                  <p style={{ textAlign: 'center' }}>{userData?.track || 0}</p>
+                  <p style={{ textAlign: 'center' }}>{userData.track || 0}</p>
                 </div>
               </div>
-              {/* <div className={cx('follwer-body-info')}>
-              </div> */}
-              <Sidebar/>
               <div className={cx('brand-items')}>
                 Legal - Privacy - Cookie Policy - Consent Manager Imprint - Artist Resources - Blog
                 - Charts
@@ -172,12 +155,9 @@ function Profile() {
       </div>
 
       {popperShare && <Share userData={userData} setPopperShare={setPopperShare} />}
-      {popperEdit && (
-        <EditProfile setUserData={setUserData} userData={userData} setPopperEdit={setPopperEdit} />
-      )}
       {popperImage && <ShowImage userData={userData} setPopperImage={setPopperImage} />}
     </div>
   );
 }
 
-export default Profile;
+export default ProfileByID;

@@ -1,4 +1,4 @@
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { Route, Routes, NavLink, useNavigate } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 import styles from './Library.module.scss';
@@ -7,12 +7,17 @@ import Overview from './Overview';
 import Likes from './Likes';
 import Playlists from './Playlists';
 import Following from './Following';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { LibraryContext } from 'context/Library';
 
 const cx = classNames.bind(styles);
 const Library = () => {
   const context = useContext(LibraryContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/library/overview');
+  }, [navigate]);
   return (
     <div className={cx('app')}>
       <div style={{ display: 'flex' }}>

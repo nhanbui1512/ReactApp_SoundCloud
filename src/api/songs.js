@@ -44,7 +44,7 @@ export async function getSongsLiked() {
   }
 }
 
-export async function getSongsById(id) {
+export async function getSongById(id) {
   try {
     const response = await axiosClient.get(`/song/getsong?song_id=${id}`);
     return response.data;

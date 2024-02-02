@@ -20,6 +20,8 @@ const cx = classNames.bind(styles);
 const ToastPlaylist = () => {
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
+      <h2 class={cx('modul-left_title')}>The Upload</h2>
+      <p class={cx('modul-left_describe')}>Newly posted tracks. Just for you</p>
       <div className={cx(['col', 'relative'])}>
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>

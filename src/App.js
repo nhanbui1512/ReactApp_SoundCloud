@@ -42,7 +42,7 @@ const App = () => {
           <Route path="/feed" element={<Feed />}></Route>
           <Route path="/search" element={<Search />}></Route>
           <Route path="/profile/*" element={<Profile />}></Route>
-          <Route path="/song" element={<Song />}></Route>
+          <Route path="/song/:id/*" element={<Song />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />

@@ -104,7 +104,7 @@ a {
   border-bottom: 0.5px #f2f2f2 solid;
 }
 
-.active {
+.group-btn_left .active {
   color: #f50;
   border-bottom: 2px solid #f50;
 }
@@ -112,20 +112,21 @@ a {
   display: flex;
 }
 .nav-info-left {
-  width: 850px;
+  width: 100%;
   height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0 20px;
+  padding: 0 20px;
   border-bottom: 1px solid #e0e0e0;
 }
+
 .nav-info-left-head {
   padding: 0px;
   height: 50px;
 }
 .nav-info-right {
-  width: 400px;
+  width: 330px;
   display: flex;
   flex-direction: column;
 }
@@ -195,7 +196,7 @@ a {
   padding: 4px 8px;
   font-size: 16px;
   border: 1px solid #e1e1e1;
-  color: #000;
+  color: #333;
   background-color: rgba(255, 255, 255, 0);
   border-radius: 4px;
   cursor: pointer;
@@ -232,7 +233,12 @@ a {
 
 .info-song {
   display: flex;
-  justify-content: center;
+}
+
+.info-song_desc {
+  display: flex;
+  flex-direction: column;
+  width: 850px;
 }
 
 .list-music_playbtn {
@@ -276,7 +282,7 @@ a {
 }
 
 .side-bar {
-  padding-left: 16px;
+  padding-left: 8px;
   border-left: 1px solid #eaeaea;
 }
 
@@ -349,14 +355,18 @@ a {
 }
 
 .info_nameart {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   line-height: 1.6;
   margin: 10px 10px 0 0;
 }
 
 .info_desc {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
   margin: 10px 10px 10px 0;
+}
+
+.song-box_icon {
+  margin-left: 8px;
 }

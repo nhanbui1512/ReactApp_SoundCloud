@@ -16,6 +16,7 @@
   display: flex;
   font-size: 1rem;
   justify-content: space-between;
+  margin-left: 8px;
 }
 
 .sidebar__modul-refresh .sidebar-icon {
@@ -61,9 +62,9 @@
   }
 }
 
-.sidebar__modul-container {
-  padding-top: 12px;
-}
+// .sidebar__modul-container {
+//   padding-top: 12px;
+// }
 
 .sidebar__modul-list {
   padding: 10px 0;

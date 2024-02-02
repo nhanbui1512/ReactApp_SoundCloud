@@ -121,15 +121,22 @@
   margin-top: 20px;
   display: flex;
   font-size: 18px;
-  padding-left: 30px;
+  justify-content: space-between;
+  // padding-left: 30px;
 }
+
+// .follwer-body-info {
+//   padding-left: 30px;
+// }
+
 .follower,
 .following,
 .tracks {
-  margin-left: 10px;
+  //margin-left: 10px;
   padding: 10px;
-  border-left: 0.5px #f2f2f2 solid;
+  border-right: 0.5px #f2f2f2 solid;
   height: 40px;
+  margin-bottom: 40px;
 }
 
 .follwer-item {
@@ -140,7 +147,7 @@
 .brand-items{
   margin-top: 20px;
   font-size: 12px;
-  padding: 30px;
+  padding-left: 8px;
   text-align: left;
   color: #ccc
 
@@ -157,6 +164,7 @@
 .router-item {
   margin-top: 15px;
   height: 500;
+  padding-right: 30px;
 }
 .router-item-right{
   width: 850px;

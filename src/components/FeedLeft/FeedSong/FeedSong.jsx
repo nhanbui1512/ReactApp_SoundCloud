@@ -31,7 +31,8 @@ const FeedSong = ({ dataSong }) => {
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
 
-  const [isLiked, ] = useState(dataSong.isLiked);
+  console.log(dataSong)
+  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
   //const navigate = useNavigate();
 
   const storage = useContext(StorageContext);

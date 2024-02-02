@@ -12,19 +12,25 @@ import {
   faBars,
   faEdit,
 } from '@fortawesome/free-solid-svg-icons';
-
 import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
+import { EditPopup } from 'components/Playlist';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = ({ dataItem = [] }) => {
-  console.log('in ra dataItem', dataItem);
-  // Lấy thumbNail đầu tiên từ songs
+const ToastPlaylist = ({ dataItem, refresh }) => {
+  const [openEdit, setOpenEdit] = useState(false);
   const firstSongThumbNail = dataItem?.[0]?.songs?.[0]?.thumbNail;
-  //console.log('in ra firstSongThumbNail', firstSongThumbNail);
+
+  const HandleCloseEdit = () => {
+    setOpenEdit(false)
+    refresh()
+  }
+
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
+      <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem}/>
       <p>{dataItem.name}</p>
       <div className={cx(['col', 'relative'])}>
         <div className={cx(['list-music', 'col'])}>
@@ -87,7 +93,9 @@ const ToastPlaylist = ({ dataItem = [] }) => {
               <FontAwesomeIcon icon={faBars} />
               <span>Add to Next up</span>
             </button>
-            <button className={cx('go-playlist-btn')}>
+            <button className={cx('go-playlist-btn')}
+              onClick={() => setOpenEdit(true)}
+            >
               <FontAwesomeIcon icon={faEdit} />
               <span>Edit</span>
             </button>

@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from '../Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUser, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import apiHandleFeed from 'api/apiHandleFeed';
+import { StorageContext } from 'context/Storage';
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
-const SidebarArtist = ({ art }) => {
-  const [isFollow, setIsFollowed] = useState(false);
-  // navigate('/user?user_id={art.id}')
 
-  // const handleFollow = () => {
-  //   if(!isFollow) {
-  //     apiHandleFeed.followUser(art.id).then(res => {
-  //       setIsFollowed(true);
-  //     }).catch(error => {
-  //       console.log(error);
-  //     });
-  //   }
-  //   else {
-  //     apiHandleFeed.unFollowUser(art.id).then(res => {
-  //       setIsFollowed(false);
-  //     }).catch(error => {
-  //       console.log(error);
-  //     });
-  //   }
-  // }
+const SidebarArtist = ({ art }) => {
+  const [isFollow, setIsFollowed] = useState(art.isFollowed);
+  const navigate = useNavigate();
+  const storage = useContext(StorageContext);
+
   const handleFollow = async () => {
     try {
+      if (!storage.currentUser) {
+        return navigate('/login');
+      }
       if (!isFollow) {
         // Nếu chưa theo dõi, gọi followUser
         await apiHandleFeed.followUser(art.id);

@@ -1,28 +1,26 @@
 // import classNames from "classnames/bind";
 
 // import styles from '../Profile.module.scss';
-import { useEffect, useState } from "react";
-import apiHandlePlayList from "api/apiHandlePlayList";
-import ToastTrackPlaylist from "components/ToastTrack/ToastTrackPlaylist";
+import { useEffect, useState } from 'react';
+import apiHandlePlayList from 'api/apiHandlePlayList';
+import ToastTrackPlaylist from 'components/ToastTrack/ToastTrackPlaylist';
 //import { Link } from "react-router-dom";
-
 
 //const cx = classNames.bind(styles);
 
 const Tracks = () => {
   const [trackList, setTrackList] = useState([]);
-  console.log('in ra tracklist', trackList);
   useEffect(() => {
     const fetchTrackList = async () => {
       try {
         const res = await apiHandlePlayList.getTrack();
         setTrackList(res.data.data);
-      } catch(error) {
+      } catch (error) {
         console.error('error get data', error);
       }
-    }
+    };
     fetchTrackList();
-  },[])
+  }, []);
   return (
     // <div className={cx('info-music-list')}>
     //   <div className={cx('router-view')}></div>
@@ -35,9 +33,8 @@ const Tracks = () => {
 
     // </div>
     <>
-      <ToastTrackPlaylist trackList={trackList}/>
+      <ToastTrackPlaylist trackList={trackList} />
     </>
-    
   );
 };
 export default Tracks;

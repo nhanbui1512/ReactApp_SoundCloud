@@ -39,7 +39,12 @@
 .list-music_playbtn {
   position: absolute;
   background-color: #f50;
-  padding: 16px 24px;
+
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   border-radius: 100%;
   top: 28%;

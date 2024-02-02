@@ -33,10 +33,11 @@ const example = {
 };
 
 export const PlaylistPopup = ({ open, onClose, songData = example }) => {
-  const [tab, setTab] = useState(0);
-  const [myPlaylist, setMyPlaylist] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [creatingPlaylist, setCreatingPlaylist] = useState(false);
+  const [tab, setTab] = useState(0)
+  const [myPlaylist, setMyPlaylist] = useState([])
+  const [newPlaylistName, setNewPlaylistName] = useState("")
+  const [filter, setFilter] = useState('')
+  const [creatingPlaylist, setCreatingPlaylist] = useState(false)
 
   // get user id
   const storage = useContext(StorageContext);
@@ -86,17 +87,16 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   };
 
   const CreateNewPlaylist = () => {
-    const name = document.getElementById('new-playlist-name').value;
-    if (name === '') {
-      alert('Enter playlist name.');
+    if (newPlaylistName === "") {
+      alert('Enter playlist name.')
     } else {
-      setCreatingPlaylist(true);
-      createPlaylist(name, [songData.id])
-        .then((result) => {
+      setCreatingPlaylist(true)
+      createPlaylist(newPlaylistName, [songData.id])
+        .then(result => {
           if (result.result) {
             // success
-            document.getElementById('new-playlist-name').value = '';
-            onClose(false);
+            setNewPlaylistName("")
+            onClose(false)
           } else {
             // error
             alert('Create playlist failed. Try again.');
@@ -163,10 +163,15 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
       {/* Create Playlist */}
       <div className={cx('create-playlist')} style={{ display: tab === 1 ? 'flex' : 'none' }}>
         <label>Playlist name</label>
-        <input id="new-playlist-name" required placeholder="Required" />
-        <button disabled={creatingPlaylist} onClick={CreateNewPlaylist}>
-          {creatingPlaylist ? 'Saving...' : 'Save'}
-        </button>
+        <input id='new-playlist-name' 
+          required
+          placeholder='Required' 
+          value={newPlaylistName}
+          onChange={(e) => setNewPlaylistName(e.target.value)}
+        />
+        <button disabled={creatingPlaylist} 
+          onClick={CreateNewPlaylist}
+        >{creatingPlaylist ? 'Saving...' : 'Save'}</button>
       </div>
     </Popup>
   );

@@ -24,20 +24,20 @@ function ProfileByID() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate(`/${id}`);
+  useEffect(() => {   
     getUsersById(id)
       .then((res) => {
-        setUserData(res.data);
-        console.log(res.data);
+        if(userData.id === id){
+          setUserData(res.data);
+          navigate(`/${id}`);
+        } else{
+          navigate('/notfound')
+        }   
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/login');
-      });
-      
-  },[id,navigate]);
-
+      .catch((err) => {       
+      });     
+  },[id,navigate,userData]);
+  
   return (
     <div>
       <div className={cx('wrapper')}>

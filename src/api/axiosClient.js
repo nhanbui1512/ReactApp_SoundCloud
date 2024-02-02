@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
-  baseURL: 'https://1e77-113-166-1-15.ngrok-free.app',
+  baseURL: 'https://0c99-113-166-1-15.ngrok-free.app',
   headers: {
     'ngrok-skip-browser-warning': 'true',
     Accept: 'application/json, text/plain, */*',

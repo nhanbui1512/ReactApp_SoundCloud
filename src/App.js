@@ -44,9 +44,8 @@ const App = () => {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/profile/*" element={<Profile />}></Route>
           <Route path="/:id/*" element={<ProfileByID />}></Route>
-          <Route path="/song" element={<Song />}></Route>
           <Route path="/notfound" element={<PageNotFound />}></Route>
-          {/* <Route path='/library/Likes' element={<Library/>}></Route> */}
+          <Route path="/song/:id/*" element={<Song />}></Route>
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />

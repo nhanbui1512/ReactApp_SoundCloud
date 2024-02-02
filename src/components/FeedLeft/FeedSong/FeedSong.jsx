@@ -97,12 +97,13 @@ const FeedSong = ({ dataSong }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
-  // const sleep = (ms) => {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // };
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
   const handleCopy = async () => {
-    var urlPage = `http://localhost:3000/song/getsong?song_id=${dataSong.id}`;
+    const domain = window.origin;
+    var urlPage = `${domain}/song/${dataSong.id}`;
     navigator.clipboard.writeText(urlPage);
     setCopy(!isCopy);
 
@@ -110,7 +111,7 @@ const FeedSong = ({ dataSong }) => {
       setCopy(isCopy);
     }, 500);
 
-    //await sleep(1000);
+    await sleep(1000);
     return clearTimeout(timeReset);
   };
   return (

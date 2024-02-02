@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './DetailSong.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,27 +13,54 @@ import {
   faUser,
   faUserCheck,
   faUserAlt,
+  faChartBar,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link, useParams } from 'react-router-dom';
+import { getSongById } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
 function Song() {
-  const [follow, setFollow] = useState(false);
-  // const navigate = useNavigate();
+  const [followUser, setFollowUser] = useState(false);
+  const [followSong, setFollowSong] = useState(false);
+  const [likeSong, setLikeSong] = useState(false);
+  const [copyLink, setCopyLink] = useState(false);
+  const [song, setSong] = useState([]);
 
-  // useEffect(() => {
-  //   navigate('/profile/all');
-  //   getCurrentUserProfile()
-  //     .then((res) => {
-  //       set);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       navigate('/login');
-  //     });
+  let { id } = useParams();
+  useEffect(() => {
+    const getSong = async () => {
+      const song = await getSongById(id);
+      setLikeSong(song.isLiked);
+      setFollowSong(song.isFollow);
+      setSong(song.song);
+    };
+    getSong();
+  }, [id]);
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
-  // }, [navigate]);
+  const handleCopyLink = async () => {
+    const domain = window.origin;
+    var urlPage = `${domain}/song/${song.id}`;
+    navigator.clipboard.writeText(urlPage);
+    setCopyLink(!copyLink);
+
+    const timeReset = setTimeout(() => {
+      setCopyLink(copyLink);
+    }, 500);
+
+    await sleep(1000);
+    return clearTimeout(timeReset);
+  };
+  const handleFollowSong = () => {
+    setFollowSong(!followSong);
+  };
+
+  const handleLikeSong = () => {
+    setLikeSong(!likeSong);
+  };
 
   return (
     <div>
@@ -44,37 +71,54 @@ function Song() {
               <FontAwesomeIcon className={cx('icon-play')} icon={faPlay} />
             </span>
             <div className={cx('name-user')}>
-              <div className={cx('lb1')}>
-                Dám Rực Rỡ | gray d X hieuthuhai X wren evans X obito, Prod. by kai đinh & 2pillz
-              </div>
+              <Link to="/" className={cx('lb1')}>
+                {song.name}
+              </Link>
               <br />
-              <div className={cx('lb2')}>Nwad Vi.1 </div>
+              <div className={cx('lb2')}>{song.artistName} </div>
               <br />
-              <div className={cx('lb2')}>In playlist: Pop</div>
+              <div className={cx('lb2')}>In genre: {song.nameGenre}</div>
             </div>
           </div>
           <div className={cx('box-song')}>
-            <span className={cx('duration-song')}>5 days ago</span>
-            <img
-              className={cx('img-song')}
-              src="https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
-              alt=""
-            />
+            <span className={cx('duration-song')}>{song.duration} days ago</span>
+            <img className={cx('img-song')} src={song.thumbNail} alt="" />
           </div>
         </div>
         <div className={cx('info-music')}>
-          <div className="info-song">
+          <div className={cx('info-song_desc')}>
             <div className={cx('nav-info-left')}>
               <div className={cx('group-btn_left')}>
-                <button>
-                  <FontAwesomeIcon icon={faHeart} />
-                  <span>Like</span>
+                <button onClick={() => handleLikeSong()} className={cx('', { active: likeSong })}>
+                  {likeSong ? (
+                    <>
+                      <FontAwesomeIcon icon={faHeart} />
+                      <span>Liked</span>
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faHeart} />
+                      <span>Like</span>
+                    </>
+                  )}
                 </button>
-                <button>
-                  <FontAwesomeIcon icon={faPeopleArrows} />
-                  <span>Follow</span>
+                <button
+                  onClick={() => handleFollowSong()}
+                  className={cx('', { active: followSong })}
+                >
+                  {followSong ? (
+                    <>
+                      <FontAwesomeIcon icon={faPeopleArrows} />
+                      <span>Following</span>
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faPeopleArrows} />
+                      <span>Follow</span>
+                    </>
+                  )}
                 </button>
-                <button>
+                <button onClick={() => handleCopyLink()} className={cx('', { active: copyLink })}>
                   <FontAwesomeIcon icon={faLink} />
                   <span>Copy Link</span>
                 </button>
@@ -90,42 +134,44 @@ function Song() {
               <div className={cx('group-btn_right')}>
                 <div>
                   <FontAwesomeIcon icon={faPlay} />
-                  <span>54.5k</span>
+                  <span>{song.numberOfListen}</span>
                 </div>
                 <div>
                   <FontAwesomeIcon icon={faHeart} />
-                  <span>760</span>
+                  <span>{song.likeCount}</span>
                 </div>
                 <div>
                   <FontAwesomeIcon icon={faUserCheck} />
-                  <span>120</span>
+                  <span>{song.likeCount}</span>
                 </div>
               </div>
             </div>
             <div className={cx('song-box')}>
               <div className={cx('song-box_playlist')}>
-                <a href="/">
+                <Link to="/">
                   <img
                     className={cx('song-box_img')}
                     src="https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
                     alt=""
                   />
-                </a>
-                <a href="/" className={cx('playlist_name')}>
+                </Link>
+                <Link to="/" className={cx('playlist_name')}>
                   Trending Music
-                </a>
-                <a href="/" className={cx('playlist_countfollow')}>
+                </Link>
+                <Link to="/" className={cx('playlist_countfollow')}>
                   <FontAwesomeIcon icon={faUser} />
                   <span>534</span>
-                </a>
+                  <FontAwesomeIcon className={cx('song-box_icon')} icon={faChartBar} />
+                  <span>4</span>
+                </Link>
                 <div
                   onClick={() => {
-                    setFollow(!follow);
+                    setFollowUser(!followUser);
                   }}
-                  className={cx('playlist_btnfollow', { follow: follow })}
+                  className={cx('playlist_btnfollow', { follow: followUser })}
                 >
                   <div className={cx('playlist_btnfollow--auto')}>
-                    {follow ? (
+                    {followUser ? (
                       <>
                         <FontAwesomeIcon icon={faUserCheck} />
                         <span>Following</span>
@@ -140,14 +186,10 @@ function Song() {
                 </div>
               </div>
               <div className={cx('song-box_info')}>
-                <a href="/" className={cx('info_nameart')}>
-                  Hoàng nhật huy
-                </a>
-                <span className={cx('info_desc')}>
-                  Âm nhạc là một trong những chủ đề đầy thu hút bởi những giai điệu phong phú, ngôn
-                  từ đa dạng xuất phát từ nhiều nguồn sáng tác khác nhau. Mượn sự hứng thú đến từ âm
-                  nhạc để bắt đầu học tiếng Anh là một ý tưởng rất hay để áp dụng.
-                </span>
+                <Link to="/" className={cx('info_nameart')}>
+                  {song.artistName}
+                </Link>
+                <span className={cx('info_desc')}>{song.description}</span>
               </div>
             </div>
           </div>

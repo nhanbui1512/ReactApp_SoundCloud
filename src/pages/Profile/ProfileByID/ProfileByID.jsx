@@ -29,12 +29,10 @@ function ProfileByID() {
           setUserData(res.data);
           navigate(`/${id}`);
         } else {
-          navigate('/');
+          navigate('/notfound');
         }
       })
-      .catch((err) => {
-        alert('User ID not found');
-      });
+      .catch((err) => {});
   }, [id, navigate, userData]);
 
   return (

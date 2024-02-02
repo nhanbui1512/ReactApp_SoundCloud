@@ -23,6 +23,7 @@ import Profile from 'pages/Profile/profile';
 import GlobalLibrary from 'context/Library';
 import ProfileByID from 'pages/Profile/ProfileByID/ProfileByID';
 import Song from 'pages/DetailSong';
+import PageNotFound from 'pages/Profile/ProfileByID/PageNotFound';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -45,6 +46,8 @@ const App = () => {
           <Route path="/profile/*" element={<Profile />}></Route>
           <Route path="/:id/*" element={<ProfileByID />}></Route>
           <Route path="/song" element={<Song />}></Route>
+          <Route path="/notfound" element={<PageNotFound />}></Route>
+          {/* <Route path='/library/Likes' element={<Library/>}></Route> */}
         </Route>
         <Route path="/login" element={<HeaderOnly />}>
           <Route index element={<Login></Login>} />

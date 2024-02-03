@@ -14,6 +14,7 @@ function PostSearch({ data }) {
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // eslint-disable-next-line
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
       if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
         // Thực hiện hành động khi click ra ngoài

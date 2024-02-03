@@ -20,6 +20,8 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist';
+import apiHandlePlayList from 'api/apiHandlePlayList';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const TrackSong = ({ dataSong }) => {
@@ -30,11 +32,30 @@ const TrackSong = ({ dataSong }) => {
   const [isRepost, setRePost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
+  const [deleteSong, setDeleteSong] = useState(false);
 
   const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
   //const navigate = useNavigate();
-
   const storage = useContext(StorageContext);
+  //const songId = useParams();
+  console.log(dataSong.id);
+  const handleDeteSong = async () => {
+    try {
+      if(!deleteSong) {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(true);
+        toast.success('bạn vừa xóa bài hát:', dataSong.name)
+      }
+      else {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(false);
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
@@ -210,6 +231,13 @@ const TrackSong = ({ dataSong }) => {
                       onClick={() => setOpenAddToPlaylist(true)}
                     >
                       Add to Playlist
+                    </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      onClick={handleDeteSong}
+                    >
+                      Delete
                     </MenuItem>
                   </Wrapper>
                 );

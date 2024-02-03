@@ -5,7 +5,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import apiHandlePlayList from 'api/apiHandlePlayList';
 import { useParams } from 'react-router-dom';
-import TrackPlaylist from 'components/TrackProfile';
+import PlaylistList from 'components/PlaylistProfile';
 
 //const cx = classNames.bind(styles);
 const Playlists = () => {
@@ -29,7 +29,7 @@ const Playlists = () => {
   return (
     <>
       {playListSong.map((playListItem, index) => (
-        <TrackPlaylist dataItem={playListItem} key={index} refresh={fetchPlayList} />
+        <PlaylistList dataItem={playListItem} key={index} refresh={fetchPlayList} />
       ))}
     </>
   );

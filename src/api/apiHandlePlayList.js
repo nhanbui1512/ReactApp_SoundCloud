@@ -11,5 +11,9 @@ const apiHandlePlayList = {
     if (userId) url = `/user?user_id=${userId}`;
     return axiosClient.get(url);
   },
+  deteleTrack(songId) {
+    const url = `/song?song_id=${songId}`;
+    return axiosClient.delete(url);
+  }
 };
 export default apiHandlePlayList;

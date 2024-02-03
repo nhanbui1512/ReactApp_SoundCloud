@@ -24,7 +24,6 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
-  console.log('in ra day',dataSong);
   //const [moreMenu, setMoreMenu] = useState(false);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();

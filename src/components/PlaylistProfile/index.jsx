@@ -21,7 +21,7 @@ import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = ({ dataItem, refresh }) => {
+const PlaylistList = ({ dataItem, refresh }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const storage = useContext(StorageContext);
@@ -143,4 +143,4 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
   );
 };
 
-export default ToastPlaylist;
+export default PlaylistList;

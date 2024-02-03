@@ -1,6 +1,6 @@
 import axios from 'axios';
 const request = axios.create({
-  baseURL: 'https://fa23-113-166-1-15.ngrok-free.app',
+  baseURL: 'https://1a51-113-166-1-15.ngrok-free.app',
 });
 
 export const get = async (path, options = {}) => {

@@ -2,11 +2,11 @@ import styles from '../FeedLeft/FeedLeft.module.scss';
 import classNames from 'classnames/bind';
 
 //import dataFeed from './dataFeed';
-import TrackSong from './ToastTrackSong/TrackSong';
+import TrackSong from './TrackSong/TrackSong';
 //import apiHandleFeed from 'api/apiHandleFeed';
 
 const cx = classNames.bind(styles);
-const ToastTrackPlaylist = ({ trackList }) => {
+const TrackPlaylist = ({ trackList }) => {
   return (
     <>
       <ul className={cx('feed__modul-list')}>
@@ -17,4 +17,4 @@ const ToastTrackPlaylist = ({ trackList }) => {
     </>
   );
 };
-export default ToastTrackPlaylist;
+export default TrackPlaylist;

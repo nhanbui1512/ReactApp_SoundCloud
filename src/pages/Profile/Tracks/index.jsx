@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import apiHandlePlayList from 'api/apiHandlePlayList';
-import ToastTrackPlaylist from 'components/ToastTrack';
 import { useParams } from 'react-router-dom';
+import TrackPlaylist from 'components/TrackProfile';
 
 //const cx = classNames.bind(styles);
 
 const Tracks = () => {
   const [trackList, setTrackList] = useState([]);
+  console.log('tracklist', trackList);
   const userId = useParams().id;
   useEffect(() => {
     const fetchTrackList = async () => {
@@ -21,7 +22,7 @@ const Tracks = () => {
   }, [userId]);
   return (
     <>
-      <ToastTrackPlaylist trackList={trackList} />
+      <TrackPlaylist trackList={trackList} />
     </>
   );
 };

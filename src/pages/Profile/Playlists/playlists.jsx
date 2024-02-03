@@ -3,9 +3,9 @@
 // import styles from '../Profile.module.scss';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import ToastPlaylist from 'components/ToastPlaylist';
 import apiHandlePlayList from 'api/apiHandlePlayList';
 import { useParams } from 'react-router-dom';
+import TrackPlaylist from 'components/TrackProfile';
 
 //const cx = classNames.bind(styles);
 const Playlists = () => {
@@ -29,7 +29,7 @@ const Playlists = () => {
   return (
     <>
       {playListSong.map((playListItem, index) => (
-        <ToastPlaylist dataItem={playListItem} key={index} refresh={fetchPlayList} />
+        <TrackPlaylist dataItem={playListItem} key={index} refresh={fetchPlayList} />
       ))}
     </>
   );

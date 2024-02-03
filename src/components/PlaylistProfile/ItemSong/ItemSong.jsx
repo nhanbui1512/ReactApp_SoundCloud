@@ -1,18 +1,32 @@
 import classNames from 'classnames/bind';
 import styles from './ItemSong.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEllipsis,
-  faHeart,
-  faLink,
-  faPlay,
-  faRepeat,
-  faShare,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faLink, faPlay } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 const ItemSong = ({ itemMusic }) => {
+  const [isCopy, setCopy] = useState(false);
+  const [isLiked, setIsLiked] = useState(itemMusic.isLiked || false);
+
+  const handleCopy = async () => {
+    const domain = window.origin;
+    var urlPage = `${domain}/song/${itemMusic.id}`;
+    navigator.clipboard.writeText(urlPage);
+    setCopy(!isCopy);
+
+    const timeReset = setTimeout(() => {
+      setCopy(isCopy);
+    }, 500);
+
+    await sleep(1000);
+    return clearTimeout(timeReset);
+  };
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   return (
     <li className={cx('list-music-item')}>
       <div className={cx('list-music-item_detail-song')}>
@@ -30,21 +44,28 @@ const ItemSong = ({ itemMusic }) => {
         </div>
 
         <div className={cx('group-btn_right')}>
-          <button>
-            <FontAwesomeIcon icon={faHeart} />
+          <button
+            className={cx('feed__modul-option-btn')}
+            onClick={() => {
+              setIsLiked(!isLiked);
+            }}
+          >
+            <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+            <span className={cx('btn-option-icon')}>{itemMusic.likeCount}</span>
           </button>
-          <button>
-            <FontAwesomeIcon icon={faRepeat} />
+          <button
+            className={cx('feed__modul-option-btn')}
+            onClick={() => {
+              handleCopy();
+            }}
+            
+          >
+            <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faLink} />
           </button>
-          <button>
-            <FontAwesomeIcon icon={faShare} />
-          </button>
-          <button>
-            <FontAwesomeIcon icon={faLink} />
-          </button>
-          <button>
+          {/* <button>
             <FontAwesomeIcon icon={faEllipsis} />
-          </button>
+          </button> */}
+          
         </div>
       </div>
     </li>

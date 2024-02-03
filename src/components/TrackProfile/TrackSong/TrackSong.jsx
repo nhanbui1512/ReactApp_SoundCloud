@@ -29,12 +29,12 @@ const TrackSong = ({ dataSong }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
-  const [isRepost, setRePost] = useState(false);
+  const [isRepost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
   const [deleteSong, setDeleteSong] = useState(false);
 
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
+  const [isLiked] = useState(dataSong.isLiked || false);
   //const navigate = useNavigate();
   const storage = useContext(StorageContext);
   //const songId = useParams();
@@ -44,7 +44,7 @@ const TrackSong = ({ dataSong }) => {
       if(!deleteSong) {
         await apiHandlePlayList.deteleTrack(dataSong.id);
         setDeleteSong(true);
-        toast.success('bạn vừa xóa bài hát:', dataSong.name)
+        toast.success('bạn vừa xóa bài hát')
       }
       else {
         await apiHandlePlayList.deteleTrack(dataSong.id);
@@ -159,9 +159,9 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setIsLiked(!isLiked);
-                  }}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
@@ -172,13 +172,13 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setRePost(!isRepost);
-                  }}
+                  // onClick={() => {
+                  //   setRePost(!isRepost);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
 
-                  <span className={cx('btn-option-icon')}>{dataSong.repost}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.numberOfLoop}</span>
                 </button>
               </>
             </Tippy>

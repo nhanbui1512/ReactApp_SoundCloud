@@ -19,22 +19,20 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-import axiosClient from 'api/axiosClient';
-import { useNavigate } from 'react-router';
-//import ToastMessage from 'components/ToastMessage/ToastMessage';
+import { PlaylistPopup } from 'components/Playlist';
 
 const cx = classNames.bind(styles);
-const FeedSong = ({ data }) => {
-  const [moreMenu, setMoreMenu] = useState(false);
+const FeedSong = ({ dataSong }) => {
+  //const [moreMenu, setMoreMenu] = useState(false);
+  const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
-  //const [isLiked, setIsLiked] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
-  const [isRepost, setRePost] = useState(false);
+  const [isRepost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
 
-  const [isLiked, setIsLiked] = useState(data.isLiked);
-  const navigate = useNavigate();
+  const [isLiked] = useState(dataSong.isLiked || false);
+  //const navigate = useNavigate();
 
   const storage = useContext(StorageContext);
 
@@ -44,8 +42,9 @@ const FeedSong = ({ data }) => {
     const audioTag = storage.audioRef.current;
 
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
-    if (storage.currentMusic.id !== data.id) {
-      storage.setCurrentMusic(data);
+    if (storage.currentMusic.id !== dataSong.id) {
+      //storage.setCurrentPlayList([dataSong]);
+      storage.setCurrentMusic(dataSong);
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -69,22 +68,22 @@ const FeedSong = ({ data }) => {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    if (storage.currentMusic.id !== data.id) {
+    if (storage.currentMusic.id !== dataSong.id) {
       setIsPlay(false);
     }
-  }, [storage.currentMusic, data.id]);
+  }, [storage.currentMusic, dataSong.id]);
 
   useEffect(() => {
     const audioTag = storage.audioRef.current;
 
     const handlePlay = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (dataSong.id === storage.currentMusic.id) {
         setIsPlay(true);
       }
     };
 
     const handlePause = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (dataSong.id === storage.currentMusic.id) {
         setIsPlay(false);
       }
     };
@@ -96,23 +95,7 @@ const FeedSong = ({ data }) => {
       audioTag.removeEventListener('play', handlePlay);
       audioTag.removeEventListener('pause', handlePlay);
     };
-  }, [storage.audioRef, storage.currentMusic.id, data.id]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-      if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-        // Thực hiện hành động khi click ra ngoài
-        setMoreMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -120,7 +103,7 @@ const FeedSong = ({ data }) => {
 
   const handleCopy = async () => {
     const domain = window.origin;
-    var urlPage = `${domain}/song/${data.id}`;
+    var urlPage = `${domain}/song/${dataSong.id}`;
     navigator.clipboard.writeText(urlPage);
     setCopy(!isCopy);
 
@@ -133,24 +116,22 @@ const FeedSong = ({ data }) => {
   };
   return (
     <>
-      {/* <div className={cx('feed__modul-item-authorname-main')}>
-        <img src={data.avatar} alt="" className={cx('feed__modul-authorname-avatar')} />
-        <div className={cx('feed__modul-authorname-name')}>{data.userName}</div>
-      </div> */}
+      {/* Add to Playlist popup */}
+      <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={dataSong} />
 
       <li className={cx('feed__modul-list-item')}>
-        <img src={data.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+        <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
-            <div className={cx('feed__modul-item-play')} onClick={handlePlay}>
+            <div onClick={handlePlay} className={cx('feed__modul-item-play')}>
               <FontAwesomeIcon
                 className={cx('feed__modul-play-icon')}
                 icon={isPlay ? faPause : faPlay}
               />
             </div>
             <div className={cx('feed__modul-item-song')}>
-              <div className={cx('feed__modul-item-authorname')}>{data.artistName}</div>
-              <div className={cx('feed__modul-item-songname')}>{data.name}</div>
+              <div className={cx('feed__modul-item-authorname')}>{dataSong.artistName}</div>
+              <div className={cx('feed__modul-item-songname')}>{dataSong.name}</div>
             </div>
           </div>
           <div className={cx('feed__modul-item-range')}></div>
@@ -159,18 +140,12 @@ const FeedSong = ({ data }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    axiosClient
-                      .post('/song/like?song_id=14')
-                      .then((res) => {})
-                      .catch((err) => {
-                        if (err.response.data.error.authorize) navigate('/login');
-                      });
-                    setIsLiked(!isLiked);
-                  }}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
-                  <span className={cx('btn-option-icon')}>{data.like}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
                 </button>
               </>
             </Tippy>
@@ -178,13 +153,13 @@ const FeedSong = ({ data }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setRePost(!isRepost);
-                  }}
+                  // onClick={() => {
+                  //   setRePost(!isRepost);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
 
-                  <span className={cx('btn-option-icon')}>{data.repost}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.repost}</span>
                 </button>
               </>
             </Tippy>
@@ -215,11 +190,12 @@ const FeedSong = ({ data }) => {
               </>
             </Tippy>
             <HeadlessTippy
-              visible={moreMenu}
+              zIndex={80}
+              //visible={moreMenu}
               interactive
               placement="bottom-start"
               offset={[0, 0]}
-              delay={300}
+              delay={[0, 300]}
               render={(atr) => {
                 return (
                   <Wrapper className={cx('more-menu')}>
@@ -227,13 +203,14 @@ const FeedSong = ({ data }) => {
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                       separate
+                      onClick={() => console.log('add to next up')}
                     >
                       Add to Next up
                     </MenuItem>
                     <MenuItem
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
-                      separate
+                      onClick={() => setOpenAddToPlaylist(true)}
                     >
                       Add to Playlist
                     </MenuItem>
@@ -241,13 +218,7 @@ const FeedSong = ({ data }) => {
                 );
               }}
             >
-              <button
-                ref={moreBtnRef}
-                onClick={(e) => {
-                  setMoreMenu(!moreMenu);
-                }}
-                className={cx('option-btn-more')}
-              >
+              <button ref={moreBtnRef} className={cx('option-btn-more')}>
                 <FontAwesomeIcon icon={faEllipsis} />
                 <span className={cx('btn-option-icon')}>More</span>
               </button>

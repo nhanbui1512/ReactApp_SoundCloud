@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList, AddToPlaylist } from 'components/Icons';
 import { StorageContext } from 'context/Storage';
+import { changePosition } from 'Utils/arrays';
 
 const {
   faBars,
@@ -76,6 +77,17 @@ function Item({ data }) {
     });
   };
 
+  const handleAddToNext = () => {
+    var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+    var indexOfSong = storage.currentPlayList.indexOf(data);
+
+    storage.setCurrentPlayList((prev) => {
+      var newState = [...prev];
+      changePosition(newState, indexOfSong, indexPlaying + 1);
+      return newState;
+    });
+  };
+
   useEffect(() => {
     if (storage.currentMusic.id !== data.id) {
       setIsPlay(false);
@@ -121,7 +133,7 @@ function Item({ data }) {
             isLiked: data.isLiked,
           },
           { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
-          { icon: <AddToList />, title: 'Add to Next up' },
+          { icon: <AddToList />, title: 'Add to Next up', onClick: handleAddToNext },
           {
             icon: <FontAwesomeIcon height={12} width={12} icon={faXmark} />,
             title: 'Remove from Playlist',
@@ -145,7 +157,7 @@ function Item({ data }) {
             isLiked: data.isLiked,
           },
           { icon: <FontAwesomeIcon height={12} width={12} icon={faRepeat} />, title: 'Repost' },
-          { icon: <AddToList />, title: 'Add to Next up' },
+          { icon: <AddToList />, title: 'Add to Next up', onClick: handleAddToNext },
 
           { icon: <AddToPlaylist />, title: 'Add to Playlist' },
           {

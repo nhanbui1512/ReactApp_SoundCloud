@@ -103,7 +103,7 @@ const Header = () => {
   return (
     <div className={cx('header')}>
       <div className={cx('header-container')}>
-        <NavLink to="/" className={(nav) => cx('logo', { active: nav.isActive })}>
+        <NavLink to="/" className={(nav) => cx('logo', { active: true })}>
           <Logo />
         </NavLink>
 
@@ -113,10 +113,7 @@ const Header = () => {
         <NavLink to={'/feed'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Feed
         </NavLink>
-        <NavLink
-          to={'/library/overview'}
-          className={(nav) => cx('header-items', { active: nav.isActive })}
-        >
+        <NavLink to={'/library'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Library
         </NavLink>
 
@@ -162,7 +159,12 @@ const Header = () => {
                 <Wrapper className={cx('dropdown-menu')}>
                   {menuUserItem.map((item, index) => {
                     return (
-                      <MenuItem to={item.to} key={index} icon={item.icon}>
+                      <MenuItem
+                        className={cx('menu-item')}
+                        to={item.to}
+                        key={index}
+                        icon={item.icon}
+                      >
                         {item.title}
                       </MenuItem>
                     );

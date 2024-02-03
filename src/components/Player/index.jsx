@@ -17,6 +17,7 @@ import Information from './Information';
 import 'tippy.js/animations/scale.css';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { StorageContext } from 'context/Storage';
+import { increaseListenCount } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -57,6 +58,31 @@ function Player() {
     setLoop(loop + 1);
   };
 
+  const handleEnd = () => {
+    const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+    if (indexPlaying !== -1) {
+      var nextSong = storage.currentPlayList[indexPlaying + 1]; // bài tiếp theo
+
+      if (loopModes[loop].type === 'playList') {
+        if (!nextSong) {
+          audioRef.current.play();
+          return;
+        }
+
+        const playMusic = (event) => {
+          event.target.play();
+          setIsPlaying(true);
+          audioRef.current.removeEventListener('loadeddata', playMusic);
+        };
+        storage.setCurrentMusic(nextSong);
+        audioRef.current.addEventListener('loadeddata', playMusic);
+        return; // thoát khỏi hàm
+      }
+    } else {
+      setIsPlaying(false);
+    }
+  };
+
   // Cập nhật thời gian hiện tại của bài hát
   const handlePlayingAudio = (e) => {
     const currentPercent = (e.target.currentTime / e.target.duration) * 100;
@@ -72,7 +98,7 @@ function Player() {
   };
 
   useEffect(() => {
-    audioRef.current.loop = loopModes[loop].isLoop;
+    audioRef.current.loop = loopModes[loop].type === 'song' ? true : false;
   }, [loop, audioRef]);
 
   return (
@@ -177,14 +203,19 @@ function Player() {
           {/* Thẻ Audio */}
           <audio
             onTimeUpdate={handlePlayingAudio}
-            onEnded={() => {
-              setIsPlaying(false);
-            }}
+            onEnded={handleEnd}
             onPlay={() => {
               setIsPlaying(true);
             }}
             onPause={() => {
               setIsPlaying(false);
+            }}
+            onLoadedData={() => {
+              increaseListenCount(storage.currentMusic.id)
+                .then(() => {})
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
             volume={0.2}
             ref={audioRef}

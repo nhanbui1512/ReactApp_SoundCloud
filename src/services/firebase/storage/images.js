@@ -10,7 +10,6 @@ export async function getImageUrlByPath(path) {
     console.log(error);
     return null;
   });
-  console.log(url);
   return url;
 }
 

@@ -26,21 +26,6 @@ function Song() {
   const [likeSong, setLikeSong] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [song, setSong] = useState([]);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   navigate('/profile/all');
-  //   getCurrentUserProfile()
-  //     .then((res) => {
-  //       set);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       navigate('/login');
-  //     });
-
-  // }, [navigate]);
 
   let { id } = useParams();
   useEffect(() => {

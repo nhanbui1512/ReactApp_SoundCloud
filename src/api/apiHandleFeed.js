@@ -21,6 +21,10 @@ const apiHandleFeed = {
     const url = `/follow?user_id=${id}`;
     return axiosClient.delete(url);
   },
+  getFollowing() {
+    const url = `/follow/following`;
+    return axiosClient.get(url);
+  },
   getSongLiked() {
     const url = `/song/liked`;
     return axiosClient.get(url);

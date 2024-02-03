@@ -27,7 +27,6 @@ function DetailFile({ selectedFile }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       setImage(e.target.files[0]);
     }
@@ -36,26 +35,25 @@ function DetailFile({ selectedFile }) {
   const handleSave = () => {
     if (textDes === '') {
       setIsEnter(true);
-      setEnter('Please enter description.')
+      setEnter('Please enter description.');
     }
     if (gengreId === 20) {
       setIsEnter(true);
-      setEnter('Please choose genre.')
+      setEnter('Please choose genre.');
     }
     if (textArt === '') {
       setIsEnter(true);
-      setEnter('Please enter artist.')
+      setEnter('Please enter artist.');
     }
     if (nameAudio === '') {
       setIsEnter(true);
-      setEnter('Please enter name audio.')
+      setEnter('Please enter name audio.');
     }
     if (image === '') {
       setIsEnter(true);
-      setEnter('Please upload image.')
+      setEnter('Please upload image.');
     }
-    if (textDes !== '' && gengreId !== 20 && textArt !== '' && nameAudio !== '' && image !== '' )
-    {
+    if (textDes !== '' && gengreId !== 20 && textArt !== '' && nameAudio !== '' && image !== '') {
       try {
         createSong({
           songName: nameAudio,
@@ -65,19 +63,17 @@ function DetailFile({ selectedFile }) {
           imageFile: image,
           genreId: gengreId,
         })
-          .then((res) => {
-            console.log(res);
-          })
+          .then((res) => {})
           .catch((err) => {
             console.log(err);
           });
         setShowLoader(true);
         setTimeout(() => {
           navigate('/profile');
-        }, 1800)
+        }, 1800);
       } catch (error) {
         console.error('Error creating song:', error);
-        toast.error('Upload fail')
+        toast.error('Upload fail');
       }
       setIsCancel(false);
     }
@@ -106,7 +102,7 @@ function DetailFile({ selectedFile }) {
                   <img className={cx('img')} alt="" accept="image/*" />
                 )}
                 <div className={cx('img_choose')}>
-                  <input ref={inputref} type="file" onChange={handleFileChange} />
+                  <input ref={inputref} type="file" onChange={handleFileChange} accept="image/*" />
                   <button
                     onClick={(e) => {
                       inputref.current.click();
@@ -185,9 +181,7 @@ function DetailFile({ selectedFile }) {
                     onChange={(e) => setTextDes(e.target.value)}
                   />
                 </div>
-                <div className={cx('active')}>
-                  {isEnter && <p>*{enter}</p>}
-                </div>
+                <div className={cx('active')}>{isEnter && <p>*{enter}</p>}</div>
               </div>
             </div>
 

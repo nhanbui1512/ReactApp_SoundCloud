@@ -4,25 +4,19 @@ import React from 'react';
 import FeedSong from '../FeedSong/FeedSong';
 
 const cx = classNames.bind(styles);
-const FeedLeftItem = ({ data }) => {
- 
+const FeedLeftItem = ({ data = [] }) => {
   return (
     <>
-      <div className={cx('feed__modul-item-authorname-main')}>
-        <img src={data.avatar} alt='' className={cx('feed__modul-authorname-avatar')}/>
-        <div className={cx('feed__modul-authorname-name')}>
-          {data.userName}
+      {data.songs.length > 0 && (
+        <div className={cx('feed__modul-item-authorname-main')}>
+          <img src={data.following?.avatar} alt="" className={cx('feed__modul-authorname-avatar')} />
+          <div className={cx('feed__modul-authorname-name')}>{data.following?.userName}</div>
         </div>
-      </div>
-      {data.songs && data.songs.length > 0 ? (
-        data.songs?.map((song) =>(
-        <>
-          <FeedSong data={song} /> 
-        </>
-        ))
-      ):(
-        <p>Chưa có bài hát nào</p>
       )}
+
+      {data.songs.length > 0 && data.songs.map((song, index) => (
+        <FeedSong dataSong={song} key={index} />
+      ))}
     </>
   );
 };

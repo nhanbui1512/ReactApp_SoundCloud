@@ -9,7 +9,7 @@ import {
   faPause,
   faPlay,
   faRepeat,
-  faUser,
+  //faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -18,8 +18,8 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState, useContext } from 'react';
-import CustomToast from 'components/CustomToast/CustomToast';
-import { toast } from 'react-toastify';
+// import CustomToast from 'components/CustomToast/CustomToast';
+// import { toast } from 'react-toastify';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
@@ -28,7 +28,7 @@ const SidebarHeart = ({ songsLiked }) => {
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(songsLiked.isLiked);
   const [isPlay, setIsPlay] = useState(false);
-  const [favoriteSongs, setFavoriteSongs] = useState([]);
+  //const [favoriteSongs, setFavoriteSongs] = useState([]);
   
   const storage = useContext(StorageContext);
 
@@ -92,15 +92,15 @@ const SidebarHeart = ({ songsLiked }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, songsLiked.id]);
 
-  const addToFavorites = (songsLiked) => {
-    setFavoriteSongs([...favoriteSongs, songsLiked]);
-    showToast(songsLiked);
-  };
-  const showToast = (songsLiked) => {
-    toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
-      position: 'top-right',
-    });
-  };
+  // const addToFavorites = (songsLiked) => {
+  //   setFavoriteSongs([...favoriteSongs, songsLiked]);
+  //   showToast(songsLiked);
+  // };
+  // const showToast = (songsLiked) => {
+  //   toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
+  //     position: 'top-right',
+  //   });
+  // };
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -128,16 +128,16 @@ const SidebarHeart = ({ songsLiked }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>{songsLiked.follower}</span>
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
+                <span className={cx('sidebar-data')}>{songsLiked.numberOfListen}</span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-                <span className={cx('sidebar-data')}>{songsLiked.song}</span>
+                <span className={cx('sidebar-data')}>{songsLiked.likeCount}</span>
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
-                <span className={cx('sidebar-data')}>{songsLiked.repeat}</span>
+                <span className={cx('sidebar-data')}>{songsLiked.numberOfLoop}</span>
               </span>
             </div>
           </div>
@@ -159,7 +159,7 @@ const SidebarHeart = ({ songsLiked }) => {
                   className={cx('sidebar__modul-option-btn')}
                   onClick={() => {
                     setIsLiked(!isLiked);
-                    addToFavorites(favoriteSongs);
+                    //addToFavorites(favoriteSongs);
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

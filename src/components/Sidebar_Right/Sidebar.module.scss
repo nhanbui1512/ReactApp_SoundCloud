@@ -16,11 +16,20 @@
   display: flex;
   font-size: 1rem;
   justify-content: space-between;
+  margin-left: 8px;
+}
+
+.sidebar__modul-refresh .sidebar-icon {
+  font-size: 1rem;
 }
 
 .sidebar__modul .sidebar__modul-refresh span:nth-child(1) {
   font-size: 1.3rem;
   margin-right: 8px;
+}
+
+.sidebar__modul-list {
+  margin-bottom: 20px;
 }
 
 /*sidebarHeart*/
@@ -57,9 +66,9 @@
   }
 }
 
-.sidebar__modul-container {
-  padding-top: 12px;
-}
+// .sidebar__modul-container {
+//   padding-top: 12px;
+// }
 
 .sidebar__modul-list {
   padding: 10px 0;
@@ -91,6 +100,17 @@
 .sidebar__modul-item-name {
   text-align: left;
   text-transform: uppercase;
+  line-height: 1.2rem;
+  max-height: 4rem;
+  font-weight: 400;
+  color: #999;
+  margin: 0;
+  overflow: hidden;
+  flex: 1;
+  padding-right: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .sidebar__modul-item-body {
@@ -104,7 +124,7 @@
   padding-right: 8px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .sidebar__modul-item-bottom {

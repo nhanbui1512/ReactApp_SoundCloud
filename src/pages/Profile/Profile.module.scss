@@ -1,5 +1,6 @@
 .wrapper {
   width: 1200px;
+  min-height: 2200px;
 }
 .info-user {
   display: flex;
@@ -8,7 +9,7 @@
   // background-position: center;
   // background-repeat: no-repeat;
   // background-size: 100% 100%;
-  background: linear-gradient(45deg, #ff7147, #f3e9ec);
+  background: linear-gradient(315deg, rgb(133, 131, 112) 0%, rgb(53, 63, 67) 100%);
 }
 
 .img-email {
@@ -121,15 +122,22 @@
   margin-top: 20px;
   display: flex;
   font-size: 18px;
-  padding-left: 30px;
+  justify-content: space-between;
+  // padding-left: 30px;
 }
+
+// .follwer-body-info {
+//   padding-left: 30px;
+// }
+
 .follower,
 .following,
 .tracks {
-  margin-left: 10px;
+  //margin-left: 10px;
   padding: 10px;
-  border-left: 0.5px #f2f2f2 solid;
+  border-right: 0.5px #f2f2f2 solid;
   height: 40px;
+  margin-bottom: 40px;
 }
 
 .follwer-item {
@@ -137,13 +145,12 @@
   margin-top: 15px;
   height: 500px;
 }
-.brand-items{
+.brand-items {
   margin-top: 20px;
   font-size: 12px;
-  padding: 30px;
+  padding-left: 8px;
   text-align: left;
-  color: #ccc
-
+  color: #ccc;
 }
 .info-music-list {
   width: 850px;
@@ -157,8 +164,9 @@
 .router-item {
   margin-top: 15px;
   height: 500;
+  padding-right: 30px;
 }
-.router-item-right{
+.router-item-right {
   width: 850px;
 }
 .button-item {
@@ -175,14 +183,15 @@
   padding: 5px;
   margin-top: 5px;
 }
-.router-view{
+.router-view {
   padding: 50px;
 }
-.p-title{
+.p-title {
   color: blue;
   font-size: 15px;
 }
-.edit-icon, .share-icon{
+.edit-icon,
+.share-icon {
   margin-right: 5px;
   margin-top: 2px;
   height: 15px;

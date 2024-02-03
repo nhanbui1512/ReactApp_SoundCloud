@@ -2,24 +2,36 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
-  faEllipsis,
   faHeart,
   faLink,
   faRepeat,
-  faShare,
   faPeopleArrows,
-  faSquareCaretUp,
+  // faShare,
+  // faEllipsis,
+  // faSquareCaretUp,
   faBars,
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
-
 import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
+import { EditPopup } from 'components/Playlist';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = () => {
+const ToastPlaylist = ({ dataItem, refresh }) => {
+  const [openEdit, setOpenEdit] = useState(false);
+  // const firstSongThumbNail = dataItem?.[0]?.songs?.[0]?.thumbNail;
+
+  const HandleCloseEdit = () => {
+    setOpenEdit(false);
+    refresh();
+  };
+
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
+      <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem} />
+      <p>{dataItem.name}</p>
       <h2 class={cx('modul-left_title')}>The Upload</h2>
       <p class={cx('modul-left_describe')}>Newly posted tracks. Just for you</p>
       <div className={cx(['col', 'relative'])}>
@@ -27,7 +39,8 @@ const ToastPlaylist = () => {
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
               <img
-                src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
+                // src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
+                src={dataItem.owner?.avatar || ''}
                 alt="anhr"
               />
               <span className={cx('list-music_playbtn')}>
@@ -36,19 +49,9 @@ const ToastPlaylist = () => {
             </div>
             <div className={cx('list-music-container')}>
               <ul className={cx(['list-music-container_scroll', 'col'])}>
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
-                <ItemSong />
+                {dataItem.songs?.map((itemMusic, index) => (
+                  <ItemSong itemMusic={itemMusic} key={index} />
+                ))}
               </ul>
             </div>
           </div>
@@ -74,6 +77,10 @@ const ToastPlaylist = () => {
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faBars} />
               <span>Add to Next up</span>
+            </button>
+            <button className={cx('go-playlist-btn')} onClick={() => setOpenEdit(true)}>
+              <FontAwesomeIcon icon={faEdit} />
+              <span>Edit</span>
             </button>
           </div>
         </div>

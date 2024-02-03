@@ -10,7 +10,6 @@ export async function getAudioUrlByPath(path) {
     console.log(error);
     return null;
   });
-  console.log(url);
   return url;
 }
 

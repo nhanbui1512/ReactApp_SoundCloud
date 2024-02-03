@@ -29,10 +29,7 @@ function Slider({ data, playLists }) {
       distanceSlide = page * (countWidths.current - 69) + (page - 2) * 17;
     }
   }
-  // if (page === totalPage) {
-  //   const residual = data.length % 4;
-  //   distanceSlide -= (4 - residual) * 190;
-  // }
+
   return (
     <div ref={widthSlide} className={cx('wrapper')}>
       <div

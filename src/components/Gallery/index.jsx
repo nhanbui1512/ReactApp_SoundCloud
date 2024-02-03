@@ -162,6 +162,13 @@ function Gallery({ data, playLists }) {
     } else {
       // ngược lại -> thêm vào sau bài đang phát
 
+      if ((indexPlaying === storage.currentPlayList.length - 1) === 0) {
+        return storage.setCurrentPlayList((prev) => {
+          var newState = [...prev];
+          newState.push(data);
+          return newState;
+        });
+      }
       var target = indexPlaying + 1;
 
       storage.setCurrentPlayList((prev) => {

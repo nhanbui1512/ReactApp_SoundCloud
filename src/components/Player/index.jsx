@@ -64,6 +64,10 @@ function Player() {
       var nextSong = storage.currentPlayList[indexPlaying + 1]; // bài tiếp theo
 
       if (loopModes[loop].type === 'playList') {
+        if (indexPlaying === storage.currentPlayList.length - 1) {
+          nextSong = storage.currentPlayList[0];
+        }
+
         if (!nextSong) {
           audioRef.current.play();
           return;
@@ -97,6 +101,49 @@ function Player() {
     setPercent(currentPercent);
   };
 
+  const handleNext = () => {
+    const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+
+    var nextSong = storage.currentPlayList[indexPlaying + 1];
+    if (!nextSong && storage.currentPlayList.length === 1) {
+      storage.audioRef.current.currentTime = 0;
+      return;
+    }
+    if (!nextSong) {
+      nextSong = storage.currentPlayList[0];
+    }
+    const playMusic = (event) => {
+      event.target.play();
+      setIsPlaying(true);
+      audioRef.current.removeEventListener('loadeddata', playMusic);
+    };
+    storage.setCurrentMusic(nextSong);
+    audioRef.current.addEventListener('loadeddata', playMusic);
+    return; // thoát khỏi hàm
+  };
+
+  const handleBack = () => {
+    const currentTime = storage.audioRef.current.currentTime;
+    if (currentTime > 5 || storage.currentPlayList.length === 1) {
+      return (storage.audioRef.current.currentTime = 0);
+    } else {
+      const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+      var backSong = storage.currentPlayList[indexPlaying - 1];
+      if (indexPlaying === 0) {
+        backSong = storage.currentPlayList[storage.currentPlayList.length - 1];
+      }
+
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlaying(true);
+        audioRef.current.removeEventListener('loadeddata', playMusic);
+      };
+      storage.setCurrentMusic(backSong);
+      audioRef.current.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
+    }
+  };
+
   useEffect(() => {
     audioRef.current.loop = loopModes[loop].type === 'song' ? true : false;
   }, [loop, audioRef]);
@@ -105,7 +152,7 @@ function Player() {
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('control-wrapper')}>
-          <div className={cx('player-btn')}>
+          <div onClick={handleBack} className={cx('player-btn')}>
             <FontAwesomeIcon className={cx('player-icon')} icon={faBackwardStep} />
           </div>
           <div
@@ -118,7 +165,7 @@ function Player() {
           >
             <FontAwesomeIcon className={cx('player-icon')} icon={isPlaying ? faPause : faPlay} />
           </div>
-          <div className={cx('player-btn')}>
+          <div onClick={handleNext} className={cx('player-btn')}>
             <FontAwesomeIcon className={cx('player-icon')} icon={faForwardStep} />
           </div>
           <div

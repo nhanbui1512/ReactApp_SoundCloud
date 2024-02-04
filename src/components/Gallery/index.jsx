@@ -38,7 +38,6 @@ function Gallery({ data, playLists }) {
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
-
   const storage = useContext(StorageContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -304,10 +303,23 @@ function Gallery({ data, playLists }) {
         </div>
       </div>
 
-      <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
-        {data.name}
-      </Link>
-      <span className={cx('name-track')}>{data.artistName}</span>
+      {playLists || (
+        <>
+          <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
+
+      {playLists && (
+        <>
+          <Link to={`/${data.userId}/playlists`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Post.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
@@ -47,7 +47,6 @@ function Post({ data }) {
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              // console.log(User.countFollow);
               // User.countFollow -= 1;
             }
             return User;
@@ -69,7 +68,6 @@ function Post({ data }) {
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              // console.log(User.countFollow);
               // User.countFollow += 1;
             }
             return User;
@@ -85,9 +83,9 @@ function Post({ data }) {
         <img className={cx('modul-left_image')} src={data.avatar} alt="" />
       </Link>
 
-      <a href="/" className={cx('name-post')}>
+      <Link to={`/${data.id}`} className={cx('name-post')}>
         {data.userName}
-      </a>
+      </Link>
       <span className={cx('name-post')}>
         <div>
           <FontAwesomeIcon className={cx('')} icon={faUserAlt} />
@@ -101,8 +99,17 @@ function Post({ data }) {
             }}
             className={cx('btn', { following: isFollowing })}
           >
-            <FontAwesomeIcon className={cx('')} icon={faUserCheck} />
-            <span className={cx('followers-post')}>Following</span>
+            {isFollowing ? (
+              <>
+                <FontAwesomeIcon className={cx('')} icon={faUserCheck} />
+                <span className={cx('followers-post')}>Following</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon className={cx('')} icon={faUserPlus} />
+                <span className={cx('followers-post')}>Follow</span>
+              </>
+            )}
           </div>
         </div>
       </span>

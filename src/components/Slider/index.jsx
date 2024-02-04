@@ -50,9 +50,9 @@ function Slider({ data, playLists }) {
           {data.map((item, index) => (
             <Gallery key={index} data={item} />
           ))}
-          {playLists.map((item, index) => (
+          {/* {playLists.map((item, index) => (
             <Gallery key={index} data={item} playLists={[]} />
-          ))}
+          ))} */}
         </div>
       </div>
 

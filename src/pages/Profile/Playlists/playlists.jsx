@@ -16,7 +16,8 @@ const Playlists = () => {
   const fetchPlayList = async () => {
     try {
       const res = await apiHandlePlayList.getPlayList(id);
-      setPlaylistSong(res.data.data);
+
+      setPlaylistSong(res.data.data.playlists);
     } catch (error) {
       console.error('error fetching data from playlist', error);
     }

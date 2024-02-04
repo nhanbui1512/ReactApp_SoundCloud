@@ -31,7 +31,6 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
       // to do: change playlist name
       removeSongsFromPlaylist(playlistData.id, removeSongs)
         .then((result) => {
-          console.log(result);
           if (result.result === true) {
             setSaveChange(false);
             onClose();

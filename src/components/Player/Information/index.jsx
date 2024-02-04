@@ -105,7 +105,7 @@ function Information({ data }) {
           </Link>
         </div>
         <div className={cx('text-wrap')}>
-          <Link href="/oh-putitbackon" className={cx('song')} title="putitbackon">
+          <Link to={`/song/${data.id}`} className={cx('song')} title="putitbackon">
             {data.name}
           </Link>
         </div>

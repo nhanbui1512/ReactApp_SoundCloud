@@ -207,7 +207,6 @@ const FeedSong = ({ dataSong }) => {
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                       separate
-                      onClick={() => console.log('add to next up')}
                     >
                       Add to Next up
                     </MenuItem>

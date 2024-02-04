@@ -22,7 +22,6 @@ import { StorageContext } from 'context/Storage';
 const cx = classNames.bind(styles);
 
 const PlaylistList = ({ dataItem, refresh }) => {
-  console.log('in ra dataItem: ', dataItem);
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const storage = useContext(StorageContext);

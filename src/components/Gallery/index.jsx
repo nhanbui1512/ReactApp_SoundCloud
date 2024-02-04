@@ -74,6 +74,16 @@ function Gallery({ data, playLists }) {
         audioTag.pause();
         // setIsPlay(false);
       }
+    } else {
+      storage.setCurrentPlayList(data.songs);
+      storage.setCurrentMusic(data.songs[0]);
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlay(true);
+        audioTag.removeEventListener('loadeddata', playMusic);
+      };
+      audioTag.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
     }
   };
 

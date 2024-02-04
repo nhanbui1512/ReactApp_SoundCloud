@@ -38,24 +38,20 @@ const TrackSong = ({ dataSong }) => {
   //const navigate = useNavigate();
   const storage = useContext(StorageContext);
   //const songId = useParams();
-  console.log(dataSong.id);
   const handleDeteSong = async () => {
     try {
-      if(!deleteSong) {
+      if (!deleteSong) {
         await apiHandlePlayList.deteleTrack(dataSong.id);
         setDeleteSong(true);
-        toast.success('bạn vừa xóa bài hát')
-      }
-      else {
+        toast.success('bạn vừa xóa bài hát');
+      } else {
         await apiHandlePlayList.deteleTrack(dataSong.id);
         setDeleteSong(false);
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
-  }
-
-
+  };
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {

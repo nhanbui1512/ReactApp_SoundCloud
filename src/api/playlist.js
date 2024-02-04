@@ -61,6 +61,27 @@ export async function removeSongsFromPlaylist(playlistId, listOfSongsId) {
   }
 }
 
+export async function updatePlaylist(playlistId, playlistName, listOfSongsId) {
+  try {
+    const json = {
+      name: playlistName,
+      idSongs: listOfSongsId,
+    };
+    const response = await axiosClient.put(
+      `/playlist/update?idPlaylist=${playlistId}`,
+      JSON.stringify(json),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function getPlaylists(page = 1, perPage = 10) {
   try {
     const response = await axiosClient.get(`/playlist/getall?page=${page}&per_page=${perPage}`);

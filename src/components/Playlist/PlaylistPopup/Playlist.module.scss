@@ -3,19 +3,19 @@
     flex-direction: row;
     gap: 20px;
     
-    button {
+    .tab-button {
         padding: 8px 8px;
         margin-bottom: 4px;
         font-size: large;
-        font-weight: 500;
+        font-weight: bold;
         background-color: transparent;
     }
-    button:hover {
+    .tab-button:hover {
         margin-bottom: 2px;
         border-bottom: 2px solid #000;
         cursor: pointer;
     }
-    button:disabled {
+    .tab-button:disabled {
         color: #f50;
         margin-bottom: 2px;
         border-bottom: 2px solid #f50;
@@ -28,7 +28,7 @@
     padding: 8px 4px;
     border-bottom: 1px solid #ccc;
 
-    img {
+    .song-img {
         width: 50px;
         height: 50px;
     }
@@ -36,12 +36,12 @@
         margin-left: 8px;
         flex-direction: column;
 
-        h6 {
+        .artist-name {
             font-size: 0.8rem;
             font-weight: 500;
             color: gray;
         }
-        h5 {
+        .song-name {
             font-size: 1rem;
             color: #000;
         }
@@ -54,7 +54,7 @@
     align-items: flex-start;
     padding: 8px 4px 0px 4px;
 
-    input {
+    .filter {
         margin-bottom: 8px;
         display: flex;
         width: 100%;
@@ -78,14 +78,13 @@
         padding-bottom: 4px;
         border-bottom: 1px solid #ccc;
 
-        label {
-            display: flex;
-            font-size: 14px;
+        .playlist-name {
+            color: #000;
+            font-size: 12px;
             font-weight: bold;
             align-self: center;
-            color: #000;
         }
-        button {
+        .button-add {
             cursor: pointer;
             padding: 4px 10px;
             color: #000;
@@ -93,11 +92,19 @@
             border: 1px solid #ccc;
             border-radius: 3px;
         }
-        button:hover {
+        .button-add:hover {
             border: 1px solid #f50;
         }
-        button.added {
+        .button-added {
+            cursor: pointer;
+            padding: 4px 10px;
             color: #f50;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .button-added:hover {
+            border: 1px solid #f50;
         }
     }
 }
@@ -109,12 +116,12 @@
     padding: 8px 4px 0px 4px;
     gap: 4px;
 
-    label {
+    .new-playlist-label {
         display: flex;
         font-size: 14px;
         color: #000;
     }
-    input {
+    .new-playlist-input {
         display: flex;
         width: 100%;
         font-weight: 100;
@@ -123,7 +130,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    button {
+    .button-save {
         cursor: pointer;
         align-self: flex-end;
         padding: 4px 10px;

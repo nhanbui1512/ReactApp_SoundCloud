@@ -53,7 +53,8 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   const RefreshPlaylist = () => {
     getPlaylistsByUserId(userId)
       .then((result) => {
-        setMyPlaylist(result.data.sort((a, b) => a.id - b.id));
+        console.log(result)
+        setMyPlaylist(result.data.playlists.sort((a, b) => a.id - b.id));
       })
       .catch((error) => console.log(error));
   };
@@ -116,10 +117,10 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
       onClose={onClose}
       header={
         <div className={cx('tab-select')}>
-          <button disabled={tab === 0} onClick={() => setTab(0)}>
+          <button className={cx('tab-button')} disabled={tab === 0} onClick={() => setTab(0)}>
             Add to Playlist
           </button>
-          <button disabled={tab === 1} onClick={() => setTab(1)}>
+          <button className={cx('tab-button')} disabled={tab === 1} onClick={() => setTab(1)}>
             Create Playlist
           </button>
         </div>
@@ -127,15 +128,15 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
     >
       {/* Song info */}
       <div className={cx('song-info')}>
-        <img src={songData.thumbNail} alt={songData.name} />
+        <img className={cx('song-img')} src={songData.thumbNail} alt={songData.name} />
         <div className={cx('song-artist-name')}>
-          <h6>{songData.artistName}</h6>
-          <h5>{songData.name}</h5>
+          <h6 className={cx('artist-name')}>{songData.artistName}</h6>
+          <h5 className={cx('song-name')}>{songData.name}</h5>
         </div>
       </div>
       {/* Add to Playlist */}
       <div className={cx('add-to-playlist')} style={{ display: tab === 0 ? 'flex' : 'none' }}>
-        <input
+        <input className={cx('filter')}
           id="playlist-filter"
           placeholder="Filter playlists"
           value={filter}
@@ -143,18 +144,18 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
         />
         <div className={cx('playlist-group')}>
           {myPlaylist.filter((x) => x.name.toLowerCase().includes(filter.toLowerCase())).length ===
-            0 && <div style={{ fontWeight: 'bold' }}>No playlist found</div>}
+            0 && <div style={{ fontWeight: 'bold', fontSize: '12px' }}>No playlist found</div>}
           {myPlaylist
             .filter((x) => x.name.toLowerCase().includes(filter.toLowerCase()))
             .map((item, index) => (
               <div className={cx('playlist-item')} key={index}>
-                <div>{item.name}</div>
+                <div className={cx('playlist-name')}>{item.name}</div>
                 {item.songs.map((song) => song.id).includes(songData.id) ? (
-                  <button className={cx('added')} onClick={() => RemoveFromPlaylist(item.id)}>
+                  <button className={cx('button-added')} onClick={() => RemoveFromPlaylist(item.id)}>
                     Added
                   </button>
                 ) : (
-                  <button onClick={() => AddToPlaylist(item.id, item.name)}>Add to playlist</button>
+                  <button className={cx('button-add')} onClick={() => AddToPlaylist(item.id, item.name)}>Add to playlist</button>
                 )}
               </div>
             ))}
@@ -162,15 +163,15 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
       </div>
       {/* Create Playlist */}
       <div className={cx('create-playlist')} style={{ display: tab === 1 ? 'flex' : 'none' }}>
-        <div>Playlist name</div>
-        <input
+        <div className={cx('new-playlist-label')}>Playlist name</div>
+        <input className={cx('new-playlist-input')}
           id="new-playlist-name"
           required
           placeholder="Required"
           value={newPlaylistName}
           onChange={(e) => setNewPlaylistName(e.target.value)}
         />
-        <button disabled={creatingPlaylist} onClick={CreateNewPlaylist}>
+        <button className={cx('button-save')} disabled={creatingPlaylist} onClick={CreateNewPlaylist}>
           {creatingPlaylist ? 'Saving...' : 'Save'}
         </button>
       </div>

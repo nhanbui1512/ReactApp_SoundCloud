@@ -1,22 +1,23 @@
 // import classNames from 'classnames/bind';
 
 // import styles from '../Profile.module.scss';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import ToastPlaylist from 'components/ToastPlaylist';
 import apiHandlePlayList from 'api/apiHandlePlayList';
-import { useParams } from 'react-router-dom';
+import { StorageContext } from 'context/Storage';
 
 //const cx = classNames.bind(styles);
 const Playlists = () => {
   const [playListSong, setPlaylistSong] = useState([]);
 
-  const id = useParams().id;
+  const storage = useContext(StorageContext);
+  const id = storage.userData.id;
 
   const fetchPlayList = async () => {
     try {
       const res = await apiHandlePlayList.getPlayList(id);
-      setPlaylistSong(res.data.data);
+      setPlaylistSong(res.data.data.playlists);
     } catch (error) {
       console.error('error fetching data from playlist', error);
     }

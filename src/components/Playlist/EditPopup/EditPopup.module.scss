@@ -1,21 +1,22 @@
 .edit-playlist {
   display: flex;
   flex-direction: column;
+  padding: 0px 8px;
 }
 
 .playlist-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 8px 4px 8px 4px;
+  padding: 8px 0px;
   gap: 4px;
 
-  label {
+  .playlist-name-label {
     display: flex;
     font-size: 14px;
     color: #000;
   }
-  input {
+  .edit-name-input {
     display: flex;
     width: 100%;
     font-weight: 100;
@@ -46,19 +47,17 @@
     padding: 4px 0px;
     align-items: center;
 
-    img {
+    .song-img {
       width: 20px;
       height: 20px;
     }
     .song-artist-name {
       margin-left: 8px;
-      h6 {
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: #000;
-      }
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #000;
     }
-    button {
+    .button-remove {
       cursor: pointer;
       margin: 0px 4px 0px auto;
       padding: 4px 10px;
@@ -67,11 +66,31 @@
       border: 1px solid #ccc;
       border-radius: 3px;
     }
-    button:hover {
+    .button-remove:hover {
       border: 1px solid #f50;
     }
-    button.removed {
+    .button-removed {
+      cursor: pointer;
+      margin: 0px 4px 0px auto;
+      padding: 4px 10px;
       color: #f50;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .button-removed:hover {
+      border: 1px solid #f50;
     }
   }
+}
+
+.button-save {
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: 8px;
+  padding: 4px 10px;
+  color: #fff;
+  background-color: #f50;
+  border-radius: 3px;
+  border-color: #f50;
 }

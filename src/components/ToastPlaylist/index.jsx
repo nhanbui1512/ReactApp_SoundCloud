@@ -11,40 +11,94 @@ import {
   // faSquareCaretUp,
   faBars,
   faEdit,
+  faPause,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
 import { EditPopup } from 'components/Playlist';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
 const ToastPlaylist = ({ dataItem, refresh }) => {
   const [openEdit, setOpenEdit] = useState(false);
-  // const firstSongThumbNail = dataItem?.[0]?.songs?.[0]?.thumbNail;
+  const [isPlaying, setIsPlaying] = useState(false);
+  const storage = useContext(StorageContext);
 
   const HandleCloseEdit = () => {
     setOpenEdit(false);
     refresh();
   };
+  const handlePlay = () => {
+    const audioTag = storage.audioRef.current;
+
+    if (storage.playlistId !== dataItem.id) {
+      storage.setCurrentPlayList(dataItem.songs);
+      storage.setCurrentMusic(dataItem.songs[0]);
+      storage.setPlaylistId(dataItem.id);
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlaying(true);
+        audioTag.removeEventListener('loadeddata', playMusic);
+      };
+      audioTag.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
+    }
+
+    // Nếu đang bài đang phát giống với bài của gallary
+    if (audioTag.paused) {
+      // Đang dừng thì hiển thị nút Play
+      audioTag.play();
+      // setIsPlay(true);
+    } else {
+      // Đang phát thì hiển thị nút pause
+      audioTag.pause();
+      // setIsPlay(false);
+    }
+  };
+
+  useEffect(() => {
+    if (storage.playlistId !== dataItem.id) {
+      setIsPlaying(false);
+    }
+  }, [storage.playlistId, dataItem.id]);
+
+  useEffect(() => {
+    const audioTag = storage.audioRef.current;
+
+    const handlePlay = () => {
+      if (dataItem.id === storage.playlistId) {
+        setIsPlaying(true);
+      }
+    };
+
+    const handlePause = () => {
+      if (dataItem.id === storage.playlistId) {
+        setIsPlaying(false);
+      }
+    };
+
+    audioTag.addEventListener('play', handlePlay);
+    audioTag.addEventListener('pause', handlePause);
+
+    return () => {
+      audioTag.removeEventListener('play', handlePlay);
+      audioTag.removeEventListener('pause', handlePlay);
+    };
+  }, [storage.audioRef, storage.playlistId, dataItem.id]);
 
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
       <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem} />
       <p>{dataItem.name}</p>
-      <h2 class={cx('modul-left_title')}>The Upload</h2>
-      <p class={cx('modul-left_describe')}>Newly posted tracks. Just for you</p>
       <div className={cx(['col', 'relative'])}>
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              <img
-                // src="	https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
-                src={dataItem.owner?.avatar || ''}
-                alt="anhr"
-              />
-              <span className={cx('list-music_playbtn')}>
-                <FontAwesomeIcon icon={faPlay} />
+              <img src={dataItem.songs[0].thumbNail || ''} alt={dataItem.name} />
+              <span onClick={handlePlay} className={cx('list-music_playbtn')}>
+                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
               </span>
             </div>
             <div className={cx('list-music-container')}>

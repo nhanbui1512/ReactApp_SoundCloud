@@ -40,13 +40,12 @@ const Signup = () => {
     }
     try {
       setSubmitted(true);
-      const response = await registerUser({
+      await registerUser({
         username,
         email,
         password,
       });
       // Handle successful registration
-      console.log('Registration successful:', response);
       alert('Signup successful');
       navigate('/login');
     } catch (error) {

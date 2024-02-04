@@ -29,7 +29,7 @@ const SidebarHeart = ({ songsLiked }) => {
   const [isLiked, setIsLiked] = useState(songsLiked.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   //const [favoriteSongs, setFavoriteSongs] = useState([]);
-  
+
   const storage = useContext(StorageContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -40,6 +40,8 @@ const SidebarHeart = ({ songsLiked }) => {
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== songsLiked.id) {
       storage.setCurrentMusic(songsLiked);
+      storage.setCurrentPlayList([songsLiked]);
+      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -143,10 +145,7 @@ const SidebarHeart = ({ songsLiked }) => {
           </div>
         </div>
         <div className={cx('Playsidebar__modul-item-container')}>
-          <div
-            className={cx('sidebar__modul-item-play')}
-            onClick={handlePlay}
-          >
+          <div className={cx('sidebar__modul-item-play')} onClick={handlePlay}>
             <FontAwesomeIcon
               className={cx('sidebar__modul-play-icon')}
               icon={isPlay ? faPause : faPlay}

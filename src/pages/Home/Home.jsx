@@ -9,6 +9,9 @@ const cx = classNames.bind(styles);
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+  const [data4, setData4] = useState([]);
   const [recommendData, setRecommendData] = useState([]);
 
   useEffect(() => {
@@ -20,6 +23,36 @@ const Home = () => {
         console.log(err);
       });
 
+    getSongs(2, 15)
+      .then((res) => {
+        setData2(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getSongs(3, 15)
+      .then((res) => {
+        setData3(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    recommendSongs()
+      .then((res) => {
+        setRecommendData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getSongs(4, 15)
+      .then((res) => {
+        setData4(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     recommendSongs()
       .then((res) => {
         setRecommendData(res.data);
@@ -38,11 +71,11 @@ const Home = () => {
       >
         <div className={cx('content')}>
           <div className={cx('trending-wrapper')}>
-            <ListDisk data={data} />
-            <ListDisk data={data} title={'Study'} />
             <ListDisk data={recommendData} title={'More of what you like'} />
-            <ListDisk data={data} title={`Today's Mixes`} />
-            <ListDisk data={data} title={'Trending Music on SoundCloud'} />
+            <ListDisk data={data} />
+            <ListDisk data={data2} title={'Study'} />
+            <ListDisk data={data3} title={`Today's Mixes`} />
+            <ListDisk data={data4} title={'Trending Music on SoundCloud'} />
           </div>
         </div>
 

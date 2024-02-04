@@ -22,7 +22,7 @@ import Profile from 'pages/Profile/profile';
 import GlobalLibrary from 'context/Library';
 import ProfileByID from 'pages/Profile/ProfileByID/ProfileByID';
 import Song from 'pages/DetailSong';
-import PageNotFound from 'pages/Profile/ProfileByID/PageNotFound';
+import PageNotFound from 'pages/Profile/ProfileByID/NotFound';
 
 const App = () => {
   const router = createBrowserRouter(

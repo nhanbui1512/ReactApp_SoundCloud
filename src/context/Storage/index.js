@@ -14,6 +14,7 @@ function GlobalStates({ children }) {
   const [currentPlayList, setCurrentPlayList] = useState(currentPlaylist); // playlist đang phát
   const [currentMusic, setCurrentMusic] = useState(currentPlayList[0] || music);
   const [indexSong, setIndexSong] = useState(0); // vị trí bài hát đang play trong playlist
+  const [playlistId, setPlaylistId] = useState(-1);
 
   const states = {
     currentUser: currentUser,
@@ -27,6 +28,8 @@ function GlobalStates({ children }) {
     setCurrentPlayList,
     indexSong,
     setIndexSong,
+    playlistId,
+    setPlaylistId,
   };
 
   // useEffect(() => {

@@ -9,7 +9,11 @@ const Playlists = ({ data = [], playLists = [] }) => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('trending-wrapper')}>
-        <ListDisk title={'Hear the tracks you’ve liked:'} data={data} playLists={playLists} />
+        <ListDisk
+          title={'Hear your own playlists and the playlists you’ve followed:'}
+          data={data}
+          playLists={playLists}
+        />
       </div>
     </div>
   );

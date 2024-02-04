@@ -96,16 +96,11 @@ const TrackSong = ({ dataSong }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
-  
-
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   const handleCopy = async () => {
-    console.log(
-      
-    );
     var urlPage = `http://localhost:3000/song/getsong?song_id=${dataSong.id}`;
     navigator.clipboard.writeText(urlPage);
     setCopy(!isCopy);
@@ -206,7 +201,6 @@ const TrackSong = ({ dataSong }) => {
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                       separate
-                      onClick={() => console.log('add to next up')}
                     >
                       Add to Next up
                     </MenuItem>

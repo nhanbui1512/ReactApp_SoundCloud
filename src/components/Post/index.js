@@ -8,6 +8,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { followUser, unfollowUser } from 'api/follow';
 import { LibraryContext } from 'context/Library';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -34,23 +35,20 @@ function Post({ data }) {
   const handleFollowing = async () => {
     if (isFollowing) {
       setIsFollowing(!isFollowing);
-      // unfollowUser(data.id)
-      //   .then((res) => {})
-      //   .catch((err) => {
-      //     console.log(err);
-      //     setIsFollowing(true);
-      //   });
-      console.log('unfollow');
+      unfollowUser(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollowing(true);
+        });
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          console.log('unfollow');
-
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              console.log(User.countFollow);
-              User.countFollow -= 1;
+              // console.log(User.countFollow);
+              // User.countFollow -= 1;
             }
             return User;
           });
@@ -59,23 +57,20 @@ function Post({ data }) {
       }
     } else {
       setIsFollowing(!isFollowing);
-      // followUser(data.id)
-      //   .then((res) => {})
-      //   .catch((err) => {
-      //     console.log(err);
-      //     setIsFollowing(false);
-      //   });
-      console.log('follow');
+      followUser(data.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollowing(false);
+        });
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          console.log('follow');
-
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              console.log(User.countFollow);
-              User.countFollow += 1;
+              // console.log(User.countFollow);
+              // User.countFollow += 1;
             }
             return User;
           });
@@ -85,7 +80,7 @@ function Post({ data }) {
     }
   };
   return (
-    <div className={cx('modul-left_item')}>
+    <Link to={`/${data.id}`} className={cx('modul-left_item')}>
       <div className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.avatar} alt="" />
       </div>
@@ -111,7 +106,7 @@ function Post({ data }) {
           </div>
         </div>
       </span>
-    </div>
+    </Link>
   );
 }
 export default Post;

@@ -13,20 +13,20 @@ export async function signIn(email, password) {
   }
 }
 
-export async function registerUser({username, email, password}) {
+export async function registerUser({ username, email, password }) {
   try {
-      var urlencoded = new URLSearchParams();
-      urlencoded.append("userName", username);
-      urlencoded.append("email", email);
-      urlencoded.append("password", password);
-      const response = await axiosClient.post(`/user/register`, urlencoded, {
-          headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-          }
-      })
-      return response.data
+    var urlencoded = new URLSearchParams();
+    urlencoded.append('userName', username);
+    urlencoded.append('email', email);
+    urlencoded.append('password', password);
+    const response = await axiosClient.post(`/user/register`, urlencoded, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    return response.data;
   } catch (error) {
-      throw error
+    throw error;
   }
 }
 
@@ -38,9 +38,9 @@ export async function changePassword({ currentPassword, newPassword, confirmPass
     urlencoded.append('confirmPassWord', confirmPassword);
     const response = await axiosClient.put(`/user/change-password`, urlencoded, {
       headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-      }
-  });
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
     toast.success('Update sucess');
     return response.data;
   } catch (error) {
@@ -64,7 +64,6 @@ export async function getCurrentUserProfile() {
 export async function getUsersById(id) {
   try {
     const response = await axiosClient.get(`/user?user_id=${id}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -74,14 +73,19 @@ export async function getUsersById(id) {
 export async function getUsersByName(name) {
   try {
     const response = await axiosClient.get(`/user/search?value=${name}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function updateUserDetails({ username = '', city = '', country = '', bio = '', avatar = ''}) {
+export async function updateUserDetails({
+  username = '',
+  city = '',
+  country = '',
+  bio = '',
+  avatar = '',
+}) {
   try {
     if (username === '' && city === '' && country === '' && bio === '' && avatar === '') {
       return null;

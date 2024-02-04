@@ -68,10 +68,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
       if (response) {
         setUserData(response.data);
       } else {
-        console.log('No changes to update or something went wrong.');
       }
     } catch (error) {
-      console.error('Error updating user details:', error);
+      console.log(error);
     }
     setShowLoader(true);
     setTimeout(() => {
@@ -155,10 +154,10 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                 <div className={cx('profile')}>
                   <div className={cx('name')}>
                     <div className={cx('txtField')}>
-                      <label className={cx('field')} htmlFor="">
+                      <div className={cx('field')} htmlFor="">
                         <span>Display name</span>
                         <span className={cx('fielLabel')}> *</span>
-                      </label>
+                      </div>
                     </div>
                     <input
                       onChange={(e) => setUserName(e.target.value)}
@@ -168,10 +167,10 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                   </div>
                   <div className={cx('profile_url')}>
                     <div className={cx('txtField')}>
-                      <label className={cx('txtFieldUrl', 'field')} htmlFor="">
+                      <div className={cx('txtFieldUrl', 'field')} htmlFor="">
                         <span>Profile URL</span>
                         <span className={cx('fielLabel')}> *</span>
-                      </label>
+                      </div>
                     </div>
                     <span className={cx('sc_text_light')}>soundcloud.com/</span>
                     <input type="text" />
@@ -180,9 +179,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                   <div className={cx('adress', 'display')}>
                     <div className={cx('city')}>
                       <div className={cx('txtField')}>
-                        <label className={cx('txtFielCity', 'field')} htmlFor="">
+                        <div className={cx('txtFielCity', 'field')} htmlFor="">
                           <span>City</span>
-                        </label>
+                        </div>
                       </div>
                       <input
                         onChange={(e) => setCity(e.target.value)}
@@ -193,9 +192,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                     </div>
                     <div className={cx('country')}>
                       <div className={cx('txtField')}>
-                        <label className={cx('txtFieldCountry', 'field')} htmlFor="">
+                        <div className={cx('txtFieldCountry', 'field')} htmlFor="">
                           <span>Country</span>
-                        </label>
+                        </div>
                       </div>
                       <input
                         onChange={(e) => setCountry(e.target.value)}
@@ -207,9 +206,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                   </div>
                   <div className={cx('bio')}>
                     <div className={cx('txtField')}>
-                      <label className={cx('field')} htmlFor="">
+                      <div className={cx('field')} htmlFor="">
                         <span>Bio</span>
-                      </label>
+                      </div>
                     </div>
                     <textarea
                       onChange={(e) => setBio(e.target.value)}
@@ -240,9 +239,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
               <div className={cx('changePass')}>
                 <div className={cx('name')}>
                   <div className={cx('txtField')}>
-                    <label className={cx('field')} htmlFor="">
+                    <div className={cx('field')} htmlFor="">
                       <span>Old password</span>
-                    </label>
+                    </div>
                   </div>
                   <input
                     onChange={(e) => setOldPass(e.target.value)}
@@ -253,9 +252,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                 </div>
                 <div className={cx('name')}>
                   <div className={cx('txtField')}>
-                    <label className={cx('field')} htmlFor="">
+                    <div className={cx('field')} htmlFor="">
                       <span>New password</span>
-                    </label>
+                    </div>
                   </div>
                   <input
                     onChange={(e) => setNewPass(e.target.value)}
@@ -266,9 +265,9 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                 </div>
                 <div className={cx('name')}>
                   <div className={cx('txtField')}>
-                    <label className={cx('field')} htmlFor="">
+                    <div className={cx('field')} htmlFor="">
                       <span>Confirm password</span>
-                    </label>
+                    </div>
                   </div>
                   <input
                     onChange={(e) => setConfirmPass(e.target.value)}

@@ -12,13 +12,14 @@ import {
 
 const cx = classNames.bind(styles);
 
-const ItemSong = ({itemMusic}) => {
-  console.log('in ra item music', itemMusic);
+const ItemSong = ({ itemMusic }) => {
   return (
     <li className={cx('list-music-item')}>
       <div className={cx('list-music-item_detail-song')}>
         <span className={cx('color-opa-07')}>{itemMusic.artistName}</span>
-        <span className={cx('color-white')} style={{marginLeft: '4px'}}>{itemMusic.name}</span>
+        <span className={cx('color-white')} style={{ marginLeft: '4px' }}>
+          {itemMusic.name}
+        </span>
       </div>
       <div className={cx(['list-music-item_group', 'color-white', 'relative'])}>
         <div className={cx('list-music-item_play-rate')}>

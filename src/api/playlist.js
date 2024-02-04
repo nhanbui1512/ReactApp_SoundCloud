@@ -11,7 +11,6 @@ export async function createPlaylist(name, listOfSongsId) {
         'Content-Type': 'application/json',
       },
     });
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -36,7 +35,6 @@ export async function addSongsToPlaylist(playlistId, playlistName, listOfSongsId
         },
       },
     );
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -57,7 +55,6 @@ export async function removeSongsFromPlaylist(playlistId, listOfSongsId) {
         'Content-Type': 'application/json',
       },
     });
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -86,7 +83,6 @@ export async function getPlaylistsById(id) {
 export async function getPlaylistsByName(name) {
   try {
     const response = await axiosClient.get(`/song/search?value=${name}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -96,7 +92,6 @@ export async function getPlaylistsByName(name) {
 export async function getPlaylistsByUserId(userId) {
   try {
     const response = await axiosClient.get(`/playlist/get-playlist-user?idUser=${userId}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -107,7 +102,6 @@ export async function getPlaylistsByUserId(userId) {
 export async function getMyFollowingPlaylist() {
   try {
     const response = await axiosClient.get(`/playlist/follow-playlists`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -117,7 +111,6 @@ export async function getMyFollowingPlaylist() {
 export async function getMyFollowingUsers() {
   try {
     const response = await axiosClient.get(`/playlist/get-playlist-user`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -127,7 +120,6 @@ export async function getMyFollowingUsers() {
 export async function deletePlaylist(id) {
   try {
     const response = await axiosClient.delete(`/playlist?idPlaylist=${id}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -140,7 +132,6 @@ export async function deletePlaylist(id) {
 export async function getUsersFollowingPlaylist(playlistId) {
   try {
     const response = await axiosClient.get(`/playlist/playlist-followed?idPlaylist=${playlistId}`);
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;

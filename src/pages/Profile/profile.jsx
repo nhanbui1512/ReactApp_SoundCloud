@@ -6,7 +6,7 @@ import Albums from './Albums/album';
 import Playlists from './Playlists/playlists';
 import All from './All/all';
 import PopularTracks from './Popular_tracks/popular';
-import Tracks from './Tracks/tracks';
+import Tracks from './Tracks';
 import Reposts from './Reposts/reposts';
 import EditProfile from './Edit_profile/EditProfile';
 import ShowImage from './Show_Image/ShowImage';
@@ -25,7 +25,6 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/profile/all');
     getCurrentUserProfile()
       .then((res) => {
         setUserData(res.data);
@@ -38,7 +37,8 @@ function Profile() {
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
-  }, []);
+    navigate('/profile/all');
+  }, [navigate]);
 
   return (
     <div>

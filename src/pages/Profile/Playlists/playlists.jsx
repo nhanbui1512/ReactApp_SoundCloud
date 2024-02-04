@@ -2,35 +2,35 @@
 
 // import styles from '../Profile.module.scss';
 import React from 'react';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import ToastPlaylist from 'components/ToastPlaylist';
 import apiHandlePlayList from 'api/apiHandlePlayList';
-
+import { useParams } from 'react-router-dom';
 
 //const cx = classNames.bind(styles);
 const Playlists = () => {
   const [playListSong, setPlaylistSong] = useState([]);
 
+  const id = useParams().id;
+
   const fetchPlayList = async () => {
     try {
-      const res = await apiHandlePlayList.getPlayList();
-      //const playListItem = res.data.data
+      const res = await apiHandlePlayList.getPlayList(id);
       setPlaylistSong(res.data.data);
-      console.log(res.data.data);
-    } catch(error) {
-      console.error('error fetching data from playlist',error);
+    } catch (error) {
+      console.error('error fetching data from playlist', error);
     }
-  }
+  };
   useEffect(() => {
     fetchPlayList();
-  }, [])
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
-      {playListSong.map((playListItem,index) => (
-          <ToastPlaylist  dataItem={playListItem} key={index} refresh={fetchPlayList}/>
+      {playListSong.map((playListItem, index) => (
+        <ToastPlaylist dataItem={playListItem} key={index} refresh={fetchPlayList} />
       ))}
-      
     </>
   );
 };

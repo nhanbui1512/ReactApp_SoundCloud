@@ -51,6 +51,7 @@ function Gallery({ data, playLists }) {
     if (storage.currentMusic.id !== data.id) {
       storage.setCurrentPlayList([data]);
       storage.setCurrentMusic(data);
+      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
 
       const playMusic = (event) => {
         event.target.play();
@@ -209,11 +210,7 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
 
       <div className={cx('modul-left_item-container-img')}>
-        <img
-          className={cx('modul-left_image')}
-          src={data.thumbNail || data.songs[0].thumbNail}
-          alt=""
-        />
+        <img className={cx('modul-left_image')} src={data.thumbNail} alt="" />
 
         {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
         <div className={cx('modul-left_backgroud')}></div>

@@ -4,7 +4,7 @@ import styles from './ListDisk.module.scss';
 
 const cx = classNames.bind(styles);
 
-function ListDisk({ title, data = [], playLists = [] }) {
+function ListDisk({ title, data = [], playLists = false }) {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>

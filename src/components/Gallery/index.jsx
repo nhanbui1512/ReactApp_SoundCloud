@@ -163,31 +163,37 @@ function Gallery({ data, playLists }) {
   const handleAddNextUp = () => {
     var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
 
-    // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
-    if (storage.currentPlayList.find((music) => music.id === data.id)) {
-      var indexOfSong = storage.currentPlayList.indexOf(data);
+    if (!playLists) {
+      // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
+      if (storage.currentPlayList.find((music) => music.id === data.id)) {
+        var indexOfSong = storage.currentPlayList.indexOf(data);
 
-      storage.setCurrentPlayList((prev) => {
-        var newState = [...prev];
-        changePosition(newState, indexOfSong, indexPlaying + 1);
-        return newState;
-      });
-    } else {
-      // ngược lại -> thêm vào sau bài đang phát
-
-      if ((indexPlaying === storage.currentPlayList.length - 1) === 0) {
-        return storage.setCurrentPlayList((prev) => {
+        storage.setCurrentPlayList((prev) => {
           var newState = [...prev];
-          newState.push(data);
+          changePosition(newState, indexOfSong, indexPlaying + 1);
+          return newState;
+        });
+      } else {
+        // ngược lại -> thêm vào sau bài đang phát
+
+        if ((indexPlaying === storage.currentPlayList.length - 1) === 0) {
+          return storage.setCurrentPlayList((prev) => {
+            var newState = [...prev];
+            newState.push(data);
+            return newState;
+          });
+        }
+        var target = indexPlaying + 1;
+
+        storage.setCurrentPlayList((prev) => {
+          var newState = [...prev];
+          newState.splice(target, 0, data);
           return newState;
         });
       }
-      var target = indexPlaying + 1;
-
+    } else {
       storage.setCurrentPlayList((prev) => {
-        var newState = [...prev];
-        newState.splice(target, 0, data);
-        return newState;
+        return [...prev, ...data.songs];
       });
     }
   };

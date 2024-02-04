@@ -31,6 +31,7 @@
   height: 100%;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 5%, rgba(0, 0, 0, 0.4) 111%);
   display: none;
+  border-radius: inherit;
   z-index: 1;
 }
 .modul-left_option-group {

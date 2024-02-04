@@ -47,30 +47,33 @@ function Gallery({ data, playLists }) {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
 
-    // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
-    if (storage.currentMusic.id !== data.id) {
-      storage.setCurrentPlayList([data]);
-      storage.setCurrentMusic(data);
-      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
+    // nếu dữ liệu truyền vào gallery là playlist
+    if (!playLists) {
+      // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
+      if (storage.currentMusic.id !== data.id) {
+        storage.setCurrentPlayList([data]);
+        storage.setCurrentMusic(data);
+        if (storage.playlistId !== -1) storage.setPlaylistId(-1);
 
-      const playMusic = (event) => {
-        event.target.play();
-        setIsPlay(true);
-        audioTag.removeEventListener('loadeddata', playMusic);
-      };
-      audioTag.addEventListener('loadeddata', playMusic);
-      return; // thoát khỏi hàm
-    }
+        const playMusic = (event) => {
+          event.target.play();
+          setIsPlay(true);
+          audioTag.removeEventListener('loadeddata', playMusic);
+        };
+        audioTag.addEventListener('loadeddata', playMusic);
+        return; // thoát khỏi hàm
+      }
 
-    // Nếu đang bài đang phát giống với bài của gallary
-    if (audioTag.paused) {
-      // Đang dừng thì hiển thị nút Play
-      audioTag.play();
-      // setIsPlay(true);
-    } else {
-      // Đang phát thì hiển thị nút pause
-      audioTag.pause();
-      // setIsPlay(false);
+      // Nếu đang bài đang phát giống với bài của gallary
+      if (audioTag.paused) {
+        // Đang dừng thì hiển thị nút Play
+        audioTag.play();
+        // setIsPlay(true);
+      } else {
+        // Đang phát thì hiển thị nút pause
+        audioTag.pause();
+        // setIsPlay(false);
+      }
     }
   };
 

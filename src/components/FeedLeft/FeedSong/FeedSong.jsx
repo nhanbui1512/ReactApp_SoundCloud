@@ -20,6 +20,7 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
@@ -120,8 +121,10 @@ const FeedSong = ({ dataSong }) => {
       {/* Add to Playlist popup */}
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={dataSong} />
 
-      <div className={cx('feed__modul-list-item')}>
-        <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+      <li className={cx('feed__modul-list-item')}>
+        <Link to={`/song/${dataSong.id}`}>
+          <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+        </Link>
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
             <div onClick={handlePlay} className={cx('feed__modul-item-play')}>
@@ -226,7 +229,7 @@ const FeedSong = ({ dataSong }) => {
             </HeadlessTippy>
           </div>
         </div>
-      </div>
+      </li>
     </>
   );
 };

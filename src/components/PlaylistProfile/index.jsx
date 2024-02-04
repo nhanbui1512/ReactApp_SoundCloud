@@ -21,10 +21,29 @@ import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = ({ dataItem, refresh }) => {
+const PlaylistList = ({ dataItem, refresh }) => {
+  console.log('in ra dataItem: ', dataItem);
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const storage = useContext(StorageContext);
+  const [totalRepeat, setTotalRepeat] = useState(0);
+  const [totalLike, setTotalLike] = useState(0);
+
+  // tính tổng số bài hát mình đã like
+  useEffect(() => {
+    const newTotalLike = dataItem.songs?.reduce((acc, curr) => {
+      return acc + curr.likeCount;
+    }, 0);
+    setTotalLike(newTotalLike);
+  }, [dataItem.songs]);
+
+  // tính tổng số lần repeate của cả playlist
+  useEffect(() => {
+    const newTotalRepeat = dataItem.songs?.reduce((acc, curr) => {
+      return acc + curr.numberOfLoop;
+    }, 0);
+    setTotalRepeat(newTotalRepeat);
+  }, [dataItem.songs]);
 
   const HandleCloseEdit = () => {
     setOpenEdit(false);
@@ -115,11 +134,11 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
           <div className={cx('group-btn_right')}>
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faHeart} />
-              <span>1,186</span>
+              <span>{totalLike}</span>
             </button>
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faRepeat} />
-              <span>21</span>
+              <span>{totalRepeat}</span>
             </button>
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faPeopleArrows} />
@@ -144,4 +163,4 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
   );
 };
 
-export default ToastPlaylist;
+export default PlaylistList;

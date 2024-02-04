@@ -58,7 +58,7 @@
 
 .group-btn_right {
   position: absolute;
-  left: 50px;
+  left: 85px;
   top: -2px;
   background-color: rgba(255, 255, 255, 0);
   display: none;
@@ -77,4 +77,11 @@
 
 .list-music-item:hover .group-btn_right {
   display: flex;
+}
+
+.liked,
+.reposted,
+.shared,
+.copyed {
+  color: var(--orange-primary);
 }

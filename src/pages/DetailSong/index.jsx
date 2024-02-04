@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import classNames from 'classnames/bind';
 import styles from './DetailSong.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,6 +38,30 @@ function Song() {
     };
     getSong();
   }, [id]);
+
+  // xử lý thời gian bài hát được upload
+  const calculateTimeFromNow = (createdAt) => {
+    const createAtTime = moment(createdAt);
+    const currentTime = moment();
+    const diffInSeconds = currentTime.diff(createAtTime, 'seconds');
+
+    const timeUnits = [
+      { unit: 'năm', value: diffInSeconds / (365 * 24 * 3600) },
+      { unit: 'tháng', value: diffInSeconds / (30 * 24 * 3600) },
+      { unit: 'tuần', value: diffInSeconds / (7 * 24 * 3600) },
+      { unit: 'ngày', value: diffInSeconds / (24 * 3600) },
+      { unit: 'giờ', value: diffInSeconds / 3600 },
+      { unit: 'phút', value: diffInSeconds / 60 },
+      { unit: 'giây', value: diffInSeconds },
+    ];
+    for (const { unit, value } of timeUnits) {
+      if (Math.floor(value) >= 1) {
+        return `${Math.floor(value)} ${unit}${Math.floor(value) > 1 ? '' : ''} trước`;
+      }
+    }
+    return 'just now';
+  };
+
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
@@ -63,7 +88,7 @@ function Song() {
   };
 
   return (
-    <div>
+    <>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
           <div className={cx('info-song')}>
@@ -81,7 +106,7 @@ function Song() {
             </div>
           </div>
           <div className={cx('box-song')}>
-            <span className={cx('duration-song')}>{song.duration} days ago</span>
+            <span className={cx('duration-song')}>{calculateTimeFromNow(song.createAt)}</span>
             <img className={cx('img-song')} src={song.thumbNail} alt="" />
           </div>
         </div>
@@ -200,7 +225,7 @@ function Song() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

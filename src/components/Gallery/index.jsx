@@ -21,7 +21,7 @@ import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { BsMusicNoteList } from 'react-icons/bs';
@@ -32,14 +32,12 @@ const cx = classNames.bind(styles);
 
 function Gallery({ data, playLists }) {
   const context = useContext(LibraryContext);
-
   const moreBtnRef = useRef();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
-
   const storage = useContext(StorageContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -236,11 +234,11 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
 
       <div className={cx('modul-left_item-container-img')}>
-        <img
-          className={cx('modul-left_image')}
-          src={data.thumbNail || data.songs[0].thumbNail}
-          alt=""
-        />
+        {playLists ? (
+          <img className={cx('modul-left_image')} src={data.songs[0].thumbNail} alt="" />
+        ) : (
+          <img className={cx('modul-left_image')} src={data.thumbNail} alt="" />
+        )}
 
         {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
         <div className={cx('modul-left_backgroud')}></div>
@@ -331,10 +329,23 @@ function Gallery({ data, playLists }) {
         </div>
       </div>
 
-      <a href="/" className={cx('name-gallery')}>
-        {data.name}
-      </a>
-      <span className={cx('name-track')}>{data.artistName}</span>
+      {playLists || (
+        <>
+          <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
+
+      {playLists && (
+        <>
+          <Link to={`/${data.userId}/playlists`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
     </div>
   );
 }

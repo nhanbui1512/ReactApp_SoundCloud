@@ -169,6 +169,13 @@
   display: none;
 }
 .btn {
+  color: #333;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.box-btn .following {
   color: var(--orange-primary);
   border: 1px solid currentColor;
   border-radius: 4px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import classNames from 'classnames/bind';
 import styles from './DetailSong.module.scss';
@@ -16,25 +16,33 @@ import {
   faUserAlt,
   faChartBar,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getSongById } from 'api/songs';
+import { followUser, unfollowUser } from 'api/follow';
+import { StorageContext } from 'context/Storage';
+import { likeSong, unlikeSong } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
 function Song() {
-  const [followUser, setFollowUser] = useState(false);
+  const [followingUser, setFollowingUser] = useState(false);
   const [followSong, setFollowSong] = useState(false);
-  const [likeSong, setLikeSong] = useState(false);
+  const [likedSong, setLikedSong] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [song, setSong] = useState([]);
+  const [owner, setOwner] = useState([]);
+  const navigate = useNavigate();
+  const storage = useContext(StorageContext);
 
   let { id } = useParams();
   useEffect(() => {
     const getSong = async () => {
       const song = await getSongById(id);
-      setLikeSong(song.isLiked);
-      setFollowSong(song.isFollow);
+      setLikedSong(song.song.isLiked);
+      // setFollowSong(song.song.owner.isFollowed);
       setSong(song.song);
+      setOwner(song.song.owner);
+      setFollowingUser(song.song.owner.isFollowed);
     };
     getSong();
   }, [id]);
@@ -84,7 +92,49 @@ function Song() {
   };
 
   const handleLikeSong = () => {
-    setLikeSong(!likeSong);
+    if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
+    song.isLiked = !song.isLiked;
+    setLikedSong(!likedSong);
+
+    if (likedSong) {
+      unlikeSong(song.id)
+        .then((res) => {
+          setLikedSong(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLikedSong(true);
+        });
+    } else {
+      likeSong(song.id)
+        .then((res) => {
+          setLikedSong(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLikedSong(false);
+        });
+    }
+  };
+
+  const handleFollowing = async () => {
+    if (followingUser) {
+      setFollowingUser(!followingUser);
+      unfollowUser(owner.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setFollowingUser(true);
+        });
+    } else {
+      setFollowingUser(!followingUser);
+      followUser(owner.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setFollowingUser(false);
+        });
+    }
   };
 
   return (
@@ -114,7 +164,7 @@ function Song() {
           <div className={cx('info-song_desc')}>
             <div className={cx('nav-info-left')}>
               <div className={cx('group-btn_left')}>
-                <button onClick={() => handleLikeSong()} className={cx('', { active: likeSong })}>
+                <button onClick={() => handleLikeSong()} className={cx('', { active: likedSong })}>
                   {likeSong ? (
                     <>
                       <FontAwesomeIcon icon={faHeart} />
@@ -165,38 +215,34 @@ function Song() {
                   <FontAwesomeIcon icon={faHeart} />
                   <span>{song.likeCount}</span>
                 </div>
-                <div>
+                {/* <div>
                   <FontAwesomeIcon icon={faUserCheck} />
                   <span>{song.likeCount}</span>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className={cx('song-box')}>
               <div className={cx('song-box_playlist')}>
                 <Link to="/">
-                  <img
-                    className={cx('song-box_img')}
-                    src="https://nhanbui1512.github.io/Sound-Cloud-/assets/img/artworks-yukyFaBjTlbbBrn6-yjfdgg-t500x500.jpg"
-                    alt=""
-                  />
+                  <img className={cx('song-box_img')} src={owner.avatar} alt="" />
                 </Link>
                 <Link to="/" className={cx('playlist_name')}>
-                  Trending Music
+                  {owner.userName}
                 </Link>
                 <Link to="/" className={cx('playlist_countfollow')}>
                   <FontAwesomeIcon icon={faUser} />
-                  <span>534</span>
+                  <span>{owner.followCount}</span>
                   <FontAwesomeIcon className={cx('song-box_icon')} icon={faChartBar} />
-                  <span>4</span>
+                  <span>{song.playlistCount}</span>
                 </Link>
                 <div
                   onClick={() => {
-                    setFollowUser(!followUser);
+                    handleFollowing();
                   }}
-                  className={cx('playlist_btnfollow', { follow: followUser })}
+                  className={cx('playlist_btnfollow', { follow: followingUser })}
                 >
                   <div className={cx('playlist_btnfollow--auto')}>
-                    {followUser ? (
+                    {followingUser ? (
                       <>
                         <FontAwesomeIcon icon={faUserCheck} />
                         <span>Following</span>

@@ -18,6 +18,7 @@ import ItemSong from './ItemSong/ItemSong';
 import { EditPopup } from 'components/Playlist';
 import { useContext, useEffect, useState } from 'react';
 import { StorageContext } from 'context/Storage';
+import { followPlaylist, unfollowPlaylist } from 'api/follow';
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +28,7 @@ const PlaylistList = ({ dataItem, refresh }) => {
   const storage = useContext(StorageContext);
   const [totalRepeat, setTotalRepeat] = useState(0);
   const [totalLike, setTotalLike] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(dataItem.isFollowed);
 
   // tính tổng số bài hát mình đã like
   useEffect(() => {
@@ -106,6 +108,26 @@ const PlaylistList = ({ dataItem, refresh }) => {
     };
   }, [storage.audioRef, storage.playlistId, dataItem.id]);
 
+  const handleFollowing = async () => {
+    if (isFollowing) {
+      setIsFollowing(!isFollowing);
+      unfollowPlaylist(dataItem.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollowing(true);
+        });
+    } else {
+      setIsFollowing(!isFollowing);
+      followPlaylist(dataItem.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+          setIsFollowing(false);
+        });
+    }
+  };
+
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
       <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem} />
@@ -139,9 +161,21 @@ const PlaylistList = ({ dataItem, refresh }) => {
               <FontAwesomeIcon icon={faRepeat} />
               <span>{totalRepeat}</span>
             </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faPeopleArrows} />
-              <span>Follow</span>
+            <button
+              onClick={() => handleFollowing()}
+              className={cx('go-playlist-btn', { active: isFollowing })}
+            >
+              {isFollowing ? (
+                <>
+                  <FontAwesomeIcon icon={faPeopleArrows} />
+                  <span>Following</span>
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faPeopleArrows} />
+                  <span>Follow</span>
+                </>
+              )}
             </button>
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faLink} />

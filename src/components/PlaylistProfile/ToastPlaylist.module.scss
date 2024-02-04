@@ -183,3 +183,8 @@
 .group-btn_right span {
   margin-left: 4px;
 }
+
+.group-btn_right .active {
+  color: #f50;
+  border-color: currentColor;
+}

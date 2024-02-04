@@ -14,7 +14,6 @@ const Tracks = () => {
       try {
         const res = await apiHandlePlayList.getTrack(userId);
         setTrackList(res.data.data);
-        console.log(res.data.data);
       } catch (error) {
         console.error('error get data', error);
       }

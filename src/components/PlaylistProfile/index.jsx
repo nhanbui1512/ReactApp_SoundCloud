@@ -1,11 +1,10 @@
 import classNames from 'classnames/bind';
+import styles from './ToastPlaylist.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
   faHeart,
   faLink,
-  faRepeat,
-  faPeopleArrows,
   // faShare,
   // faEllipsis,
   // faSquareCaretUp,
@@ -13,7 +12,6 @@ import {
   faEdit,
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
-import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
 import { EditPopup } from 'components/Playlist';
 import { useContext, useEffect, useState } from 'react';
@@ -22,11 +20,10 @@ import { StorageContext } from 'context/Storage';
 const cx = classNames.bind(styles);
 
 const PlaylistList = ({ dataItem, refresh }) => {
-  console.log('in ra dataItem: ', dataItem);
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const storage = useContext(StorageContext);
-  const [totalRepeat, setTotalRepeat] = useState(0);
   const [totalLike, setTotalLike] = useState(0);
 
   // tính tổng số bài hát mình đã like
@@ -35,15 +32,6 @@ const PlaylistList = ({ dataItem, refresh }) => {
       return acc + curr.likeCount;
     }, 0);
     setTotalLike(newTotalLike);
-  }, [dataItem.songs]);
-
-
-  // tính tổng số lần repeate của cả playlist
-  useEffect(() => {
-    const newTotalRepeat = dataItem.songs?.reduce((acc, curr) => {
-      return acc + curr.numberOfLoop;
-    }, 0);
-    setTotalRepeat(newTotalRepeat);
   }, [dataItem.songs]);
 
   const HandleCloseEdit = () => {
@@ -124,8 +112,8 @@ const PlaylistList = ({ dataItem, refresh }) => {
             <div className={cx('list-music-container')}>
               <ul className={cx(['list-music-container_scroll', 'col'])}>
                 {dataItem.songs?.map((itemMusic, index) => (
-                  <ItemSong itemMusic={itemMusic} key={index} />
-                ))}
+                    <ItemSong itemMusic={itemMusic} key={index} />
+                  ))}
               </ul>
             </div>
           </div>
@@ -136,14 +124,15 @@ const PlaylistList = ({ dataItem, refresh }) => {
               <FontAwesomeIcon icon={faHeart} />
               <span>{totalLike}</span>
             </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faRepeat} />
-              <span>{totalRepeat}</span>
-            </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faPeopleArrows} />
-              <span>Follow</span>
-            </button>
+            {/* <button 
+              className={cx('go-playlist-btn')}
+              // onClick={() => {
+              //   setPopperShare(true);
+              // }}
+            >
+              <FontAwesomeIcon icon={faShare} />
+              <span>Share</span>
+            </button> */}
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faLink} />
               <span>Copy Link</span>

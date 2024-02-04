@@ -82,7 +82,7 @@ const Sidebar = () => {
               <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
               <span className={cx('sidebar-icon')}>{totalLike}</span>
             </div>
-            <Link to="/libary/Likes">View All</Link>
+            <Link to={`/libary/Likes`}>View All</Link>
           </div>
           <div className={cx('sidebar__modul-container')}>
             {/* <SidebarHeartUL  data={listSongLiked} /> */}

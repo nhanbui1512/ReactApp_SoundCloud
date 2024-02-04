@@ -20,6 +20,8 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist';
+import apiHandlePlayList from 'api/apiHandlePlayList';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const TrackSong = ({ dataSong }) => {
@@ -27,14 +29,29 @@ const TrackSong = ({ dataSong }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
-  const [isRepost, setRePost] = useState(false);
+  const [isRepost] = useState(false);
   const [isShare, setShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
+  const [deleteSong, setDeleteSong] = useState(false);
 
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
+  const [isLiked] = useState(dataSong.isLiked || false);
   //const navigate = useNavigate();
-
   const storage = useContext(StorageContext);
+  //const songId = useParams();
+  const handleDeteSong = async () => {
+    try {
+      if (!deleteSong) {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(true);
+        toast.success('bạn vừa xóa bài hát');
+      } else {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
@@ -138,9 +155,9 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setIsLiked(!isLiked);
-                  }}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
@@ -151,13 +168,13 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setRePost(!isRepost);
-                  }}
+                  // onClick={() => {
+                  //   setRePost(!isRepost);
+                  // }}
                 >
                   <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
 
-                  <span className={cx('btn-option-icon')}>{dataSong.repost}</span>
+                  <span className={cx('btn-option-icon')}>{dataSong.numberOfLoop}</span>
                 </button>
               </>
             </Tippy>
@@ -210,6 +227,13 @@ const TrackSong = ({ dataSong }) => {
                       onClick={() => setOpenAddToPlaylist(true)}
                     >
                       Add to Playlist
+                    </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      onClick={handleDeteSong}
+                    >
+                      Delete
                     </MenuItem>
                   </Wrapper>
                 );

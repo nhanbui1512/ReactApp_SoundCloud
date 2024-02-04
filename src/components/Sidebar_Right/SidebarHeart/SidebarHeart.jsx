@@ -9,7 +9,6 @@ import {
   faPause,
   faPlay,
   faRepeat,
-  //faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -18,8 +17,6 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState, useContext } from 'react';
-// import CustomToast from 'components/CustomToast/CustomToast';
-// import { toast } from 'react-toastify';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);

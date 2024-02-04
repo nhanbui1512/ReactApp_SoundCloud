@@ -80,10 +80,10 @@ function Post({ data }) {
     }
   };
   return (
-    <Link to={`/${data.id}`} className={cx('modul-left_item')}>
-      <div className={cx('modul-left_item-container-img')}>
+    <div className={cx('modul-left_item')}>
+      <Link to={`/${data.id}`} className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.avatar} alt="" />
-      </div>
+      </Link>
 
       <a href="/" className={cx('name-post')}>
         {data.userName}
@@ -106,7 +106,7 @@ function Post({ data }) {
           </div>
         </div>
       </span>
-    </Link>
+    </div>
   );
 }
 export default Post;

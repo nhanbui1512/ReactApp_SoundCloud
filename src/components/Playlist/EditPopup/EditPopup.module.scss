@@ -1,3 +1,27 @@
+.tab-select {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  
+  .tab-button {
+      padding: 8px 8px;
+      margin-bottom: 4px;
+      font-size: large;
+      font-weight: bold;
+      background-color: transparent;
+  }
+  .tab-button:hover {
+      margin-bottom: 2px;
+      border-bottom: 2px solid #000;
+      cursor: pointer;
+  }
+  .tab-button:disabled {
+      color: #f50;
+      margin-bottom: 2px;
+      border-bottom: 2px solid #f50;
+  }
+}
+
 .edit-playlist {
   display: flex;
   flex-direction: column;
@@ -93,4 +117,36 @@
   background-color: #f50;
   border-radius: 3px;
   border-color: #f50;
+}
+
+.delete-playlist {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px;
+  gap: 4px;
+}
+
+.delete-confirm {
+  display: flex;
+  width: 100%;
+  font-weight: 100;
+  font-size: 14px;
+  padding: 2px 7px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button-delete {
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 4px 10px;
+  color: #fff;
+  background-color: #f50;
+  border-radius: 3px;
+  border-color: #f50;
+}
+.button-delete:disabled {
+  color: darkgray;
+  background-color: #ccc;
 }

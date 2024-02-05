@@ -34,7 +34,7 @@ const Playlists = () => {
         <PlaylistList dataItem={playListItem} key={index} refresh={fetchPlayList} />
       ))}
 
-      {playListSong.length > 0 && (
+      {playListSong.length === 0 && (
         <div className={cx('info-music-list')}>
           <div className={cx('router-view')}></div>
           <p>Seems a little quiet over here</p>

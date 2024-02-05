@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { BsMusicNoteList } from 'react-icons/bs';
-import { PlaylistPopup } from 'components/Playlist';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);

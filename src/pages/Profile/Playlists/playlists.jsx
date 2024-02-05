@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import apiHandlePlayList from 'api/apiHandlePlayList';
 import PlaylistList from 'components/PlaylistProfile';
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
@@ -17,7 +17,7 @@ const Playlists = () => {
   const fetchPlayList = async () => {
     try {
       const res = await apiHandlePlayList.getPlayList(id);
-      setPlaylistSong(res.data.data);
+      setPlaylistSong(res.data.data.playlists);
     } catch (error) {
       console.log(error.message);
     }
@@ -30,18 +30,15 @@ const Playlists = () => {
 
   return (
     <>
-      {playListSong.playlists?.length > 0 ? (
-        playListSong.playlists?.map((playListItem, index) => (
-          <PlaylistList dataItem={playListItem} key={index} refresh={fetchPlayList} />
-        ))
-      ) : (
+      {playListSong.map((playListItem, index) => (
+        <PlaylistList dataItem={playListItem} key={index} refresh={fetchPlayList} />
+      ))}
+
+      {playListSong.length > 0 && (
         <div className={cx('info-music-list')}>
           <div className={cx('router-view')}></div>
           <p>Seems a little quiet over here</p>
           <p className={cx('p-title')}>Create playlist right now.</p>
-          {/* <Link to="/upload" className={cx('btn-route-upload')}>
-            Upload
-          </Link> */}
         </div>
       )}
     </>

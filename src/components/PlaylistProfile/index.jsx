@@ -124,7 +124,11 @@ const PlaylistList = ({ dataItem, refresh }) => {
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              <img src={dataItem.songs[0].thumbNail || ''} alt={dataItem.name} />
+              {dataItem.songs[0] ? (
+                <img src={dataItem.songs[0]?.thumbNail || ''} alt={dataItem.name} />
+              ) : (
+                <div>{dataItem.name}</div>
+              )}
               <span onClick={handlePlay} className={cx('list-music_playbtn')}>
                 <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
               </span>

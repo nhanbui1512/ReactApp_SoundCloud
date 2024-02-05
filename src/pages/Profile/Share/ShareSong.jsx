@@ -6,29 +6,19 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {twitter,facebook,tumblr,pinterest,email} from './icon'
 const cx = classNames.bind(styles);
 
-function Share({ setPopperShare = {} }) {
+function ShareSong({ dataShareSong, setPopperShare = {} }) {
 
   const [shareLink, setShareLink] = useState(''); 
   const inputRef = useRef(null);
 
   useEffect(() => {
-    setShareLink(window.location.href );
-  }, []);
+    setShareLink(`http://localhost:3001/song/${dataShareSong.id}`);
+  }, [dataShareSong.id]);
 
   const handleCopyLink = () => {
     inputRef.current.select();
     document.execCommand('copy');
-    // if (inputRef.current) {
-    //   // Lấy đường link hiện tại từ trình duyệt
-    //   const currentUrl = window.location.href;
-
-    //   // Gán đường link vào input để có thể copy
-    //   inputRef.current.value = currentUrl;
-
-    //   // Copy đường link vào clipboard
-    //   inputRef.current.select();
-    //   document.execCommand('copy');
-    // }
+    
   };
  
   return (
@@ -63,4 +53,4 @@ function Share({ setPopperShare = {} }) {
     </div>
   );
 }
-export default Share;
+export default ShareSong;

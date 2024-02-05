@@ -1,19 +1,14 @@
 import classNames from 'classnames/bind';
+import styles from './ToastPlaylist.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
   faHeart,
   faLink,
-  faRepeat,
-  faPeopleArrows,
-  // faShare,
-  // faEllipsis,
-  // faSquareCaretUp,
   faBars,
   faEdit,
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
-import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
 import { EditPopup } from 'components/Playlist';
 import { useContext, useEffect, useState } from 'react';
@@ -25,8 +20,8 @@ const cx = classNames.bind(styles);
 const PlaylistList = ({ dataItem, refresh }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const storage = useContext(StorageContext);
-  const [totalRepeat, setTotalRepeat] = useState(0);
   const [totalLike, setTotalLike] = useState(0);
   const [isFollowing, setIsFollowing] = useState(dataItem.isFollowed);
 
@@ -36,14 +31,6 @@ const PlaylistList = ({ dataItem, refresh }) => {
       return acc + curr.likeCount;
     }, 0);
     setTotalLike(newTotalLike);
-  }, [dataItem.songs]);
-
-  // tính tổng số lần repeate của cả playlist
-  useEffect(() => {
-    const newTotalRepeat = dataItem.songs?.reduce((acc, curr) => {
-      return acc + curr.numberOfLoop;
-    }, 0);
-    setTotalRepeat(newTotalRepeat);
   }, [dataItem.songs]);
 
   const HandleCloseEdit = () => {
@@ -157,26 +144,15 @@ const PlaylistList = ({ dataItem, refresh }) => {
               <FontAwesomeIcon icon={faHeart} />
               <span>{totalLike}</span>
             </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faRepeat} />
-              <span>{totalRepeat}</span>
-            </button>
-            <button
-              onClick={() => handleFollowing()}
-              className={cx('go-playlist-btn', { active: isFollowing })}
+            {/* <button 
+              className={cx('go-playlist-btn')}
+              // onClick={() => {
+              //   setPopperShare(true);
+              // }}
             >
-              {isFollowing ? (
-                <>
-                  <FontAwesomeIcon icon={faPeopleArrows} />
-                  <span>Following</span>
-                </>
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faPeopleArrows} />
-                  <span>Follow</span>
-                </>
-              )}
-            </button>
+              <FontAwesomeIcon icon={faShare} />
+              <span>Share</span>
+            </button> */}
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faLink} />
               <span>Copy Link</span>

@@ -33,10 +33,9 @@ const FeedSong = ({ dataSong }) => {
   const [isCopy, setCopy] = useState(false);
   const [popperShare, setPopperShare] = useState(false);
   const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
-  
+
   const storage = useContext(StorageContext);
   const context = useContext(LibraryContext);
-
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
@@ -152,7 +151,7 @@ const FeedSong = ({ dataSong }) => {
         });
       }
     }
-  }
+  };
 
   return (
     <>
@@ -259,7 +258,6 @@ const FeedSong = ({ dataSong }) => {
           </div>
         </div>
         {popperShare && <ShareSong dataShareSong={dataSong} setPopperShare={setPopperShare} />}
-
       </li>
     </>
   );

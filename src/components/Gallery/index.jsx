@@ -235,7 +235,7 @@ function Gallery({ data, playLists }) {
 
       <div className={cx('modul-left_item-container-img')}>
         {playLists ? (
-          <img className={cx('modul-left_image')} src={data.songs[0].thumbNail} alt="" />
+          <img className={cx('modul-left_image')} src={data.songs[0]?.thumbNail || ''} alt="" />
         ) : (
           <img className={cx('modul-left_image')} src={data.thumbNail} alt="" />
         )}

@@ -13,7 +13,6 @@ import ItemSong from './ItemSong/ItemSong';
 import { EditPopup } from 'components/Playlist/EditPopup/EditPopup';
 import { useContext, useEffect, useState } from 'react';
 import { StorageContext } from 'context/Storage';
-import { followPlaylist, unfollowPlaylist } from 'api/follow';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +22,6 @@ const PlaylistList = ({ dataItem, refresh }) => {
 
   const storage = useContext(StorageContext);
   const [totalLike, setTotalLike] = useState(0);
-  const [isFollowing, setIsFollowing] = useState(dataItem.isFollowed);
 
   // tính tổng số bài hát mình đã like
   useEffect(() => {
@@ -95,26 +93,6 @@ const PlaylistList = ({ dataItem, refresh }) => {
     };
   }, [storage.audioRef, storage.playlistId, dataItem.id]);
 
-  const handleFollowing = async () => {
-    if (isFollowing) {
-      setIsFollowing(!isFollowing);
-      unfollowPlaylist(dataItem.id)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-          setIsFollowing(true);
-        });
-    } else {
-      setIsFollowing(!isFollowing);
-      followPlaylist(dataItem.id)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-          setIsFollowing(false);
-        });
-    }
-  };
-
   return (
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
       <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem} />
@@ -124,7 +102,7 @@ const PlaylistList = ({ dataItem, refresh }) => {
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              <img src={dataItem.songs[0].thumbNail || ''} alt={dataItem.name} />
+              <img src={dataItem.songs[0]?.thumbNail || ''} alt={dataItem.name} />
               <span onClick={handlePlay} className={cx('list-music_playbtn')}>
                 <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
               </span>

@@ -18,11 +18,11 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-import { PlaylistPopup } from 'components/Playlist';
 import { Link } from 'react-router-dom';
 import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
 import ShareSong from 'pages/Profile/Share/ShareSong';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {

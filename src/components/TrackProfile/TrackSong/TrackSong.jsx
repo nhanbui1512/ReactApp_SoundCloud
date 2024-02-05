@@ -18,7 +18,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-import { PlaylistPopup } from 'components/Playlist';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import apiHandlePlayList from 'api/apiHandlePlayList';
 import { toast } from 'react-toastify';
 import { LibraryContext } from 'context/Library';

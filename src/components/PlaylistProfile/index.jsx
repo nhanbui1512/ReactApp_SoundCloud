@@ -10,7 +10,7 @@ import {
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
 import ItemSong from './ItemSong/ItemSong';
-import { EditPopup } from 'components/Playlist';
+import { EditPopup } from 'components/Playlist/EditPopup/EditPopup';
 import { useContext, useEffect, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';

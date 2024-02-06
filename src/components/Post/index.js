@@ -1,13 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './Post.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { followUser, unfollowUser } from 'api/follow';
 import { LibraryContext } from 'context/Library';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -43,7 +44,13 @@ function Post({ data }) {
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          newUsers = newUsers.filter((User) => User.id !== data.id);
+          newUsers = newUsers.map((User) => {
+            if (User.id === data.id) {
+              User.isFollow = !User.isFollow;
+              // User.countFollow -= 1;
+            }
+            return User;
+          });
           return newUsers;
         });
       }
@@ -58,7 +65,13 @@ function Post({ data }) {
       if (context) {
         context.setDataUsers((prev) => {
           var newUsers = [...prev];
-          newUsers = newUsers.push(data);
+          newUsers = newUsers.map((User) => {
+            if (User.id === data.id) {
+              User.isFollow = !User.isFollow;
+              // User.countFollow += 1;
+            }
+            return User;
+          });
           return newUsers;
         });
       }
@@ -66,13 +79,13 @@ function Post({ data }) {
   };
   return (
     <div className={cx('modul-left_item')}>
-      <div className={cx('modul-left_item-container-img')}>
+      <Link to={`/${data.id}`} className={cx('modul-left_item-container-img')}>
         <img className={cx('modul-left_image')} src={data.avatar} alt="" />
-      </div>
+      </Link>
 
-      <a href="/" className={cx('name-post')}>
+      <Link to={`/${data.id}`} className={cx('name-post')}>
         {data.userName}
-      </a>
+      </Link>
       <span className={cx('name-post')}>
         <div>
           <FontAwesomeIcon className={cx('')} icon={faUserAlt} />
@@ -86,8 +99,17 @@ function Post({ data }) {
             }}
             className={cx('btn', { following: isFollowing })}
           >
-            <FontAwesomeIcon className={cx('')} icon={faUserCheck} />
-            <span className={cx('followers-post')}>Following</span>
+            {isFollowing ? (
+              <>
+                <FontAwesomeIcon className={cx('')} icon={faUserCheck} />
+                <span className={cx('followers-post')}>Following</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon className={cx('')} icon={faUserPlus} />
+                <span className={cx('followers-post')}>Follow</span>
+              </>
+            )}
           </div>
         </div>
       </span>

@@ -8,7 +8,6 @@ import {
   faListUl,
   faPause,
   faPlay,
-  faRepeat,
   faShare,
   faLink,
 } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +18,13 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
-import { PlaylistPopup } from 'components/Playlist';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
+import apiHandlePlayList from 'api/apiHandlePlayList';
+import { toast } from 'react-toastify';
+import { LibraryContext } from 'context/Library';
+import { likeSong, unlikeSong } from 'api/songs';
+import { Link } from 'react-router-dom';
+import ShareSong from 'pages/Profile/Share/ShareSong';
 
 const cx = classNames.bind(styles);
 const TrackSong = ({ dataSong }) => {
@@ -27,14 +32,65 @@ const TrackSong = ({ dataSong }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
-  const [isRepost, setRePost] = useState(false);
-  const [isShare, setShare] = useState(false);
+  const [isShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
-
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
-  //const navigate = useNavigate();
+  const [deleteSong, setDeleteSong] = useState(false);
+  const [popperShare, setPopperShare] = useState(false);
 
   const storage = useContext(StorageContext);
+  const context = useContext(LibraryContext);
+  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
+
+  // handle like /unlike
+  const handleLike = () => {
+    if (isLiked) {
+      unlikeSong(dataSong.id)
+        .then((res) => {
+          setIsLiked(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(true);
+        });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [...prev];
+          newSongs = newSongs.filter((song) => song.id !== dataSong.id);
+          return newSongs;
+        });
+      }
+    } else {
+      likeSong(dataSong.id)
+        .then((res) => {
+          setIsLiked(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(false);
+        });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [dataSong, ...prev];
+          return newSongs;
+        });
+      }
+    }
+  };
+
+  const handleDeteSong = async () => {
+    try {
+      if (!deleteSong) {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(true);
+        toast.success('bạn vừa xóa bài hát');
+      } else {
+        await apiHandlePlayList.deteleTrack(dataSong.id);
+        setDeleteSong(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
@@ -118,7 +174,9 @@ const TrackSong = ({ dataSong }) => {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={dataSong} />
 
       <li className={cx('feed__modul-list-item')}>
-        <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+        <Link to={`/song/${dataSong.id}`}>
+          <img src={dataSong.thumbNail || ''} alt="" className={cx('feed__modul-item-image')} />
+        </Link>
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
             <div className={cx('feed__modul-item-play')} onClick={handlePlay}>
@@ -138,26 +196,15 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  // }}
                   onClick={() => {
-                    setIsLiked(!isLiked);
+                    handleLike();
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
-                </button>
-              </>
-            </Tippy>
-            <Tippy animation={'scale-subtle'} content={'Repost'}>
-              <>
-                <button
-                  className={cx('feed__modul-option-btn')}
-                  onClick={() => {
-                    setRePost(!isRepost);
-                  }}
-                >
-                  <FontAwesomeIcon className={cx('', { reposted: isRepost })} icon={faRepeat} />
-
-                  <span className={cx('btn-option-icon')}>{dataSong.repost}</span>
                 </button>
               </>
             </Tippy>
@@ -166,7 +213,7 @@ const TrackSong = ({ dataSong }) => {
                 <button
                   className={cx('feed__modul-option-btn')}
                   onClick={() => {
-                    setShare(!isShare);
+                    setPopperShare(true);
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { shared: isShare })} icon={faShare} />
@@ -211,6 +258,13 @@ const TrackSong = ({ dataSong }) => {
                     >
                       Add to Playlist
                     </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      onClick={handleDeteSong}
+                    >
+                      Delete
+                    </MenuItem>
                   </Wrapper>
                 );
               }}
@@ -222,6 +276,7 @@ const TrackSong = ({ dataSong }) => {
             </HeadlessTippy>
           </div>
         </div>
+        {popperShare && <ShareSong dataShareSong={dataSong} setPopperShare={setPopperShare} />}
       </li>
     </>
   );

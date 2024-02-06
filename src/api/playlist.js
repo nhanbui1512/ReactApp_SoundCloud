@@ -158,3 +158,12 @@ export async function getUsersFollowingPlaylist(playlistId) {
     throw error;
   }
 }
+
+export async function getRandom(quantity) {
+  try {
+    const res = await axiosClient.get(`/playlist/random?quantity=${quantity}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

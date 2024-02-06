@@ -1,30 +1,35 @@
 import classNames from 'classnames/bind';
+import styles from './ToastPlaylist.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
   faHeart,
   faLink,
-  faRepeat,
-  faPeopleArrows,
-  // faShare,
-  // faEllipsis,
-  // faSquareCaretUp,
   faBars,
   faEdit,
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
-import styles from './ToastPlaylist.module.scss';
 import ItemSong from './ItemSong/ItemSong';
-import { EditPopup } from 'components/Playlist';
+import { EditPopup } from 'components/Playlist/EditPopup/EditPopup';
 import { useContext, useEffect, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
-const ToastPlaylist = ({ dataItem, refresh }) => {
+const PlaylistList = ({ dataItem, refresh }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const storage = useContext(StorageContext);
+  const [totalLike, setTotalLike] = useState(0);
+
+  // tính tổng số bài hát mình đã like
+  useEffect(() => {
+    const newTotalLike = dataItem.songs?.reduce((acc, curr) => {
+      return acc + curr.likeCount;
+    }, 0);
+    setTotalLike(newTotalLike);
+  }, [dataItem.songs]);
 
   const HandleCloseEdit = () => {
     setOpenEdit(false);
@@ -92,17 +97,12 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
     <div className={cx(['border-bottom', 'margin-bottom-34', 'col'])}>
       <EditPopup open={openEdit} onClose={HandleCloseEdit} playlistData={dataItem} />
       <p>{dataItem.name}</p>
-      <h2 className={cx('modul-left_title')}>The Upload</h2>
       <p className={cx('modul-left_describe')}>Newly posted tracks. Just for you</p>
       <div className={cx(['col', 'relative'])}>
         <div className={cx(['list-music', 'col'])}>
           <div className={cx('row')}>
             <div className={cx(['list-music_image', 'relative'])}>
-              {dataItem.songs[0] ? (
-                <img src={dataItem.songs[0]?.thumbNail || ''} alt={dataItem.name} />
-              ) : (
-                <div>{dataItem.name}</div>
-              )}
+              <img src={dataItem.songs[0]?.thumbNail || ''} alt={dataItem.name} />
               <span onClick={handlePlay} className={cx('list-music_playbtn')}>
                 <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
               </span>
@@ -120,16 +120,17 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
           <div className={cx('group-btn_right')}>
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faHeart} />
-              <span>1,186</span>
+              <span>{totalLike}</span>
             </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faRepeat} />
-              <span>21</span>
-            </button>
-            <button className={cx('go-playlist-btn')}>
-              <FontAwesomeIcon icon={faPeopleArrows} />
-              <span>Follow</span>
-            </button>
+            {/* <button 
+              className={cx('go-playlist-btn')}
+              // onClick={() => {
+              //   setPopperShare(true);
+              // }}
+            >
+              <FontAwesomeIcon icon={faShare} />
+              <span>Share</span>
+            </button> */}
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faLink} />
               <span>Copy Link</span>
@@ -149,4 +150,4 @@ const ToastPlaylist = ({ dataItem, refresh }) => {
   );
 };
 
-export default ToastPlaylist;
+export default PlaylistList;

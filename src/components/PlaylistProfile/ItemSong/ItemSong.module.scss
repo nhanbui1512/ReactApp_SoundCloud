@@ -50,15 +50,15 @@
   display: flex;
 }
 
-.font-11 {
+.font-11, .btn-option-icon {
   font-size: 11px !important;
   line-height: 1.2rem;
-  margin: 0 2px;
+  margin: 0 3px;
 }
 
 .group-btn_right {
   position: absolute;
-  left: 50px;
+  left: 85px;
   top: -2px;
   background-color: rgba(255, 255, 255, 0);
   display: none;
@@ -77,4 +77,11 @@
 
 .list-music-item:hover .group-btn_right {
   display: flex;
+}
+
+.liked,
+.reposted,
+.shared,
+.copyed {
+  color: var(--orange-primary);
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import apiHandlePlayList from 'api/apiHandlePlayList';
-import ToastTrackPlaylist from 'components/ToastTrack';
 import { useParams } from 'react-router-dom';
+import TrackPlaylist from 'components/TrackProfile';
+//import TrackPlaylist from 'components/TrackProfile';
 
 //const cx = classNames.bind(styles);
 
@@ -21,7 +22,7 @@ const Tracks = () => {
   }, [userId]);
   return (
     <>
-      <ToastTrackPlaylist trackList={trackList} />
+      <TrackPlaylist trackList={trackList} />
     </>
   );
 };

@@ -9,7 +9,6 @@ import {
   faPause,
   faPlay,
   faRepeat,
-  //faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -18,19 +17,21 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState, useContext } from 'react';
-// import CustomToast from 'components/CustomToast/CustomToast';
-// import { toast } from 'react-toastify';
 import { StorageContext } from 'context/Storage';
+import { LibraryContext } from 'context/Library';
+import { likeSong, unlikeSong } from 'api/songs';
+
 
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ songsLiked }) => {
   const [moreMenu, setMoreMenu] = useState(false);
   const moreBtnRef = useRef();
-  const [isLiked, setIsLiked] = useState(songsLiked.isLiked);
+  const [isLiked, setIsLiked] = useState(songsLiked.isLiked || false);
   const [isPlay, setIsPlay] = useState(false);
   //const [favoriteSongs, setFavoriteSongs] = useState([]);
 
   const storage = useContext(StorageContext);
+  const context = useContext(LibraryContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
@@ -118,6 +119,43 @@ const SidebarHeart = ({ songsLiked }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+
+  // handle like /unlike
+  const handleLike = () => {
+    if (isLiked) {
+      unlikeSong(songsLiked.id)
+        .then((res) => {
+          setIsLiked(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(true);
+        });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [...prev];
+          newSongs = newSongs.filter((song) => song.id !== songsLiked.id);
+          return newSongs;
+        });
+      }
+    } else {
+      likeSong(songsLiked.id)
+        .then((res) => {
+          setIsLiked(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLiked(false);
+        });
+      if (context) {
+        context.setDataSongLikes((prev) => {
+          var newSongs = [songsLiked, ...prev];
+          return newSongs;
+        });
+      }
+    }
+  }
   return (
     <>
       <li className={cx('sidebar__modul-list-item')}>
@@ -156,9 +194,12 @@ const SidebarHeart = ({ songsLiked }) => {
               <>
                 <span
                   className={cx('sidebar__modul-option-btn')}
+                  // onClick={() => {
+                  //   setIsLiked(!isLiked);
+                  //   //addToFavorites(favoriteSongs);
+                  // }}
                   onClick={() => {
-                    setIsLiked(!isLiked);
-                    //addToFavorites(favoriteSongs);
+                    handleLike();
                   }}
                 >
                   <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />

@@ -37,7 +37,6 @@ function Profile() {
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
-    navigate('/profile/all');
   }, [navigate]);
 
   return (

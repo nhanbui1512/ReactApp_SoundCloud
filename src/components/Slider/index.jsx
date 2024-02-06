@@ -48,10 +48,7 @@ function Slider({ data, playLists }) {
           })}
         >
           {data.map((item, index) => (
-            <Gallery key={index} data={item} />
-          ))}
-          {playLists.map((item, index) => (
-            <Gallery key={index} data={item} playLists={[]} />
+            <Gallery playLists={playLists} key={index} data={item} />
           ))}
         </div>
       </div>

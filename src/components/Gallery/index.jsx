@@ -21,25 +21,23 @@ import { AddToList } from 'components/Icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { BsMusicNoteList } from 'react-icons/bs';
-import { PlaylistPopup } from 'components/Playlist';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);
 
 function Gallery({ data, playLists }) {
   const context = useContext(LibraryContext);
-
   const moreBtnRef = useRef();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
-
   const storage = useContext(StorageContext);
 
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -47,12 +45,36 @@ function Gallery({ data, playLists }) {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
 
-    // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
-    if (storage.currentMusic.id !== data.id) {
-      storage.setCurrentPlayList([data]);
-      storage.setCurrentMusic(data);
-      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
+    // nếu dữ liệu truyền vào gallery là playlist
+    if (!playLists) {
+      // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
+      if (storage.currentMusic.id !== data.id) {
+        storage.setCurrentPlayList([data]);
+        storage.setCurrentMusic(data);
+        if (storage.playlistId !== -1) storage.setPlaylistId(-1);
 
+        const playMusic = (event) => {
+          event.target.play();
+          setIsPlay(true);
+          audioTag.removeEventListener('loadeddata', playMusic);
+        };
+        audioTag.addEventListener('loadeddata', playMusic);
+        return; // thoát khỏi hàm
+      }
+
+      // Nếu đang bài đang phát giống với bài của gallary
+      if (audioTag.paused) {
+        // Đang dừng thì hiển thị nút Play
+        audioTag.play();
+        // setIsPlay(true);
+      } else {
+        // Đang phát thì hiển thị nút pause
+        audioTag.pause();
+        // setIsPlay(false);
+      }
+    } else {
+      storage.setCurrentPlayList(data.songs);
+      storage.setCurrentMusic(data.songs[0]);
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -60,17 +82,6 @@ function Gallery({ data, playLists }) {
       };
       audioTag.addEventListener('loadeddata', playMusic);
       return; // thoát khỏi hàm
-    }
-
-    // Nếu đang bài đang phát giống với bài của gallary
-    if (audioTag.paused) {
-      // Đang dừng thì hiển thị nút Play
-      audioTag.play();
-      // setIsPlay(true);
-    } else {
-      // Đang phát thì hiển thị nút pause
-      audioTag.pause();
-      // setIsPlay(false);
     }
   };
 
@@ -150,24 +161,37 @@ function Gallery({ data, playLists }) {
   const handleAddNextUp = () => {
     var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
 
-    // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
-    if (storage.currentPlayList.find((music) => music.id === data.id)) {
-      var indexOfSong = storage.currentPlayList.indexOf(data);
+    if (!playLists) {
+      // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
+      if (storage.currentPlayList.find((music) => music.id === data.id)) {
+        var indexOfSong = storage.currentPlayList.indexOf(data);
 
-      storage.setCurrentPlayList((prev) => {
-        var newState = [...prev];
-        changePosition(newState, indexOfSong, indexPlaying + 1);
-        return newState;
-      });
+        storage.setCurrentPlayList((prev) => {
+          var newState = [...prev];
+          changePosition(newState, indexOfSong, indexPlaying + 1);
+          return newState;
+        });
+      } else {
+        // ngược lại -> thêm vào sau bài đang phát
+
+        if ((indexPlaying === storage.currentPlayList.length - 1) === 0) {
+          return storage.setCurrentPlayList((prev) => {
+            var newState = [...prev];
+            newState.push(data);
+            return newState;
+          });
+        }
+        var target = indexPlaying + 1;
+
+        storage.setCurrentPlayList((prev) => {
+          var newState = [...prev];
+          newState.splice(target, 0, data);
+          return newState;
+        });
+      }
     } else {
-      // ngược lại -> thêm vào sau bài đang phát
-
-      var target = indexPlaying + 1;
-
       storage.setCurrentPlayList((prev) => {
-        var newState = [...prev];
-        newState.splice(target, 0, data);
-        return newState;
+        return [...prev, ...data.songs];
       });
     }
   };
@@ -210,11 +234,11 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
 
       <div className={cx('modul-left_item-container-img')}>
-        <img
-          className={cx('modul-left_image')}
-          src={data.thumbNail || data.songs[0].thumbNail}
-          alt=""
-        />
+        {playLists ? (
+          <img className={cx('modul-left_image')} src={data.songs[0]?.thumbNail || ''} alt="" />
+        ) : (
+          <img className={cx('modul-left_image')} src={data.thumbNail} alt="" />
+        )}
 
         {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
         <div className={cx('modul-left_backgroud')}></div>
@@ -305,10 +329,23 @@ function Gallery({ data, playLists }) {
         </div>
       </div>
 
-      <a href="/" className={cx('name-gallery')}>
-        {data.name}
-      </a>
-      <span className={cx('name-track')}>{data.artistName}</span>
+      {playLists || (
+        <>
+          <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
+
+      {playLists && (
+        <>
+          <Link to={`/${data.userId}/playlists`} className={cx('name-gallery')}>
+            {data.name}
+          </Link>
+          <span className={cx('name-track')}>{data.artistName}</span>
+        </>
+      )}
     </div>
   );
 }

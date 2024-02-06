@@ -30,8 +30,12 @@ function Information({ data }) {
     }, 300);
   };
 
-  const hanleFollow = () => {
-    if (!storage.currentUser) navigate('/lofin');
+  const handleFollow = () => {
+    if (!storage.currentUser) {
+      navigate('/login');
+      return;
+    }
+
     if (!isFollowed) {
       followUser(data.owner.id).then((res) => {
         setisFollowed(!isFollowed);
@@ -101,7 +105,7 @@ function Information({ data }) {
           </Link>
         </div>
         <div className={cx('text-wrap')}>
-          <Link href="/oh-putitbackon" className={cx('song')} title="putitbackon">
+          <Link to={`/song/${data.id}`} className={cx('song')} title="putitbackon">
             {data.name}
           </Link>
         </div>
@@ -119,7 +123,7 @@ function Information({ data }) {
           </div>
         </Tippy>
         <Tippy offset={[0, 8]} render={() => <div className={cx('like-tippy')}>Follow</div>}>
-          <div onClick={hanleFollow} className={cx('action-btn', { isActive: isFollowed })}>
+          <div onClick={handleFollow} className={cx('action-btn', { isActive: isFollowed })}>
             <FontAwesomeIcon
               className={cx('action-icon')}
               icon={isFollowed ? faUserCheck : faUserPlus}

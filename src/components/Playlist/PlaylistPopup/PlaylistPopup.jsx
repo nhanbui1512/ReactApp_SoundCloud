@@ -53,7 +53,6 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   const RefreshPlaylist = () => {
     getPlaylistsByUserId(userId)
       .then((result) => {
-        console.log(result)
         setMyPlaylist(result.data.playlists.sort((a, b) => a.id - b.id));
       })
       .catch((error) => console.log(error));

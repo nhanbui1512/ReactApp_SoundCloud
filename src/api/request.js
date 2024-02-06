@@ -1,6 +1,6 @@
 import axios from 'axios';
 const request = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://ancient-springs-85853-62c74127a4a9.herokuapp.com',
 });
 
 export const get = async (path, options = {}) => {

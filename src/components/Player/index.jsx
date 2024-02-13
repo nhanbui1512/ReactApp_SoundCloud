@@ -11,13 +11,13 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { IoIosRepeat } from 'react-icons/io';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { BsRepeat1 } from 'react-icons/bs';
 import Information from './Information';
 import 'tippy.js/animations/scale.css';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { StorageContext } from 'context/Storage';
-import { increaseListenCount } from 'api/songs';
+import { increaseListenCount, increaseLoopCount } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
@@ -59,6 +59,18 @@ function Player() {
   };
 
   const handleEnd = () => {
+    if (loopModes[loop].type === 'song') {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+
+      increaseLoopCount(storage.currentMusic.id)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+      return;
+    }
+
     const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
     if (indexPlaying !== -1) {
       var nextSong = storage.currentPlayList[indexPlaying + 1]; // bài tiếp theo
@@ -144,9 +156,9 @@ function Player() {
     }
   };
 
-  useEffect(() => {
-    audioRef.current.loop = loopModes[loop].type === 'song' ? true : false;
-  }, [loop, audioRef]);
+  // useEffect(() => {
+  //   audioRef.current.loop = loopModes[loop].type === 'song' ? true : false;
+  // }, [loop, audioRef]);
 
   return (
     <div className={cx('wrapper')}>

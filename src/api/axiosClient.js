@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
-  baseURL: 'https://ancient-springs-85853-62c74127a4a9.herokuapp.com',
+  baseURL: 'http://localhost:3000',
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'multipart/form-data',

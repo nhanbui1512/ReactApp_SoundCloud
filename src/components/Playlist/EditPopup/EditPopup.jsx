@@ -1,51 +1,66 @@
 import classNames from 'classnames/bind';
 import styles from './EditPopup.module.scss';
 import Popup from 'components/Popup';
-import { useState } from 'react';
-import { deletePlaylist, updatePlaylist } from 'api/playlist';
+import { useEffect, useState } from 'react';
+import { addSongsToPlaylist, deletePlaylist, removeSongsFromPlaylist } from 'api/playlist';
 
 const cx = classNames.bind(styles);
 
 export const EditPopup = ({ open, onClose, playlistData }) => {
   const [tab, setTab] = useState(0);
   const [newPlaylistName, setNewPlaylistName] = useState(playlistData.name);
-  const [updateSongs, setUpdateSongs] = useState(playlistData.songs.map(song => song.id) || []);
+  const [removeSongs, setRemoveSongs] = useState([])
   const [saveChange, setSaveChange] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState("");
   const [deleting, setDeleting] = useState(false);
 
-  console.log(updateSongs)
+  useEffect(() => {
+    if (open) {
+      setTab(0)
+      setNewPlaylistName(playlistData.name)
+      setRemoveSongs([])
+      setSaveChange(false)
+      setDeleteConfirm("")
+      setDeleting(false)
+    }
+    // eslint-disable-next-line
+  }, [open])
 
   const HandleRemoveSong = (songId) => {
-    const edit = updateSongs.filter((id) => id !== songId);
-    setUpdateSongs(edit);
-  };
-  const CancleRemoveSong = (songId) => {
-    const edit = [].concat(updateSongs);
+    const edit = [].concat(removeSongs)
     if (!edit.includes(songId)) {
-      edit.push(songId);
+      edit.push(songId)
     }
-    setUpdateSongs(edit);
-  };
+    setRemoveSongs(edit)
+  }
+  const CancleRemoveSong = (songId) => {
+    const edit = removeSongs.filter(id => id !== songId)
+    setRemoveSongs(edit)
+  }
 
   const HandleSaveChange = () => {
     if (newPlaylistName === '') {
       alert('Enter playlist name.');
     } else {
-      setSaveChange(true);
-      updatePlaylist(playlistData.id, newPlaylistName, updateSongs)
-        .then((result) => {
-          if (result.result === true) {
-            setSaveChange(false);
-            onClose();
-          } else {
-            throw Error();
-          }
+      setSaveChange(true)
+      const promises = []
+      if (removeSongs.length > 0) {
+        const promise1 = removeSongsFromPlaylist(playlistData.id, removeSongs)
+        promises.push(promise1)
+      }
+      if (newPlaylistName !== playlistData.name) {
+        const promise2 = addSongsToPlaylist(playlistData.id, newPlaylistName, [])
+        promises.push(promise2)
+      }
+      Promise.allSettled(promises)
+        .then(results => {
+          setSaveChange(false)
+          onClose()
         })
-        .catch((error) => {
-          alert('Save change failed. Try again');
-          setSaveChange(false);
-        });
+        .catch(error => {
+          alert("Save change failed. Try again")
+          setSaveChange(false)
+        })
     }
   };
 
@@ -101,14 +116,14 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
                 <div className={cx('song-artist-name')}>
                   {song.artistName} - {song.name}
                 </div>
-                {updateSongs.includes(song.id) ? (
+                {removeSongs.includes(song.id) ? (
+                  <button className={cx('button-removed')} 
+                  onClick={() => CancleRemoveSong(song.id)}
+                  >Removed</button>
+                ) : (
                   <button className={cx('button-remove')} 
                   onClick={() => HandleRemoveSong(song.id)}
                   >Remove</button>
-                ) : (
-                  <button className={cx('button-removed')} 
-                    onClick={() => CancleRemoveSong(song.id)}
-                  >Removed</button>
                 )}
               </div>
             ))}

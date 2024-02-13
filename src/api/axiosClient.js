@@ -3,9 +3,7 @@ import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
   baseURL: 'http://localhost:3000',
-  //baseURL: 'https://b111-113-166-1-15.ngrok-free.app',
   headers: {
-    'ngrok-skip-browser-warning': 'true',
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'multipart/form-data',
   },

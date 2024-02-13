@@ -108,6 +108,15 @@ export async function increaseListenCount(songId) {
   }
 }
 
+export async function increaseLoopCount(songId) {
+  try {
+    const response = await axiosClient.post(`/loop?song_id=${songId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function recommendSongs() {
   try {
     const response = await axiosClient.get('/song/recommend');

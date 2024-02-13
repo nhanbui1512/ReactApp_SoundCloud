@@ -19,9 +19,9 @@ export async function createPlaylist(name, listOfSongsId) {
 
 export async function addSongsToPlaylist(playlistId, playlistName, listOfSongsId) {
   try {
-    if (listOfSongsId.length === 0) {
-      return null;
-    }
+    // if (listOfSongsId.length === 0) {
+    //   return null;
+    // }
     const json = {
       name: playlistName,
       idSongs: listOfSongsId,

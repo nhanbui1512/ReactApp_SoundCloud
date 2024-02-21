@@ -39,6 +39,7 @@ const FeedSong = ({ dataSong }) => {
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
+    console.log('play');
     e.preventDefault();
     const audioTag = storage.audioRef.current;
 

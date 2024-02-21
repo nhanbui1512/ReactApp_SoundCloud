@@ -3,6 +3,7 @@ import { createContext, useEffect, useRef, useState } from 'react';
 import { getCookie } from 'services/local/cookie';
 import { getCurrentUserProfile } from 'api/users';
 import { currentPlaylist, music } from './data';
+import Cookies from 'js-cookie';
 
 export const StorageContext = createContext();
 
@@ -58,6 +59,7 @@ function GlobalStates({ children }) {
           setCurrentUser(true);
         })
         .catch((err) => {
+          Cookies.remove('authToken');
           console.log(err);
         });
     } else {

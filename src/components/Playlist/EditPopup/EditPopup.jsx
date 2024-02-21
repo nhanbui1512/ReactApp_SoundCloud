@@ -9,65 +9,65 @@ const cx = classNames.bind(styles);
 export const EditPopup = ({ open, onClose, playlistData }) => {
   const [tab, setTab] = useState(0);
   const [newPlaylistName, setNewPlaylistName] = useState(playlistData.name);
-  const [removeSongs, setRemoveSongs] = useState([])
+  const [removeSongs, setRemoveSongs] = useState([]);
   const [saveChange, setSaveChange] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState('');
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setTab(0)
-      setNewPlaylistName(playlistData.name)
-      setRemoveSongs([])
-      setSaveChange(false)
-      setDeleteConfirm("")
-      setDeleting(false)
+      setTab(0);
+      setNewPlaylistName(playlistData.name);
+      setRemoveSongs([]);
+      setSaveChange(false);
+      setDeleteConfirm('');
+      setDeleting(false);
     }
     // eslint-disable-next-line
-  }, [open])
+  }, [open]);
 
   const HandleRemoveSong = (songId) => {
-    const edit = [].concat(removeSongs)
+    const edit = [].concat(removeSongs);
     if (!edit.includes(songId)) {
-      edit.push(songId)
+      edit.push(songId);
     }
-    setRemoveSongs(edit)
-  }
+    setRemoveSongs(edit);
+  };
   const CancleRemoveSong = (songId) => {
-    const edit = removeSongs.filter(id => id !== songId)
-    setRemoveSongs(edit)
-  }
+    const edit = removeSongs.filter((id) => id !== songId);
+    setRemoveSongs(edit);
+  };
 
   const HandleSaveChange = () => {
     if (newPlaylistName === '') {
       alert('Enter playlist name.');
     } else {
-      setSaveChange(true)
-      const promises = []
+      setSaveChange(true);
+      const promises = [];
       if (removeSongs.length > 0) {
-        const promise1 = removeSongsFromPlaylist(playlistData.id, removeSongs)
-        promises.push(promise1)
+        const promise1 = removeSongsFromPlaylist(playlistData.id, removeSongs);
+        promises.push(promise1);
       }
       if (newPlaylistName !== playlistData.name) {
-        const promise2 = addSongsToPlaylist(playlistData.id, newPlaylistName, [])
-        promises.push(promise2)
+        const promise2 = addSongsToPlaylist(playlistData.id, newPlaylistName, []);
+        promises.push(promise2);
       }
       Promise.allSettled(promises)
-        .then(results => {
-          setSaveChange(false)
-          onClose()
+        .then((results) => {
+          setSaveChange(false);
+          onClose();
         })
-        .catch(error => {
-          alert("Save change failed. Try again")
-          setSaveChange(false)
-        })
+        .catch((error) => {
+          alert('Save change failed. Try again');
+          setSaveChange(false);
+        });
     }
   };
 
   const HandleDeletePlaylist = () => {
-    setDeleting(true)
+    setDeleting(true);
     deletePlaylist(playlistData.id)
-      .then(result => {
+      .then((result) => {
         if (result.result === true) {
           setDeleting(false);
           onClose();
@@ -75,15 +75,18 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
           throw Error();
         }
       })
-      .catch(error => {
-        alert("Delete playlist failed. Try again.")
-        setDeleting(false)
-      })
-  }
+      .catch((error) => {
+        alert('Delete playlist failed. Try again.');
+        setDeleting(false);
+      });
+  };
 
   return (
-    <Popup open={open} onClose={onClose} header={
-      <div className={cx('tab-select')}>
+    <Popup
+      open={open}
+      onClose={onClose}
+      header={
+        <div className={cx('tab-select')}>
           <button className={cx('tab-button')} disabled={tab === 0} onClick={() => setTab(0)}>
             Edit Playlist
           </button>
@@ -91,13 +94,14 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
             Delete Playlist
           </button>
         </div>
-    }>
+      }
+    >
       {/* edit playlist */}
       <div className={cx('edit-playlist')} style={{ display: tab === 0 ? 'flex' : 'none' }}>
         <div className={cx('playlist-info')}>
           <div className={cx('playlist-name-label')}>Playlist name</div>
-          <input className={cx('edit-name-input')}
-            id="new-playlist-name"
+          <input
+            className={cx('edit-name-input')}
             required
             placeholder="Required"
             value={newPlaylistName}
@@ -117,13 +121,16 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
                   {song.artistName} - {song.name}
                 </div>
                 {removeSongs.includes(song.id) ? (
-                  <button className={cx('button-removed')} 
-                  onClick={() => CancleRemoveSong(song.id)}
-                  >Removed</button>
+                  <button
+                    className={cx('button-removed')}
+                    onClick={() => CancleRemoveSong(song.id)}
+                  >
+                    Removed
+                  </button>
                 ) : (
-                  <button className={cx('button-remove')} 
-                  onClick={() => HandleRemoveSong(song.id)}
-                  >Remove</button>
+                  <button className={cx('button-remove')} onClick={() => HandleRemoveSong(song.id)}>
+                    Remove
+                  </button>
                 )}
               </div>
             ))}
@@ -141,15 +148,19 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
             {playlistData.name}
           </span>
         </div>
-        <input className={cx('delete-confirm')}
+        <input
+          className={cx('delete-confirm')}
           placeholder="Playlist's name"
           value={deleteConfirm}
           onChange={(e) => setDeleteConfirm(e.target.value)}
         />
-        <button className={cx('button-delete')}
+        <button
+          className={cx('button-delete')}
           disabled={deleteConfirm !== playlistData.name || deleting}
           onClick={HandleDeletePlaylist}
-        >{deleting ? "Deleting" : "Delete"}</button>
+        >
+          {deleting ? 'Deleting' : 'Delete'}
+        </button>
       </div>
     </Popup>
   );

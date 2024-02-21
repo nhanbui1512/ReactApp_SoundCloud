@@ -135,8 +135,8 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
       </div>
       {/* Add to Playlist */}
       <div className={cx('add-to-playlist')} style={{ display: tab === 0 ? 'flex' : 'none' }}>
-        <input className={cx('filter')}
-          id="playlist-filter"
+        <input
+          className={cx('filter')}
           placeholder="Filter playlists"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
@@ -150,11 +150,19 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
               <div className={cx('playlist-item')} key={index}>
                 <div className={cx('playlist-name')}>{item.name}</div>
                 {item.songs.map((song) => song.id).includes(songData.id) ? (
-                  <button className={cx('button-added')} onClick={() => RemoveFromPlaylist(item.id)}>
+                  <button
+                    className={cx('button-added')}
+                    onClick={() => RemoveFromPlaylist(item.id)}
+                  >
                     Added
                   </button>
                 ) : (
-                  <button className={cx('button-add')} onClick={() => AddToPlaylist(item.id, item.name)}>Add to playlist</button>
+                  <button
+                    className={cx('button-add')}
+                    onClick={() => AddToPlaylist(item.id, item.name)}
+                  >
+                    Add to playlist
+                  </button>
                 )}
               </div>
             ))}
@@ -163,14 +171,18 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
       {/* Create Playlist */}
       <div className={cx('create-playlist')} style={{ display: tab === 1 ? 'flex' : 'none' }}>
         <div className={cx('new-playlist-label')}>Playlist name</div>
-        <input className={cx('new-playlist-input')}
-          id="new-playlist-name"
+        <input
+          className={cx('new-playlist-input')}
           required
           placeholder="Required"
           value={newPlaylistName}
           onChange={(e) => setNewPlaylistName(e.target.value)}
         />
-        <button className={cx('button-save')} disabled={creatingPlaylist} onClick={CreateNewPlaylist}>
+        <button
+          className={cx('button-save')}
+          disabled={creatingPlaylist}
+          onClick={CreateNewPlaylist}
+        >
           {creatingPlaylist ? 'Saving...' : 'Save'}
         </button>
       </div>

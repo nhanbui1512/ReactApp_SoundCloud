@@ -42,6 +42,7 @@ function PlayList({ handleHidden, className }) {
           className="flex_1"
           style={{
             overflow: 'hidden',
+            overflowY: 'scroll',
           }}
         >
           <div className={cx('play-list-container')}>

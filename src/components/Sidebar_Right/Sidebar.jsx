@@ -1,6 +1,6 @@
 import './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faTabletScreenButton, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 // import artirstFollow from './data';
@@ -80,7 +80,14 @@ const Sidebar = () => {
           <div className={cx('sidebar__modul-refresh')}>
             <div className={cx('sidebar-data-quantity')}>
               <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-              <span className={cx('sidebar-icon')}>{totalLike}</span>
+              <span
+                style={{
+                  marginLeft: 8,
+                }}
+                className={cx('sidebar-icon')}
+              >
+                {totalLike}
+              </span>
             </div>
             <Link to={`/libary/Likes`}>View All</Link>
           </div>
@@ -93,26 +100,9 @@ const Sidebar = () => {
             </ul>
           </div>
         </div>
-        {/* <div className={cx('sidebar__modul')}>
-          <div className={cx('sidebar__modul-refresh')}>
-            <span>
-              <FaHistory />
-            </span>
-            <span>View All</span>
-          </div>
-          <div className={cx('sidebar__modul-container')}>
-            <ul className={cx('sidebar__modul-list')}>
-              {artirstFollow.map((art, index) => {
-                return <SidebarHistory key={index} art={art} />;
-              })}
-            </ul>
-          </div>
-        </div> */}
+
         <div className={cx('sidebar__modul')}>
           <div className={cx('sidebar__modul-refresh')}>
-            <span>
-              <FontAwesomeIcon icon={faTabletScreenButton} />
-            </span>
             <span>Go Mobile</span>
           </div>
           <div className={cx('sidebar__modul-container')}>

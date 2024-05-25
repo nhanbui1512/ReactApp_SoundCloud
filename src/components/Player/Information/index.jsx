@@ -94,7 +94,7 @@ function Information({ data }) {
 
   return (
     <div className={cx('wrapper')}>
-      <Link className={cx('avatar')}>
+      <Link to={`/song/${data.id}`} className={cx('avatar')}>
         <Image src={data.thumbNail} alt="" />
       </Link>
 

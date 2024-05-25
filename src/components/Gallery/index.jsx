@@ -164,7 +164,7 @@ function Gallery({ data, playLists }) {
     if (!playLists) {
       // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
       if (storage.currentPlayList.find((music) => music.id === data.id)) {
-        var indexOfSong = storage.currentPlayList.indexOf(data);
+        var indexOfSong = storage.currentPlayList.findIndex((element) => data.id === element.id);
 
         storage.setCurrentPlayList((prev) => {
           var newState = [...prev];
@@ -190,8 +190,12 @@ function Gallery({ data, playLists }) {
         });
       }
     } else {
+      let songs = data.songs.filter((song) => {
+        return !storage.currentPlayList.includes(song);
+      });
+      console.log(songs);
       storage.setCurrentPlayList((prev) => {
-        return [...prev, ...data.songs];
+        return [...prev, ...songs];
       });
     }
   };

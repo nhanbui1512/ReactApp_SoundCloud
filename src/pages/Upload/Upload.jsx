@@ -9,8 +9,6 @@ const cx = classNames.bind(styles);
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const inputref = useRef();
-  //const location = useLocation();
-  //const isBug = location.state?.isBug || false;
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -27,14 +25,14 @@ function Upload() {
   };
   return (
     <div>
-      {selectedFile && <DetailFile selectedFile={selectedFile}/>}
+      {selectedFile && <DetailFile selectedFile={selectedFile} />}
       {selectedFile !== null || (
         <div className={cx('wrapper')}>
           <div className={cx('uploadmain')}>
             <div className={cx('upload_content')}>
               <h1>Drag and drop your tracks & albums here</h1>
               <div className={cx('upload_choose')}>
-                <input ref={inputref} type="file"  onChange={handleFileChange} accept="audio/*"/>
+                <input ref={inputref} type="file" onChange={handleFileChange} accept="audio/*" />
                 <button
                   className={cx('but_chooseFile')}
                   onClick={(e) => {

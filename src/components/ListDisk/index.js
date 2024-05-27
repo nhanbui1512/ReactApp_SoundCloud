@@ -1,6 +1,7 @@
 import Slider from 'components/Slider';
 import classNames from 'classnames/bind';
 import styles from './ListDisk.module.scss';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
@@ -16,4 +17,10 @@ function ListDisk({ title, data = [], playLists = false }) {
     </div>
   );
 }
+
+ListDisk.propTypes = {
+  title: PropTypes.string.isRequired,
+  data: PropTypes.array,
+  playLists: PropTypes.bool,
+};
 export default ListDisk;

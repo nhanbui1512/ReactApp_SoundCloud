@@ -59,7 +59,7 @@ const SidebarArtist = ({ art }) => {
             <span className={cx('sidebar__modul-item-quantity-song')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faChartBar} />
-                <span className={cx('sidebar-data')}>{art.songs.length}</span>
+                <span className={cx('sidebar-data')}>{art.songs?.length}</span>
               </span>
             </span>
           </div>

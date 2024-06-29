@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:3000/api',
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'multipart/form-data',

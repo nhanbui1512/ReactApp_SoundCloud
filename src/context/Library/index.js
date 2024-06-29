@@ -24,11 +24,13 @@ function GlobalLibrary({ children }) {
 
         // getSongLikes
         var SongLikes = await getSongsLiked();
-        SongLikes = SongLikes.data.map((songLike) => {
-          songLike.song.isLiked = true;
-          return songLike.song;
-        });
-        setDataSongLikes(SongLikes);
+        if (SongLikes.data) {
+          SongLikes = SongLikes.data.map((songLike) => {
+            songLike.song.isLiked = true;
+            return songLike.song;
+          });
+          setDataSongLikes(SongLikes);
+        }
 
         // getPlaylists
         const Playlists = await getMyFollowingPlaylist();

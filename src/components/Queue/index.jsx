@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PlayListItem from './Item';
 import SwitchButton from 'components/SwitchButton';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 function PlayList({ handleHidden, className }) {
   const storage = useContext(StorageContext);
   const [setCurrentPlayList] = [storage.setCurrentPlayList];
+  const [autoPlay, setAutoPlay] = useState(false);
 
   const handleClear = (e) => {
     setCurrentPlayList((prev) => {
@@ -61,7 +62,12 @@ function PlayList({ handleHidden, className }) {
             </div>
           </div>
           <div>
-            <SwitchButton />
+            <SwitchButton
+              isChecked={autoPlay}
+              onSwitch={(e) => {
+                setAutoPlay(!autoPlay);
+              }}
+            />
           </div>
         </div>
       </div>

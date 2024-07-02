@@ -15,12 +15,14 @@ import {
   faUserCheck,
   faUserAlt,
   faChartBar,
+  faRepeat,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getSongById } from 'api/songs';
 import { followUser, unfollowUser } from 'api/follow';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
+import ListComment from './ListComment';
 
 const cx = classNames.bind(styles);
 
@@ -35,11 +37,11 @@ function Song() {
   const storage = useContext(StorageContext);
 
   let { id } = useParams();
+
   useEffect(() => {
     const getSong = async () => {
       const song = await getSongById(id);
       setLikedSong(song.song.isLiked);
-      // setFollowSong(song.song.owner.isFollowed);
       setSong(song.song);
       setOwner(song.song.owner);
       setFollowingUser(song.song.owner.isFollowed);
@@ -215,10 +217,10 @@ function Song() {
                   <FontAwesomeIcon icon={faHeart} />
                   <span>{song.likeCount}</span>
                 </div>
-                {/* <div>
-                  <FontAwesomeIcon icon={faUserCheck} />
-                  <span>{song.likeCount}</span>
-                </div> */}
+                <div>
+                  <FontAwesomeIcon icon={faRepeat} />
+                  <span>{song.numberOfLoop}</span>
+                </div>
               </div>
             </div>
             <div className={cx('song-box')}>
@@ -256,11 +258,8 @@ function Song() {
                   </div>
                 </div>
               </div>
-              <div className={cx('song-box_info')}>
-                <Link to="/" className={cx('info_nameart')}>
-                  {song.artistName}
-                </Link>
-                <span className={cx('info_desc')}>{song.description}</span>
+              <div className={cx('content')}>
+                <ListComment />
               </div>
             </div>
           </div>
@@ -275,4 +274,4 @@ function Song() {
   );
 }
 
-export default Song;
+export default React.memo(Song);

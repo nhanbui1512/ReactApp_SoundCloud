@@ -18,7 +18,7 @@ function DetailFile({ selectedFile }) {
   const [textArt, setTextArt] = useState('');
   const [gengreId, setGengreId] = useState(20);
   const [nameAudio, setNameAudio] = useState('');
-  const [showLoader, setShowLoader] = useState(false);
+  const [perCentUpload, setPercentUpload] = useState(0);
   const [isEnter, setIsEnter] = useState(false);
   const [enter, setEnter] = useState('');
   const [selectedValue, setSelectedValue] = useState(30);
@@ -62,21 +62,25 @@ function DetailFile({ selectedFile }) {
           audioFile: selectedFile,
           imageFile: image,
           genreId: gengreId,
+          onProgress: handleProgress,
         })
-          .then((res) => {})
+          .then((res) => {
+            navigate('/profile');
+          })
           .catch((err) => {
             console.log(err);
           });
-        setShowLoader(true);
-        setTimeout(() => {
-          navigate('/profile');
-        }, 1800);
       } catch (error) {
         console.error('Error creating song:', error);
         toast.error('Upload fail');
       }
       setIsCancel(false);
     }
+  };
+
+  const handleProgress = (progressEvent) => {
+    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    setPercentUpload(percentCompleted);
   };
 
   return (
@@ -87,7 +91,7 @@ function DetailFile({ selectedFile }) {
         <div className={cx('wrapper')}>
           <div className={cx('main')}>
             <div className={cx('progress_loader')}>
-              {showLoader && <div className={cx('progress')}></div>}
+              <div style={{ '--percent': `${perCentUpload}%` }} className={cx('progress')}></div>
             </div>
             <div className={cx('content')}>
               <div className={cx('filds_img')}>

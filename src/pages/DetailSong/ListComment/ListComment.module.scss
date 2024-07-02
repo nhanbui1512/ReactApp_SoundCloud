@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.title {
+  h3 {
+    font-size: 14px;
+    display: flex;
+    gap: 4px;
+    font-weight: 400;
+    color: #999;
+  }
+}
+.selection:hover {
+  background-color: #f50;
+  color: #fff;
+}
+
+.active {
+  color: #f50;
+  background-color: transparent !important;
+}

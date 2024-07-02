@@ -9,6 +9,7 @@ export async function createSong({
   audioFile,
   imageFile,
   genreId,
+  onProgress,
 }) {
   try {
     const formdata = new FormData();
@@ -18,7 +19,11 @@ export async function createSong({
     formdata.append('song', audioFile);
     formdata.append('thumbNail', imageFile);
     formdata.append('genreId', genreId);
-    const response = await axiosClient.post(`/song/create`, formdata);
+    const response = await axiosClient.post(`/song/create`, formdata, {
+      onUploadProgress: (progressEvent) => {
+        if (onProgress) return onProgress(progressEvent);
+      },
+    });
     return response.data;
   } catch (error) {
     throw error;

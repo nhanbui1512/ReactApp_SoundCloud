@@ -21,6 +21,7 @@ const Login = () => {
       password: password,
     })
       .then((res) => {
+        console.log(res);
         setToken({ token: res.token });
         storage.setCurrentUser(true);
         storage.setUserData(res.user);
@@ -73,7 +74,6 @@ const Login = () => {
           </p>
         </div>
 
-        
         <p className={cx('p1')}>
           When registering, you agree that we may use your provided data for the registration and to
           send you notifications on our products and services. You can unsubscribe from

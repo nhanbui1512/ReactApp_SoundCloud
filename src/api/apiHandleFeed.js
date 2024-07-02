@@ -2,11 +2,11 @@ import axiosClient from './axiosClient';
 
 const apiHandleFeed = {
   getAllSong() {
-    const url = `/user/get-users?quantity=4`;
+    const url = `/user/get-users`;
     return axiosClient.get(url);
   },
   getUser() {
-    const url = `/user/get-users?quantity=4`;
+    const url = `/user/get-users`;
     return axiosClient.get(url);
   },
   getLike(id) {
@@ -28,6 +28,6 @@ const apiHandleFeed = {
   getSongLiked() {
     const url = `/song/liked`;
     return axiosClient.get(url);
-  }
+  },
 };
 export default apiHandleFeed;

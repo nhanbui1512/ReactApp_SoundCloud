@@ -1,7 +1,6 @@
 .wrapper {
   width: 1200px;
   min-height: 2000px;
-
 }
 
 a {
@@ -16,9 +15,6 @@ a {
   height: 250px;
   padding: 20px;
   margin-bottom: 24px;
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
   background: linear-gradient(45deg, #020101, #f3e9ec);
 }
 
@@ -296,17 +292,17 @@ a {
 .song-box_playlist {
   display: flex;
   flex-direction: column;
-  width: 180px;
+  width: 120px;
 }
 
 .song-box_img {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
 }
 
 .playlist_name {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 4px;
@@ -371,4 +367,8 @@ a {
 
 .song-box_icon {
   margin-left: 8px;
+}
+.content {
+  width: 100%;
+  padding-left: 30px;
 }

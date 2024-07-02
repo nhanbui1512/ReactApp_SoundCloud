@@ -103,8 +103,14 @@ const ListComment = memo(() => {
         </div>
       </div>
       <div className={cx('content')}>
-        <CommentItem />
+        <div className="pt-5 pr-2.5">
+          <CommentItem />
+        </div>
+        <div className="pt-3 pr-2.5 ml-12">
+          <CommentItem />
+        </div>
       </div>
+      <div className={cx(['drop-bar'])}></div>
     </div>
   );
 });

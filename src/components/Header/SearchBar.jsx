@@ -97,17 +97,21 @@ const SearchBar = () => {
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
 
-        <button className={cx('search-btn')} onClick={() => handleSearch()}>
-          <FontAwesomeIcon className={cx('search-icon')} icon={faSearch} />
-        </button>
+        {keyword === '' && (
+          <button className={cx(['search-btn', 'center'])} onClick={() => handleSearch()}>
+            <FontAwesomeIcon fontSize={16} className={cx('search-icon')} icon={faSearch} />
+          </button>
+        )}
 
-        <button
-          className={cx('search-clear-btn')}
-          hidden={keyword === ''}
-          onClick={() => setKeyword('')}
-        >
-          <FontAwesomeIcon className={cx('search-icon')} icon={faClose} />
-        </button>
+        {keyword !== '' && (
+          <button
+            className={cx(['search-clear-btn', 'center'])}
+            hidden={keyword === ''}
+            onClick={() => setKeyword('')}
+          >
+            <FontAwesomeIcon fontSize={14} className={cx('search-icon')} icon={faClose} />
+          </button>
+        )}
       </div>
     </HeadlessTippy>
   );

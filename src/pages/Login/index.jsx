@@ -40,6 +40,7 @@ const Login = () => {
         <h1 className={cx('login-title')}>Login </h1>
         <br></br>
         <input
+          className="text-[14px]"
           value={email}
           placeholder="Your Email"
           required
@@ -47,6 +48,7 @@ const Login = () => {
         />
         <br></br>
         <input
+          className="text-[14px]"
           value={password}
           type="password"
           placeholder="Your Password"

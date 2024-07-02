@@ -275,8 +275,10 @@ a {
 }
 
 .img-song {
+  width: 210px;
+  height: 210px;
+  object-fit: cover;
   flex: 1;
-  width: 35%;
   background-size: cover;
 }
 
@@ -370,6 +372,6 @@ a {
   margin-left: 8px;
 }
 .content {
-  width: 100%;
+  flex: 1;
   padding-left: 30px;
 }

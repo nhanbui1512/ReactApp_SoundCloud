@@ -57,6 +57,7 @@
     background: #e5e5e5;
     height: 28px;
     border-radius: 4px;
+    font-size: 0.8rem;
   }
 }
 .search-suggest {
@@ -67,12 +68,12 @@
 }
 
 .search-clear-btn {
-  position: absolute;
   background-color: transparent;
+  position: absolute;
   cursor: pointer;
-  right: 30px;
-  margin: 0;
-  top: 12px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #333;
 }
 .search-btn {
@@ -81,13 +82,11 @@
   cursor: pointer;
   right: 16px;
   margin: 0;
-  top: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #333;
 }
-.search-icon {
-  width: 15;
-  height: 15;
-}
+
 .avatar-wrapper {
   display: flex;
   align-items: center;

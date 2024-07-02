@@ -69,8 +69,8 @@ function Slider({ data, playLists }) {
           }}
           className={cx('right-wraper')}
         >
-          <button className={cx('slide-btn')}>
-            <FontAwesomeIcon icon={faChevronRight} />
+          <button className={cx(['slide-btn', 'center'])}>
+            <FontAwesomeIcon fontSize={14} icon={faChevronRight} />
           </button>
         </div>
       )}
@@ -91,8 +91,8 @@ function Slider({ data, playLists }) {
           }}
           className={cx('left-wraper')}
         >
-          <button className={cx('slide-btn')}>
-            <FontAwesomeIcon icon={faChevronLeft} />
+          <button className={cx(['slide-btn', 'center'])}>
+            <FontAwesomeIcon fontSize={14} icon={faChevronLeft} />
           </button>
         </div>
       )}

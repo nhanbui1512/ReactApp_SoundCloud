@@ -42,6 +42,7 @@ function Song() {
   let { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const getSong = async () => {
       const song = await getSongById(id);
       setLikedSong(song.song.isLiked);
@@ -55,24 +56,7 @@ function Song() {
   // xử lý thời gian bài hát được upload
   const calculateTimeFromNow = (createdAt) => {
     const createAtTime = moment(createdAt);
-    const currentTime = moment();
-    const diffInSeconds = currentTime.diff(createAtTime, 'seconds');
-
-    const timeUnits = [
-      { unit: 'năm', value: diffInSeconds / (365 * 24 * 3600) },
-      { unit: 'tháng', value: diffInSeconds / (30 * 24 * 3600) },
-      { unit: 'tuần', value: diffInSeconds / (7 * 24 * 3600) },
-      { unit: 'ngày', value: diffInSeconds / (24 * 3600) },
-      { unit: 'giờ', value: diffInSeconds / 3600 },
-      { unit: 'phút', value: diffInSeconds / 60 },
-      { unit: 'giây', value: diffInSeconds },
-    ];
-    for (const { unit, value } of timeUnits) {
-      if (Math.floor(value) >= 1) {
-        return `${Math.floor(value)} ${unit}${Math.floor(value) > 1 ? '' : ''} trước`;
-      }
-    }
-    return 'just now';
+    return createAtTime.fromNow();
   };
 
   const sleep = (ms) => {
@@ -166,7 +150,7 @@ function Song() {
           </div>
           <div className={cx('box-song')}>
             <span className={cx('duration-song')}>{calculateTimeFromNow(song.createAt)}</span>
-            <img className={cx('img-song')} src={song.thumbNail} alt="" />
+            <img className={cx('img-song')} src={song.thumbNail} alt={song.name} />
           </div>
         </div>
         <div className={cx('info-music')}>

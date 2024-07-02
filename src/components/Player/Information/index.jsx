@@ -1,5 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Information.module.scss';
+import PropTypes from 'prop-types';
+
 import Image from 'components/Image';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -94,7 +96,7 @@ function Information({ data }) {
 
   return (
     <div className={cx('wrapper')}>
-      <Link className={cx('avatar')}>
+      <Link to={`/song/${data.id}`} className={cx('avatar')}>
         <Image src={data.thumbNail} alt="" />
       </Link>
 
@@ -152,4 +154,7 @@ function Information({ data }) {
     </div>
   );
 }
+Information.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 export default Information;

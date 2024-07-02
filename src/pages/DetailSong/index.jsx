@@ -16,6 +16,7 @@ import {
   faUserAlt,
   faChartBar,
   faRepeat,
+  faPause,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getSongById } from 'api/songs';
@@ -35,6 +36,8 @@ function Song() {
   const [owner, setOwner] = useState([]);
   const navigate = useNavigate();
   const storage = useContext(StorageContext);
+
+  const [isPlaying, setIsPlaying] = useState(false);
 
   let { id } = useParams();
 
@@ -139,13 +142,17 @@ function Song() {
     }
   };
 
+  const handlePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
           <div className={cx('info-song')}>
-            <span className={cx('list-music_playbtn')}>
-              <FontAwesomeIcon className={cx('icon-play')} icon={faPlay} />
+            <span onClick={handlePlay} className={cx('list-music_playbtn')}>
+              <FontAwesomeIcon className={cx('icon-play')} icon={isPlaying ? faPause : faPlay} />
             </span>
             <div className={cx('name-user')}>
               <Link to="/" className={cx('lb1')}>

@@ -4,44 +4,6 @@ import musics from 'assets/musics';
 export const currentPlaylist = [
   {
     thumbNail:
-      'http://res.cloudinary.com/dmykkmqwz/image/upload/v1708086235/images/lchqm7floolyrplmp2sd.jpg',
-    linkFile:
-      'http://res.cloudinary.com/dmykkmqwz/video/upload/v1708086239/audios/tqs36jlweumvaqbox5wp.mp3',
-    durationTime: '05:02',
-    createAtTimeFormat: '19:24 16/02/2024',
-    id: 73,
-    name: 'Tệ Thật, Anh Nhớ Em (Lofi Ver.) - Thanh Hưng x Freak D',
-    description: 'Freak D ',
-    numberOfListen: 3,
-    numberOfLoop: 1,
-    duration: 302.759,
-    artistName: 'Thanh Hưng x Freak D',
-    createAt: '2024-02-16T12:24:00.000Z',
-    updateAt: null,
-    genre: {
-      id: 3,
-      name: 'Indie',
-    },
-    owner: {
-      avatar:
-        'http://res.cloudinary.com/dmykkmqwz/image/upload/v1706800047/avatars/qk23kmrvn74uug43vtxq.jpg',
-      createAtFormatTime: '1:47:22 27/01/2024',
-      updateAtFormatTime: '22:07:27 01/02/2024',
-      id: 1,
-      userName: 'Nhân Bùi Admin',
-      email: 'admin@gmail.com',
-      city: 'Huế City',
-      country: 'Việt Nam',
-      bio: 'Developer',
-      createAt: '2024-01-26T18:47:22.000Z',
-      updateAt: '2024-02-01T15:07:27.000Z',
-      isFollowed: true,
-    },
-    likeCount: 1,
-    isLiked: true,
-  },
-  {
-    thumbNail:
       'http://res.cloudinary.com/dmykkmqwz/image/upload/v1706846196/images/yjxfrup87pyty8bjbqme.jpg',
     linkFile:
       'http://res.cloudinary.com/dmykkmqwz/video/upload/v1706846200/audios/yrvqwzybx1rgq4ovxmvg.mp3',

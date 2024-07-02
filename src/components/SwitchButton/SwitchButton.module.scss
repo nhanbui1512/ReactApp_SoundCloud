@@ -40,16 +40,16 @@
   transition: 0.4s;
 }
 
-input:checked + .slider {
+#input-check:checked + .slider {
   background-color: var(--orange-primary);
   border: 1px solid var(--orange-primary);
 }
 
-// input:focus + .slider {
-// box-shadow: 0 0 1px var(--orange-primary);
-// }
+#input-check:focus + .slider {
+  box-shadow: 0 0 1px var(--orange-primary);
+}
 
-input:checked + .slider:before {
+#input-check:checked + .slider:before {
   transform: translateX(1em);
   background-color: #fff;
 }

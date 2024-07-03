@@ -9,11 +9,29 @@ const cx = classNames.bind(styles);
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
 
   useEffect(() => {
     getSongs()
       .then((res) => {
         setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getSongs(2, 10)
+      .then((res) => {
+        setData2(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getSongs(3, 10)
+      .then((res) => {
+        setData3(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,12 +47,9 @@ const Home = () => {
       >
         <div className={cx('content')}>
           <div className={cx('trending-wrapper')}>
-            {/* <ListDisk data={recommendData} title={'More of what you like'} /> */}
             <ListDisk data={data} />
-            {/* <ListDisk data={randomPlaylist} title={'Recommend Playlists'} playLists={true} /> */}
-            {/* <ListDisk data={data2} title={'Study'} /> */}
-            {/* <ListDisk data={data3} title={`Today's Mixes`} /> */}
-            {/* <ListDisk data={data4} title={'Trending Music on SoundCloud'} /> */}
+            <ListDisk data={data2} title={'Trending Music on SoundCloud'} />
+            <ListDisk data={data3} title={`Today's Mixes`} />
           </div>
         </div>
 

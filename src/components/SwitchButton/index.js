@@ -10,7 +10,7 @@ function SwitchButton({ onSwitch, isChecked = false }) {
   };
   return (
     <div className={cx('switch')}>
-      <input onChange={() => {}} checked={isChecked} type="checkbox" />
+      <input id={cx('input-check')} onChange={() => {}} checked={isChecked} type="checkbox" />
       <span className={cx('slider')} onClick={handleSwitch}></span>
     </div>
   );

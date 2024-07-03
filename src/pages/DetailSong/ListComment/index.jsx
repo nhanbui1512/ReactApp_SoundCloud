@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ListComment.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import CommentItem from './CommentItem';
+import { getCommentsOfSong } from 'api/comments';
 
 const cx = classNames.bind(styles);
 
@@ -23,13 +24,22 @@ const sortOptions = [
   },
 ];
 
-const ListComment = memo(() => {
+const ListComment = memo(({ songId }) => {
   const [sort, setSort] = React.useState(1);
+  const [commentData, setCommentData] = useState({});
 
   const handleChange = (event) => {
     setSort(event.target.value);
   };
-
+  useEffect(() => {
+    getCommentsOfSong(songId)
+      .then((res) => {
+        setCommentData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [songId]);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
@@ -38,7 +48,7 @@ const ListComment = memo(() => {
             <span>
               <FontAwesomeIcon icon={faComment} />
             </span>
-            <span>159 comments</span>
+            <span>{commentData.totalDocs} comments</span>
           </h3>
         </div>
         <div>
@@ -103,12 +113,11 @@ const ListComment = memo(() => {
         </div>
       </div>
       <div className={cx('content')}>
-        <div className="pt-5 pr-2.5">
-          <CommentItem />
-        </div>
-        <div className="pt-3 pr-2.5 ml-12">
-          <CommentItem />
-        </div>
+        {commentData.data?.map((comment) => (
+          <div key={comment.id} className="pt-5 pr-2.5">
+            <CommentItem data={comment} />
+          </div>
+        ))}
       </div>
       <div className={cx(['drop-bar'])}></div>
     </div>

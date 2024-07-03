@@ -2,33 +2,37 @@ import classNames from 'classnames/bind';
 import styles from './Gallery.module.scss';
 import PropTypes from 'prop-types';
 
+import { memo, useContext, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale-subtle.css';
+
+import { MenuItem, Wrapper } from 'components/DropDownMenu';
+import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
+import { StorageContext } from 'context/Storage';
+import { LibraryContext } from 'context/Library';
+
+import { likeSong, unlikeSong } from 'api/songs';
+import { followPlaylist, unfollowPlaylist } from 'api/follow';
+import { changePosition } from 'Utils/arrays';
+
+import { BsMusicNoteList } from 'react-icons/bs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faHeart,
   faListOl,
-  faListUl,
   faPause,
   faPlay,
   faUserCheck,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
-import HeadlessTippy from '@tippyjs/react/headless';
-import Tippy from '@tippyjs/react/headless';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/scale-subtle.css';
-import { MenuItem, Wrapper } from 'components/DropDownMenu';
-import { AddToList } from 'components/Icons';
-import { memo, useContext, useEffect, useRef, useState } from 'react';
-import { StorageContext } from 'context/Storage';
-import { Link, useNavigate } from 'react-router-dom';
-import { followPlaylist, unfollowPlaylist } from 'api/follow';
-import { LibraryContext } from 'context/Library';
-import { BsMusicNoteList } from 'react-icons/bs';
-import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
-import { changePosition } from 'Utils/arrays';
-import { likeSong, unlikeSong } from 'api/songs';
+import { QueueMusic } from '@mui/icons-material';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 const cx = classNames.bind(styles);
 
@@ -291,7 +295,7 @@ function Gallery({ data, playLists }) {
                 <Wrapper className={cx('more-menu')}>
                   <MenuItem
                     className={cx('menu-item')}
-                    icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                    icon={<FormatListBulletedIcon className={cx('menu-item-icon')} />}
                     separate
                     onClick={handleAddNextUp}
                   >
@@ -299,7 +303,7 @@ function Gallery({ data, playLists }) {
                   </MenuItem>
                   <MenuItem
                     className={cx('menu-item')}
-                    icon={<AddToList className={cx('menu-item-icon')} />}
+                    icon={<QueueMusic className={cx('menu-item-icon')} />}
                     onClick={() => setOpenAddToPlaylist(true)}
                   >
                     Add to Playlist

@@ -24,6 +24,7 @@ import { followUser, unfollowUser } from 'api/follow';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
 import ListComment from './ListComment';
+import CommentForm from './CommentForm';
 
 const cx = classNames.bind(styles);
 
@@ -155,6 +156,9 @@ function Song() {
         </div>
         <div className={cx('info-music')}>
           <div className={cx('info-song_desc')}>
+            <div className="px-5 mb-2">
+              <CommentForm />
+            </div>
             <div className={cx('nav-info-left')}>
               <div className={cx('group-btn_left')}>
                 <button onClick={() => handleLikeSong()} className={cx('', { active: likedSong })}>
@@ -250,7 +254,7 @@ function Song() {
                 </div>
               </div>
               <div className={cx('content')}>
-                <ListComment />
+                <ListComment songId={id} />
               </div>
             </div>
           </div>

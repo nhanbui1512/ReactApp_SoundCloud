@@ -11,7 +11,7 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { IoIosRepeat } from 'react-icons/io';
-import { useContext, useRef, useState } from 'react';
+import { memo, useContext, useRef, useState } from 'react';
 import { BsRepeat1 } from 'react-icons/bs';
 import Information from './Information';
 import 'tippy.js/animations/scale.css';
@@ -337,4 +337,4 @@ function Player() {
     </div>
   );
 }
-export default Player;
+export default memo(Player);

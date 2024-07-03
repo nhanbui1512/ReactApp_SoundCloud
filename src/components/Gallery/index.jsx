@@ -20,28 +20,27 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 import { StorageContext } from 'context/Storage';
-import { likeSong, unlikeSong } from 'api/songs';
 import { Link, useNavigate } from 'react-router-dom';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import { changePosition } from 'Utils/arrays';
+import { likeSong, unlikeSong } from 'api/songs';
 
 const cx = classNames.bind(styles);
 
 function Gallery({ data, playLists }) {
   const context = useContext(LibraryContext);
   const moreBtnRef = useRef();
-  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const storage = useContext(StorageContext);
-
+  const navigate = useNavigate();
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
     e.preventDefault();
@@ -86,16 +85,13 @@ function Gallery({ data, playLists }) {
     }
   };
 
-  const handleLike = (e) => {
+  const handleLike = () => {
     if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
-    data.isLiked = !data.isLiked;
     setIsLiked(!isLiked);
 
     if (isLiked) {
       unlikeSong(data.id)
-        .then((res) => {
-          setIsLiked(false);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
           setIsLiked(true);
@@ -109,9 +105,7 @@ function Gallery({ data, playLists }) {
       }
     } else {
       likeSong(data.id)
-        .then((res) => {
-          setIsLiked(true);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
           setIsLiked(false);
@@ -194,7 +188,6 @@ function Gallery({ data, playLists }) {
       let songs = data.songs.filter((song) => {
         return !storage.currentPlayList.includes(song);
       });
-      console.log(songs);
       storage.setCurrentPlayList((prev) => {
         return [...prev, ...songs];
       });
@@ -203,10 +196,9 @@ function Gallery({ data, playLists }) {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    if (storage.currentMusic?.id !== data.id) {
-      setIsPlay(false);
-    }
-  }, [storage.currentMusic, data.id]);
+    setIsPlay(storage.currentMusic?.id === data.id);
+    // eslint-disable-next-line
+  }, [storage.currentMusic]);
 
   // Xử lý thay đổi state của icon khi nhạc ở Player dừng hoặc Phát
   useEffect(() => {
@@ -231,7 +223,8 @@ function Gallery({ data, playLists }) {
       audioTag.removeEventListener('play', handlePlay);
       audioTag.removeEventListener('pause', handlePlay);
     };
-  }, [storage.audioRef, storage.currentMusic.id, data.id]);
+    // eslint-disable-next-line
+  }, [storage.audioRef, storage.currentMusic.id]);
 
   return (
     <div className={cx('modul-left_item')}>
@@ -359,4 +352,4 @@ Gallery.propTypes = {
   data: PropTypes.object.isRequired,
   playlist: PropTypes.array,
 };
-export default Gallery;
+export default memo(Gallery);

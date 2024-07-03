@@ -2,6 +2,7 @@ import Slider from 'components/Slider';
 import classNames from 'classnames/bind';
 import styles from './ListDisk.module.scss';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -23,4 +24,4 @@ ListDisk.propTypes = {
   data: PropTypes.array,
   playLists: PropTypes.bool,
 };
-export default ListDisk;
+export default memo(ListDisk);

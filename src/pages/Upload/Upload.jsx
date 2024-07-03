@@ -34,7 +34,7 @@ function Upload() {
               <div className={cx('upload_choose')}>
                 <input ref={inputref} type="file" onChange={handleFileChange} accept="audio/*" />
                 <button
-                  className={cx('but_chooseFile')}
+                  className={cx(['but_chooseFile', 'text-[14px]'])}
                   onClick={(e) => {
                     inputref.current.click();
                   }}

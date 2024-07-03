@@ -108,6 +108,7 @@ function DetailFile({ selectedFile }) {
                 <div className={cx('img_choose')}>
                   <input ref={inputref} type="file" onChange={handleFileChange} accept="image/*" />
                   <button
+                    className="text-[14px]"
                     onClick={(e) => {
                       inputref.current.click();
                     }}
@@ -202,7 +203,7 @@ function DetailFile({ selectedFile }) {
               >
                 Cancel
               </button>
-              <button className={cx('butSave')} onClick={handleSave}>
+              <button className={cx(['butSave', 'text-[14px]'])} onClick={handleSave}>
                 Save
               </button>
             </div>

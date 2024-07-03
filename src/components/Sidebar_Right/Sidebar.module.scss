@@ -135,8 +135,9 @@
 }
 
 .sidebar__modul-item-bottom-left {
-  font-size: 0.8rem;
   display: flex;
+  gap: 2px;
+  font-size: 0.8rem;
   justify-content: space-between;
 }
 

@@ -49,7 +49,7 @@ const SidebarArtist = ({ art }) => {
           <div className={cx('sidebar__modul-item-name')}>{art.userName}</div>
         </div>
         <div className={cx('sidebar__modul-item-bottom')}>
-          <div className="sidebar__modul-item-bottom-left">
+          <div className={cx('sidebar__modul-item-bottom-left')}>
             <span className={cx('sidebar__modul-item-quantity-follower')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />

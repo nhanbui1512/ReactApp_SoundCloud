@@ -96,7 +96,6 @@ const TrackSong = ({ dataSong }) => {
   const handlePlay = (e) => {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
-
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== dataSong.id) {
       storage.setCurrentMusic(dataSong);

@@ -46,7 +46,6 @@ function Gallery({ data, playLists }) {
   const handlePlay = (e) => {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
-
     // nếu dữ liệu truyền vào gallery là playlist
     if (!playLists) {
       // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
@@ -204,7 +203,7 @@ function Gallery({ data, playLists }) {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    if (storage.currentMusic.id !== data.id) {
+    if (storage.currentMusic?.id !== data.id) {
       setIsPlay(false);
     }
   }, [storage.currentMusic, data.id]);
@@ -265,7 +264,7 @@ function Gallery({ data, playLists }) {
                   }}
                   className={cx('option-btn')}
                 >
-                  <FontAwesomeIcon className={cx('', { primary: isLiked })} icon={faHeart} />
+                  <FontAwesomeIcon className={cx({ primary: isLiked })} icon={faHeart} />
                 </span>
               </>
             </Tippy>

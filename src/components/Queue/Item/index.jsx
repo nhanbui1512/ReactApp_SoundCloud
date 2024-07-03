@@ -27,7 +27,6 @@ function Item({ data }) {
 
   const handlePlay = (e) => {
     const audioTag = storage.audioRef.current;
-
     if (data.id !== storage.currentMusic.id) {
       storage.setCurrentMusic(data);
       setIsPlay(!isPlay);

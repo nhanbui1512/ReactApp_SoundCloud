@@ -21,7 +21,6 @@ import { StorageContext } from 'context/Storage';
 import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
 
-
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ songsLiked }) => {
   const [moreMenu, setMoreMenu] = useState(false);
@@ -37,7 +36,6 @@ const SidebarHeart = ({ songsLiked }) => {
   const handlePlay = (e) => {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
-
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== songsLiked.id) {
       storage.setCurrentMusic(songsLiked);
@@ -66,14 +64,13 @@ const SidebarHeart = ({ songsLiked }) => {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    if (storage.currentMusic.id !== songsLiked.id) {
+    if (storage.currentMusic?.id !== songsLiked.id) {
       setIsPlay(false);
     }
   }, [storage.currentMusic, songsLiked.id]);
 
   useEffect(() => {
     const audioTag = storage.audioRef.current;
-
     const handlePlay = () => {
       if (songsLiked.id === storage.currentMusic.id) {
         setIsPlay(true);
@@ -120,7 +117,6 @@ const SidebarHeart = ({ songsLiked }) => {
     };
   }, []);
 
-
   // handle like /unlike
   const handleLike = () => {
     if (isLiked) {
@@ -155,7 +151,7 @@ const SidebarHeart = ({ songsLiked }) => {
         });
       }
     }
-  }
+  };
   return (
     <>
       <li className={cx('sidebar__modul-list-item')}>

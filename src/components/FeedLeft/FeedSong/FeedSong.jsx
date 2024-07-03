@@ -42,7 +42,6 @@ const FeedSong = ({ dataSong }) => {
     console.log('play');
     e.preventDefault();
     const audioTag = storage.audioRef.current;
-
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== dataSong.id) {
       storage.setCurrentPlayList([dataSong]);
@@ -78,7 +77,6 @@ const FeedSong = ({ dataSong }) => {
 
   useEffect(() => {
     const audioTag = storage.audioRef.current;
-
     const handlePlay = () => {
       if (dataSong.id === storage.currentMusic.id) {
         setIsPlay(true);

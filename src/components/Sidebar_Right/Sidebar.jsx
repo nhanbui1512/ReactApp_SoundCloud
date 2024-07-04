@@ -25,7 +25,7 @@ const Sidebar = () => {
         const combinedSongs = res1.data.data.map((item) => item.song);
         setListSongLiked(combinedSongs);
       } catch (error) {
-        console.error('error fetch data', error);
+        console.error(error);
       }
     };
     getSongLiked();

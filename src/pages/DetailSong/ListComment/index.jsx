@@ -6,6 +6,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import CommentItem from './CommentItem';
 import { getCommentsOfSong } from 'api/comments';
+import EmptyComment from './EmptyComment';
 
 const cx = classNames.bind(styles);
 
@@ -118,6 +119,8 @@ const ListComment = memo(({ songId }) => {
             <CommentItem data={comment} />
           </div>
         ))}
+
+        {commentData.totalDocs === 0 && <EmptyComment />}
       </div>
       <div className={cx(['drop-bar'])}></div>
     </div>

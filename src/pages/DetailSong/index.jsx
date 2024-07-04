@@ -204,15 +204,15 @@ function Song() {
                 </button>
               </div>
               <div className={cx('group-btn_right')}>
-                <div>
+                <div className="flex items-center">
                   <FontAwesomeIcon icon={faPlay} />
                   <span>{song.numberOfListen}</span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <FontAwesomeIcon icon={faHeart} />
                   <span>{song.likeCount}</span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <FontAwesomeIcon icon={faRepeat} />
                   <span>{song.numberOfLoop}</span>
                 </div>

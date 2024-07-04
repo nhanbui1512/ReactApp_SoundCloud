@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { StorageContext } from 'context/Storage';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +14,10 @@ const CommentForm = memo(({ onClose }) => {
   const handleClose = (e) => {
     if (onClose) return onClose(e);
   };
+  const handleSend = (e) => {
+    toast.success('Comment successfully');
+  };
+
   const storage = useContext(StorageContext);
 
   return (
@@ -27,7 +32,7 @@ const CommentForm = memo(({ onClose }) => {
           <input placeholder="Write a comment" className={cx(['input', 'text-[14px]'])}></input>
           {onClose && <button onClick={handleClose} className={cx('close-btn')}></button>}
         </div>
-        <button className={cx(['send-btn', 'center', 'ml-4'])}>
+        <button onClick={handleSend} className={cx(['send-btn', 'center', 'ml-4'])}>
           <FontAwesomeIcon fontSize={16} icon={faPaperPlane} />
         </button>
       </div>

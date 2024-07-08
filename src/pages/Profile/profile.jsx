@@ -13,6 +13,8 @@ import ShowImage from './Show_Image/ShowImage';
 import Share from './Share/Share';
 import { getCurrentUserProfile } from 'api/users';
 import Sidebar from 'components/Sidebar_Right/Sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -121,27 +123,19 @@ function Profile() {
                 onClick={() => {
                   setPopperShare(true);
                 }}
-                className={cx('btn-share')}
+                className={cx('option-btn')}
               >
-                <img
-                  src="https://a-v2.sndcdn.com/assets/images/share-e2febe1d.svg"
-                  alt="Share Icon"
-                  className={cx('share-icon')}
-                />
-                <span style={{ marginTop: '2px', fontSize: '16px' }}>Share</span>
+                <FontAwesomeIcon fontSize={14} icon={faShareFromSquare} />
+                <span style={{ marginLeft: 4, fontSize: '16px' }}>Share</span>
               </button>
               <button
                 onClick={() => {
                   setPopperEdit(true);
                 }}
-                className={cx('btn-edit')}
+                className={cx('option-btn')}
               >
-                <img
-                  src="https://a-v2.sndcdn.com/assets/images/edit-2fe52d66.svg"
-                  alt="Edit Icon"
-                  className={cx('edit-icon')}
-                />
-                <span style={{ marginTop: '2px', fontSize: '16px' }}>Edit</span>
+                <FontAwesomeIcon icon={faPenToSquare} />
+                <span style={{ marginLeft: 4, fontSize: '16px' }}>Edit</span>
               </button>
             </div>
             <div className={cx('follwer-item')}>

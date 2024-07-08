@@ -25,6 +25,8 @@ import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
 import ListComment from './ListComment';
 import CommentForm from './CommentForm';
+import { createComment, getCommentsOfSong } from 'api/comments';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +36,8 @@ function Song() {
   const [likedSong, setLikedSong] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [song, setSong] = useState([]);
+  const [commentData, setCommentData] = useState({});
+
   const [owner, setOwner] = useState([]);
   const navigate = useNavigate();
   const storage = useContext(StorageContext);
@@ -51,7 +55,12 @@ function Song() {
       setOwner(song.song.owner);
       setFollowingUser(song.song.owner.isFollowed);
     };
+    const getComments = async () => {
+      const data = await getCommentsOfSong(id);
+      setCommentData(data);
+    };
     getSong();
+    getComments();
   }, [id]);
 
   // xử lý thời gian bài hát được upload
@@ -131,6 +140,23 @@ function Song() {
     setIsPlaying(!isPlaying);
   };
 
+  const handleComment = (content) => {
+    if (content.trim() === '') return toast.error('Content of comment must be filled');
+
+    createComment(id, content)
+      .then((res) => {
+        toast.success('Comment successfully');
+        setCommentData((prev) => {
+          const newState = { ...prev };
+          newState.data.unshift(res.data);
+          return newState;
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className={cx('wrapper')}>
@@ -157,7 +183,7 @@ function Song() {
         <div className={cx('info-music')}>
           <div className={cx('info-song_desc')}>
             <div className="px-5 mb-2">
-              <CommentForm />
+              <CommentForm onSendComment={handleComment} />
             </div>
             <div className={cx('nav-info-left')}>
               <div className={cx('group-btn_left')}>
@@ -254,7 +280,7 @@ function Song() {
                 </div>
               </div>
               <div className={cx('content')}>
-                <ListComment songId={id} />
+                <ListComment commentData={commentData} />
               </div>
             </div>
           </div>

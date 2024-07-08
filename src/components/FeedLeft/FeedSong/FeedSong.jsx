@@ -39,7 +39,6 @@ const FeedSong = ({ dataSong }) => {
 
   // Hàm xử lý khi nút Play/Pause được nhấn
   const handlePlay = (e) => {
-    console.log('play');
     e.preventDefault();
     const audioTag = storage.audioRef.current;
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
@@ -164,10 +163,7 @@ const FeedSong = ({ dataSong }) => {
         <div className={cx('feed__modul-item-info')}>
           <div className={cx('feed__modul-item-song-info')}>
             <div onClick={handlePlay} className={cx('feed__modul-item-play')}>
-              <FontAwesomeIcon
-                className={cx('feed__modul-play-icon')}
-                icon={isPlay ? faPause : faPlay}
-              />
+              <FontAwesomeIcon icon={isPlay ? faPause : faPlay} />
             </div>
             <div className={cx('feed__modul-item-song')}>
               <div className={cx('feed__modul-item-authorname')}>{dataSong.artistName}</div>

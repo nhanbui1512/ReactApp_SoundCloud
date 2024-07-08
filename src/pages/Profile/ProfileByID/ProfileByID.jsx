@@ -130,11 +130,12 @@ function ProfileByID() {
           </div>
           <div className={cx('nav-info-right')}>
             <div className={cx('button-item')}>
-              <button className={cx('sidebar__modul-item-follower')} onClick={handleFollow}>
+              <button className={cx('option-btn')} onClick={handleFollow}>
                 <span
                   className={cx('sidebar__modul-item-quantity-follower', { following: isFollow })}
                 >
                   <FontAwesomeIcon
+                    fontSize={14}
                     className={cx('sidebar-icon')}
                     icon={!isFollow ? faUserPlus : faUserCheck}
                   />
@@ -145,9 +146,9 @@ function ProfileByID() {
                 onClick={() => {
                   setPopperShare(true);
                 }}
-                className={cx('btn-share')}
+                className={cx('option-btn')}
               >
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faShare} />
+                <FontAwesomeIcon fontSize={14} className={cx('sidebar-icon')} icon={faShare} />
                 <span style={{ marginTop: '2px', fontSize: '12px' }}>Share</span>
               </button>
             </div>

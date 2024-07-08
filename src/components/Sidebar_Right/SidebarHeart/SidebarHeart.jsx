@@ -2,14 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from '../Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEllipsis,
-  faHeart,
-  faListUl,
-  faPause,
-  faPlay,
-  faRepeat,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart, faPause, faPlay, faRepeat } from '@fortawesome/free-solid-svg-icons';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -213,7 +207,7 @@ const SidebarHeart = ({ songsLiked }) => {
                   <Wrapper className={cx('more-menu')}>
                     <MenuItem
                       className={cx('menu-item')}
-                      icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
+                      icon={<FormatListBulletedIcon fontSize="16" />}
                       separate
                     >
                       Add to Next up

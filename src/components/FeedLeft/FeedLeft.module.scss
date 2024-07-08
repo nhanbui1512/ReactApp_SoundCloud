@@ -37,6 +37,7 @@
   align-items: center;
   margin: 8px;
   border: 1px solid #dbdbdb;
+  object-fit: cover;
 }
 
 .feed__modul-item-info {
@@ -60,11 +61,8 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  //transform: translate(-50%, -50%);
-  // display: none;
-  //z-index: 10;
   background-color: #f50;
-  font-size: 25px !important;
+  font-size: 20px;
   color: #fff !important;
   cursor: pointer;
   &:hover {
@@ -90,9 +88,6 @@
   overflow: hidden;
   flex: 1 1;
   padding-right: 8px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
 
 /*OPTION GROUP*/

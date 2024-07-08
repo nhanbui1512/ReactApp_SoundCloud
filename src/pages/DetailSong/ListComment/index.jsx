@@ -1,11 +1,10 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ListComment.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import CommentItem from './CommentItem';
-import { getCommentsOfSong } from 'api/comments';
 import EmptyComment from './EmptyComment';
 
 const cx = classNames.bind(styles);
@@ -25,22 +24,29 @@ const sortOptions = [
   },
 ];
 
-const ListComment = memo(({ songId }) => {
+const ListComment = memo(({ commentData = {} }) => {
   const [sort, setSort] = React.useState(1);
-  const [commentData, setCommentData] = useState({});
 
   const handleChange = (event) => {
     setSort(event.target.value);
   };
-  useEffect(() => {
-    getCommentsOfSong(songId)
-      .then((res) => {
-        setCommentData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [songId]);
+
+  const renderComments = () => {
+    const renderItems = (comment, parent = undefined) => {
+      return (
+        <div key={comment.id}>
+          <div className={comment.parentId === null ? 'pt-5 pr-2.5' : 'ml-12 pt-3'}>
+            <CommentItem data={comment} parentData={parent} />
+          </div>
+
+          {comment.Replies.map((item) => renderItems(item, comment.user))}
+        </div>
+      );
+    };
+
+    return commentData.data?.map((comment) => renderItems(comment));
+  };
+
   return (
     <div className={cx('wrapper')}>
       {commentData.totalDocs !== 0 && (
@@ -116,13 +122,7 @@ const ListComment = memo(({ songId }) => {
             </div>
           </div>
 
-          <div className={cx('content')}>
-            {commentData.data?.map((comment) => (
-              <div key={comment.id} className="pt-5 pr-2.5">
-                <CommentItem data={comment} />
-              </div>
-            ))}
-          </div>
+          <div className={cx('content')}>{renderComments()}</div>
           <div className={cx(['drop-bar'])}></div>
         </div>
       )}

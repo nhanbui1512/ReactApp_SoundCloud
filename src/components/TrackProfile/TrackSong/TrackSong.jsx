@@ -21,14 +21,12 @@ import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import apiHandlePlayList from 'api/apiHandlePlayList';
 import { toast } from 'react-toastify';
-import { LibraryContext } from 'context/Library';
-import { likeSong, unlikeSong } from 'api/songs';
+import { getSongById, likeSong, unlikeSong } from 'api/songs';
 import { Link } from 'react-router-dom';
 import ShareSong from 'pages/Profile/Share/ShareSong';
 
 const cx = classNames.bind(styles);
 const TrackSong = ({ dataSong }) => {
-  //const [moreMenu, setMoreMenu] = useState(false);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
@@ -38,8 +36,7 @@ const TrackSong = ({ dataSong }) => {
   const [popperShare, setPopperShare] = useState(false);
 
   const storage = useContext(StorageContext);
-  const context = useContext(LibraryContext);
-  const [isLiked, setIsLiked] = useState(dataSong.isLiked || false);
+  const [isLiked, setIsLiked] = useState(dataSong.isLiked);
 
   // handle like /unlike
   const handleLike = () => {
@@ -52,13 +49,6 @@ const TrackSong = ({ dataSong }) => {
           console.log(err);
           setIsLiked(true);
         });
-      if (context) {
-        context.setDataSongLikes((prev) => {
-          var newSongs = [...prev];
-          newSongs = newSongs.filter((song) => song.id !== dataSong.id);
-          return newSongs;
-        });
-      }
     } else {
       likeSong(dataSong.id)
         .then((res) => {
@@ -68,12 +58,6 @@ const TrackSong = ({ dataSong }) => {
           console.log(err);
           setIsLiked(false);
         });
-      if (context) {
-        context.setDataSongLikes((prev) => {
-          var newSongs = [dataSong, ...prev];
-          return newSongs;
-        });
-      }
     }
   };
 
@@ -98,7 +82,14 @@ const TrackSong = ({ dataSong }) => {
     const audioTag = storage.audioRef.current;
     // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
     if (storage.currentMusic.id !== dataSong.id) {
-      storage.setCurrentMusic(dataSong);
+      getSongById(dataSong.id)
+        .then((res) => {
+          storage.setCurrentMusic(res.song);
+        })
+        .catch((err) => {
+          toast.error('Error load data');
+          console.log(err);
+        });
       const playMusic = (event) => {
         event.target.play();
         setIsPlay(true);
@@ -195,14 +186,11 @@ const TrackSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  // onClick={() => {
-                  //   setIsLiked(!isLiked);
-                  // }}
                   onClick={() => {
                     handleLike();
                   }}
                 >
-                  <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+                  <FontAwesomeIcon className={cx({ liked: isLiked })} icon={faHeart} />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
                 </button>
               </>

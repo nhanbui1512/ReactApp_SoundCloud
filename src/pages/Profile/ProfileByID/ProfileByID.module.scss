@@ -91,7 +91,7 @@
   cursor: pointer;
   margin-right: 15px;
 }
-.sidebar-icon{
+.sidebar-icon {
   margin-right: 5px;
 }
 .sidebar-data {
@@ -152,13 +152,12 @@
   margin-top: 15px;
   height: 500px;
 }
-.brand-items{
+.brand-items {
   margin-top: 20px;
   font-size: 12px;
   padding: 30px;
   text-align: left;
-  color: #ccc
-
+  color: #ccc;
 }
 .info-music-list {
   width: 850px;
@@ -173,7 +172,7 @@
   margin-top: 15px;
   height: 500;
 }
-.router-item-right{
+.router-item-right {
   width: 850px;
 }
 .button-item {
@@ -190,22 +189,44 @@
   padding: 5px;
   margin-top: 5px;
 }
-.router-view{
+.router-view {
   padding: 50px;
 }
-.p-title{
+.p-title {
   color: blue;
   font-size: 15px;
 }
-.edit-icon, .share-icon{
+.edit-icon,
+.share-icon {
   margin-right: 5px;
   margin-top: 2px;
   height: 15px;
   width: auto;
 }
-.follwer-icon{
+.follwer-icon {
   margin-right: 5px;
   margin-top: 2px;
   height: 15px;
   width: auto;
+}
+.option-btn {
+  display: inline-block;
+  position: relative;
+  height: 26px;
+  margin: 0;
+  padding: 2px 11px 2px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  background-color: #fff;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: initial;
+}
+.option-btn + .option-btn {
+  margin-left: 6px;
 }

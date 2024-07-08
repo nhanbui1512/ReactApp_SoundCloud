@@ -295,7 +295,7 @@ function Gallery({ data, playLists }) {
                 <Wrapper className={cx('more-menu')}>
                   <MenuItem
                     className={cx('menu-item')}
-                    icon={<FormatListBulletedIcon className={cx('menu-item-icon')} />}
+                    icon={<FormatListBulletedIcon fontSize="16" />}
                     separate
                     onClick={handleAddNextUp}
                   >
@@ -303,7 +303,7 @@ function Gallery({ data, playLists }) {
                   </MenuItem>
                   <MenuItem
                     className={cx('menu-item')}
-                    icon={<QueueMusic className={cx('menu-item-icon')} />}
+                    icon={<QueueMusic fontSize="16" />}
                     onClick={() => setOpenAddToPlaylist(true)}
                   >
                     Add to Playlist

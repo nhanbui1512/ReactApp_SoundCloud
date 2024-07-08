@@ -8,7 +8,7 @@ import CommentForm from 'pages/DetailSong/CommentForm';
 
 const cx = classNames.bind(styles);
 
-const CommentItem = memo(({ data }) => {
+const CommentItem = memo(({ data, parentData = {} }) => {
   const [reply, setReply] = useState(false);
 
   const handleCloseCommentForm = () => {
@@ -31,13 +31,26 @@ const CommentItem = memo(({ data }) => {
             <span className="text-[12px] text-neutral-600">{data.fromNow}</span>
           </div>
           <div>
-            <p className="text-[14px] mb-1">{data.content}</p>
+            <p className="text-[14px] mb-1">
+              {data.parentId && '@'}
+              {data.parentId && (
+                <Link
+                  style={{
+                    color: '#38d',
+                  }}
+                  className="mr-0.5"
+                >
+                  {parentData.userName}
+                </Link>
+              )}
+              {data.content}
+            </p>
           </div>
           <span
             onClick={() => {
               setReply(true);
             }}
-            className="mr-2 text-[14px] cursor-pointer font-medium"
+            className="mr-2 text-[14px] cursor-pointer font-medium w-fit"
           >
             Reply
           </span>

@@ -6,9 +6,8 @@ import Image from 'components/Image';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
-// import PlayList from 'components/PlayList';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
 import { followUser, unfollowUser } from 'api/follow';
@@ -18,7 +17,7 @@ const cx = classNames.bind(styles);
 function Information({ data }) {
   const storage = useContext(StorageContext);
   const navigate = useNavigate();
-  const [isFollowed, setisFollowed] = useState(data.owner?.isFollowed || false);
+  const [isFollowed, setisFollowed] = useState(data.owner?.isFollowed);
   const [openPlayList, setopenPlayList] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const handleHidden = () => {
@@ -91,7 +90,7 @@ function Information({ data }) {
   };
 
   useEffect(() => {
-    setisFollowed(data.owner?.isFollowed || false);
+    setisFollowed(data.owner?.isFollowed);
   }, [data]);
 
   return (
@@ -124,14 +123,21 @@ function Information({ data }) {
             <FontAwesomeIcon className={cx('action-icon')} icon={faHeart} />
           </div>
         </Tippy>
-        <Tippy offset={[0, 8]} render={() => <div className={cx('like-tippy')}>Follow</div>}>
-          <div onClick={handleFollow} className={cx('action-btn', { isActive: isFollowed })}>
-            <FontAwesomeIcon
-              className={cx('action-icon')}
-              icon={isFollowed ? faUserCheck : faUserPlus}
-            />
-          </div>
-        </Tippy>
+        {data.owner?.id !== storage.userData?.id && (
+          <Tippy
+            offset={[0, 8]}
+            render={() => (
+              <div className={cx('like-tippy')}>{isFollowed ? 'Unfollow' : 'Follow'}</div>
+            )}
+          >
+            <div onClick={handleFollow} className={cx('action-btn', { isActive: isFollowed })}>
+              <FontAwesomeIcon
+                className={cx('action-icon')}
+                icon={isFollowed ? faUserCheck : faUserPlus}
+              />
+            </div>
+          </Tippy>
+        )}
         <Tippy
           visible={openPlayList}
           placement="top-end"
@@ -157,4 +163,4 @@ function Information({ data }) {
 Information.propTypes = {
   data: PropTypes.object.isRequired,
 };
-export default Information;
+export default memo(Information);

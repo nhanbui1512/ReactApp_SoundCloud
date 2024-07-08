@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CommentForm.module.scss';
 import { Avatar } from '@mui/material';
@@ -6,16 +6,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { StorageContext } from 'context/Storage';
-import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
-const CommentForm = memo(({ onClose }) => {
+const CommentForm = memo(({ onClose, onSendComment }) => {
+  const [comment, setComment] = useState('');
+
   const handleClose = (e) => {
     if (onClose) return onClose(e);
   };
+
   const handleSend = (e) => {
-    toast.success('Comment successfully');
+    if (onSendComment) onSendComment(comment);
+    setComment('');
   };
 
   const storage = useContext(StorageContext);
@@ -29,7 +32,13 @@ const CommentForm = memo(({ onClose }) => {
       )}
       <div className="flex flex-1 ml-2 h-10 items-center">
         <div className="flex-1 relative">
-          <input placeholder="Write a comment" className={cx(['input', 'text-[14px]'])}></input>
+          <input
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Write a comment"
+            className={cx(['input', 'text-[14px]'])}
+          ></input>
           {onClose && <button onClick={handleClose} className={cx('close-btn')}></button>}
         </div>
         <button onClick={handleSend} className={cx(['send-btn', 'center', 'ml-4'])}>
@@ -42,5 +51,6 @@ const CommentForm = memo(({ onClose }) => {
 
 CommentForm.propTypes = {
   onClose: PropTypes.func,
+  onSendComment: PropTypes.func,
 };
 export default CommentForm;

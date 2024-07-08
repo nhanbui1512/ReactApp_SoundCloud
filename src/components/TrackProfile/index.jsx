@@ -12,15 +12,19 @@ const TrackPlaylist = ({ trackList }) => {
     <>
       <ul className={cx('feed__modul-list')}>
         {trackList.songs?.length > 0 ? (
-          trackList.songs?.map((list, index) => <TrackSong dataSong={list} key={index} />)
+          trackList.songs?.map((song, index) => <TrackSong dataSong={song} key={song.id} />)
         ) : (
-          <div style={{textAlign: 'center'}} className={cx('info-music-list')}>
+          <div style={{ textAlign: 'center' }} className={cx('info-music-list')}>
             <div className={cx('router-view')}></div>
             <p style={{ textAlign: 'center', marginTop: '72px' }}>Bạn chưa có bài hát nào</p>
             <p style={{ textAlign: 'center', color: 'blue' }} className={cx('p-title')}>
               Hãy tạo bài hát ngay nào.
             </p>
-            <Link to="/upload" style={{backgroundColor: 'orange', textAlign: 'center'}} className={cx('btn-route-upload')}>
+            <Link
+              to="/upload"
+              style={{ backgroundColor: 'orange', textAlign: 'center' }}
+              className={cx('btn-route-upload')}
+            >
               Upload
             </Link>
           </div>

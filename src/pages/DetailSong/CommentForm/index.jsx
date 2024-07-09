@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CommentForm.module.scss';
 import { Avatar } from '@mui/material';
@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 
 const CommentForm = memo(({ onClose, onSendComment }) => {
   const [comment, setComment] = useState('');
+  const inputRef = useRef();
 
   const handleClose = (e) => {
     if (onClose) return onClose(e);
@@ -23,6 +24,11 @@ const CommentForm = memo(({ onClose, onSendComment }) => {
 
   const storage = useContext(StorageContext);
 
+  useEffect(() => {
+    if (onClose) inputRef.current.focus();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="flex items-center">
       {storage.currentUser && (
@@ -33,12 +39,13 @@ const CommentForm = memo(({ onClose, onSendComment }) => {
       <div className="flex flex-1 ml-2 h-10 items-center">
         <div className="flex-1 relative">
           <input
+            ref={inputRef}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Write a comment"
             className={cx(['input', 'text-[14px]'])}
-          ></input>
+          />
           {onClose && <button onClick={handleClose} className={cx('close-btn')}></button>}
         </div>
         <button onClick={handleSend} className={cx(['send-btn', 'center', 'ml-4'])}>

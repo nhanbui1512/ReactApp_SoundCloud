@@ -12,3 +12,18 @@ export function changePosition(mang, viTriA, viTriB) {
   // Chèn phần tử vào vị trí b
   mang.splice(viTriB, 0, phanTu);
 }
+
+export function deepFindComment(comments, targetId) {
+  for (const comment of comments) {
+    if (comment.id === targetId) {
+      return comment;
+    }
+    if (comment.Replies && comment.Replies.length > 0) {
+      const found = deepFindComment(comment.Replies, targetId);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+}

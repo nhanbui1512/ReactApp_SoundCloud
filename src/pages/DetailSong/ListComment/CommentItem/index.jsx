@@ -1,18 +1,26 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CommentItem.module.scss';
 import { Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CommentForm from 'pages/DetailSong/CommentForm';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { StorageContext } from 'context/Storage';
 
 const cx = classNames.bind(styles);
 
-const CommentItem = memo(({ data, parentData = {} }) => {
+const CommentItem = memo(({ data, parentData = {}, onReply }) => {
   const [reply, setReply] = useState(false);
+  const storage = useContext(StorageContext);
 
   const handleCloseCommentForm = () => {
     setReply(false);
+  };
+
+  const handleReply = (content) => {
+    setReply(false);
+    if (onReply) return onReply(content, data);
   };
   return (
     <>
@@ -46,20 +54,28 @@ const CommentItem = memo(({ data, parentData = {} }) => {
               {data.content}
             </p>
           </div>
-          <span
-            onClick={() => {
-              setReply(true);
-            }}
-            className="mr-2 text-[14px] cursor-pointer font-medium w-fit"
-          >
-            Reply
-          </span>
+          <div className="flex items-center">
+            <span
+              onClick={() => {
+                setReply(true);
+              }}
+              className="mr-2 text-[14px] cursor-pointer font-medium w-fit"
+            >
+              Reply
+            </span>
+            {/* can delete ?  */}
+            {storage.userData?.id === data.userId && (
+              <button className="w-8 h-8 flex center">
+                <DeleteOutlineIcon fontSize="small" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {reply && (
         <div className="pt-3 pr-2.5 ml-12">
-          <CommentForm onClose={handleCloseCommentForm} />
+          <CommentForm onSendComment={handleReply} onClose={handleCloseCommentForm} />
         </div>
       )}
     </>

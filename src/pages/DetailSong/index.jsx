@@ -280,7 +280,7 @@ function Song() {
                 </div>
               </div>
               <div className={cx('content')}>
-                <ListComment commentData={commentData} />
+                <ListComment commentData={commentData} setCommentData={setCommentData} />
               </div>
             </div>
           </div>

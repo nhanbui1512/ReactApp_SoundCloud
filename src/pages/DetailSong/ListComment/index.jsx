@@ -6,6 +6,10 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import CommentItem from './CommentItem';
 import EmptyComment from './EmptyComment';
+import PropTypes from 'prop-types';
+import { deepFindComment } from 'Utils/arrays';
+import { replyComment } from 'api/comments';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -24,11 +28,27 @@ const sortOptions = [
   },
 ];
 
-const ListComment = memo(({ commentData = {} }) => {
+const ListComment = memo(({ commentData = {}, setCommentData }) => {
   const [sort, setSort] = React.useState(1);
 
   const handleChange = (event) => {
     setSort(event.target.value);
+  };
+  const handleReply = (content, parentComment) => {
+    replyComment(content, parentComment.songId, parentComment.id)
+      .then((res) => {
+        setCommentData((prev) => {
+          const newState = { ...prev };
+          const comment = deepFindComment(newState.data, parentComment.id); // newState.data is comments array
+          comment.Replies.push(res.data);
+          return newState;
+        });
+        toast.success('Comment successfully');
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error('Comment fail');
+      });
   };
 
   const renderComments = () => {
@@ -36,7 +56,7 @@ const ListComment = memo(({ commentData = {} }) => {
       return (
         <div key={comment.id}>
           <div className={comment.parentId === null ? 'pt-5 pr-2.5' : 'ml-12 pt-3'}>
-            <CommentItem data={comment} parentData={parent} />
+            <CommentItem onReply={handleReply} data={comment} parentData={parent} />
           </div>
 
           {comment.Replies.map((item) => renderItems(item, comment.user))}
@@ -49,7 +69,7 @@ const ListComment = memo(({ commentData = {} }) => {
 
   return (
     <div className={cx('wrapper')}>
-      {commentData.totalDocs !== 0 && (
+      {commentData.data?.length !== 0 && (
         <div>
           <div className={cx('header')}>
             <div className={cx('title')}>
@@ -127,9 +147,13 @@ const ListComment = memo(({ commentData = {} }) => {
         </div>
       )}
 
-      {commentData.totalDocs === 0 && <EmptyComment />}
+      {commentData.data?.length === 0 && <EmptyComment />}
     </div>
   );
 });
 
+ListComment.propTypes = {
+  commentData: PropTypes.object.isRequired,
+  setCommentData: PropTypes.func,
+};
 export default ListComment;

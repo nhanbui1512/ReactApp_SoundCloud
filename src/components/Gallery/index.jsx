@@ -49,7 +49,7 @@ function Gallery({ data, playLists }) {
   const handlePlay = (e) => {
     e.preventDefault();
     const audioTag = storage.audioRef.current;
-    // nếu dữ liệu truyền vào gallery là playlist
+    // nếu dữ liệu truyền vào gallery ko phải là playlist
     if (!playLists) {
       // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
       if (storage.currentMusic.id !== data.id) {

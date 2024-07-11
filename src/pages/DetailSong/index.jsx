@@ -35,7 +35,7 @@ function Song() {
   const [followSong, setFollowSong] = useState(false);
   const [likedSong, setLikedSong] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
-  const [song, setSong] = useState([]);
+  const [song, setSong] = useState({});
   const [commentData, setCommentData] = useState({});
 
   const [owner, setOwner] = useState([]);
@@ -44,7 +44,7 @@ function Song() {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -136,11 +136,36 @@ function Song() {
     }
   };
 
-  const handlePlay = () => {
-    setIsPlaying(!isPlaying);
+  const handlePlayOrPause = (e) => {
+    e.preventDefault();
+    const audioTag = storage.audioRef.current;
+    // Nếu dữ liệu của gallary # dữ liệu bài hát đang được load thì set lại state
+    if (storage.currentMusic.id !== song.id) {
+      storage.setCurrentPlayList([song]);
+      storage.setCurrentMusic(song);
+      if (storage.playlistId !== -1) storage.setPlaylistId(-1);
+
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlaying(true);
+        audioTag.removeEventListener('loadeddata', playMusic);
+      };
+      audioTag.addEventListener('loadeddata', playMusic);
+      return; // thoát khỏi hàm
+    }
+
+    // Nếu đang bài đang phát giống với bài của gallary
+    if (audioTag.paused) {
+      // Đang dừng thì hiển thị nút Play
+      audioTag.play();
+    } else {
+      // Đang phát thì hiển thị nút pause
+      audioTag.pause();
+    }
   };
 
   const handleComment = (content) => {
+    if (!storage.currentUser) return navigate('/login');
     if (content.trim() === '') return toast.error('Content of comment must be filled');
 
     createComment(id, content)
@@ -148,6 +173,7 @@ function Song() {
         toast.success('Comment successfully');
         setCommentData((prev) => {
           const newState = { ...prev };
+          newState.totalDocs++;
           newState.data.unshift(res.data);
           return newState;
         });
@@ -157,12 +183,43 @@ function Song() {
       });
   };
 
+  useEffect(() => {
+    setIsPlaying(storage.currentMusic?.id === Number(id));
+    // eslint-disable-next-line
+  }, [storage.currentMusic, id]);
+
+  // Xử lý thay đổi state của icon khi nhạc ở Player dừng hoặc Phát
+  useEffect(() => {
+    const audioTag = storage.audioRef.current;
+
+    const handlePlay = () => {
+      if (Number(id) === storage.currentMusic.id) {
+        setIsPlaying(true);
+      }
+    };
+
+    const handlePause = () => {
+      if (Number(id) === storage.currentMusic.id) {
+        setIsPlaying(false);
+      }
+    };
+
+    audioTag.addEventListener('play', handlePlay);
+    audioTag.addEventListener('pause', handlePause);
+
+    return () => {
+      audioTag.removeEventListener('play', handlePlay);
+      audioTag.removeEventListener('pause', handlePlay);
+    };
+    // eslint-disable-next-line
+  }, [id]);
+
   return (
     <>
       <div className={cx('wrapper')}>
         <div className={cx('info-user')}>
           <div className={cx('info-song')}>
-            <span onClick={handlePlay} className={cx('list-music_playbtn')}>
+            <span onClick={handlePlayOrPause} className={cx('list-music_playbtn')}>
               <FontAwesomeIcon className={cx('icon-play')} icon={isPlaying ? faPause : faPlay} />
             </span>
             <div className={cx('name-user')}>

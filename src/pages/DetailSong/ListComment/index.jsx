@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ListComment.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import { deepFindComment } from 'Utils/arrays';
 import { replyComment } from 'api/comments';
 import { toast } from 'react-toastify';
+import { StorageContext } from 'context/Storage';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -30,15 +32,20 @@ const sortOptions = [
 
 const ListComment = memo(({ commentData = {}, setCommentData }) => {
   const [sort, setSort] = React.useState(1);
+  const storage = useContext(StorageContext);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setSort(event.target.value);
   };
   const handleReply = (content, parentComment) => {
+    if (!storage.currentUser) return navigate('/login');
+    if (content.trim() === '') return toast.error('Content of comment must be filled');
     replyComment(content, parentComment.songId, parentComment.id)
       .then((res) => {
         setCommentData((prev) => {
           const newState = { ...prev };
+          newState.totalDocs++;
           const comment = deepFindComment(newState.data, parentComment.id); // newState.data is comments array
           comment.Replies.push(res.data);
           return newState;

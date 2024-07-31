@@ -7,11 +7,14 @@ import PropTypes from 'prop-types';
 import CommentForm from 'pages/DetailSong/CommentForm';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { StorageContext } from 'context/Storage';
+import HeadlessTippy from '@tippyjs/react/headless';
 
 const cx = classNames.bind(styles);
 
 const CommentItem = memo(({ data, parentData = {}, onReply }) => {
   const [reply, setReply] = useState(false);
+  const [isOpenPopper, setIsOpenPopper] = useState(false);
+
   const storage = useContext(StorageContext);
 
   const handleCloseCommentForm = () => {
@@ -22,6 +25,8 @@ const CommentItem = memo(({ data, parentData = {}, onReply }) => {
     setReply(false);
     if (onReply) return onReply(content, data);
   };
+
+  const closePopper = () => setIsOpenPopper(false);
   return (
     <>
       <div className={cx('wrapper')}>
@@ -65,9 +70,38 @@ const CommentItem = memo(({ data, parentData = {}, onReply }) => {
             </span>
             {/* can delete ?  */}
             {storage.userData?.id === data.userId && (
-              <button className="w-8 h-8 flex center">
-                <DeleteOutlineIcon fontSize="small" />
-              </button>
+              <HeadlessTippy
+                visible={isOpenPopper}
+                interactive
+                placement={'bottom-end'}
+                onClickOutside={() => closePopper()}
+                render={() => (
+                  <div className={cx('delete-popper')}>
+                    <div className="flex flex-col">
+                      <span className="text-[12px]">
+                        Do you really want to remove this comment?
+                      </span>
+
+                      <div className="flex justify-end gap-1">
+                        <button onClick={() => closePopper()} className={cx('option-btn')}>
+                          Cancel
+                        </button>
+                        <button className={cx('option-btn')}>Yes</button>
+                      </div>
+                    </div>
+                    <div className={cx('dialog-arrow')}></div>
+                  </div>
+                )}
+              >
+                <button
+                  onClick={() => {
+                    setIsOpenPopper((prev) => !prev);
+                  }}
+                  className="w-8 h-8 flex center"
+                >
+                  <DeleteOutlineIcon fontSize="small" />
+                </button>
+              </HeadlessTippy>
             )}
           </div>
         </div>

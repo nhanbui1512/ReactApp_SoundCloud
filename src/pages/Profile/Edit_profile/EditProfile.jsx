@@ -143,6 +143,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                       accept="image/*"
                     />
                     <button
+                      className="text-[14px]"
                       onClick={(e) => {
                         inputref.current.click();
                       }}
@@ -160,6 +161,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                       </div>
                     </div>
                     <input
+                      className={cx('field-input')}
                       onChange={(e) => setUserName(e.target.value)}
                       value={userName}
                       type="text"
@@ -184,6 +186,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                         </div>
                       </div>
                       <input
+                        className={cx('field-input')}
                         onChange={(e) => setCity(e.target.value)}
                         value={city}
                         type="text"
@@ -197,6 +200,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                         </div>
                       </div>
                       <input
+                        className={cx('field-input')}
                         onChange={(e) => setCountry(e.target.value)}
                         value={country}
                         type="text"
@@ -211,6 +215,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                       </div>
                     </div>
                     <textarea
+                      className={cx('field-input')}
                       onChange={(e) => setBio(e.target.value)}
                       value={bio}
                       type="text"
@@ -244,6 +249,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                     </div>
                   </div>
                   <input
+                    className={cx('field-input')}
                     onChange={(e) => setOldPass(e.target.value)}
                     value={oldPass}
                     type="password"
@@ -257,6 +263,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                     </div>
                   </div>
                   <input
+                    className={cx('field-input')}
                     onChange={(e) => setNewPass(e.target.value)}
                     value={newPass}
                     type="password"
@@ -270,6 +277,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                     </div>
                   </div>
                   <input
+                    className={cx('field-input')}
                     onChange={(e) => setConfirmPass(e.target.value)}
                     value={confirmPass}
                     type="password"

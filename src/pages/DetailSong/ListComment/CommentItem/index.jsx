@@ -11,7 +11,7 @@ import HeadlessTippy from '@tippyjs/react/headless';
 
 const cx = classNames.bind(styles);
 
-const CommentItem = memo(({ data, parentData = {}, onReply }) => {
+const CommentItem = memo(({ data, parentData = {}, onReply, onDelete }) => {
   const [reply, setReply] = useState(false);
   const [isOpenPopper, setIsOpenPopper] = useState(false);
 
@@ -24,6 +24,11 @@ const CommentItem = memo(({ data, parentData = {}, onReply }) => {
   const handleReply = (content) => {
     setReply(false);
     if (onReply) return onReply(content, data);
+  };
+
+  const handleDelete = () => {
+    if (onDelete) return onDelete(data);
+    setIsOpenPopper(false);
   };
 
   const closePopper = () => setIsOpenPopper(false);
@@ -86,7 +91,9 @@ const CommentItem = memo(({ data, parentData = {}, onReply }) => {
                         <button onClick={() => closePopper()} className={cx('option-btn')}>
                           Cancel
                         </button>
-                        <button className={cx('option-btn')}>Yes</button>
+                        <button onClick={handleDelete} className={cx('option-btn')}>
+                          Yes
+                        </button>
                       </div>
                     </div>
                     <div className={cx('dialog-arrow')}></div>

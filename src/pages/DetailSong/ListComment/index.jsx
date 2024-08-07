@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ListComment.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -95,6 +95,28 @@ const ListComment = memo(({ commentData = {}, setCommentData }) => {
         toast.error('Delete comment unsuccessfully');
       });
   };
+
+  useEffect(() => {
+    let commentArray = commentData?.data ? [...commentData.data] : [];
+
+    switch (sort) {
+      case 1:
+        commentArray.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
+        break;
+      case 2:
+        commentArray.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+        break;
+      default:
+        break;
+    }
+
+    setCommentData((prev) => {
+      prev.data = commentArray;
+      return prev;
+    });
+    // eslint-disable-next-line
+  }, [sort, commentData]);
+
   return (
     <div className={cx('wrapper')}>
       {commentData.data?.length !== 0 && (

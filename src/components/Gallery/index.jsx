@@ -33,6 +33,7 @@ import {
 
 import { QueueMusic } from '@mui/icons-material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -196,6 +197,7 @@ function Gallery({ data, playLists }) {
         return [...prev, ...songs];
       });
     }
+    toast.success('Added to Next up');
   };
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play

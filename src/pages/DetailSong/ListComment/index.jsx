@@ -8,7 +8,7 @@ import CommentItem from './CommentItem';
 import EmptyComment from './EmptyComment';
 import PropTypes from 'prop-types';
 import { deepFindComment } from 'Utils/arrays';
-import { replyComment } from 'api/comments';
+import { deleteComment, replyComment } from 'api/comments';
 import { toast } from 'react-toastify';
 import { StorageContext } from 'context/Storage';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +38,7 @@ const ListComment = memo(({ commentData = {}, setCommentData }) => {
   const handleChange = (event) => {
     setSort(event.target.value);
   };
+
   const handleReply = (content, parentComment) => {
     if (!storage.currentUser) return navigate('/login');
     if (content.trim() === '') return toast.error('Content of comment must be filled');
@@ -63,7 +64,12 @@ const ListComment = memo(({ commentData = {}, setCommentData }) => {
       return (
         <div key={comment.id}>
           <div className={comment.parentId === null ? 'pt-5 pr-2.5' : 'ml-12 pt-3'}>
-            <CommentItem onReply={handleReply} data={comment} parentData={parent} />
+            <CommentItem
+              onDelete={handleDelete}
+              onReply={handleReply}
+              data={comment}
+              parentData={parent}
+            />
           </div>
 
           {comment.Replies.map((item) => renderItems(item, comment.user))}
@@ -74,6 +80,21 @@ const ListComment = memo(({ commentData = {}, setCommentData }) => {
     return commentData.data?.map((comment) => renderItems(comment));
   };
 
+  const handleDelete = (data) => {
+    deleteComment(data.id)
+      .then((res) => {
+        setCommentData((prev) => {
+          const newState = { ...prev };
+          newState.data = newState.data.filter((item) => item.id !== data.id);
+          return newState;
+        });
+        toast.success('Delete comment successfully');
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error('Delete comment unsuccessfully');
+      });
+  };
   return (
     <div className={cx('wrapper')}>
       {commentData.data?.length !== 0 && (

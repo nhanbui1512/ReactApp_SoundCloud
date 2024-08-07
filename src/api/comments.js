@@ -42,3 +42,12 @@ export async function replyComment(content, songId, commentId) {
     throw error;
   }
 }
+
+export async function deleteComment(commentId) {
+  try {
+    const res = await axiosClient.delete(`/comments?comment_id=${commentId}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -1,3 +1,38 @@
 .wrapper {
   display: flex;
 }
+.delete-popper {
+  position: relative;
+  width: 282px;
+  min-height: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  .option-btn {
+    font-size: 11px;
+    height: 22px;
+    padding: 2px 9px 2px 8px;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    background-color: #fff;
+    &:hover {
+      color: #333;
+      outline: 0;
+      border-color: #ccc;
+    }
+  }
+}
+.dialog-arrow {
+  position: absolute;
+  transform: rotate(45deg);
+  top: -5px;
+  right: 12px;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-width: 1px 0 0 1px;
+  box-shadow: -1px -1px 1px -1px rgba(0, 0, 0, 0.5);
+}

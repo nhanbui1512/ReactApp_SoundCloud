@@ -24,10 +24,6 @@ const sortOptions = [
     name: 'Oldest',
     value: 2,
   },
-  {
-    name: 'Track Time',
-    value: 3,
-  },
 ];
 
 const ListComment = memo(({ commentData = {}, setCommentData }) => {

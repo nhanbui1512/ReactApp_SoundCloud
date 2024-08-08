@@ -143,9 +143,12 @@ function Song() {
     // handle logic
     storage.setCurrentPlayList((prev) => {
       const newState = [...prev];
-      const isExist = newState.findIndex((item) => item.id === song.id);
-      if (isExist === -1) newState.splice(1, 0, song);
-      else changePosition(newState, isExist, 1);
+      if (newState[0].id !== song.id) {
+        const isExist = newState.findIndex((item) => item.id === song.id);
+        if (isExist === -1) newState.splice(1, 0, song);
+        else changePosition(newState, isExist, 1);
+      }
+
       return newState;
     });
     toast.success('Add to next up successfully');

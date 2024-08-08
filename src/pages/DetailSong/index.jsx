@@ -27,6 +27,7 @@ import ListComment from './ListComment';
 import CommentForm from './CommentForm';
 import { createComment, getCommentsOfSong } from 'api/comments';
 import { toast } from 'react-toastify';
+import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);
 
@@ -82,12 +83,14 @@ function Song() {
     const timeReset = setTimeout(() => {
       setCopyLink(copyLink);
     }, 500);
-
+    toast.success('Copied Link of song');
     await sleep(1000);
     return clearTimeout(timeReset);
   };
   const handleFollowSong = () => {
     setFollowSong(!followSong);
+    const message = followSong ? 'Unfollow user successfully' : 'Follow user successfully';
+    toast.success(message);
   };
 
   const handleLikeSong = () => {
@@ -134,6 +137,18 @@ function Song() {
           setFollowingUser(false);
         });
     }
+  };
+
+  const handleAddToNextUp = () => {
+    // handle logic
+    storage.setCurrentPlayList((prev) => {
+      const newState = [...prev];
+      const isExist = newState.findIndex((item) => item.id === song.id);
+      if (isExist === -1) newState.splice(1, 0, song);
+      else changePosition(newState, isExist, 1);
+      return newState;
+    });
+    toast.success('Add to next up successfully');
   };
 
   const handlePlayOrPause = (e) => {
@@ -277,7 +292,7 @@ function Song() {
                   <FontAwesomeIcon icon={faLink} />
                   <span>Copy Link</span>
                 </button>
-                <button>
+                <button onClick={handleAddToNextUp}>
                   <FontAwesomeIcon icon={faBars} />
                   <span>Add to Next up</span>
                 </button>

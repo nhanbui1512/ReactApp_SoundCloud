@@ -74,11 +74,11 @@ export async function updatePlaylist(playlistId, playlistName, listOfSongsId) {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -103,7 +103,7 @@ export async function getPlaylistsById(id) {
 // same API endpoint with getSongsByName
 export async function getPlaylistsByName(name) {
   try {
-    const response = await axiosClient.get(`/song/search?value=${name}`);
+    const response = await axiosClient.get(`/song/search?search_value=${name}`);
     return response.data;
   } catch (error) {
     throw error;

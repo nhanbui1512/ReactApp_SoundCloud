@@ -60,7 +60,7 @@ export async function getSongById(id) {
 // same API endpoint with getPlaylistsByName
 export async function getSongsByName(name) {
   try {
-    const response = await axiosClient.get(`/song/search?value=${name}`);
+    const response = await axiosClient.get(`/song/search?search_value=${name}`);
     return response.data;
   } catch (error) {
     throw error;

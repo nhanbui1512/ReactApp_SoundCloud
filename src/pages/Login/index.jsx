@@ -25,7 +25,6 @@ const Login = () => {
       password: password,
     })
       .then((res) => {
-        console.log(res);
         setToken({ token: res.token });
         storage.setCurrentUser(true);
         storage.setUserData(res.user);

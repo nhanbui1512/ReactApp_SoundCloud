@@ -27,7 +27,6 @@ import ListComment from './ListComment';
 import CommentForm from './CommentForm';
 import { createComment, getCommentsOfSong } from 'api/comments';
 import { toast } from 'react-toastify';
-import { changePosition } from 'Utils/arrays';
 
 const cx = classNames.bind(styles);
 
@@ -141,14 +140,28 @@ function Song() {
 
   const handleAddToNextUp = () => {
     // handle logic
+    const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+    const indexOfSongInPlaylist = storage.currentPlayList.findIndex((item) => item.id === song.id);
     storage.setCurrentPlayList((prev) => {
       const newState = [...prev];
-      if (newState[0].id !== song.id) {
-        const isExist = newState.findIndex((item) => item.id === song.id);
-        if (isExist === -1) newState.splice(1, 0, song);
-        else changePosition(newState, isExist, 1);
-      }
+      // đảm bảo bài muốn thêm vào sau không phải là bài đang phát
+      // 2 trường hợp : không được phát nhưng tồn tại trong pl , không được phát và cũng không tồn tại trong pl
+      if (storage.currentPlayList[indexPlaying].id !== song.id) {
+        if (indexOfSongInPlaylist !== -1) {
+          // Xóa phần tử khỏi vị trí cũ
+          newState.splice(indexOfSongInPlaylist, 1);
 
+          // Nếu phần tử nằm trên vị trí đang phát, giảm indexPlaying để điều chỉnh vị trí
+          const newIndexPlaying =
+            indexOfSongInPlaylist < indexPlaying ? indexPlaying - 1 : indexPlaying;
+
+          // Chèn phần tử vào sau vị trí đang phát (điều chỉnh)
+          newState.splice(newIndexPlaying + 1, 0, song);
+        } else {
+          // Chèn phần tử song vào sau vị trí đang phát nếu không tồn tại trong danh sách
+          newState.splice(indexPlaying + 1, 0, song);
+        }
+      }
       return newState;
     });
     toast.success('Add to next up successfully');

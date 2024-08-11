@@ -17,7 +17,6 @@ import { LibraryContext } from 'context/Library';
 
 import { likeSong, unlikeSong } from 'api/songs';
 import { followPlaylist, unfollowPlaylist } from 'api/follow';
-import { changePosition } from 'Utils/arrays';
 
 import { BsMusicNoteList } from 'react-icons/bs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -159,36 +158,34 @@ function Gallery({ data, playLists }) {
   };
 
   const handleAddNextUp = () => {
-    var indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
-
     if (!playLists) {
       // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
-      if (storage.currentPlayList.find((music) => music.id === data.id)) {
-        var indexOfSong = storage.currentPlayList.findIndex((element) => data.id === element.id);
+      const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);
+      const indexOfSongInPlaylist = storage.currentPlayList.findIndex(
+        (item) => item.id === data.id,
+      );
+      storage.setCurrentPlayList((prev) => {
+        const newState = [...prev];
+        // đảm bảo bài muốn thêm vào sau không phải là bài đang phát
+        // 2 trường hợp : không được phát nhưng tồn tại trong pl , không được phát và cũng không tồn tại trong pl
+        if (storage.currentPlayList[indexPlaying].id !== data.id) {
+          if (indexOfSongInPlaylist !== -1) {
+            // Xóa phần tử khỏi vị trí cũ
+            newState.splice(indexOfSongInPlaylist, 1);
 
-        storage.setCurrentPlayList((prev) => {
-          var newState = [...prev];
-          changePosition(newState, indexOfSong, indexPlaying + 1);
-          return newState;
-        });
-      } else {
-        // ngược lại -> thêm vào sau bài đang phát
+            // Nếu phần tử nằm trên vị trí đang phát, giảm indexPlaying để điều chỉnh vị trí
+            const newIndexPlaying =
+              indexOfSongInPlaylist < indexPlaying ? indexPlaying - 1 : indexPlaying;
 
-        if ((indexPlaying === storage.currentPlayList.length - 1) === 0) {
-          return storage.setCurrentPlayList((prev) => {
-            var newState = [...prev];
-            newState.push(data);
-            return newState;
-          });
+            // Chèn phần tử vào sau vị trí đang phát (điều chỉnh)
+            newState.splice(newIndexPlaying + 1, 0, data);
+          } else {
+            // Chèn phần tử song vào sau vị trí đang phát nếu không tồn tại trong danh sách
+            newState.splice(indexPlaying + 1, 0, data);
+          }
         }
-        var target = indexPlaying + 1;
-
-        storage.setCurrentPlayList((prev) => {
-          var newState = [...prev];
-          newState.splice(target, 0, data);
-          return newState;
-        });
-      }
+        return newState;
+      });
     } else {
       let songs = data.songs.filter((song) => {
         return !storage.currentPlayList.includes(song);

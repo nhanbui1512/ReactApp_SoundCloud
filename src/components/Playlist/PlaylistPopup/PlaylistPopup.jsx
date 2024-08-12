@@ -151,14 +151,14 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
                 <div className={cx('playlist-name')}>{item.name}</div>
                 {item.songs.map((song) => song.id).includes(songData.id) ? (
                   <button
-                    className={cx('button-added')}
+                    className={cx(['button-added', 'text-[14px]'])}
                     onClick={() => RemoveFromPlaylist(item.id)}
                   >
                     Added
                   </button>
                 ) : (
                   <button
-                    className={cx('button-add')}
+                    className={cx(['button-add', 'text-[14px]'])}
                     onClick={() => AddToPlaylist(item.id, item.name)}
                   >
                     Add to playlist
@@ -179,7 +179,7 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
           onChange={(e) => setNewPlaylistName(e.target.value)}
         />
         <button
-          className={cx('button-save')}
+          className={cx(['button-save', 'text-[16px]'])}
           disabled={creatingPlaylist}
           onClick={CreateNewPlaylist}
         >

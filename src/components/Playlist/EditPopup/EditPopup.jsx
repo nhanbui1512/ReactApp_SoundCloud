@@ -122,13 +122,16 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
                 </div>
                 {removeSongs.includes(song.id) ? (
                   <button
-                    className={cx('button-removed')}
+                    className={cx(['button-removed', 'text-[14px]'])}
                     onClick={() => CancleRemoveSong(song.id)}
                   >
                     Removed
                   </button>
                 ) : (
-                  <button className={cx('button-remove')} onClick={() => HandleRemoveSong(song.id)}>
+                  <button
+                    className={cx(['button-remove', 'text-[14px]'])}
+                    onClick={() => HandleRemoveSong(song.id)}
+                  >
                     Remove
                   </button>
                 )}
@@ -136,7 +139,11 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
             ))}
           </div>
         )}
-        <button className={cx('button-save')} disabled={saveChange} onClick={HandleSaveChange}>
+        <button
+          className={cx(['button-save', 'text-[16px]'])}
+          disabled={saveChange}
+          onClick={HandleSaveChange}
+        >
           {saveChange ? 'Saving...' : 'Save'}
         </button>
       </div>
@@ -155,7 +162,7 @@ export const EditPopup = ({ open, onClose, playlistData }) => {
           onChange={(e) => setDeleteConfirm(e.target.value)}
         />
         <button
-          className={cx('button-delete')}
+          className={cx(['button-delete', 'text-[16px]'])}
           disabled={deleteConfirm !== playlistData.name || deleting}
           onClick={HandleDeletePlaylist}
         >

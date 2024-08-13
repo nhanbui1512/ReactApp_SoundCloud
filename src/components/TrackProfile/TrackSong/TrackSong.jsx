@@ -19,20 +19,17 @@ import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
-import apiHandlePlayList from 'api/apiHandlePlayList';
 import { toast } from 'react-toastify';
 import { getSongById, likeSong, unlikeSong } from 'api/songs';
 import { Link } from 'react-router-dom';
 import ShareSong from 'pages/Profile/Share/ShareSong';
-
 const cx = classNames.bind(styles);
-const TrackSong = ({ dataSong }) => {
+const TrackSong = ({ dataSong, onDelete }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
   const moreBtnRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
   const [isShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
-  const [deleteSong, setDeleteSong] = useState(false);
   const [popperShare, setPopperShare] = useState(false);
 
   const storage = useContext(StorageContext);
@@ -62,18 +59,7 @@ const TrackSong = ({ dataSong }) => {
   };
 
   const handleDeteSong = async () => {
-    try {
-      if (!deleteSong) {
-        await apiHandlePlayList.deteleTrack(dataSong.id);
-        setDeleteSong(true);
-        toast.success('bạn vừa xóa bài hát');
-      } else {
-        await apiHandlePlayList.deteleTrack(dataSong.id);
-        setDeleteSong(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    if (onDelete) return onDelete(dataSong);
   };
 
   // Hàm xử lý khi nút Play/Pause được nhấn

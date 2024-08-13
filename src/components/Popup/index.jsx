@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './Popup.module.scss'
+import styles from './Popup.module.scss';
 import { useEffect, useState } from 'react';
 
 /* Usage:
@@ -17,34 +17,37 @@ import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const Popup = ({ open, onClose, header, children }) => {
-  const [show, setShow] = useState(false)
-  
+const Popup = ({ open, onClose, header, children, inner }) => {
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
-    setShow(open)
-  }, [open])
+    setShow(open);
+  }, [open]);
 
   const close = () => {
-    setShow(false)
-    onClose(false)
-  }
+    setShow(false);
+    onClose(false);
+  };
 
   return (
-    <div className={cx('container')} style={{
-      // visibility: show ? 'visible' : 'hidden',
-      display: show ? 'flex' : 'none',
-      opacity: show ? '1' : '0',
-    }}>
-      <div className={cx('overlay')} onClick={close}/>
-      <div className={cx('popup')}>
+    <div
+      className={cx('container')}
+      style={{
+        // visibility: show ? 'visible' : 'hidden',
+        display: show ? 'flex' : 'none',
+        opacity: show ? '1' : '0',
+      }}
+    >
+      <div className={cx('overlay')} onClick={close} />
+      <div className={cx('popup', { [inner]: inner })}>
         {header}
-        <button className={cx('close')} onClick={close}>&times;</button>
-        <div className={cx('content')}>
-          {children}
-        </div>
+        <button className={cx('close')} onClick={close}>
+          &times;
+        </button>
+        <div className={cx('content')}>{children}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Popup
+export default Popup;

@@ -131,3 +131,18 @@
 .menu-item {
   color: #333;
 }
+.popup_del-btn {
+  background-color: var(--orange-primary);
+  border-radius: 50%;
+  color: var(--white);
+}
+.popup-option-btn {
+  padding: 2px 11px 2px 10px;
+  border: 1px solid #e5e5e5;
+  height: 26px;
+  font-size: 12px;
+}
+.replace-btn {
+  justify-content: center;
+  border-radius: 3px;
+}

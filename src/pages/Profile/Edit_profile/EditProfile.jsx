@@ -41,14 +41,21 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
       const passData = {
         currentPassword: oldPass,
         newPassword: newPass,
-        confirmPassword: confirmPass,
+        refreshToken: '',
       };
-      try {
-        changePassword(passData);
-        setPopperEdit(false);
-      } catch (error) {
-        console.error('Error while changing password:', error);
-      }
+
+      changePassword(passData)
+        .then((res) => {
+          toast.success('Change password successfully');
+          return setPopperEdit(false);
+        })
+        .catch((err) => {
+          if (err.response.status === 404) {
+            return toast.error('Old password is incorrect');
+          } else {
+            return toast.error('Change password unsuccessfully');
+          }
+        });
     } else {
       toast.error('Confirm incorrect password');
     }

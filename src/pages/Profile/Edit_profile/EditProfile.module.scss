@@ -159,6 +159,7 @@
 }
 
 .butSave {
+  transition: background-color 0.3s ease;
   font-size: 14px;
   background-color: #f50;
   color: white;
@@ -243,4 +244,9 @@
   100% {
     width: 100%;
   }
+}
+
+.disable{
+  transition: background-color 0.3s ease;
+  background-color: #ccc;
 }

@@ -32,7 +32,7 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
   const handleSaveChanges = () => {
     const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,30}$/;
     if (!passRegex.test(newPass)) {
-      alert(
+      toast.error(
         'Please enter password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character,length of 10-30',
       );
       return;
@@ -294,7 +294,13 @@ function EditProfile({ setUserData, setPopperEdit, userData = {} }) {
                 >
                   Cancel
                 </button>
-                <button className={cx('butSave')} onClick={handleSaveChanges}>
+                <button
+                  disabled={confirmPass !== newPass || confirmPass.trim() === ''}
+                  className={cx('butSave', {
+                    disable: confirmPass !== newPass || confirmPass.trim() === '',
+                  })}
+                  onClick={handleSaveChanges}
+                >
                   Save changes
                 </button>
               </div>

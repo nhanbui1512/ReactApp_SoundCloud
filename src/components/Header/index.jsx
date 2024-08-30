@@ -175,14 +175,18 @@ const Header = () => {
           </HeadlessTippy>
         )}
         {/* Notification  */}
-
-        <HeadlessTippy interactive visible offset={[-100, 0]} render={() => <Notification />}>
-          <div
-            className={cx(['more-btn', 'w-[46px] flex items-center justify-center cursor-pointer'])}
-          >
-            <FontAwesomeIcon className="text-[18px]" icon={faBell} />
-          </div>
-        </HeadlessTippy>
+        {currentUser && (
+          <HeadlessTippy interactive offset={[-100, 0]} render={() => <Notification />}>
+            <div
+              className={cx([
+                'more-btn',
+                'w-[46px] flex items-center justify-center cursor-pointer',
+              ])}
+            >
+              <FontAwesomeIcon className="text-[18px]" icon={faBell} />
+            </div>
+          </HeadlessTippy>
+        )}
         {/* More DropDown Menu */}
         <HeadlessTippy
           interactive

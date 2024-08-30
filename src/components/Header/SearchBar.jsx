@@ -89,6 +89,7 @@ const SearchBar = () => {
     >
       <div className={cx('search-container')}>
         <input
+          placeholder="Search"
           value={keyword}
           onChange={(e) => {
             setKeyword(e.target.value);

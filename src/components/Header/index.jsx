@@ -4,6 +4,7 @@ import { Logo, PlayList } from 'components/Icons';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faBell,
   faChevronDown,
   faEllipsis,
   faHeart,
@@ -19,6 +20,7 @@ import Button from 'components/Button';
 import { StorageContext } from 'context/Storage';
 import SearchBar from './SearchBar';
 import Cookies from 'js-cookie';
+import Notification from './Notification';
 
 const cx = classNames.bind(styles);
 const menuUserItem = [
@@ -106,7 +108,6 @@ const Header = () => {
         <NavLink to="/" className={(nav) => cx('logo', { active: true })}>
           <Logo />
         </NavLink>
-
         <NavLink to="/" className={(nav) => cx('header-items', { active: nav.isActive })}>
           Home
         </NavLink>
@@ -116,9 +117,7 @@ const Header = () => {
         <NavLink to={'/library'} className={(nav) => cx('header-items', { active: nav.isActive })}>
           Library
         </NavLink>
-
         <SearchBar />
-
         {currentUser && (
           <div
             style={{
@@ -129,9 +128,7 @@ const Header = () => {
             Try Next Pro
           </div>
         )}
-
         {currentUser && <div className={cx('header-items')}>For Artists</div>}
-
         {currentUser || (
           <div className={cx('login-menu')}>
             <Button className={cx('sigin-btn')} to={'/login'} outline>
@@ -142,13 +139,11 @@ const Header = () => {
             </Button>
           </div>
         )}
-
         {currentUser && (
           <NavLink to={'/upload'} className={(nav) => cx('header-items', { active: nav.isActive })}>
             Upload
           </NavLink>
         )}
-
         {/* Avatar DropDown Menu */}
         {currentUser && (
           <HeadlessTippy
@@ -179,7 +174,15 @@ const Header = () => {
             </Link>
           </HeadlessTippy>
         )}
+        {/* Notification  */}
 
+        <HeadlessTippy interactive visible offset={[-100, 0]} render={() => <Notification />}>
+          <div
+            className={cx(['more-btn', 'w-[46px] flex items-center justify-center cursor-pointer'])}
+          >
+            <FontAwesomeIcon className="text-[18px]" icon={faBell} />
+          </div>
+        </HeadlessTippy>
         {/* More DropDown Menu */}
         <HeadlessTippy
           interactive

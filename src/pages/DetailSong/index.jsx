@@ -8,7 +8,6 @@ import {
   faBars,
   faHeart,
   faLink,
-  faPeopleArrows,
   faPlay,
   faEllipsis,
   faUser,
@@ -288,22 +287,15 @@ function Song() {
                     </>
                   )}
                 </button>
-                <button
-                  onClick={() => handleFollowSong()}
-                  className={cx('', { active: followSong })}
-                >
-                  {followSong ? (
-                    <>
-                      <FontAwesomeIcon icon={faPeopleArrows} />
-                      <span>Following</span>
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faPeopleArrows} />
-                      <span>Follow</span>
-                    </>
-                  )}
-                </button>
+                {storage.currentUser && storage.userData?.id !== song.owner?.id && (
+                  <button
+                    onClick={() => handleFollowSong()}
+                    className={cx('', { active: followingUser })}
+                  >
+                    <FontAwesomeIcon icon={followingUser ? faUserCheck : faUserAlt} />
+                    <span>{followingUser ? `Following` : `Follow`}</span>
+                  </button>
+                )}
                 <button onClick={() => handleCopyLink()} className={cx('', { active: copyLink })}>
                   <FontAwesomeIcon icon={faLink} />
                   <span>Copy Link</span>
@@ -353,17 +345,8 @@ function Song() {
                   className={cx('playlist_btnfollow', { follow: followingUser })}
                 >
                   <div className={cx('playlist_btnfollow--auto')}>
-                    {followingUser ? (
-                      <>
-                        <FontAwesomeIcon icon={faUserCheck} />
-                        <span>Following</span>
-                      </>
-                    ) : (
-                      <>
-                        <FontAwesomeIcon icon={faUserAlt} />
-                        <span>Follow</span>
-                      </>
-                    )}
+                    <FontAwesomeIcon icon={followingUser ? faUserCheck : faUserAlt} />
+                    <span>{followingUser ? `Following` : `Follow`}</span>
                   </div>
                 </div>
               </div>

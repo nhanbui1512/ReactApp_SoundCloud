@@ -33,6 +33,8 @@ import {
 import { QueueMusic } from '@mui/icons-material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { toast } from 'react-toastify';
+import LikedNotify from 'components/Notificates/LikedNotify';
+import { toastConfig } from 'configs/Toast/toastConfig';
 
 const cx = classNames.bind(styles);
 
@@ -90,6 +92,7 @@ function Gallery({ data, playLists }) {
   };
 
   const handleLike = () => {
+    toast(<LikedNotify />, toastConfig);
     if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
     setIsLiked(!isLiked);
 

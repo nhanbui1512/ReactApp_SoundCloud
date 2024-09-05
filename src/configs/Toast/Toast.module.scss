@@ -1,9 +1,11 @@
-.custom-container{
-  box-shadow: none;
+.custom-container {
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+.custom-body {
   padding: 0 !important;
   margin: 0 !important;
 }
-.custom-body{ 
-  padding: 0 !important;
-  margin: 0 !important;
+.custom-toast {
+  animation-duration: 0.3s !important; /* Thời gian cho hiệu ứng Zoom */
 }

@@ -92,7 +92,6 @@ function Gallery({ data, playLists }) {
   };
 
   const handleLike = () => {
-    toast(<LikedNotify songData={data} />, toastConfig);
     if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
     setIsLiked(!isLiked);
 
@@ -111,6 +110,7 @@ function Gallery({ data, playLists }) {
         });
       }
     } else {
+      toast(<LikedNotify songData={data} />, toastConfig);
       likeSong(data.id)
         .then((res) => {})
         .catch((err) => {

@@ -7,6 +7,9 @@ import { AddToList, AddToPlaylist } from 'components/Icons';
 import { StorageContext } from 'context/Storage';
 import { changePosition } from 'Utils/arrays';
 
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
 const {
   faBars,
   faPlay,
@@ -22,6 +25,15 @@ const { FontAwesomeIcon } = require('@fortawesome/react-fontawesome');
 const cx = classNames.bind(styles);
 
 function Item({ data }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: data.id });
+
+  const dndKitStyles = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    cursor: 'pointer',
+    userSelect: 'none',
+  };
+
   const storage = useContext(StorageContext);
   const [isPlay, setIsPlay] = useState(false);
 
@@ -171,6 +183,10 @@ function Item({ data }) {
 
   return (
     <div
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={dndKitStyles}
       className={cx('wrapper', {
         active: data.id === storage.currentMusic.id,
       })}
@@ -187,9 +203,9 @@ function Item({ data }) {
           </div>
         </div>
         <div className={cx(['col', 'play-list-item_info'])}>
-          <a className={cx('artist-name')} href="/">
+          <span className={cx('artist-name')} href="/">
             {data.name}
-          </a>
+          </span>
           <span>{data.artistName}</span>
         </div>
         <div className={cx(['relative', 'play-list-item_footer'])}>

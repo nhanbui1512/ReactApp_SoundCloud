@@ -3,10 +3,19 @@ import styles from './Queue.module.scss';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import PlayListItem from './Item';
 import SwitchButton from 'components/SwitchButton';
 import { useContext, useState } from 'react';
 import { StorageContext } from 'context/Storage';
+
+import {
+  DndContext,
+  // PointerSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import ListSong from './ListSong';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +24,41 @@ function PlayList({ handleHidden, className }) {
   const [setCurrentPlayList] = [storage.setCurrentPlayList];
   const [autoPlay, setAutoPlay] = useState(false);
 
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+
+  // nhấn giữ 250ms và dung sai của cảm ứng (di chuyển chênh lệch 5px )
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 250,
+      tolerance: 500,
+    },
+  });
+
+  const mySensors = useSensors(mouseSensor, touchSensor);
+  function swapItem(arr, start, end) {
+    let startIndex = arr.findIndex((item) => start === item.id);
+    let endIndex = arr.findIndex((item) => end === item.id);
+
+    if (start !== -1 && end !== -1) {
+      [arr[startIndex], arr[endIndex]] = [arr[endIndex], arr[startIndex]];
+    }
+    return [...arr];
+  }
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    if (!over) return;
+    const start = active.id;
+    const end = over.id;
+    if (start !== end) {
+      let newArr = swapItem(storage.currentPlayList, start, end);
+      storage.setCurrentPlayList(newArr);
+    }
+  }
   const handleClear = (e) => {
     setCurrentPlayList((prev) => {
       var newState = prev.filter((song) => song.id === storage.currentMusic.id);
@@ -47,11 +91,9 @@ function PlayList({ handleHidden, className }) {
           }}
         >
           <div className={cx('play-list-container')}>
-            <div className={cx('col')}>
-              {storage.currentPlayList.map((song, index) => {
-                return <PlayListItem data={song} key={index} />;
-              })}
-            </div>
+            <DndContext sensors={mySensors} onDragEnd={handleDragEnd}>
+              <ListSong items={storage.currentPlayList} />
+            </DndContext>
           </div>
         </div>
         <div className={cx('footer')}>

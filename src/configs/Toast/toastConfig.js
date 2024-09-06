@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 export const toastConfig = {
   position: 'top-right', // Set the position
-  autoClose: false, // Set the auto close duration
+  autoClose: 3000, // Set the auto close duration
   hideProgressBar: true, // Hide the progress bar
   closeOnClick: false, // Enable close on click
   pauseOnHover: false, // Pause on hover

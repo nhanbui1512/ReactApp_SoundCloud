@@ -25,11 +25,11 @@ const { FontAwesomeIcon } = require('@fortawesome/react-fontawesome');
 const cx = classNames.bind(styles);
 
 function Item({ data }) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: data.id });
+  const { attributes, listeners, setNodeRef, transform } = useSortable({ id: data.id });
 
   const dndKitStyles = {
     transform: CSS.Translate.toString(transform),
-    transition,
+    // transition,
     cursor: 'pointer',
     userSelect: 'none',
   };

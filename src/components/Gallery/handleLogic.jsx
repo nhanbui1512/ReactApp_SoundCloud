@@ -78,5 +78,4 @@ export const handleLogicAddNextUp = ({ playLists, storage, data, toast }) => {
       return [...prev, ...songs];
     });
   }
-  toast.success('Added to Next up');
 };

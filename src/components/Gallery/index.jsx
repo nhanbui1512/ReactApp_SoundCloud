@@ -33,7 +33,7 @@ import {
 import { QueueMusic } from '@mui/icons-material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { toast } from 'react-toastify';
-import LikedNotify from 'components/Notificates/LikedNotify';
+import Notification from 'components/Notificates/Notification';
 import { toastConfig } from 'configs/Toast/toastConfig';
 import { handleLogicAddNextUp, handleLogicPlay } from './handleLogic';
 import { Skeleton } from '@mui/material';
@@ -76,7 +76,7 @@ function Gallery({ data, playLists }) {
         });
       }
     } else {
-      toast(<LikedNotify songData={data} />, toastConfig);
+      toast(<Notification songData={data} />, toastConfig);
       likeSong(data.id)
         .then((res) => {})
         .catch((err) => {
@@ -128,6 +128,14 @@ function Gallery({ data, playLists }) {
 
   const handleAddNextUp = () => {
     handleLogicAddNextUp({ playLists, storage, data, toast });
+    toast(
+      <Notification
+        songData={playLists ? playLists.songs[0] : data}
+        description="Added to"
+        savedPosition="Next up"
+      />,
+      toastConfig,
+    );
   };
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play

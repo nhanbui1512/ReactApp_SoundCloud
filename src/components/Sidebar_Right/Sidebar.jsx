@@ -109,10 +109,12 @@ const Sidebar = () => {
             <ul className={cx('sidebar__modul-list')}>
               <div className={cx('sidebar__modul-list-mobile')}>
                 <img
+                  className="object-cover"
                   src="https://a-v2.sndcdn.com/assets/images/appstore_badge@en-9e7292e6.png"
                   alt="applestore"
                 />
                 <img
+                  className="object-cover"
                   src="https://a-v2.sndcdn.com/assets/images/google_play_badge@en-51d52194.png"
                   alt="chplay"
                 />

@@ -171,7 +171,7 @@ function Gallery({ data, playLists }) {
         const newState = [...prev];
         // đảm bảo bài muốn thêm vào sau không phải là bài đang phát
         // 2 trường hợp : không được phát nhưng tồn tại trong pl , không được phát và cũng không tồn tại trong pl
-        if (storage.currentPlayList[indexPlaying].id !== data.id) {
+        if (storage.currentPlayList[indexPlaying]?.id !== data.id) {
           if (indexOfSongInPlaylist !== -1) {
             // Xóa phần tử khỏi vị trí cũ
             newState.splice(indexOfSongInPlaylist, 1);

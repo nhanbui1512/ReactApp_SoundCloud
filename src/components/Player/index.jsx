@@ -35,7 +35,7 @@ const loopModes = [
   },
 ];
 
-function Player() {
+function Player({ disable = false }) {
   const storage = useContext(StorageContext);
 
   const music = storage.currentMusic;
@@ -161,7 +161,7 @@ function Player() {
   // }, [loop, audioRef]);
 
   return (
-    <div className={cx('wrapper')}>
+    <div className={cx('wrapper', { disable })}>
       <div className={cx('inner')}>
         <div className={cx('control-wrapper')}>
           <div onClick={handleBack} className={cx('player-btn')}>

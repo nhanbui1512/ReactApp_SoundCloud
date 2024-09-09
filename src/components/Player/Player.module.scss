@@ -9,6 +9,7 @@
   border-top: 1px solid #cecece;
   user-select: none;
   z-index: 99;
+  animation: slideFromBottom 0.4s ease-in-out;
 }
 .inner {
   width: 1240px;
@@ -138,4 +139,20 @@
 .information-container {
   width: 360px;
   height: 100%;
+}
+
+.disable {
+  display: none;
+}
+
+@keyframes slideFromBottom {
+  0% {
+    opacity: 0;
+    transform: translate(0, 100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }

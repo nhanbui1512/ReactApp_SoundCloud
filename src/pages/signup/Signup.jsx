@@ -58,9 +58,10 @@ const Signup = () => {
   return (
     <div className={cx('wrapper')}>
       <form className={cx('signup-form')}>
-        <h1>Signup </h1>
+        <h1>Signup</h1>
         <br></br>
         <input
+          className="text-[14px]"
           type="text"
           placeholder="User Name"
           required
@@ -68,6 +69,7 @@ const Signup = () => {
         />
         <br></br>
         <input
+          className="text-[14px]"
           type="email"
           placeholder="Your Email"
           required
@@ -75,6 +77,7 @@ const Signup = () => {
         />
         <br></br>
         <input
+          className="text-[14px]"
           type="password"
           placeholder="Your Password"
           required
@@ -83,6 +86,7 @@ const Signup = () => {
         <br></br>
 
         <input
+          className="text-[14px]"
           type="password"
           placeholder="Confirm Password"
           required
@@ -92,7 +96,7 @@ const Signup = () => {
         <button
           type="submit"
           onClick={onSubmit}
-          className={cx('signup-button')}
+          className={cx(['signup-button', 'text-[14px]'])}
           disabled={submitted}
         >
           Signup

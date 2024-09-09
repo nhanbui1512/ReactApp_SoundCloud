@@ -37,12 +37,19 @@ const Login = () => {
       });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin(e);
+    }
+  };
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('login-form')}>
         <h1 className={cx('login-title')}>Login </h1>
         <br></br>
         <input
+          onKeyDown={handleKeyDown}
           className="text-[14px]"
           value={email}
           placeholder="Your Email"
@@ -52,6 +59,7 @@ const Login = () => {
         <br></br>
         <div className="relative flex justify-center">
           <input
+            onKeyDown={handleKeyDown}
             className="text-[14px]"
             value={password}
             type={isHiddenPassword ? 'password' : 'text'}

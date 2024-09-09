@@ -1,19 +1,17 @@
 body {
-    
   font-family: sans-serif;
 }
 .signup-form {
   width: 400px;
-  height: 400px;
   border: 1px solid grey;
   border-radius: 10px;
   text-align: center;
-  margin:  0 auto;
+  margin: 0 auto;
   margin-top: 150px;
   background-color: rgb(241, 164, 20);
-
+  padding-bottom: 24px;
 }
-.signup-form h1{
+.signup-form h1 {
   display: inline-block;
 }
 .signup-form input {
@@ -31,9 +29,7 @@ body {
   border: none;
   border-radius: 5px;
   background-color: rgb(39, 104, 195);
-  color: white
-  
-  
+  color: white;
 }
 .signup-button {
   margin-top: 10px;
@@ -42,7 +38,7 @@ body {
   color: grey;
   background-color: darkgray;
 }
-.div-p0{
+.div-p0 {
   font-size: 17px;
   margin-top: 5px;
 }

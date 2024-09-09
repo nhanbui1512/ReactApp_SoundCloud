@@ -197,7 +197,7 @@ function Item({ data }) {
         </div>
 
         <div className={cx(['relative', 'play-list-item_img'])}>
-          <img src={data.thumbNail || ''} alt="" />
+          <img className="object-cover" src={data.thumbNail || ''} alt="" />
           <div onClick={handlePlay} className={cx('play-list-item_status-btn')}>
             <FontAwesomeIcon icon={isPlay ? faPause : faPlay} />
           </div>

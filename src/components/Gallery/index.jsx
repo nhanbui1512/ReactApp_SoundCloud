@@ -36,6 +36,7 @@ import { toast } from 'react-toastify';
 import LikedNotify from 'components/Notificates/LikedNotify';
 import { toastConfig } from 'configs/Toast/toastConfig';
 import { handleLogicAddNextUp, handleLogicPlay } from './handleLogic';
+import { Skeleton } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
@@ -46,6 +47,9 @@ function Gallery({ data, playLists }) {
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollow);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const storage = useContext(StorageContext);
   const navigate = useNavigate();
   // Hàm xử lý khi nút Play/Pause được nhấn
@@ -129,6 +133,9 @@ function Gallery({ data, playLists }) {
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     setIsPlay(storage.currentMusic?.id === data.id);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
     // eslint-disable-next-line
   }, [storage.currentMusic]);
 
@@ -164,10 +171,14 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
 
       <div className={cx('modul-left_item-container-img')}>
-        {playLists ? (
-          <img className={cx('modul-left_image')} src={data.songs[0]?.thumbNail || ''} alt="" />
+        {isLoading ? (
+          <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
         ) : (
-          <img className={cx('modul-left_image')} src={data.thumbNail} alt="" />
+          <img
+            className={cx('modul-left_image')}
+            src={playLists ? data.songs[0]?.thumbNail : data.thumbNail}
+            alt=""
+          />
         )}
 
         {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}

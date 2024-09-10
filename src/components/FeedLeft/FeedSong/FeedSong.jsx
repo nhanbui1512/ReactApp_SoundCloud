@@ -23,6 +23,9 @@ import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
 import ShareSong from 'pages/Profile/Share/ShareSong';
 import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
+import { toast } from 'react-toastify';
+import Notification from 'components/Notificates/Notification';
+import { toastConfig } from 'configs/Toast/toastConfig';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
@@ -117,6 +120,7 @@ const FeedSong = ({ dataSong }) => {
 
   // handle like /unlike
   const handleLike = () => {
+    toast(<Notification thumbNail={dataSong.thumbNail} header={dataSong.name} />, toastConfig);
     if (isLiked) {
       unlikeSong(dataSong.id)
         .then((res) => {

@@ -26,6 +26,7 @@ import ListComment from './ListComment';
 import CommentForm from './CommentForm';
 import { createComment, getCommentsOfSong } from 'api/comments';
 import { toast } from 'react-toastify';
+import { Skeleton } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
@@ -36,6 +37,7 @@ function Song() {
   const [copyLink, setCopyLink] = useState(false);
   const [song, setSong] = useState({});
   const [commentData, setCommentData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const [owner, setOwner] = useState([]);
   const navigate = useNavigate();
@@ -60,6 +62,9 @@ function Song() {
     };
     getSong();
     getComments();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
   }, [id]);
 
   // xử lý thời gian bài hát được upload
@@ -264,7 +269,13 @@ function Song() {
           </div>
           <div className={cx('box-song')}>
             <span className={cx('duration-song')}>{calculateTimeFromNow(song.createAt)}</span>
-            <img className={cx('img-song')} src={song.thumbNail} alt={song.name} />
+            <div className="flex w-[210px] h-[210px]">
+              {isLoading ? (
+                <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+              ) : (
+                <img className={cx('img-song')} src={song.thumbNail} alt={song.name} />
+              )}
+            </div>
           </div>
         </div>
         <div className={cx('info-music')}>

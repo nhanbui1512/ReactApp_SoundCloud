@@ -7,7 +7,13 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 const Notification = memo(
-  ({ songData, description = 'was saved to', savedPosition = 'your library', ...props }) => {
+  ({
+    thumbNail,
+    header,
+    description = 'was saved to',
+    savedPosition = 'your library',
+    ...props
+  }) => {
     const handleClose = () => {
       return props.closeToast();
     };
@@ -15,10 +21,10 @@ const Notification = memo(
     return (
       <div className={cx('wrapper')}>
         <div className="flex w-[44px] h-[44px]">
-          <Image className="w-full h-full" src={songData.thumbNail} />
+          <Image className="w-full h-full" src={thumbNail} />
         </div>
         <div className="pl-1 py-1 flex flex-col max-w-52">
-          <span className="text-[12px] text-gray-700 font-bold truncate">{songData.name}</span>
+          <span className="text-[12px] text-gray-700 font-bold truncate">{header}</span>
           <p className="text-[12px] text-gray-700">
             {description} <span className="font-bold text-sky-500">{savedPosition}</span>
           </p>

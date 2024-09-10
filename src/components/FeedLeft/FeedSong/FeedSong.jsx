@@ -120,11 +120,11 @@ const FeedSong = ({ dataSong }) => {
 
   // handle like /unlike
   const handleLike = () => {
-    toast(<Notification thumbNail={dataSong.thumbNail} header={dataSong.name} />, toastConfig);
     if (isLiked) {
       unlikeSong(dataSong.id)
         .then((res) => {
           setIsLiked(false);
+          dataSong.likeCount--;
         })
         .catch((err) => {
           console.log(err);
@@ -141,6 +141,7 @@ const FeedSong = ({ dataSong }) => {
       likeSong(dataSong.id)
         .then((res) => {
           setIsLiked(true);
+          dataSong.likeCount++;
         })
         .catch((err) => {
           console.log(err);
@@ -152,6 +153,7 @@ const FeedSong = ({ dataSong }) => {
           return newSongs;
         });
       }
+      toast(<Notification thumbNail={dataSong.thumbNail} header={dataSong.name} />, toastConfig);
     }
   };
 

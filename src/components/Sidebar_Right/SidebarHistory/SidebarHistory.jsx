@@ -8,7 +8,7 @@ import {
   faListUl,
   faPause,
   faPlay,
-  faRepeat
+  faRepeat,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
@@ -17,6 +17,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import { MenuItem, Wrapper } from 'components/DropDownMenu';
 import { AddToList } from 'components/Icons';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const SidebarHistory = ({ art }) => {
@@ -42,7 +43,7 @@ const SidebarHistory = ({ art }) => {
 
   return (
     <>
-      <li className={cx('sidebar__modul-list-item')}>
+      <Link className={cx('sidebar__modul-list-item')}>
         <img src={art.image} alt="" className={cx('sidebar__modul-image-song')} />
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
@@ -52,22 +53,16 @@ const SidebarHistory = ({ art }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
-                <span className={cx('sidebar-data')}>
-                {art.follower}
-                </span> 
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
+                <span className={cx('sidebar-data')}>{art.follower}</span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
-              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-                <span className={cx('sidebar-data')}>
-                  {art.song}
-                </span> 
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
+                <span className={cx('sidebar-data')}>{art.song}</span>
               </span>
               <span className={cx('sidebar__modul-item-repeat')}>
-              <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
-                <span className={cx('sidebar-data')}>
-                  {art.repeat}
-                </span> 
+                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faRepeat} />
+                <span className={cx('sidebar-data')}>{art.repeat}</span>
               </span>
             </div>
           </div>
@@ -147,7 +142,7 @@ const SidebarHistory = ({ art }) => {
             </HeadlessTippy>
           </div>
         </div>
-      </li>
+      </Link>
     </>
   );
 };

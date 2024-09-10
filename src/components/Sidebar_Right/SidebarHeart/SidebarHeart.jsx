@@ -14,6 +14,7 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ songsLiked }) => {
@@ -148,7 +149,7 @@ const SidebarHeart = ({ songsLiked }) => {
   };
   return (
     <>
-      <li className={cx('sidebar__modul-list-item')}>
+      <Link to={`song/${songsLiked.id}`} className={cx('sidebar__modul-list-item')}>
         <img src={songsLiked.thumbNail || ''} alt="" className={cx('sidebar__modul-image-song')} />
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
@@ -246,7 +247,7 @@ const SidebarHeart = ({ songsLiked }) => {
             </HeadlessTippy>
           </div>
         </div>
-      </li>
+      </Link>
     </>
   );
 };

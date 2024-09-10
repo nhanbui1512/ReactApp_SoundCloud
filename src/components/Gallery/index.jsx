@@ -76,7 +76,7 @@ function Gallery({ data, playLists }) {
         });
       }
     } else {
-      toast(<Notification songData={data} />, toastConfig);
+      toast(<Notification thumbNail={data.thumbNail} header={data.name} />, toastConfig);
       likeSong(data.id)
         .then((res) => {})
         .catch((err) => {
@@ -130,7 +130,8 @@ function Gallery({ data, playLists }) {
     handleLogicAddNextUp({ playLists, storage, data, toast });
     toast(
       <Notification
-        songData={playLists ? playLists.songs[0] : data}
+        thumbNail={playLists ? playLists.songs[0].thumbNail : data.thumbNail}
+        header={data.name}
         description="Added to"
         savedPosition="Next up"
       />,

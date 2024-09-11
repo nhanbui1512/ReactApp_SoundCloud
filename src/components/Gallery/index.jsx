@@ -204,6 +204,7 @@ function Gallery({ data, playLists }) {
             <Tippy animation={'scale-subtle'} content={'Like'}>
               <>
                 <span
+                  title={isLiked ? 'Unlike' : 'Like'}
                   onClick={() => {
                     handleLike();
                   }}

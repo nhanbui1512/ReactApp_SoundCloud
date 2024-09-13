@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { StorageContext } from 'context/Storage';
@@ -8,6 +8,8 @@ import { setToken } from 'services/local/cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEye as faEyeSollid } from '@fortawesome/free-solid-svg-icons';
+import { GoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const Login = () => {
@@ -36,12 +38,31 @@ const Login = () => {
         setPassword('');
       });
   };
+  const handleGoogleSuccess = (credentialResponse) => {
+    console.log(credentialResponse);
+    toast.success('Login successfully');
+
+    // axios
+    //   .post('http://localhost:5000/api/auth/google', {
+    //     token: credentialResponse.credential,
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleLogin(e);
     }
   };
+
+  useEffect(() => {
+    console.clear();
+  });
 
   return (
     <div className={cx('wrapper')}>
@@ -87,6 +108,16 @@ const Login = () => {
         <button onClick={handleLogin} className={cx('login-button')}>
           Login
         </button>
+        <div className="flex justify-center my-4">
+          <GoogleLogin
+            width={280}
+            onSuccess={handleGoogleSuccess}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            useOneTap
+          />
+        </div>
         <div className={cx('div-p0')}>
           <p className={cx('p0')}>
             Need to Signup? <Link to="/signup">Create Account</Link>

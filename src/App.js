@@ -23,6 +23,7 @@ import GlobalLibrary from 'context/Library';
 import ProfileByID from 'pages/Profile/ProfileByID/ProfileByID';
 import Song from 'pages/DetailSong';
 import PageNotFound from 'pages/Profile/ProfileByID/NotFound';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -58,21 +59,23 @@ const App = () => {
   );
   return (
     <>
-      <RouterProvider router={router} />
-      <ToastContainer
-        style={{
-          fontSize: 14,
-        }}
-        position="top-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        pauseOnHover={false}
-        draggable
-      />
+      <GoogleOAuthProvider clientId="366958085391-fk9s2420k0omik86jh53qnqhogeo7mm1.apps.googleusercontent.com">
+        <RouterProvider router={router} />
+        <ToastContainer
+          style={{
+            fontSize: 14,
+          }}
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          pauseOnHover={false}
+          draggable
+        />
+      </GoogleOAuthProvider>
     </>
   );
 };

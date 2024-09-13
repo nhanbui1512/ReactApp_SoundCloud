@@ -8,3 +8,12 @@ export async function CheckLogin({ email, password }) {
     throw error;
   }
 }
+
+export async function LoginByGoogle(token) {
+  try {
+    const res = await request.post('/auth/google', { token: token });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

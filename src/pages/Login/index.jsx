@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { StorageContext } from 'context/Storage';
-import { CheckLogin } from 'api/Login';
+import { CheckLogin, LoginByGoogle } from 'api/Login';
 import styles from './Login.module.scss';
 import { setToken } from 'services/local/cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,19 +39,17 @@ const Login = () => {
       });
   };
   const handleGoogleSuccess = (credentialResponse) => {
-    console.log(credentialResponse);
-    toast.success('Login successfully');
-
-    // axios
-    //   .post('http://localhost:5000/api/auth/google', {
-    //     token: credentialResponse.credential,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    const token = credentialResponse.credential;
+    LoginByGoogle(token)
+      .then((res) => {
+        setToken({ token: res.token });
+        storage.setCurrentUser(true);
+        storage.setUserData(res.user);
+        navigate('/');
+      })
+      .catch((err) => {
+        toast.error('Login by Google Unsuccessfully');
+      });
   };
 
   const handleKeyDown = (e) => {

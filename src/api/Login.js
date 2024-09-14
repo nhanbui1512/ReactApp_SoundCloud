@@ -17,3 +17,12 @@ export async function LoginByGoogle(token) {
     throw error;
   }
 }
+
+export async function LoginByFacebook(token) {
+  try {
+    const res = await request.post('/auth/facebook', { token: token });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

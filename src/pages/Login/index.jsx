@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { StorageContext } from 'context/Storage';
-import { CheckLogin, LoginByGoogle } from 'api/Login';
+import { CheckLogin, LoginByFacebook, LoginByGoogle } from 'api/Login';
 import styles from './Login.module.scss';
 import { setToken } from 'services/local/cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,8 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEye as faEyeSollid } from '@fortawesome/free-solid-svg-icons';
 import { GoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
+import { LoginSocialFacebook } from 'reactjs-social-login';
+import { FacebookLoginButton } from 'react-social-login-buttons';
 
 const cx = classNames.bind(styles);
 const Login = () => {
@@ -49,6 +51,20 @@ const Login = () => {
       })
       .catch((err) => {
         toast.error('Login by Google Unsuccessfully');
+      });
+  };
+
+  const handleFacebookSuccess = (response) => {
+    const token = response.data.accessToken;
+    LoginByFacebook(token)
+      .then((res) => {
+        setToken({ token: res.token });
+        storage.setCurrentUser(true);
+        storage.setUserData(res.user);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -115,6 +131,18 @@ const Login = () => {
             }}
             useOneTap
           />
+        </div>
+
+        <div className="flex justify-center">
+          <LoginSocialFacebook
+            appId="1167507854334726"
+            onResolve={handleFacebookSuccess}
+            onReject={(err) => {
+              console.log(err);
+            }}
+          >
+            <FacebookLoginButton className={cx('login-facebook-btn')} />
+          </LoginSocialFacebook>
         </div>
         <div className={cx('div-p0')}>
           <p className={cx('p0')}>

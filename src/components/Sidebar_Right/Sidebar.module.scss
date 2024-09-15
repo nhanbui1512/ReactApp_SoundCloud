@@ -42,10 +42,6 @@
   cursor: pointer;
 }
 
-.sidebar__modul-list-item:hover {
-  background-color: hsl(0deg 64.52% 71.47% / 10%);
-}
-
 .sidebar__modul-list-item {
   &:hover {
     .Playsidebar__modul-item-container {
@@ -141,9 +137,6 @@
   justify-content: space-between;
 }
 
-// .sidebar-icon {
-//   margin-right: 4px;
-// }
 .sidebar-data {
   margin: 0 4px;
   font-size: 0.8rem;
@@ -158,9 +151,12 @@
 //   height: 15px;
 // }
 
-.sidebar__modul-item-quantity-follower,
-.sidebar__modul-item-quantity-song {
+.sidebar__modul-item-quantity-follower {
   font-size: 0.7rem;
+}
+.sidebar__modul-item-repeat,
+.sidebar__modul-item-quantity-song {
+  color: #999;
 }
 
 .sidebar__modul-item-follower {

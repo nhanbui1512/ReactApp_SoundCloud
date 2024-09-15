@@ -159,8 +159,11 @@ const SidebarHeart = ({ songsLiked }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className={cx('sidebar__modul-item-bottom-left')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
-                <span className={cx('sidebar-data')}>{songsLiked.numberOfListen}</span>
+                <FontAwesomeIcon className={cx(['sidebar-icon', 'text-gray-400'])} icon={faPlay} />
+
+                <span className={cx(['sidebar-data', 'text-gray-400'])}>
+                  {songsLiked.numberOfListen}
+                </span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />

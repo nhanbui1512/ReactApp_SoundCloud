@@ -53,7 +53,7 @@ const SidebarHistory = ({ art }) => {
           <div className={cx('sidebar__modul-item-bottom')}>
             <div className="sidebar__modul-item-bottom-left">
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faPlay} />
+                <FontAwesomeIcon className={cx(['sidebar-icon', 'text-gray-400'])} icon={faPlay} />
                 <span className={cx('sidebar-data')}>{art.follower}</span>
               </span>
               <span className={cx('sidebar__modul-item-quantity-song')}>

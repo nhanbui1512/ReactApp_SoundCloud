@@ -52,18 +52,21 @@ const SidebarArtist = ({ art }) => {
           <div className={cx('sidebar__modul-item-bottom-left')}>
             <span className={cx('sidebar__modul-item-quantity-follower')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
-                <FontAwesomeIcon className={cx('sidebar-icon')} icon={faUser} />
-                <span className={cx('sidebar-data')}>{art.followerNumber}</span>
+                <FontAwesomeIcon className={cx(['sidebar-icon', 'text-gray-400'])} icon={faUser} />
+                <span className={cx(['sidebar-data', 'text-gray-400'])}>{art.followerNumber}</span>
               </span>
             </span>
             <span className={cx('sidebar__modul-item-quantity-song')}>
               <span className={cx('sidebar__modul-item-quantity-follower')}>
                 <FontAwesomeIcon className={cx('sidebar-icon')} icon={faChartBar} />
-                <span className={cx('sidebar-data')}>{art.songs?.length}</span>
+                <span className={cx('sidebar-data')}>{art.track}</span>
               </span>
             </span>
           </div>
-          <button className={cx('sidebar__modul-item-follower')} onClick={handleFollow}>
+          <button
+            className={cx(['sidebar__modul-item-follower', 'text-black'])}
+            onClick={handleFollow}
+          >
             <span className={cx('sidebar__modul-item-quantity-follower', { following: isFollow })}>
               <FontAwesomeIcon
                 className={cx('sidebar-icon')}

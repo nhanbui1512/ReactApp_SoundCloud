@@ -61,7 +61,7 @@ const SidebarHeart = ({ songsLiked }) => {
   };
 
   const handleAddNextUp = (e) => {
-    handleLogicAddNextUp({ playLists: false, storage, data: songsLiked, toast });
+    handleLogicAddNextUp({ playLists: false, storage, data: songsLiked });
     toast(
       <Notification
         thumbNail={songsLiked.thumbNail}

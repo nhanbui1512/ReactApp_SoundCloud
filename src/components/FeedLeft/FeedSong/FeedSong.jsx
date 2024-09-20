@@ -26,6 +26,7 @@ import { PlaylistPopup } from 'components/Playlist/PlaylistPopup/PlaylistPopup';
 import { toast } from 'react-toastify';
 import Notification from 'components/Notificates/Notification';
 import { toastConfig } from 'configs/Toast/toastConfig';
+import { handleLogicAddNextUp } from 'components/Gallery/handleLogic';
 
 const cx = classNames.bind(styles);
 const FeedSong = ({ dataSong }) => {
@@ -69,36 +70,6 @@ const FeedSong = ({ dataSong }) => {
       // setIsPlay(false);
     }
   };
-
-  // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
-  useEffect(() => {
-    if (storage.currentMusic.id !== dataSong.id) {
-      setIsPlay(false);
-    }
-  }, [storage.currentMusic, dataSong.id]);
-
-  useEffect(() => {
-    const audioTag = storage.audioRef.current;
-    const handlePlay = () => {
-      if (dataSong.id === storage.currentMusic.id) {
-        setIsPlay(true);
-      }
-    };
-
-    const handlePause = () => {
-      if (dataSong.id === storage.currentMusic.id) {
-        setIsPlay(false);
-      }
-    };
-
-    audioTag.addEventListener('play', handlePlay);
-    audioTag.addEventListener('pause', handlePause);
-
-    return () => {
-      audioTag.removeEventListener('play', handlePlay);
-      audioTag.removeEventListener('pause', handlePlay);
-    };
-  }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
 
   const handleCopy = async () => {
     const domain = window.origin;
@@ -157,6 +128,49 @@ const FeedSong = ({ dataSong }) => {
     }
   };
 
+  const handleAddNextUp = () => {
+    handleLogicAddNextUp({ playLists: false, storage, data: dataSong });
+    toast(
+      <Notification
+        description="Added to"
+        savedPosition="Next up"
+        thumbNail={dataSong.thumbNail}
+        header={dataSong.name}
+      />,
+      toastConfig,
+    );
+  };
+
+  // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
+  useEffect(() => {
+    if (storage.currentMusic.id !== dataSong.id) {
+      setIsPlay(false);
+    }
+  }, [storage.currentMusic, dataSong.id]);
+
+  useEffect(() => {
+    const audioTag = storage.audioRef.current;
+    const handlePlay = () => {
+      if (dataSong.id === storage.currentMusic.id) {
+        setIsPlay(true);
+      }
+    };
+
+    const handlePause = () => {
+      if (dataSong.id === storage.currentMusic.id) {
+        setIsPlay(false);
+      }
+    };
+
+    audioTag.addEventListener('play', handlePlay);
+    audioTag.addEventListener('pause', handlePause);
+
+    return () => {
+      audioTag.removeEventListener('play', handlePlay);
+      audioTag.removeEventListener('pause', handlePlay);
+    };
+  }, [storage.audioRef, storage.currentMusic.id, dataSong.id]);
+
   return (
     <>
       {/* Add to Playlist popup */}
@@ -182,9 +196,6 @@ const FeedSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  // onClick={() => {
-                  //   setIsLiked(!isLiked);
-                  // }}
                   onClick={() => {
                     handleLike();
                   }}
@@ -198,9 +209,6 @@ const FeedSong = ({ dataSong }) => {
               <>
                 <button
                   className={cx('feed__modul-option-btn')}
-                  // onClick={() => {
-                  //   setShare(!isShare);
-                  // }}
                   onClick={() => {
                     setPopperShare(true);
                   }}
@@ -237,6 +245,7 @@ const FeedSong = ({ dataSong }) => {
                       className={cx('menu-item')}
                       icon={<FontAwesomeIcon className={cx('menu-item-icon')} icon={faListUl} />}
                       separate
+                      onClick={handleAddNextUp}
                     >
                       Add to Next up
                     </MenuItem>

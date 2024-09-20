@@ -127,7 +127,7 @@ function Gallery({ data, playLists }) {
   };
 
   const handleAddNextUp = () => {
-    handleLogicAddNextUp({ playLists, storage, data, toast });
+    handleLogicAddNextUp({ playLists, storage, data });
     toast(
       <Notification
         thumbNail={playLists ? playLists.songs[0].thumbNail : data.thumbNail}

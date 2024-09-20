@@ -43,7 +43,7 @@ export const handleLogicPlay = ({ event, storage, playLists, data, setIsPlay }) 
 
 export function handleFollow() {}
 
-export const handleLogicAddNextUp = ({ playLists, storage, data, toast }) => {
+export const handleLogicAddNextUp = ({ playLists, storage, data }) => {
   if (!playLists) {
     // nếu đã tồn tại trong playlsit -> thay đổi vị trí của nó lên sau bài đang phát
     const indexPlaying = storage.currentPlayList.indexOf(storage.currentMusic);

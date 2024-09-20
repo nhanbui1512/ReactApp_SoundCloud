@@ -58,7 +58,7 @@ function Gallery({ data, playLists }) {
   };
 
   const handleLike = () => {
-    if (!storage.currentUser) navigate('/login'); // chưa login thì chuyển qua trang login
+    if (!storage.currentUser) return navigate('/login'); // chưa login thì chuyển qua trang login
     setIsLiked(!isLiked);
 
     if (isLiked) {

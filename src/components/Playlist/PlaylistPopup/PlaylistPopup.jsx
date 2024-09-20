@@ -74,15 +74,12 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   const RemoveFromPlaylist = (playlistId) => {
     removeSongsFromPlaylist(playlistId, [songData.id])
       .then((result) => {
-        if (result.result) {
-          // success
-          RefreshPlaylist();
-        } else {
-          // error
-          alert('Removed from playlist failed. Try again.');
-        }
+        RefreshPlaylist();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error('Removed from playlist failed. Try again.');
+      });
   };
 
   const CreateNewPlaylist = () => {

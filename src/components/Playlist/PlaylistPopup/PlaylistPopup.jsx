@@ -9,19 +9,11 @@ import {
   removeSongsFromPlaylist,
 } from 'api/playlist';
 import { StorageContext } from 'context/Storage';
+import { toast } from 'react-toastify';
+import Notification from 'components/Notificates/Notification';
+import { toastConfig } from 'configs/Toast/toastConfig';
 
 const cx = classNames.bind(styles);
-
-/* Usage:
-  const [openPlaylistPopup, setOpenPlaylistPopup] = useState(false)
-  ...
-  return (
-    ...
-      <button onClick={() => setOpenPlaylistPopup(true)}>Add to playlist</button>
-      <PlaylistPopup open={openPlaylistPopup} onClose={setOpenPlaylistPopup} songData={}/>
-    ...
-  )
-*/
 
 // songData = example
 const example = {
@@ -61,15 +53,22 @@ export const PlaylistPopup = ({ open, onClose, songData = example }) => {
   const AddToPlaylist = (playlistId, playlistName) => {
     addSongsToPlaylist(playlistId, playlistName, [songData.id])
       .then((result) => {
-        if (result.result) {
-          // success
-          RefreshPlaylist();
-        } else {
-          // error
-          alert('Added to playlist failed. Try again.');
-        }
+        toast(
+          <Notification
+            header={songData.name}
+            thumbNail={songData.thumbNail}
+            savedPosition={playlistName}
+            description="Added to"
+          />,
+          toastConfig,
+        );
+        // success
+        RefreshPlaylist();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error('Added to playlist failed. Try again.');
+      });
   };
 
   const RemoveFromPlaylist = (playlistId) => {

@@ -14,10 +14,11 @@
 /*ARTIST*/
 .sidebar__modul-refresh {
   display: flex;
-  font-size: 1rem;
-  justify-content: space-between;
+  font-size: 14px;
+  gap: 8px;
   align-items: center;
   margin-left: 8px;
+  color: #999;
 }
 
 .sidebar__modul-refresh .sidebar-icon {
@@ -186,27 +187,14 @@
   border: 1px solid #dbdbdb;
 }
 
-/*PHẦN HOVER ĐỂ PLAY NHẠC VÀ MORE*/
-//@import url('../Sidebar_Right/Sidebar.module.scss');
-// .Playsidebar__modul-item-container {
-//   //display: none; // Ẩn PlaySidebar mặc định
-//   position: relative;
-//   display: flex;
-//   margin: 0px;
-//   cursor: pointer;
-//   align-items: center;
-
-// }
-
 .sidebar__modul-item-play {
   position: relative;
   align-items: center;
   justify-content: center;
   width: 28px;
   height: 28px;
-  /* top: 225%; */
-  top: 30px;
-  right: 696%;
+  top: 26px;
+  right: 392%;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   display: none;
@@ -265,4 +253,17 @@
 .sidebar__modul-list-mobile {
   display: flex;
   justify-content: space-around;
+}
+.action-btn {
+  width: 25px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  background-color: var(--white);
+}
+.action-btn + .action-btn {
+  margin-left: 4px;
 }

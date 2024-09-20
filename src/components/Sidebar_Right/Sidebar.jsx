@@ -3,14 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-// import artirstFollow from './data';
-// import { FaHistory } from 'react-icons/fa';
-// import SidebarHistory from './SidebarHistory/SidebarHistory';
 import React, { useEffect, useState } from 'react';
 import SidebarHeart from './SidebarHeart/SidebarHeart';
 import SidebarArtist from './SidebarArtist/SidebarArtist';
 import apiHandleFeed from 'api/apiHandleFeed';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
@@ -80,16 +76,9 @@ const Sidebar = () => {
           <div className={cx('sidebar__modul-refresh')}>
             <div className={cx('sidebar-data-quantity')}>
               <FontAwesomeIcon className={cx('sidebar-icon')} icon={faHeart} />
-              <span
-                style={{
-                  marginLeft: 8,
-                }}
-                className={cx('sidebar-icon')}
-              >
-                {totalLike}
-              </span>
+              <span className="ml-0.5">{totalLike}</span>
             </div>
-            <Link to={`/libary/Likes`}>View All</Link>
+            <span>Likes</span>
           </div>
           <div className={cx('sidebar__modul-container')}>
             {/* <SidebarHeartUL  data={listSongLiked} /> */}

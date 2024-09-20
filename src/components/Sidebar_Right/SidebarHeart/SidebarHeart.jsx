@@ -14,7 +14,6 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ songsLiked }) => {
@@ -87,15 +86,6 @@ const SidebarHeart = ({ songsLiked }) => {
     };
   }, [storage.audioRef, storage.currentMusic.id, songsLiked.id]);
 
-  // const addToFavorites = (songsLiked) => {
-  //   setFavoriteSongs([...favoriteSongs, songsLiked]);
-  //   showToast(songsLiked);
-  // };
-  // const showToast = (songsLiked) => {
-  //   toast.success(<CustomToast songsLiked={songsLiked} isLiked={isLiked} />, {
-  //     position: 'top-right',
-  //   });
-  // };
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
@@ -149,7 +139,7 @@ const SidebarHeart = ({ songsLiked }) => {
   };
   return (
     <>
-      <Link to={`song/${songsLiked.id}`} className={cx('sidebar__modul-list-item')}>
+      <div className={cx('sidebar__modul-list-item')}>
         <img src={songsLiked.thumbNail || ''} alt="" className={cx('sidebar__modul-image-song')} />
         <div className={cx('sidebar__modul-item-info')}>
           <div className={cx('sidebar__modul-item-head')}>
@@ -187,11 +177,7 @@ const SidebarHeart = ({ songsLiked }) => {
             <Tippy animation={'scale-subtle'} content={'Like'}>
               <>
                 <span
-                  className={cx('sidebar__modul-option-btn')}
-                  // onClick={() => {
-                  //   setIsLiked(!isLiked);
-                  //   //addToFavorites(favoriteSongs);
-                  // }}
+                  className={cx(['sidebar__modul-option-btn', 'action-btn'])}
                   onClick={() => {
                     handleLike();
                   }}
@@ -243,14 +229,14 @@ const SidebarHeart = ({ songsLiked }) => {
                 onClick={(e) => {
                   setMoreMenu(!moreMenu);
                 }}
-                className={cx('option-btn')}
+                className={cx(['option-btn', 'action-btn'])}
               >
-                <FontAwesomeIcon icon={faEllipsis} />
+                <FontAwesomeIcon className="text-black" icon={faEllipsis} />
               </span>
             </HeadlessTippy>
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };

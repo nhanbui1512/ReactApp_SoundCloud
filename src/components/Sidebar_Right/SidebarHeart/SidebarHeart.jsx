@@ -14,6 +14,10 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import { StorageContext } from 'context/Storage';
 import { LibraryContext } from 'context/Library';
 import { likeSong, unlikeSong } from 'api/songs';
+import { handleLogicAddNextUp } from 'components/Gallery/handleLogic';
+import { toast } from 'react-toastify';
+import { toastConfig } from 'configs/Toast/toastConfig';
+import Notification from 'components/Notificates/Notification';
 
 const cx = classNames.bind(styles);
 const SidebarHeart = ({ songsLiked }) => {
@@ -56,6 +60,19 @@ const SidebarHeart = ({ songsLiked }) => {
     }
   };
 
+  const handleAddNextUp = (e) => {
+    handleLogicAddNextUp({ playLists: false, storage, data: songsLiked, toast });
+    toast(
+      <Notification
+        thumbNail={songsLiked.thumbNail}
+        header={songsLiked.name}
+        description="Added to"
+        savedPosition="Next up"
+      />,
+      toastConfig,
+    );
+  };
+
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     if (storage.currentMusic?.id !== songsLiked.id) {
@@ -85,22 +102,6 @@ const SidebarHeart = ({ songsLiked }) => {
       audioTag.removeEventListener('pause', handlePlay);
     };
   }, [storage.audioRef, storage.currentMusic.id, songsLiked.id]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-      if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-        // Thực hiện hành động khi click ra ngoài
-        setMoreMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   // handle like /unlike
   const handleLike = () => {
@@ -187,6 +188,7 @@ const SidebarHeart = ({ songsLiked }) => {
               </>
             </Tippy>
             <HeadlessTippy
+              onClickOutside={() => setMoreMenu(false)}
               visible={moreMenu}
               interactive
               placement="bottom-start"
@@ -199,6 +201,7 @@ const SidebarHeart = ({ songsLiked }) => {
                       className={cx('menu-item')}
                       icon={<FormatListBulletedIcon fontSize="16" />}
                       separate
+                      onClick={handleAddNextUp}
                     >
                       Add to Next up
                     </MenuItem>

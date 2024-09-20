@@ -44,7 +44,10 @@ function PlayList({ handleHidden, className }) {
     let endIndex = arr.findIndex((item) => end === item.id);
 
     if (start !== -1 && end !== -1) {
-      [arr[startIndex], arr[endIndex]] = [arr[endIndex], arr[startIndex]];
+      // [arr[startIndex], arr[endIndex]] = [arr[endIndex], arr[startIndex]]; // swap 2 element
+      const element = arr.splice(startIndex, 1)[0];
+      // Chèn phần tử vào vị trí b
+      arr.splice(endIndex, 0, element);
     }
     return [...arr];
   }

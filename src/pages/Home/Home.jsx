@@ -4,6 +4,7 @@ import ListDisk from 'components/ListDisk';
 import Sidebar from 'components/Sidebar_Right/Sidebar';
 import { useEffect, useState } from 'react';
 import { getSongs } from 'api/songs';
+import { getPlaylists } from 'api/playlist';
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
     getSongs()
@@ -36,6 +38,14 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
+
+    getPlaylists(1, 10)
+      .then((res) => {
+        setPlaylists(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -50,6 +60,7 @@ const Home = () => {
             <ListDisk data={data} />
             <ListDisk data={data2} title={'Trending Music on SoundCloud'} />
             <ListDisk data={data3} title={`Today's Mixes`} />
+            <ListDisk data={playlists} playLists title="Playlists" />
           </div>
         </div>
 

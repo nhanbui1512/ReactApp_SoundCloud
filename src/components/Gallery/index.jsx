@@ -250,13 +250,15 @@ function Gallery({ data, playLists }) {
                   >
                     Add to Next up
                   </MenuItem>
-                  <MenuItem
-                    className={cx('menu-item')}
-                    icon={<QueueMusic fontSize="16" />}
-                    onClick={() => setOpenAddToPlaylist(true)}
-                  >
-                    Add to Playlist
-                  </MenuItem>
+                  {playLists || (
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={<QueueMusic fontSize="16" />}
+                      onClick={() => setOpenAddToPlaylist(true)}
+                    >
+                      Add to Playlist
+                    </MenuItem>
+                  )}
                 </Wrapper>
               );
             }}

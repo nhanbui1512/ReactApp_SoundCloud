@@ -2,10 +2,12 @@ import classNames from 'classnames/bind';
 
 import styles from './Likes.moudle.scss';
 import Gallery from 'components/Gallery';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const cx = classNames.bind(styles);
 
-const Likes = ({ data }) => {
+const Likes = ({ likedSongs }) => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
@@ -13,7 +15,7 @@ const Likes = ({ data }) => {
       </div>
       <div className={cx('trending-wrapper')}>
         <div className={cx('container')}>
-          {data.map((item) => (
+          {likedSongs.map((item) => (
             <Gallery key={item.id} data={item} />
           ))}
         </div>
@@ -21,4 +23,8 @@ const Likes = ({ data }) => {
     </div>
   );
 };
-export default Likes;
+
+Likes.propTypes = {
+  likedSongs: PropTypes.array,
+};
+export default React.memo(Likes);

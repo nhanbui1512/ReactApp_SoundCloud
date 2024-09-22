@@ -49,7 +49,7 @@ const Library = () => {
       </div>
       <Routes>
         <Route index path="/Overview" element={<Overview data={context.dataSongs} />} />
-        <Route path="/Likes" element={<Likes data={context.dataSongLikes} />} />
+        <Route path="/Likes" element={<Likes likedSongs={context.dataSongLikes} />} />
         <Route path="/Playlists" element={<Playlists playLists={context.dataPlaylists} />} />
         <Route path="/Following" element={<Following data={context.dataUsers} />} />
       </Routes>

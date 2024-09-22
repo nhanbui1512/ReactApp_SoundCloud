@@ -4,13 +4,16 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
-  faHeart,
   faListUl,
   faPause,
   faPlay,
+  faHeart,
   faShare,
   faLink,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { faHeart as heartRegular } from '@fortawesome/free-regular-svg-icons';
+
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -92,9 +95,9 @@ const FeedSong = ({ dataSong }) => {
   // handle like /unlike
   const handleLike = () => {
     if (isLiked) {
+      setIsLiked(false);
       unlikeSong(dataSong.id)
         .then((res) => {
-          setIsLiked(false);
           dataSong.likeCount--;
         })
         .catch((err) => {
@@ -109,9 +112,9 @@ const FeedSong = ({ dataSong }) => {
         });
       }
     } else {
+      setIsLiked(true);
       likeSong(dataSong.id)
         .then((res) => {
-          setIsLiked(true);
           dataSong.likeCount++;
         })
         .catch((err) => {
@@ -200,7 +203,10 @@ const FeedSong = ({ dataSong }) => {
                     handleLike();
                   }}
                 >
-                  <FontAwesomeIcon className={cx('', { liked: isLiked })} icon={faHeart} />
+                  <FontAwesomeIcon
+                    className={cx('', { liked: isLiked })}
+                    icon={isLiked ? faHeart : heartRegular}
+                  />
                   <span className={cx('btn-option-icon')}>{dataSong.likeCount}</span>
                 </button>
               </>

@@ -130,7 +130,7 @@ function Gallery({ data, playLists }) {
     handleLogicAddNextUp({ playLists, storage, data });
     toast(
       <Notification
-        thumbNail={playLists ? playLists.songs[0].thumbNail : data.thumbNail}
+        thumbNail={playLists ? data.songs[0].thumbNail : data.thumbNail}
         header={data.name}
         description="Added to"
         savedPosition="Next up"

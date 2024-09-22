@@ -75,25 +75,25 @@ function Player({ disable = false }) {
     if (indexPlaying !== -1) {
       var nextSong = storage.currentPlayList[indexPlaying + 1]; // bài tiếp theo
 
-      if (loopModes[loop].type === 'playList') {
-        if (indexPlaying === storage.currentPlayList.length - 1) {
-          nextSong = storage.currentPlayList[0];
-        }
-
-        if (!nextSong) {
-          audioRef.current.play();
-          return;
-        }
-
-        const playMusic = (event) => {
-          event.target.play();
-          setIsPlaying(true);
-          audioRef.current.removeEventListener('loadeddata', playMusic);
-        };
+      // * Nếu xuất hiện bài hát tiếp theo (Không phải là bài cuối cùng trong playlist)
+      if (nextSong) {
         storage.setCurrentMusic(nextSong);
-        audioRef.current.addEventListener('loadeddata', playMusic);
-        return; // thoát khỏi hàm
+      } else if (loopModes[loop].type === 'playList') {
+        // * Kiểm tra chế độ playlist loop
+        nextSong = storage.currentPlayList[0]; // TODO Cho bài hát tiếp theo là bài hát đầu tiên
+      } else {
+        audioRef.current.currentTime = 0;
+        return;
       }
+
+      const playMusic = (event) => {
+        event.target.play();
+        setIsPlaying(true);
+        audioRef.current.removeEventListener('loadeddata', playMusic);
+      };
+      storage.setCurrentMusic(nextSong);
+      audioRef.current.addEventListener('loadeddata', playMusic);
+      return;
     } else {
       setIsPlaying(false);
     }

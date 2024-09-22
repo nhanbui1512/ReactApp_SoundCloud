@@ -5,32 +5,32 @@ import { faUserAlt, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-
 
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale-subtle.css';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { followUser, unfollowUser } from 'api/follow';
 import { LibraryContext } from 'context/Library';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const cx = classNames.bind(styles);
 
-function Post({ data }) {
+const example = {
+  avatar:
+    'http://res.cloudinary.com/dmykkmqwz/image/upload/v1706841987/avatars/zoga6la9w86nhlroq1m6.jpg',
+  createAtFormatTime: '21:12:37 26/01/2024',
+  updateAtFormatTime: '9:46:26 02/02/2024',
+  id: 6,
+  userName: 'Nguyễn Chí Quốc',
+  email: 'quoc@gmail.com',
+  city: 'Quảng Nam',
+  country: 'Việt Nam',
+  bio: 'IT BK ĐN',
+  //...
+};
+
+function Post({ data = example }) {
   const context = useContext(LibraryContext);
-
-  const moreBtnRef = useRef();
-  const [isFollowing, setIsFollowing] = useState(data.isFollow);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Kiểm tra xem sự kiện click có xảy ra ngoài nút button không
-      if (moreBtnRef.current && !moreBtnRef.current.contains(event.target)) {
-        // Thực hiện hành động khi click ra ngoài
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const [isFollowing, setIsFollowing] = useState(data.isFollowed);
 
   const handleFollowing = async () => {
     if (isFollowing) {
@@ -47,7 +47,6 @@ function Post({ data }) {
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              // User.countFollow -= 1;
             }
             return User;
           });
@@ -68,7 +67,6 @@ function Post({ data }) {
           newUsers = newUsers.map((User) => {
             if (User.id === data.id) {
               User.isFollow = !User.isFollow;
-              // User.countFollow += 1;
             }
             return User;
           });
@@ -77,6 +75,7 @@ function Post({ data }) {
       }
     }
   };
+
   return (
     <div className={cx('modul-left_item')}>
       <Link to={`/${data.id}`} className={cx('modul-left_item-container-img')}>
@@ -99,21 +98,18 @@ function Post({ data }) {
             }}
             className={cx('btn', { following: isFollowing })}
           >
-            {isFollowing ? (
-              <>
-                <FontAwesomeIcon className={cx('')} icon={faUserCheck} />
-                <span className={cx('followers-post')}>Following</span>
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon className={cx('')} icon={faUserPlus} />
-                <span className={cx('followers-post')}>Follow</span>
-              </>
-            )}
+            <div>
+              <FontAwesomeIcon className={cx('')} icon={isFollowing ? faUserCheck : faUserPlus} />
+              <span className={cx('followers-post')}>{isFollowing ? `Following` : `Follow`}</span>
+            </div>
           </div>
         </div>
       </span>
     </div>
   );
 }
-export default Post;
+
+Post.propTypes = {
+  data: PropTypes.object.isRequired,
+};
+export default React.memo(Post);

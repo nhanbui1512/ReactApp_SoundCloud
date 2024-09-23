@@ -28,7 +28,7 @@ function ProfileByID() {
     getUsersById(id)
       .then((res) => {
         setUserData(res.data || {});
-        setIsFollowed(res.data.isFollowed);
+        setIsFollowed(res.data?.isFollowed);
       })
       .catch((err) => {
         console.log(err);

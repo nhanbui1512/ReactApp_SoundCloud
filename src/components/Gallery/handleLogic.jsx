@@ -72,7 +72,8 @@ export const handleLogicAddNextUp = ({ playLists, storage, data }) => {
     });
   } else {
     let songs = data.songs.filter((song) => {
-      return !storage.currentPlayList.includes(song);
+      let isExist = storage.currentPlayList.findIndex((item) => item.id === song.id);
+      return isExist === -1;
     });
     storage.setCurrentPlayList((prev) => {
       return [...prev, ...songs];

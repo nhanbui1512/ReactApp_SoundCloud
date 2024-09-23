@@ -38,9 +38,13 @@ function Information({ data }) {
     }
 
     if (!isFollowed) {
-      followUser(data.owner.id).then((res) => {
-        setisFollowed(!isFollowed);
-      });
+      followUser(data.owner?.id)
+        .then((res) => {
+          setisFollowed(!isFollowed);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       unfollowUser(data.owner.id)
         .then((res) => {

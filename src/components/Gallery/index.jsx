@@ -141,7 +141,7 @@ function Gallery({ data, playLists }) {
 
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
-    setIsPlay(storage.currentMusic?.id === data.id);
+    setIsPlay(storage.currentMusic?.id === data.id || storage.playlistId === data.id);
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
@@ -153,13 +153,13 @@ function Gallery({ data, playLists }) {
     const audioTag = storage.audioRef.current;
 
     const handlePlay = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (data.id === storage.currentMusic.id || data.id === storage.playlistId) {
         setIsPlay(true);
       }
     };
 
     const handlePause = () => {
-      if (data.id === storage.currentMusic.id) {
+      if (data.id === storage.currentMusic.id || data.id === storage.playlistId) {
         setIsPlay(false);
       }
     };

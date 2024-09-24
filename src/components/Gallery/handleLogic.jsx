@@ -28,9 +28,10 @@ export const handleLogicPlay = ({ event, storage, playLists, data, setIsPlay }) 
       audioTag.pause();
       // setIsPlay(false);
     }
-  } else {
+  } else if (storage.playlistId !== data.id) {
     storage.setCurrentPlayList(data.songs);
     storage.setCurrentMusic(data.songs[0]);
+    storage.setPlaylistId(data.id);
     const playMusic = (e) => {
       e.target.play();
       setIsPlay(true);
@@ -38,6 +39,10 @@ export const handleLogicPlay = ({ event, storage, playLists, data, setIsPlay }) 
     };
     audioTag.addEventListener('loadeddata', playMusic);
     return; // thoát khỏi hàm
+  } else if (audioTag.paused) {
+    audioTag.play();
+  } else {
+    audioTag.pause();
   }
 };
 

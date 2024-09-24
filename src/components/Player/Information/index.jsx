@@ -6,7 +6,7 @@ import Image from 'components/Image';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListUl, faUserCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { memo, useContext, useEffect, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { StorageContext } from 'context/Storage';
 import { likeSong, unlikeSong } from 'api/songs';
@@ -92,10 +92,6 @@ function Information({ data }) {
       return newPrev;
     });
   };
-
-  useEffect(() => {
-    setisFollowed(data.owner?.isFollowed);
-  }, [data]);
 
   return (
     <div className={cx('wrapper')}>

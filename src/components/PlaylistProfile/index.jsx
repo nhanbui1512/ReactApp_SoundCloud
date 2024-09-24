@@ -55,11 +55,9 @@ const PlaylistList = ({ dataItem, refresh }) => {
     if (audioTag.paused) {
       // Đang dừng thì hiển thị nút Play
       audioTag.play();
-      // setIsPlay(true);
     } else {
       // Đang phát thì hiển thị nút pause
       audioTag.pause();
-      // setIsPlay(false);
     }
   };
 
@@ -122,15 +120,7 @@ const PlaylistList = ({ dataItem, refresh }) => {
               <FontAwesomeIcon icon={faHeart} />
               <span>{totalLike}</span>
             </button>
-            {/* <button 
-              className={cx('go-playlist-btn')}
-              // onClick={() => {
-              //   setPopperShare(true);
-              // }}
-            >
-              <FontAwesomeIcon icon={faShare} />
-              <span>Share</span>
-            </button> */}
+
             <button className={cx('go-playlist-btn')}>
               <FontAwesomeIcon icon={faLink} />
               <span>Copy Link</span>
@@ -139,10 +129,12 @@ const PlaylistList = ({ dataItem, refresh }) => {
               <FontAwesomeIcon icon={faBars} />
               <span>Add to Next up</span>
             </button>
-            <button className={cx('go-playlist-btn')} onClick={() => setOpenEdit(true)}>
-              <FontAwesomeIcon icon={faEdit} />
-              <span>Edit</span>
-            </button>
+            {dataItem.userId === storage.userData?.id && (
+              <button className={cx('go-playlist-btn')} onClick={() => setOpenEdit(true)}>
+                <FontAwesomeIcon icon={faEdit} />
+                <span>Edit</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

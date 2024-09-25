@@ -1,6 +1,6 @@
 import axios from 'axios';
 const request = axios.create({
-  baseURL: 'http://soundcloud.nhanbui.online/api',
+  baseURL: 'http://localhost:3000/api',
 });
 
 export const get = async (path, options = {}) => {

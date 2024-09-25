@@ -45,7 +45,7 @@ function Gallery({ data, playLists }) {
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
-  const [isFollow, setIsFollow] = useState(data.isFollow);
+  const [isFollow, setIsFollow] = useState(data.isFollowed && playLists);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -216,7 +216,7 @@ function Gallery({ data, playLists }) {
             </Tippy>
           )}
 
-          {playLists && (
+          {playLists && data.userId !== storage.userData?.id && (
             <Tippy animation={'scale-subtle'} content={'Follow'}>
               <>
                 <span

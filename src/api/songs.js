@@ -39,9 +39,9 @@ export async function getSongs(page = 1, perPage = 10) {
   }
 }
 
-export async function getSongsLiked() {
+export async function getSongsLiked({ page = 1, perPage = 20 }) {
   try {
-    const response = await axiosClient.get(`/song/liked`);
+    const response = await axiosClient.get(`/song/liked?page=${page}&per_page=${perPage}`);
     return response.data;
   } catch (error) {
     throw error;

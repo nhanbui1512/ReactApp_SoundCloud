@@ -23,7 +23,7 @@ function GlobalLibrary({ children }) {
         setDataSongs(Songs.data);
 
         // getSongLikes
-        var SongLikes = await getSongsLiked();
+        var SongLikes = await getSongsLiked({ page: 1, perPage: 18 });
         if (SongLikes.data) {
           SongLikes = SongLikes.data.map((songLike) => {
             songLike.song.isLiked = true;

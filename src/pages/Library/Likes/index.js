@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 const Likes = ({ likedSongs }) => {
   return (
-    <div className={cx('wrapper')}>
+    <div className={cx('wrapper mb-12')}>
       <div className={cx('header')}>
         <h2 className={cx('title')}>Hear the tracks you’ve liked:</h2>
       </div>

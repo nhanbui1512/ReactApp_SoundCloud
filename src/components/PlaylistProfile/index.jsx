@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './ToastPlaylist.module.scss';
+import styles from './PlaylistProfile.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
@@ -108,7 +108,14 @@ const PlaylistList = ({ dataItem, refresh }) => {
             <div className={cx('list-music-container')}>
               <ul className={cx(['list-music-container_scroll', 'col'])}>
                 {dataItem.songs?.map((itemMusic, index) => (
-                  <ItemSong itemMusic={itemMusic} key={index} />
+                  <ItemSong
+                    itemMusic={itemMusic}
+                    key={index}
+                    active={
+                      storage.currentMusic?.id === itemMusic.id &&
+                      dataItem.id === storage.playlistId
+                    }
+                  />
                 ))}
               </ul>
             </div>

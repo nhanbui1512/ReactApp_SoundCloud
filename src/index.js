@@ -10,17 +10,15 @@ import Storage from 'context/Storage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
-    <GlobalStyles>
-      <Storage>
-        <ToastProvider>
-          {isMobile ? <div>Mobile app</div> : <App />}
-          {/* <App /> */}
-          {/* <App /> */}
-        </ToastProvider>
-      </Storage>
-    </GlobalStyles>
-  </React.StrictMode>,
+  <GlobalStyles>
+    <Storage>
+      <ToastProvider>
+        {isMobile ? <div>Mobile app</div> : <App />}
+        {/* <App /> */}
+        {/* <App /> */}
+      </ToastProvider>
+    </Storage>
+  </GlobalStyles>,
 );
 
 // If you want to start measuring performance in your app, pass a function

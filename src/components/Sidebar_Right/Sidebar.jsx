@@ -17,8 +17,8 @@ const Sidebar = () => {
   useEffect(() => {
     const getSongLiked = async () => {
       try {
-        const res1 = await apiHandleFeed.getSongLiked();
-        const combinedSongs = res1.data.data.map((item) => item.song);
+        const res = await apiHandleFeed.getSongLiked();
+        const combinedSongs = res.data?.data?.docs?.map((item) => item.song);
         setListSongLiked(combinedSongs);
       } catch (error) {
         console.error(error);

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 
-import { getSongs, getSongsLiked } from 'api/songs';
+import { getSongs } from 'api/songs';
 import { getMyFollowingPlaylist } from 'api/playlist';
 import { getFollowing } from 'api/follow';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ export const LibraryContext = createContext();
 
 function GlobalLibrary({ children }) {
   const [dataSongs, setDataSongs] = useState([]);
-  const [dataSongLikes, setDataSongLikes] = useState([]);
   const [dataPlaylists, setDataPlaylists] = useState([]);
   const [dataUsers, setDataUsers] = useState([]);
 
@@ -21,16 +20,6 @@ function GlobalLibrary({ children }) {
         // getSongs
         const Songs = await getSongs();
         setDataSongs(Songs.data);
-
-        // getSongLikes
-        var SongLikes = await getSongsLiked({ page: 1, perPage: 18 });
-        if (SongLikes.data) {
-          SongLikes = SongLikes.data.map((songLike) => {
-            songLike.song.isLiked = true;
-            return songLike.song;
-          });
-          setDataSongLikes(SongLikes);
-        }
 
         // getPlaylists
         const Playlists = await getMyFollowingPlaylist();
@@ -52,8 +41,6 @@ function GlobalLibrary({ children }) {
   const states = {
     dataSongs,
     setDataSongs,
-    dataSongLikes,
-    setDataSongLikes,
     dataPlaylists,
     setDataPlaylists,
     dataUsers,

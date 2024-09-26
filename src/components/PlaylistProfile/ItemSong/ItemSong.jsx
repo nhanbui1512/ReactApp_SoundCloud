@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const ItemSong = ({ itemMusic }) => {
+const ItemSong = ({ itemMusic, active = false }) => {
   const [isCopy, setCopy] = useState(false);
   const [isLiked, setIsLiked] = useState(itemMusic.isLiked || false);
 
@@ -28,7 +28,7 @@ const ItemSong = ({ itemMusic }) => {
   };
 
   return (
-    <li className={cx('list-music-item')}>
+    <li className={cx('list-music-item', { active: active })}>
       <div className={cx('list-music-item_detail-song')}>
         <span className={cx('color-opa-07')}>{itemMusic.artistName}</span>
         <span className={cx('color-white')} style={{ marginLeft: '4px' }}>
@@ -58,14 +58,12 @@ const ItemSong = ({ itemMusic }) => {
             onClick={() => {
               handleCopy();
             }}
-            
           >
             <FontAwesomeIcon className={cx('', { copyed: isCopy })} icon={faLink} />
           </button>
           {/* <button>
             <FontAwesomeIcon icon={faEllipsis} />
           </button> */}
-          
         </div>
       </div>
     </li>

@@ -12,11 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <GlobalStyles>
     <Storage>
-      <ToastProvider>
-        {isMobile ? <div>Mobile app</div> : <App />}
-        {/* <App /> */}
-        {/* <App /> */}
-      </ToastProvider>
+      <ToastProvider>{isMobile ? <div>Mobile app</div> : <App />}</ToastProvider>
     </Storage>
   </GlobalStyles>,
 );

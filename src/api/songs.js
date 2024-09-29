@@ -30,9 +30,11 @@ export async function createSong({
   }
 }
 
-export async function getSongs(page = 1, perPage = 10) {
+export async function getSongs(page = 1, perPage = 10, suffle = true) {
   try {
-    const response = await axiosClient.get(`/song/get-songs?page=${page}&per_page=${perPage}`);
+    const response = await axiosClient.get(
+      `/song/get-songs?page=${page}&per_page=${perPage}&suffle=${suffle}`,
+    );
     return response.data;
   } catch (error) {
     throw error;

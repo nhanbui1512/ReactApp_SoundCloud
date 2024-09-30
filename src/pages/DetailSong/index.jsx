@@ -55,6 +55,7 @@ function Song() {
       setSong(song.song);
       setOwner(song.song.owner);
       setFollowingUser(song.song.owner.isFollowed);
+      document.title = song.song.name; // Set the title here
     };
     const getComments = async () => {
       const data = await getCommentsOfSong(id);
@@ -65,6 +66,10 @@ function Song() {
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
+
+    return () => {
+      document.title = 'Music App'; // Optional: Reset title on unmount
+    };
   }, [id]);
 
   // xử lý thời gian bài hát được upload

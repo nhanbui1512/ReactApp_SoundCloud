@@ -18,6 +18,8 @@ const Home = () => {
     playlist1: [],
   });
 
+  const [fetching, setIsFetching] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,6 +38,7 @@ const Home = () => {
           data5: data5.data,
           playlist1: playlist1.data,
         });
+        setIsFetching(false);
       } catch (error) {
         console.log(error);
       }
@@ -53,12 +56,25 @@ const Home = () => {
       >
         <div className={cx('content')}>
           <div className={cx('trending-wrapper')}>
-            <ListDisk data={dataState.data1} />
-            <ListDisk data={dataState.data2} title={'Trending Music on SoundCloud'} />
-            <ListDisk data={dataState.data3} title={`More of what you like`} />
-            <ListDisk data={dataState.data4} title={`Trending Music on SoundCloud`} />
-            <ListDisk data={dataState.data5} title={`Feel Good`} />
-            <ListDisk data={dataState.playlist1} playLists title="Mixed by Nhân Bùi" />
+            <ListDisk loading={fetching} data={dataState.data1} />
+            <ListDisk
+              loading={fetching}
+              data={dataState.data2}
+              title={'Trending Music on SoundCloud'}
+            />
+            <ListDisk loading={fetching} data={dataState.data3} title={`More of what you like`} />
+            <ListDisk
+              loading={fetching}
+              data={dataState.data4}
+              title={`Trending Music on SoundCloud`}
+            />
+            <ListDisk loading={fetching} data={dataState.data5} title={`Feel Good`} />
+            <ListDisk
+              loading={fetching}
+              data={dataState.playlist1}
+              playLists
+              title="Mixed by Nhân Bùi"
+            />
           </div>
         </div>
 

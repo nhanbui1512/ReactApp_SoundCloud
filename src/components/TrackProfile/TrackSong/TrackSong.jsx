@@ -23,6 +23,9 @@ import { toast } from 'react-toastify';
 import { getSongById, likeSong, unlikeSong } from 'api/songs';
 import { Link } from 'react-router-dom';
 import ShareSong from 'pages/Profile/Share/ShareSong';
+import Popup from 'components/Popup';
+import EditMusic from 'components/EditMusic';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 const cx = classNames.bind(styles);
 const TrackSong = ({ dataSong, onDelete }) => {
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
@@ -31,7 +34,7 @@ const TrackSong = ({ dataSong, onDelete }) => {
   const [isShare] = useState(false);
   const [isCopy, setCopy] = useState(false);
   const [popperShare, setPopperShare] = useState(false);
-
+  const [editSong, setEditSong] = useState({});
   const storage = useContext(StorageContext);
   const [isLiked, setIsLiked] = useState(dataSong.isLiked);
 
@@ -238,6 +241,17 @@ const TrackSong = ({ dataSong, onDelete }) => {
                     >
                       Delete
                     </MenuItem>
+                    <MenuItem
+                      className={cx('menu-item')}
+                      icon={
+                        <FontAwesomeIcon className={cx('menu-item-icon')} icon={faPenToSquare} />
+                      }
+                      onClick={() => {
+                        setEditSong(dataSong);
+                      }}
+                    >
+                      Edit
+                    </MenuItem>
                   </Wrapper>
                 );
               }}
@@ -251,6 +265,10 @@ const TrackSong = ({ dataSong, onDelete }) => {
         </div>
         {popperShare && <ShareSong dataShareSong={dataSong} setPopperShare={setPopperShare} />}
       </li>
+
+      <Popup onClose={() => setEditSong({})} open={Object.keys(editSong).length !== 0}>
+        <EditMusic />
+      </Popup>
     </>
   );
 };

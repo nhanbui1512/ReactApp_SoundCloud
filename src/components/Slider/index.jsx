@@ -6,7 +6,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import React, { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
-function Slider({ data, playLists }) {
+function Slider({ data, playLists, isLoading = true }) {
   const widthSlide = useRef();
   const countWidths = useRef();
   const [page, setPage] = useState(0);
@@ -30,6 +30,14 @@ function Slider({ data, playLists }) {
     }
   }
 
+  const renderLoading = () => {
+    const items = Array(5).fill(1);
+    return items.map((item, index) => <Gallery key={index} loading data={{}} />);
+  };
+
+  const renderData = () => {
+    return data.map((item, index) => <Gallery playLists={playLists} key={item.id} data={item} />);
+  };
   return (
     <div ref={widthSlide} className={cx('wrapper')}>
       <div
@@ -47,13 +55,11 @@ function Slider({ data, playLists }) {
             vibrateLeft: vibrateLeft,
           })}
         >
-          {data.map((item, index) => (
-            <Gallery playLists={playLists} key={item.id} data={item} />
-          ))}
+          {isLoading ? renderLoading() : renderData()}
         </div>
       </div>
 
-      {page !== totalPage && (
+      {page !== totalPage && !isLoading && (
         <div
           onClick={() => {
             if (page < totalPage) {

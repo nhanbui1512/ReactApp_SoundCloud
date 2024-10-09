@@ -40,15 +40,13 @@ import { Skeleton } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
-function Gallery({ data, playLists }) {
+function Gallery({ data, playLists, loading = false }) {
   const context = useContext(LibraryContext);
   const moreBtnRef = useRef();
   const [isLiked, setIsLiked] = useState(data.isLiked);
   const [isPlay, setIsPlay] = useState(false);
   const [isFollow, setIsFollow] = useState(data.isFollowed && playLists);
   const [openAddToPlaylist, setOpenAddToPlaylist] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const storage = useContext(StorageContext);
   const navigate = useNavigate();
@@ -142,9 +140,6 @@ function Gallery({ data, playLists }) {
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     setIsPlay(storage.currentMusic?.id === data.id || storage.playlistId === data.id);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
     // eslint-disable-next-line
   }, [storage.currentMusic]);
 
@@ -180,7 +175,7 @@ function Gallery({ data, playLists }) {
       <PlaylistPopup open={openAddToPlaylist} onClose={setOpenAddToPlaylist} songData={data} />
 
       <div className={cx('modul-left_item-container-img')}>
-        {isLoading ? (
+        {loading ? (
           <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
         ) : (
           <img
@@ -191,103 +186,115 @@ function Gallery({ data, playLists }) {
         )}
 
         {playLists && <BsMusicNoteList className={cx('playlist-icon')} />}
-        <div className={cx('modul-left_backgroud')}></div>
-        <div onClick={handlePlay} className={cx('modul-left_playbtn')}>
-          <FontAwesomeIcon
-            className={cx('modul-left_playbtn-icon')}
-            icon={isPlay ? faPause : faPlay}
-          />
-        </div>
-
-        <div className={cx('modul-left_option-group')}>
-          {playLists || (
-            <Tippy animation={'scale-subtle'} content={'Like'}>
-              <>
-                <span
-                  title={isLiked ? 'Unlike' : 'Like'}
-                  onClick={() => {
-                    handleLike();
-                  }}
-                  className={cx('option-btn')}
-                >
-                  <FontAwesomeIcon className={cx({ primary: isLiked })} icon={faHeart} />
-                </span>
-              </>
-            </Tippy>
-          )}
-
-          {playLists && data.userId !== storage.userData?.id && (
-            <Tippy animation={'scale-subtle'} content={'Follow'}>
-              <>
-                <span
-                  onClick={() => {
-                    handleFollow();
-                  }}
-                  className={cx('option-btn')}
-                >
-                  <FontAwesomeIcon
-                    className={cx('', { primary: isFollow })}
-                    icon={isFollow ? faUserCheck : faUserPlus}
-                  />
-                </span>
-              </>
-            </Tippy>
-          )}
-
-          <HeadlessTippy
-            interactive
-            placement="bottom-start"
-            offset={[0, 0]}
-            delay={[0, 300]}
-            render={(atr) => {
-              return (
-                <Wrapper className={cx('more-menu')}>
-                  <MenuItem
-                    className={cx('menu-item')}
-                    icon={<FormatListBulletedIcon fontSize="16" />}
-                    separate
-                    onClick={handleAddNextUp}
-                  >
-                    Add to Next up
-                  </MenuItem>
-                  {playLists || (
-                    <MenuItem
-                      className={cx('menu-item')}
-                      icon={<QueueMusic fontSize="16" />}
-                      onClick={() => setOpenAddToPlaylist(true)}
+        {loading || (
+          <>
+            <div className={cx('modul-left_backgroud')}></div>
+            <div onClick={handlePlay} className={cx('modul-left_playbtn')}>
+              <FontAwesomeIcon
+                className={cx('modul-left_playbtn-icon')}
+                icon={isPlay ? faPause : faPlay}
+              />
+            </div>
+            <div className={cx('modul-left_option-group')}>
+              {playLists || (
+                <Tippy animation={'scale-subtle'} content={'Like'}>
+                  <>
+                    <span
+                      title={isLiked ? 'Unlike' : 'Like'}
+                      onClick={() => {
+                        handleLike();
+                      }}
+                      className={cx('option-btn')}
                     >
-                      Add to Playlist
-                    </MenuItem>
-                  )}
-                </Wrapper>
-              );
-            }}
-          >
-            <span ref={moreBtnRef} className={cx('option-btn')}>
-              <FontAwesomeIcon icon={faEllipsis} />
-            </span>
-          </HeadlessTippy>
+                      <FontAwesomeIcon className={cx({ primary: isLiked })} icon={faHeart} />
+                    </span>
+                  </>
+                </Tippy>
+              )}
 
-          <div className={cx('modul-left_option-more')}>
-            <button className="border-bottom radius-top">
-              <FontAwesomeIcon icon={faListOl} />
-              <span>Add to Next up</span>
-            </button>
+              {playLists && data.userId !== storage.userData?.id && (
+                <Tippy animation={'scale-subtle'} content={'Follow'}>
+                  <>
+                    <span
+                      onClick={() => {
+                        handleFollow();
+                      }}
+                      className={cx('option-btn')}
+                    >
+                      <FontAwesomeIcon
+                        className={cx('', { primary: isFollow })}
+                        icon={isFollow ? faUserCheck : faUserPlus}
+                      />
+                    </span>
+                  </>
+                </Tippy>
+              )}
 
-            <button className="radius-end">
-              <i className="fa-solid fa-list"></i>
-              <span className="font-12">Add to Playlist</span>
-            </button>
-          </div>
-        </div>
+              <HeadlessTippy
+                interactive
+                placement="bottom-start"
+                offset={[0, 0]}
+                delay={[0, 300]}
+                render={(atr) => {
+                  return (
+                    <Wrapper className={cx('more-menu')}>
+                      <MenuItem
+                        className={cx('menu-item')}
+                        icon={<FormatListBulletedIcon fontSize="16" />}
+                        separate
+                        onClick={handleAddNextUp}
+                      >
+                        Add to Next up
+                      </MenuItem>
+                      {playLists || (
+                        <MenuItem
+                          className={cx('menu-item')}
+                          icon={<QueueMusic fontSize="16" />}
+                          onClick={() => setOpenAddToPlaylist(true)}
+                        >
+                          Add to Playlist
+                        </MenuItem>
+                      )}
+                    </Wrapper>
+                  );
+                }}
+              >
+                <span ref={moreBtnRef} className={cx('option-btn')}>
+                  <FontAwesomeIcon icon={faEllipsis} />
+                </span>
+              </HeadlessTippy>
+
+              <div className={cx('modul-left_option-more')}>
+                <button className="border-bottom radius-top">
+                  <FontAwesomeIcon icon={faListOl} />
+                  <span>Add to Next up</span>
+                </button>
+
+                <button className="radius-end">
+                  <i className="fa-solid fa-list"></i>
+                  <span className="font-12">Add to Playlist</span>
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {playLists || (
         <>
-          <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
-            {data.name}
-          </Link>
-          <span className={cx('name-track')}>{data.artistName}</span>
+          {loading ? (
+            <>
+              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+            </>
+          ) : (
+            <>
+              <Link to={`/song/${data.id}`} className={cx('name-gallery')}>
+                {data.name}
+              </Link>
+              <span className={cx('name-track')}>{data.artistName}</span>
+            </>
+          )}
         </>
       )}
 

@@ -100,6 +100,10 @@ const TrackSong = ({ dataSong, onDelete }) => {
     }
   };
 
+  const handleCloseEditPopup = () => {
+    setEditSong({});
+  };
+
   // lắng nghe sự kiện khi bài hát được đổi thì icon Play/Pause đổi sang Play
   useEffect(() => {
     if (storage.currentMusic.id !== dataSong.id) {
@@ -267,7 +271,7 @@ const TrackSong = ({ dataSong, onDelete }) => {
       </li>
 
       <Popup onClose={() => setEditSong({})} open={Object.keys(editSong).length !== 0}>
-        <EditMusic />
+        <EditMusic onClose={handleCloseEditPopup} />
       </Popup>
     </>
   );

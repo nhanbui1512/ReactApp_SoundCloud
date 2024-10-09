@@ -5,10 +5,14 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './EditMusic.module.scss';
 import Image from 'components/Image';
+import { Divider } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
-function EditMusic(props) {
+function EditMusic({ onClose }) {
+  const handleClose = () => {
+    if (onClose) onClose();
+  };
   return (
     <div className="flex flex-col">
       <div>
@@ -89,6 +93,44 @@ function EditMusic(props) {
             </div>
           </div>
         </div>
+      </div>
+
+      <Divider component={'div'} />
+
+      <div className="px-5 py-[25px] flex justify-between">
+        <div className="text-[var(--orange-primary)] text-[12px] flex items-center">
+          <span>*</span> <span className=" text-[#333] font-semibold">Required fileds</span>
+        </div>
+
+        <div>
+          <Button primary className={'rounded-sm'}>
+            Save changes
+          </Button>
+          <Button onClick={handleClose} text textBlack>
+            Cancel
+          </Button>
+        </div>
+      </div>
+      <Divider component={'div'} />
+      <div className="px-5 py-[25px] text-[12px]">
+        <strong className="sc-text-h4">Important:</strong> By sharing, you confirm that your track
+        complies with our{' '}
+        <a className="text-[#38d] font-semibold" href="/terms-of-use">
+          Terms of use
+        </a>{' '}
+        and you don't infringe anyone else's rights. If in doubt, refer to the{' '}
+        <a className="text-[#38d] font-semibold" href="/pages/copyright">
+          Copyright information
+        </a>{' '}
+        pages and{' '}
+        <a
+          className="text-[#38d] font-semibold"
+          target="blank"
+          href="http://copyright.help.soundcloud.com/"
+        >
+          FAQs
+        </a>{' '}
+        before uploading.{' '}
       </div>
     </div>
   );

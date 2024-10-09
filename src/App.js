@@ -26,6 +26,7 @@ import PageNotFound from 'pages/Profile/ProfileByID/NotFound';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = () => {
+  // Dùng createHashRouter để thêm dấu # vào đầu route nếu deploy theo kiểu static files
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
